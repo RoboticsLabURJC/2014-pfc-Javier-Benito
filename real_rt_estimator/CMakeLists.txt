@@ -50,6 +50,7 @@ find_package(OpenCV REQUIRED)
 
 find_library(ice_lib Ice)
 find_library(iceUtil_lib IceUtil)
+
 #PKG_CHECK_MODULES(opencv REQUIRED opencv)
 #include_directories(${opencv_INCLUDE_DIRS})
 #link_directories(${opencv_LIBRARY_DIRS})
@@ -72,7 +73,7 @@ TARGET_LINK_LIBRARIES(real_rt_estimator
 	${OpenCV_LIBRARIES}
 
 	${OpenCV_LIBS}
-	${opencv_LIBRARIES}
+
 	/usr/local/lib/jderobot/libgeometry.so
 	/usr/local/lib/jderobot/libprogeo.so
 	/usr/local/lib/jderobot/libgeometry.so

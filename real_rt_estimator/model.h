@@ -19,8 +19,18 @@
 // #include <opencv2/core/core.hpp>
 // #include <opencv2/imgproc/imgproc.hpp>
 // #include <opencv2/highgui/highgui.hpp>
-// 
-#include "opencv2/opencv.hpp"
+//
+//#include "opencv2/opencv.hpp"
+
+#include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/features2d/features2d.hpp"
+#include "opencv2/highgui/highgui.hpp"
+
+// IMPORTANT: install this lib to use SIFT
+#include "opencv2/nonfree/features2d.hpp"
+
+#include <opencv2/legacy/legacy.hpp>
 
 //PCL
 #include <pcl/point_types.h>
@@ -51,11 +61,11 @@ namespace real_rt_estimator {
 	public:
 		Model();
 		virtual ~Model();
-	
+
 	    pthread_mutex_t controlImgRGB;
 		pthread_mutex_t controlImgDEPTH;
 		pthread_mutex_t controlMatches;
-		
+
 		std::vector<jderobot::RGBPoint> get_pc();
 		std::vector<jderobot::RGBPoint> get_pc_converted();
 
@@ -69,17 +79,17 @@ namespace real_rt_estimator {
 		void createImageRGBAux(jderobot::ImageDataPtr data);
 		void createImageDEPTH(jderobot::ImageDataPtr data);
 		void createImageDEPTHAux(jderobot::ImageDataPtr data);
-		
+
 	    void createEmptyImageRGB();
  		void createEmptyImageDEPTH();
 	    void updateImageRGB(jderobot::ImageDataPtr data);
 		void updateImageRGBAux(jderobot::ImageDataPtr data);
 		void updateImageDEPTH(jderobot::ImageDataPtr data);
 		void updateImageDEPTHAux(jderobot::ImageDataPtr data);
-		
+
 		int doSiftAndGetPoints();
 		void estimateRT();
-/*		
+/*
 // 	    jderobot::EncodersDataPtr encodersData;
 // 	    jderobot::LaserDataPtr laserData;
 // 	    jderobot::ImageDataPtr imageData1; // Contains the image info
@@ -88,24 +98,24 @@ namespace real_rt_estimator {
 // 	    jderobot::PTEncodersDataPtr PTecondersData2;
 //             jderobot::PTMotorsData* PTmotorsData1;
 //             jderobot::PTMotorsData* PTmotorsData2;
-		
+
 	    cv::Mat image1;	// Image camera1 processed to manipulate with openCV
 	    cv::Mat image2; // Image camera2 processed to manipulate with openCV
-	    
-	    
+
+
 // 	    bool guiVisible;
 // 	    bool iterationControlActivated;
 	    //Variables used in NavigationAlgorithm
-// 	    int sentido; 
+// 	    int sentido;
 // 	    int accion;*/
-	    
+
 	private:
 	    //Variables used in NavigationAlgorithm
 // 	    cv::Mat imageCamera1;
 // 	    cv::Mat imageCamera2;
-	    
+
 	    //typedef std::vector<cv::KeyPoint> vectorkp;
-	    
+
 		cv::Mat imageRGB;
 		cv::Mat imageRGB_aux;
 		cv::Mat imageDEPTH;
@@ -116,53 +126,52 @@ namespace real_rt_estimator {
 		cv::Mat temp_imageRGB_aux;
 		cv::Mat temp_imageDEPTH;
 		cv::Mat temp_imageDEPTH_aux;
-		
-		
+
+
 		real_rt_estimator::myprogeo *mypro;
-		
+
 		int sift_points;
-		
+
 		struct myMatch {
 			int matchNum;
 			int matchDistance;
 			double matchAprox;
 		};
-		
+
 		std::vector<myMatch> myMatches;
-		
+
 		jderobot::ImageDataPtr dataRGB;
 		jderobot::ImageDataPtr dataDEPTH;
-		
+
 		/* It is supposed that camera parameters are defined */
 		TPinHoleCamera TPHcamera1;
 		TPinHoleCamera TPHcamaraDepth;
 
 		Eigen::Matrix4f RT_final;
-		
+
 		//std::vector<cv::KeyPoint> vkp1;
 		//std::vector<cv::KeyPoint> vkp2;
-		
+
 		std::vector<jderobot::RGBPoint> v_rgbp, v_rgbp_aux;
 		std::vector<jderobot::RGBPoint> pc, pc_converted;
 
-		
+
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc;
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc_converted;
-		
+
 		void doSift(/*jderobot::ImageDataPtr img1, jderobot::ImageDataPtr img2*/);
 		void getPoints();
-		
 
-		
+
+
 		static bool sortByDistance(const myMatch &lhs, const myMatch &rhs);
-		
 
-		
-		
+
+
+
 		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);;
-			    
-     
+
+
     };//class
 } // namespace
 #endif /*REAL_RT_ESTIMATOR_MODEL_H*/
-
