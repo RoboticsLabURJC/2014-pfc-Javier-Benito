@@ -1,0 +1,9 @@
+# Ignoring files created with cmake and make
+Makefile
+CMakeFiles/
+*.cmake
+CMakeCache.txt
+
+# Executable
+real_rt_estimator
+
