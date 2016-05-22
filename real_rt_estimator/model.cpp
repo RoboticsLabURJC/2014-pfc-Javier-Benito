@@ -80,31 +80,31 @@ namespace real_rt_estimator {
 		return result;
 	}
 
-	void Model::createImageRGB(jderobot::ImageDataPtr data) {
+	void Model::createImageRGB(cv::Mat data) {
 		this->dataRGB = data;
 		pthread_mutex_lock(&this->controlImgRGB);
-		imageRGB.create(data->description->height, data->description->width, CV_8UC3);
+		imageRGB.create(data.rows, data.cols, CV_8UC3);
 		pthread_mutex_unlock(&this->controlImgRGB);
-		imageRGB_aux.create(data->description->height, data->description->width, CV_8UC3);
+		imageRGB_aux.create(data.rows, data.cols, CV_8UC3);
 	}
 
-	void Model::createImageRGBAux(jderobot::ImageDataPtr data) {
+	void Model::createImageRGBAux(cv::Mat data) {
 		//pthread_mutex_lock(&this->controlImgRGB);
-		imageRGB_aux.create(data->description->height, data->description->width, CV_8UC3);
+		imageRGB_aux.create(data.rows, data.cols, CV_8UC3);
 		//pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
-	void Model::createImageDEPTH(jderobot::ImageDataPtr data) {
+	void Model::createImageDEPTH(cv::Mat data) {
 		this->dataDEPTH = data;
 		pthread_mutex_lock(&this->controlImgRGB);
-		imageDEPTH.create(data->description->height, data->description->width, CV_8UC3);
+		imageDEPTH.create(data.rows, data.cols, CV_8UC3);
 		pthread_mutex_unlock(&this->controlImgRGB);
-		imageDEPTH_aux.create(data->description->height, data->description->width, CV_8UC3);
+		imageDEPTH_aux.create(data.rows, data.cols, CV_8UC3);
 	}
 
-	void Model::createImageDEPTHAux(jderobot::ImageDataPtr data) {
+	void Model::createImageDEPTHAux(cv::Mat data) {
 		//pthread_mutex_lock(&this->controlImgDEPTH);
-		imageDEPTH_aux.create(data->description->height, data->description->width, CV_8UC3);
+		imageDEPTH_aux.create(data.rows, data.cols, CV_8UC3);
 		//pthread_mutex_unlock(&this->controlImgDEPTH);
 	}
 
@@ -120,31 +120,31 @@ namespace real_rt_estimator {
 		pthread_mutex_unlock(&this->controlGui2);
     }*/
 
-	void Model::updateImageRGB(jderobot::ImageDataPtr data){
+	void Model::updateImageRGB(cv::Mat data){
 		this->updateImageRGBAux(this->dataRGB);
 		pthread_mutex_lock(&this->controlImgRGB);
-		memcpy((unsigned char *) imageRGB.data ,&(data->pixelData[0]), imageRGB.cols*imageRGB.rows * 3);
+		memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
 		pthread_mutex_unlock(&this->controlImgRGB);
 		this->dataRGB = data;
 	}
 
-	void Model::updateImageRGBAux(jderobot::ImageDataPtr data){
+	void Model::updateImageRGBAux(cv::Mat data){
 		//pthread_mutex_lock(&this->controlImgRGB);
-		memcpy((unsigned char *) imageRGB_aux.data ,&(data->pixelData[0]), imageRGB_aux.cols*imageRGB_aux.rows * 3);
+		memcpy((unsigned char *) imageRGB_aux.data ,&(data.data), imageRGB_aux.cols*imageRGB_aux.rows * 3);
 		//pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
-	void Model::updateImageDEPTH(jderobot::ImageDataPtr data){
+	void Model::updateImageDEPTH(cv::Mat data){
 		this->updateImageDEPTHAux(this->dataDEPTH);
 		pthread_mutex_lock(&this->controlImgRGB);
-		memcpy((unsigned char *) imageDEPTH.data ,&(data->pixelData[0]), imageDEPTH.cols*imageDEPTH.rows * 3);
+		memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
 		pthread_mutex_unlock(&this->controlImgRGB);
 		this->dataDEPTH = data;
 	}
 
-	void Model::updateImageDEPTHAux(jderobot::ImageDataPtr data){
+	void Model::updateImageDEPTHAux(cv::Mat data){
 		//pthread_mutex_lock(&this->controlImgDEPTH);
-		memcpy((unsigned char *) imageDEPTH_aux.data ,&(data->pixelData[0]), imageDEPTH_aux.cols*imageDEPTH_aux.rows * 3);
+		memcpy((unsigned char *) imageDEPTH_aux.data ,&(data.data), imageDEPTH_aux.cols*imageDEPTH_aux.rows * 3);
 		//pthread_mutex_unlock(&this->controlImgDEPTH);
 	}
 // 	cv::Mat Model::getImage() {

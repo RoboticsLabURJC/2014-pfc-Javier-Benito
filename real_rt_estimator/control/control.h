@@ -2,6 +2,7 @@
 #define SENSORS_H
 
 //ICE
+#include <iostream>
 #include <Ice/Ice.h>
 #include <IceUtil/IceUtil.h>
 
@@ -17,13 +18,18 @@
 
 #include <boost/algorithm/string.hpp>
 
+
+
+#include <parallelIce/cameraClient.h>
+#include "easyiceconfig/EasyIce.h"
+
 namespace real_rt_estimator {
 
 class Control {
 	public:
 
 		Control(Ice::CommunicatorPtr ic, real_rt_estimator::Model* sm);	//constructor
-		void update();					
+		void update();
 
 	private:
 
@@ -32,8 +38,10 @@ class Control {
 		Ice::CommunicatorPtr ic;
 		jderobot::CameraPrx cprxRGB;
 		jderobot::CameraPrx cprxDEPTH;
+
+
+		//jderobot::cameraClient* camDEPTH;
 	};
 }
 
 #endif // SENSORS_H
- 

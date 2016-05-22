@@ -58,6 +58,14 @@ find_library(iceUtil_lib IceUtil)
 include_directories(
 	/usr/local/include/jderobot
 	${CMAKE_CURRENT_SOURCE_DIR}
+
+	${resourcelocator_INCLUDE_DIRS}
+	${easyiceconfig_INCLUDE_DIRS}
+)
+
+link_directories(
+	${resourcelocator_LIBRARY_DIRS}
+	#${easyiceconfig_LIBRARY_DIRS}
 )
 
 
@@ -79,8 +87,18 @@ TARGET_LINK_LIBRARIES(real_rt_estimator
 	/usr/local/lib/jderobot/libgeometry.so
 	/usr/local/lib/jderobot/libJderobotInterfaces.so
 	/usr/local/lib/jderobot/libjderobotutil.so
+	/usr/local/lib/jderobot/libparallelIce.so
 	#/usr/lib/libIce.so
 	#/usr/lib/libIceUtil.so
+	parallelIce
 	${ice_lib}
 	${iceUtil_lib}
+	#${easyiceconfig_LIBRARIES}
+
+	#JderobotInterfaces
+	#jderobotutil
+	#${resourcelocator_LIBRARIES}
+
+	#${ZeroCIce_LIBRARIES}
+	#${ZLIB_LIBRARIES}
 )

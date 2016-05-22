@@ -75,17 +75,17 @@ namespace real_rt_estimator {
 		cv::Mat getImageCameraDEPTHAux();
 		cv::Mat getImageCameraMatches();
 
-		void createImageRGB(jderobot::ImageDataPtr data);
-		void createImageRGBAux(jderobot::ImageDataPtr data);
-		void createImageDEPTH(jderobot::ImageDataPtr data);
-		void createImageDEPTHAux(jderobot::ImageDataPtr data);
+		void createImageRGB(cv::Mat data);
+		void createImageRGBAux(cv::Mat data);
+		void createImageDEPTH(cv::Mat data);
+		void createImageDEPTHAux(cv::Mat data);
 
 	    void createEmptyImageRGB();
  		void createEmptyImageDEPTH();
-	    void updateImageRGB(jderobot::ImageDataPtr data);
-		void updateImageRGBAux(jderobot::ImageDataPtr data);
-		void updateImageDEPTH(jderobot::ImageDataPtr data);
-		void updateImageDEPTHAux(jderobot::ImageDataPtr data);
+	    void updateImageRGB(cv::Mat data);
+		void updateImageRGBAux(cv::Mat data);
+		void updateImageDEPTH(cv::Mat data);
+		void updateImageDEPTHAux(cv::Mat data);
 
 		int doSiftAndGetPoints();
 		void estimateRT();
@@ -140,8 +140,8 @@ namespace real_rt_estimator {
 
 		std::vector<myMatch> myMatches;
 
-		jderobot::ImageDataPtr dataRGB;
-		jderobot::ImageDataPtr dataDEPTH;
+		cv::Mat dataRGB;
+		cv::Mat dataDEPTH;
 
 		/* It is supposed that camera parameters are defined */
 		TPinHoleCamera TPHcamera1;

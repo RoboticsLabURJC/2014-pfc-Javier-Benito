@@ -34,41 +34,42 @@ namespace real_rt_estimator {
     class Gui {
     public:
 
-        Gui(Model* sm);
-        virtual ~Gui();
+      Gui(Model* sm);
+      virtual ~Gui();
 
-        void display();
+      void display();
 
-        cv::Mat image1; // Image camera1 processed to manipulate with openCV
-        cv::Mat image2; // Image camera1 processed to manipulate with openCV
-        cv::Mat image3; // Image camera1 processed to manipulate with openCV
+      cv::Mat image1; // Image camera1 processed to manipulate with openCV
+      cv::Mat image2; // Image camera1 processed to manipulate with openCV
+      cv::Mat image3; // Image camera1 processed to manipulate with openCV
 
     private:
-		Model* sm;
-		
-        Gtk::Main gtkmain;
-        Glib::RefPtr<Gnome::Glade::Xml> refXml;
-        std::string gladepath;
+      
+  		Model* sm;
 
-        // Windows
-        Gtk::Window *secondarywindow;
+      Gtk::Main gtkmain;
+      Glib::RefPtr<Gnome::Glade::Xml> refXml;
+      std::string gladepath;
 
-        // Cameras
-        Gtk::Image *gtk_image1;
-		Gtk::Image *gtk_image2;
-		Gtk::Image *gtk_image3;
+      // Windows
+      Gtk::Window *secondarywindow;
 
-		//DrawArea* world1;
-		DrawArea* world;
-		std::string worldpath;
-		
-        // Private Methods
-        void setCamara(const cv::Mat image, int id);
-		void ShowImage();
-	
-		void putPointCloud();
-		void putCamera();
-	
+      // Cameras
+      Gtk::Image *gtk_image1;
+  		Gtk::Image *gtk_image2;
+  		Gtk::Image *gtk_image3;
+
+  		//DrawArea* world1;
+  		DrawArea* world;
+  		std::string worldpath;
+
+      // Private Methods
+      void setCamara(const cv::Mat image, int id);
+  		void ShowImage();
+
+  		void putPointCloud();
+  		void putCamera();
+
 
 
     }; //class
