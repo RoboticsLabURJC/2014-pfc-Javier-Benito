@@ -11,6 +11,7 @@ SET( SOURCE_FILES
 	control/threadcontrol.cpp
 	myprogeo.cpp
 	drawarea.cpp
+	#parallelIce/cameraClient.cpp
 )
 
 add_definitions(-DGLADE_DIR="${gladedir}")
@@ -56,14 +57,20 @@ find_library(iceUtil_lib IceUtil)
 #link_directories(${opencv_LIBRARY_DIRS})
 
 include_directories(
+
 	/usr/local/include/jderobot
 	${CMAKE_CURRENT_SOURCE_DIR}
 
 	${resourcelocator_INCLUDE_DIRS}
 	${easyiceconfig_INCLUDE_DIRS}
+
+	#${INCLUDES_JDEROBOT}
+	${INTERFACES_CPP_DIR}
+	${LIBS_DIR}
 )
 
 link_directories(
+	/usr/local/lib/jderobot/
 	${resourcelocator_LIBRARY_DIRS}
 	#${easyiceconfig_LIBRARY_DIRS}
 )

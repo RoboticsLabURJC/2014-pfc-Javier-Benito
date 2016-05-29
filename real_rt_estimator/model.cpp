@@ -123,28 +123,35 @@ namespace real_rt_estimator {
 	void Model::updateImageRGB(cv::Mat data){
 		this->updateImageRGBAux(this->dataRGB);
 		pthread_mutex_lock(&this->controlImgRGB);
-		memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
+		imageRGB = data.clone();
+		//memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
+
 		pthread_mutex_unlock(&this->controlImgRGB);
 		this->dataRGB = data;
 	}
 
 	void Model::updateImageRGBAux(cv::Mat data){
 		//pthread_mutex_lock(&this->controlImgRGB);
-		memcpy((unsigned char *) imageRGB_aux.data ,&(data.data), imageRGB_aux.cols*imageRGB_aux.rows * 3);
+		std::cout << "aquí1" << std::endl;
+		imageRGB_aux = data.clone();
+		//memcpy((unsigned char *) imageRGB_aux.data ,&(data.data), imageRGB_aux.cols*imageRGB_aux.rows * 3);
+		std::cout << "aquí2" << std::endl;
 		//pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
 	void Model::updateImageDEPTH(cv::Mat data){
 		this->updateImageDEPTHAux(this->dataDEPTH);
 		pthread_mutex_lock(&this->controlImgRGB);
-		memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
+		imageDEPTH = data.clone();
+		//memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
 		pthread_mutex_unlock(&this->controlImgRGB);
 		this->dataDEPTH = data;
 	}
 
 	void Model::updateImageDEPTHAux(cv::Mat data){
 		//pthread_mutex_lock(&this->controlImgDEPTH);
-		memcpy((unsigned char *) imageDEPTH_aux.data ,&(data.data), imageDEPTH_aux.cols*imageDEPTH_aux.rows * 3);
+		imageDEPTH_aux = data.clone();
+		//memcpy((unsigned char *) imageDEPTH_aux.data ,&(data.data), imageDEPTH_aux.cols*imageDEPTH_aux.rows * 3);
 		//pthread_mutex_unlock(&this->controlImgDEPTH);
 	}
 // 	cv::Mat Model::getImage() {

@@ -7,9 +7,11 @@
 #include <IceUtil/IceUtil.h>
 
 #include "../model.h"
+//#include "../parallelIce/cameraClient.h"
 
 //INTERFACES
-#include <jderobot/camera.h>
+//#include <jderobot/camera.h>
+//#include <jderobot/pose3d.h>
 
 //Opencv
 #include <opencv2/core/core.hpp>
