@@ -149,12 +149,14 @@ namespace real_rt_estimator {
 
 		Eigen::Matrix4f RT_final;
 
+
 		//std::vector<cv::KeyPoint> vkp1;
 		//std::vector<cv::KeyPoint> vkp2;
 
 		std::vector<jderobot::RGBPoint> v_rgbp, v_rgbp_aux;
 		std::vector<jderobot::RGBPoint> pc, pc_converted;
 
+    bool first;
 
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc;
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc_converted;

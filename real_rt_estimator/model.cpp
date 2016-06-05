@@ -15,11 +15,9 @@ namespace real_rt_estimator {
 		TPHcamaraDepth.foa.H=1;
 		update_camera_matrix(&TPHcamaraDepth);
 		display_camerainfo(TPHcamaraDepth);*/
-		this->RT_final << 1, 0, 0, 0,
-							0, 1, 0, 0,
-							0, 0, 1, 0,
-							0, 0, 0, 1;
-		std::cout << this->RT_final;
+
+
+		this->first = true;
 
 
 		this->mypro= new real_rt_estimator::myprogeo();
@@ -37,6 +35,12 @@ namespace real_rt_estimator {
 
 
 		//this->pc_converted->points.resize(0);
+
+		this->RT_final << 1, 0, 0, 0,
+							0, 1, 0, 0,
+							0, 0, 1, 0,
+							0, 0, 0, 1;
+		std::cout << this->RT_final;
 	}
 
 	Model::~Model() {}
@@ -132,10 +136,8 @@ namespace real_rt_estimator {
 
 	void Model::updateImageRGBAux(cv::Mat data){
 		//pthread_mutex_lock(&this->controlImgRGB);
-		std::cout << "aquí1" << std::endl;
 		imageRGB_aux = data.clone();
 		//memcpy((unsigned char *) imageRGB_aux.data ,&(data.data), imageRGB_aux.cols*imageRGB_aux.rows * 3);
-		std::cout << "aquí2" << std::endl;
 		//pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
@@ -170,7 +172,7 @@ namespace real_rt_estimator {
 		int width = imgDepth->cols;
 		int height = imgDepth->rows;
 
-		std::cout <<  "TAMAÑOnto x! " << width << height << std::endl;
+		//std::cout <<  "TAMAÑOnto x! " << width << height << std::endl;
 		//float module;
 		//float ux,uy,uz;
 
@@ -178,9 +180,9 @@ namespace real_rt_estimator {
 
 		int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[3*x+imgDepth->rows*y+1]<<8)|(imgDepth->data[3*x+imgDepth->rows*y+2]));
 
-		std::cout <<  "Mejor punto x! " << x << std::endl;
-		std::cout <<  "Mejor punto y! " << y << std::endl;
-		std::cout <<  "Distandica best! " << realDepthDist << std::endl;
+		//std::cout <<  "Mejor punto x! " << x << std::endl;
+		//std::cout <<  "Mejor punto y! " << y << std::endl;
+		//std::cout <<  "Distandica best! " << realDepthDist << std::endl;
 
 		/* Defining auxiliar points*/
 		//HPoint2D auxPoint2DCam1;
@@ -224,7 +226,7 @@ namespace real_rt_estimator {
 		p.y=t*uy+camy;
 		p.z=t*uz+camz;
 
-		std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+		//std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
 
 		return p;
 
@@ -276,6 +278,8 @@ namespace real_rt_estimator {
 		cv::drawKeypoints(this->imageRGB_aux, keypoints2, this->imageRGB_aux);
 		pthread_mutex_unlock(&this->controlImgRGB);*/
 
+
+		this->sift_points = matches.size();
 		if (matches.size() != 0) {
 			/*std::cout <<  "puntos de la kp1 " << keypoints1.size() << std::endl;
 			std::cout <<  "puntos de la kp2 " << keypoints2.size() << std::endl;
@@ -333,10 +337,10 @@ namespace real_rt_estimator {
 
 			int bestMatch = this->myMatches[0].matchNum;
 
-			std::cout <<  "matchNUM " << this->myMatches[0].matchNum << std::endl;
-			std::cout <<  "best match " << bestMatch << std::endl;
-			std::cout <<  "best match 1" << keypoints1[matches[bestMatch].queryIdx].pt.x << std::endl;
-			std::cout <<  "best match 2" << keypoints1[matches[bestMatch].queryIdx].pt.y << std::endl;
+			//std::cout <<  "matchNUM " << this->myMatches[0].matchNum << std::endl;
+			//std::cout <<  "best match " << bestMatch << std::endl;
+			//std::cout <<  "best match 1" << keypoints1[matches[bestMatch].queryIdx].pt.x << std::endl;
+			//std::cout <<  "best match 2" << keypoints1[matches[bestMatch].queryIdx].pt.y << std::endl;
 
 			// Save X best points to Points Cloud
 			int numBestPoints = N_ESTIMATOR_POINTS;
@@ -374,7 +378,7 @@ namespace real_rt_estimator {
 			this->imageMatches = imgMatches;
 			/////////////////////////////////////////////////////////////
 
-			std::cout << "tamaño puntos: " << v_rgbp.size() << " y " << v_rgbp_aux.size() << std::endl;
+			//std::cout << "tamaño puntos: " << v_rgbp.size() << " y " << v_rgbp_aux.size() << std::endl;
 			//this->pc->points = v_rgbp;
 			//this->pc_aux->points = v_rgbp_aux;
 
@@ -387,6 +391,8 @@ namespace real_rt_estimator {
 	void Model::estimateRT() {
 
 		// TODO: Comprobar número mínimo de puntos!!!!!!!!!
+
+
 
 		int num_points_for_RT = v_rgbp.size();
 		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
@@ -403,38 +409,78 @@ namespace real_rt_estimator {
 			points_ref_2(i,3) = 1;
 		}
 
-		//std::cout << "buuu: \n" << points_ref_1 << " --------- " << points_ref_2 << std::endl;
 
-		//JacobiSVD<MatrixXf> svd(points_ref_1, Eigen::ComputeThinU | Eigen::ComputeThinV);
-		//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
+		/*if (this->first) {
+			this->RT_final << 1, 0, 0, 0,
+								0, 1, 0, 0,
+								0, 0, 1, 0,
+								0, 0, 0, 1;
+			std::cout << this->RT_final;
 
-		Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
+			Eigen::Vector4f points_ref_1_aux;
+			Eigen::Vector4f points_ref_2_aux;
 
-		std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
-		this->RT_final = RT_estimate * this->RT_final;
+			this->pc_converted.resize(num_points_for_RT);
 
-		std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+			for(int i=0; i<num_points_for_RT; i++){
+				points_ref_2_aux(0) = this->pc[i].x;
+				points_ref_2_aux(1) = this->pc[i].y;
+				points_ref_2_aux(2) = this->pc[i].z;
+				points_ref_2_aux(3) = 1;
 
-		Eigen::Vector4f points_ref_1_aux;
-		Eigen::Vector4f points_ref_2_aux;
+				Eigen::Vector4f points_ref_1_aux;
+				Eigen::Vector4f points_ref_2_aux;
 
-		this->pc_converted.resize(num_points_for_RT);
+				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+				//points_ref_1_aux = 2*points_ref_2_aux;
+				//std::cout << "asdfasdfasdfasdftrix is: \n" << points_ref_2_aux << std::endl;
+				this->pc_converted[i].x = points_ref_1_aux(0);
+				this->pc_converted[i].y = points_ref_1_aux(1);
+				this->pc_converted[i].z = points_ref_1_aux(2);
+				this->pc_converted[i].r = this->pc[i].r;
+				this->pc_converted[i].g = this->pc[i].g;
+				this->pc_converted[i].b = this->pc[i].b;
+			}
+			this->first = false;
+		} else {*/
 
-		for(int i=0; i<num_points_for_RT; i++){
-			points_ref_2_aux(0) = this->pc[i].x;
-			points_ref_2_aux(1) = this->pc[i].y;
-			points_ref_2_aux(2) = this->pc[i].z;
-			points_ref_2_aux(3) = 1;
 
-			points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
-			//std::cout << "asdfasdfasdfasdftrix is: \n" << points_ref_2_aux << std::endl;
-			this->pc_converted[i].x = points_ref_1_aux(0);
-			this->pc_converted[i].y = points_ref_1_aux(1);
-			this->pc_converted[i].z = points_ref_1_aux(2);
-			this->pc_converted[i].r = this->pc[i].r;
-			this->pc_converted[i].g = this->pc[i].g;
-			this->pc_converted[i].b = this->pc[i].b;
-		}
+			//std::cout << "buuu: \n" << points_ref_1 << " --------- " << points_ref_2 << std::endl;
+
+			//JacobiSVD<MatrixXf> svd(points_ref_1, Eigen::ComputeThinU | Eigen::ComputeThinV);
+			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
+
+			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
+
+			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+
+			this->RT_final = this->RT_final*RT_estimate;
+
+			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+
+			Eigen::Vector4f points_ref_1_aux;
+			Eigen::Vector4f points_ref_2_aux;
+
+			this->pc_converted.resize(sift_points);
+
+			for(int i=0; i<sift_points; i++){
+				points_ref_2_aux(0) = this->pc[i].x;
+				points_ref_2_aux(1) = this->pc[i].y;
+				points_ref_2_aux(2) = this->pc[i].z;
+				points_ref_2_aux(3) = 1;
+
+				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+				//points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+				//points_ref_1_aux = RT_final*points_ref_2_aux;
+				//std::cout << "asdfasdfasdfasdftrix is: \n" << points_ref_2_aux << std::endl;
+				this->pc_converted[i].x = points_ref_1_aux(0);
+				this->pc_converted[i].y = points_ref_1_aux(1);
+				this->pc_converted[i].z = points_ref_1_aux(2);
+				this->pc_converted[i].r = this->pc[i].r;
+				this->pc_converted[i].g = this->pc[i].g;
+				this->pc_converted[i].b = this->pc[i].b;
+			}
+		//}
 
 		/*
 		for(int i=0; i<num_points_for_RT; i++){

@@ -45,8 +45,6 @@ namespace real_rt_estimator {
       /*Create the first image obtained from the camera and stores in the shared memory*/
       this->sm->createImageRGB(data);
 
-      std::cout <<  "aaaaaaaaAAAAAAAAAA 1" << std::endl;
-
     } else {
       cameraRGBOn = false;
     	/*Create an empty image if there is no camera connected*/
@@ -97,22 +95,17 @@ namespace real_rt_estimator {
     if(cameraRGBOn) {
   	  //Get de data from the camera and stores de image in the shared memory periodically (see threadcontrol)
   		//jderobot::ImageDataPtr data = cprxRGB->getImageData();
-std::cout << "11" << std::endl;
       cv::Mat data;
   		camRGB->getImage(data,true);
   		cv::Size rgbSize = data.size();
-      std::cout << "11_1" << std::endl;
   		this->sm->updateImageRGB(data);
-      std::cout << "112" << std::endl;
     }
     if(cameraDEPTHOn) {
-      std::cout << "22" << std::endl;
       //Get de data from the camera and stores de image in the shared memory periodically (see threadcontrol)
       cv::Mat dataDEPTH;
   		camDEPTH->getImage(dataDEPTH,true);
   		cv::Size depthSize = dataDEPTH.size();
       this->sm->updateImageDEPTH(dataDEPTH);
-      std::cout << "222" << std::endl;
     }
   }
 
