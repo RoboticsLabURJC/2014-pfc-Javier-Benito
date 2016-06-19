@@ -12,15 +12,20 @@ namespace real_rt_estimator {
 			std::exit(1);
 		}
 
-        std::cout << "Loading glade... \n";
+    std::cout << "Loading glade... \n";
 
-        refXml = Gnome::Glade::Xml::create("./real_rt_estimator.glade");
-        //Get widgets
-        refXml->get_widget("secondarywindow", secondarywindow);
-        // Camera images
-        refXml->get_widget("image1", gtk_image1);
-	      refXml->get_widget("image2", gtk_image2);
-        refXml->get_widget("image3", gtk_image3);
+    refXml = Gnome::Glade::Xml::create("./real_rt_estimator.glade");
+    //Get widgets
+    refXml->get_widget("secondarywindow", secondarywindow);
+    // Camera images
+    refXml->get_widget("image1", gtk_image1);
+    refXml->get_widget("image2", gtk_image2);
+    refXml->get_widget("image3", gtk_image3);
+
+    //Button
+    refXml->get_widget("button_estimate_rt", w_button_estimate_rt);
+
+    w_button_estimate_rt->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
 
 		//opengl world
 		refXml->get_widget_derived("drawingarea1",world);
@@ -33,6 +38,9 @@ namespace real_rt_estimator {
 
         secondarywindow->show();
 
+    this->processDone = false;
+    this->firstProcess = true;
+
 		std::cout << "Done." << std::endl;
     }
 
@@ -43,37 +51,52 @@ namespace real_rt_estimator {
     void Gui::ShowImage() {
 
   		this->image1 = this->sm->getImageCameraRGB();
-  		this->image2 = this->sm->getImageCameraRGBAux();
+      this->image2 = this->sm->getImageCameraRGBAux();
 
-  		int done = 0;
 
-  		struct timeval t_ini, t_fin;
-  		long total_ini, total_fin;
-  		long diff;
-  		gettimeofday(&t_ini, NULL);
+      if (this->sm->doSiftAndGetPoints()) {
+        this->processDone = true;
+      }
 
-  		total_ini = t_ini.tv_sec * 1000000 + t_ini.tv_usec;
-   			if (this->sm->doSiftAndGetPoints()) {
-  				done = 1;
-  				this->sm->estimateRT();
-  			}
 
-  		gettimeofday(&t_fin, NULL);
-  		total_fin = t_fin.tv_sec * 1000000 + t_fin.tv_usec;
-
-  		diff = (total_fin - total_ini) / 1000;;
-  		std::cout <<  "Tiempo procesado-> " << diff << " ms" << std::endl;
-
-  		this->image3 = this->sm->getImageCameraMatches();
       setCamara(this->image1, 1);
-  		setCamara(this->image2, 2);
-  		setCamara(this->image3, 3);
+      setCamara(this->image2, 2);
+      setCamara(this->image3, 3);
 
-  		if (done) {
-  			this->putPointCloud();
-  			this->putCamera();
-  		}
     }
+
+    void Gui::estimateCurrentRT() {
+      //this->image2 = this->sm->getImageCameraRGBAux();
+
+      struct timeval t_ini, t_fin;
+      long total_ini, total_fin;
+      long diff;
+      gettimeofday(&t_ini, NULL);
+
+      total_ini = t_ini.tv_sec * 1000000 + t_ini.tv_usec;
+
+      if (this->processDone) {
+        this->sm->estimateRT();
+        this->putPointCloud();
+      }
+
+      gettimeofday(&t_fin, NULL);
+      total_fin = t_fin.tv_sec * 1000000 + t_fin.tv_usec;
+
+      diff = (total_fin - total_ini) / 1000;;
+      std::cout <<  "Tiempo procesado-> " << diff << " ms" << std::endl;
+
+      this->image3 = this->sm->getImageCameraMatches();
+
+
+      this->sm->changeImageAux();
+
+      //if (done) {
+      //  this->putPointCloud();
+        //this->putCamera();
+      //}
+    }
+
 
     void Gui::display() {
         ShowImage();

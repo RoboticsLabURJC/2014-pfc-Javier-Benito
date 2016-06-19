@@ -43,7 +43,7 @@
 
 //#define IMG_X 320
 //#define IMG_Y 240
-#define N_ESTIMATOR_POINTS 10
+#define N_ESTIMATOR_POINTS 20
 
 /* Traslation of graphic coordinates to optical coordinates and vice versa */
 /*#define GRAPHIC_TO_OPTICAL_X(x,y) (SIFNTSC_ROWS-1-y)
@@ -87,6 +87,8 @@ namespace real_rt_estimator {
 		void updateImageDEPTH(cv::Mat data);
 		void updateImageDEPTHAux(cv::Mat data);
 
+    void changeImageAux();
+
 		int doSiftAndGetPoints();
 		void estimateRT();
 /*
@@ -127,6 +129,7 @@ namespace real_rt_estimator {
 		cv::Mat temp_imageDEPTH;
 		cv::Mat temp_imageDEPTH_aux;
 
+    bool isChangeImageAux;
 
 		real_rt_estimator::myprogeo *mypro;
 

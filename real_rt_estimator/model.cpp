@@ -5,8 +5,8 @@
 //Shared memory class storage of shared resources of the component
 
 namespace real_rt_estimator {
-
 	Model::Model() {
+
 		//pthread_mutex_t controlImgRGB = PTHREAD_MUTEX_INITIALIZER;
 		//pthread_mutex_t controlImgDEPTH = PTHREAD_MUTEX_INITIALIZER;
 
@@ -19,6 +19,7 @@ namespace real_rt_estimator {
 
 		this->first = true;
 
+		this->isChangeImageAux = true;
 
 		this->mypro= new real_rt_estimator::myprogeo();
 		char c_null[0];
@@ -125,7 +126,10 @@ namespace real_rt_estimator {
     }*/
 
 	void Model::updateImageRGB(cv::Mat data){
-		this->updateImageRGBAux(this->dataRGB);
+		if (this->isChangeImageAux) {
+			this->updateImageRGBAux(this->dataRGB);
+			this->isChangeImageAux = false;
+		}
 		pthread_mutex_lock(&this->controlImgRGB);
 		imageRGB = data.clone();
 		//memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
@@ -162,6 +166,11 @@ namespace real_rt_estimator {
 // 		pthread_mutex_unlock(&this->controlGui);
 // 		return result;
 // 	}
+
+
+	void Model::changeImageAux() {
+		this->isChangeImageAux = true;
+	}
 
 	bool Model::sortByDistance(const Model::myMatch &lhs, const Model::myMatch &rhs) {
 		return ((lhs.matchDistance + lhs.matchAprox) < (rhs.matchDistance + rhs.matchAprox));
@@ -393,8 +402,9 @@ namespace real_rt_estimator {
 		// TODO: Comprobar número mínimo de puntos!!!!!!!!!
 
 
-
 		int num_points_for_RT = v_rgbp.size();
+		std::cout << "The points number for RT calculation is: \n" <<  num_points_for_RT << std::endl;
+		
 		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
 		Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
 

@@ -90,8 +90,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <widget class="GtkButton" id="button1">
-                <property name="label" translatable="yes">RESET</property>
+              <widget class="GtkButton" id="button_estimate_rt">
+                <property name="label" translatable="yes">Estimate RT</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>

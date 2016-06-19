@@ -44,8 +44,11 @@ namespace real_rt_estimator {
       cv::Mat image3; // Image camera1 processed to manipulate with openCV
 
     private:
-      
+
   		Model* sm;
+
+      bool processDone;
+      bool firstProcess;
 
       Gtk::Main gtkmain;
       Glib::RefPtr<Gnome::Glade::Xml> refXml;
@@ -59,6 +62,9 @@ namespace real_rt_estimator {
   		Gtk::Image *gtk_image2;
   		Gtk::Image *gtk_image3;
 
+      // Button
+      Gtk::Button *w_button_estimate_rt;
+
   		//DrawArea* world1;
   		DrawArea* world;
   		std::string worldpath;
@@ -66,6 +72,8 @@ namespace real_rt_estimator {
       // Private Methods
       void setCamara(const cv::Mat image, int id);
   		void ShowImage();
+
+      void estimateCurrentRT();
 
   		void putPointCloud();
   		void putCamera();
