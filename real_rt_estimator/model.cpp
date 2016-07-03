@@ -18,6 +18,8 @@ namespace real_rt_estimator {
 
 
 		this->first = true;
+		this->iterationCloud = 0;
+
 
 		this->isChangeImageAux = true;
 
@@ -126,16 +128,16 @@ namespace real_rt_estimator {
     }*/
 
 	void Model::updateImageRGB(cv::Mat data){
+		pthread_mutex_lock(&this->controlImgRGB);
 		if (this->isChangeImageAux) {
 			this->updateImageRGBAux(this->dataRGB);
 			this->isChangeImageAux = false;
 		}
-		pthread_mutex_lock(&this->controlImgRGB);
 		imageRGB = data.clone();
 		//memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
 
-		pthread_mutex_unlock(&this->controlImgRGB);
 		this->dataRGB = data;
+		pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
 	void Model::updateImageRGBAux(cv::Mat data){
@@ -146,12 +148,12 @@ namespace real_rt_estimator {
 	}
 
 	void Model::updateImageDEPTH(cv::Mat data){
-		this->updateImageDEPTHAux(this->dataDEPTH);
 		pthread_mutex_lock(&this->controlImgRGB);
+		this->updateImageDEPTHAux(this->dataDEPTH);
 		imageDEPTH = data.clone();
 		//memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
-		pthread_mutex_unlock(&this->controlImgRGB);
 		this->dataDEPTH = data;
+		pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
 	void Model::updateImageDEPTHAux(cv::Mat data){
@@ -182,10 +184,16 @@ namespace real_rt_estimator {
 		int height = imgDepth->rows;
 
 		//std::cout <<  "TAMAÑOnto x! " << width << height << std::endl;
+		//std::cout <<  imgDepth->data  << std::endl;
 		//float module;
 		//float ux,uy,uz;
 
 		pcl::PointXYZRGBA points;
+
+		//std::cout <<  "lol" << std::endl;
+		//std::cout << imgDepth->data[3*x+imgDepth->rows*y+1] << std::endl;
+		//std::cout << imgDepth->data[3*x+imgDepth->rows*y+1] << std::endl;
+		//std::cout << (3*x+imgDepth->rows*y+2) << std::endl;
 
 		int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[3*x+imgDepth->rows*y+1]<<8)|(imgDepth->data[3*x+imgDepth->rows*y+2]));
 
@@ -196,8 +204,8 @@ namespace real_rt_estimator {
 		/* Defining auxiliar points*/
 		//HPoint2D auxPoint2DCam1;
 		//HPoint3D auxPoint3DCam1;
-
 		float d = (float)realDepthDist;
+		std::cout <<  d << std::endl;
 		float xp,yp,zp,camx,camy,camz;
 		mypro->mybackproject(x, y, &xp, &yp, &zp, &camx, &camy, &camz,0);
 		//vector unitario
@@ -215,7 +223,7 @@ namespace real_rt_estimator {
 		fmod = sqrt(1/(((camx-c1x)*(camx-c1x))+((camy-c1y)*(camy-c1y))+((camz-c1z)*(camz-c1z))));
 		fx = (c1x - camx)*fmod;
 		fy = (c1y - camy)*fmod;
-		fz = (c1z - camz) * fmod;
+		fz = (c1z - camz)*fmod;
 		ux = (xp-camx)*modulo;
 		uy = (yp-camy)*modulo;
 		uz = (zp-camz)*modulo;
@@ -235,7 +243,17 @@ namespace real_rt_estimator {
 		p.y=t*uy+camy;
 		p.z=t*uz+camz;
 
-		//std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+		//std::cout <<  "coloeres dimensiones! " << p.r << ", " << p.g << ", " << p.b << std::endl;
+		std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+
+		//for(int i=0; i<(3*width*width); i++) {
+		//	int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[i+1]<<8)|(imgDepth->data[i+2]));
+		//	std::cout << realDepthDist << std::endl;
+		//}
+		//std::terminate();
+		/*if (p.x == 0) {
+			std::terminate();
+		}*/
 
 		return p;
 
@@ -246,13 +264,10 @@ namespace real_rt_estimator {
 		// GetTems
 		pthread_mutex_lock(&this->controlImgRGB);
 			this->temp_imageRGB = this->imageRGB.clone();
-		pthread_mutex_unlock(&this->controlImgRGB);
-		this->temp_imageRGB_aux = this->imageRGB_aux.clone();
-
-		pthread_mutex_lock(&this->controlImgRGB);
+			this->temp_imageRGB_aux = this->imageRGB_aux.clone();
 			this->temp_imageDEPTH = this->imageDEPTH.clone();
+			this->temp_imageDEPTH_aux = this->imageDEPTH_aux.clone();
 		pthread_mutex_unlock(&this->controlImgRGB);
-		this->temp_imageDEPTH_aux = this->imageDEPTH_aux.clone();
 
 		//Función doSIFT
 		std::vector<cv::KeyPoint> keypoints1, keypoints2;
@@ -304,7 +319,9 @@ namespace real_rt_estimator {
 
 					////////////////////////////////////////////////////////////////////////////////////////////////
 					// Save the point cloud...
+
 					this->pc.push_back(getPoints3D(keypoints1[i].pt.x, keypoints1[i].pt.y, &this->temp_imageRGB, &this->temp_imageDEPTH));
+
 					////////////////////////////////////////////////////////////////////////////////////////////////
 
 					if (matches[i].distance < 100) {
@@ -371,8 +388,13 @@ namespace real_rt_estimator {
 				y_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.y+0.5f);
 				x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x+0.5f);
 				y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y+0.5f);
+
+
+				std::cout <<  "Entramos funcion" << std::endl;
 				this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
+				std::cout <<  "Entramos funcion2" << std::endl;
 				this->v_rgbp_aux.push_back(getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux));
+
 
 				////////////////////////////////////////////////////////
 				// Draw the chosen points of interest
@@ -391,6 +413,7 @@ namespace real_rt_estimator {
 			//this->pc->points = v_rgbp;
 			//this->pc_aux->points = v_rgbp_aux;
 
+
 			return 1;
 		} else {
 			return 0;
@@ -399,12 +422,25 @@ namespace real_rt_estimator {
 
 	void Model::estimateRT() {
 
+
+		for(int i=0; i<10; i++) {
+			std::cout <<  i << std::endl;
+			std::cout <<  "matchNUM " << this->myMatches[i].matchNum << std::endl;
+			std::cout <<  "matchDistance " << this->myMatches[i].matchDistance << std::endl;
+			std::cout <<  "matchAprox " << this->myMatches[i].matchAprox << std::endl;
+		}
+
+
+
+
+
+
 		// TODO: Comprobar número mínimo de puntos!!!!!!!!!
 
 
 		int num_points_for_RT = v_rgbp.size();
 		std::cout << "The points number for RT calculation is: \n" <<  num_points_for_RT << std::endl;
-		
+
 		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
 		Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
 
@@ -417,6 +453,9 @@ namespace real_rt_estimator {
 			points_ref_2(i,1) = v_rgbp_aux[i].y;
 			points_ref_2(i,2) = v_rgbp_aux[i].z;
 			points_ref_2(i,3) = 1;
+			//std::cout << "v_rgbp_aux[i]" << std::endl;
+			//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+			//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
 		}
 
 
@@ -486,10 +525,47 @@ namespace real_rt_estimator {
 				this->pc_converted[i].x = points_ref_1_aux(0);
 				this->pc_converted[i].y = points_ref_1_aux(1);
 				this->pc_converted[i].z = points_ref_1_aux(2);
-				this->pc_converted[i].r = this->pc[i].r;
-				this->pc_converted[i].g = this->pc[i].g;
-				this->pc_converted[i].b = this->pc[i].b;
+				//this->pc_converted[i].r = this->pc[i].r;
+				//this->pc_converted[i].g = this->pc[i].g;
+				//this->pc_converted[i].b = this->pc[i].b;
+				if (this->iterationCloud == 0) {
+					this->pc_converted[i].r = 255;
+					this->pc_converted[i].g = 0;
+					this->pc_converted[i].b = 0;
+				}
+				if (this->iterationCloud == 1) {
+					this->pc_converted[i].r = 0;
+					this->pc_converted[i].g = 255;
+					this->pc_converted[i].b = 0;
+				}
+				if (this->iterationCloud == 2) {
+					this->pc_converted[i].r = 0;
+					this->pc_converted[i].g = 0;
+					this->pc_converted[i].b = 255;
+				}
+				if (this->iterationCloud == 3) {
+					this->pc_converted[i].r = 255;
+					this->pc_converted[i].g = 255;
+					this->pc_converted[i].b = 0;
+				}
+				if (this->iterationCloud == 4) {
+					this->pc_converted[i].r = 0;
+					this->pc_converted[i].g = 255;
+					this->pc_converted[i].b = 255;
+				}
+				if (this->iterationCloud == 5) {
+					this->pc_converted[i].r = 255;
+					this->pc_converted[i].g = 0;
+					this->pc_converted[i].b = 255;
+				}
+				if (this->iterationCloud == 6) {
+					this->pc_converted[i].r = 255;
+					this->pc_converted[i].g = 255;
+					this->pc_converted[i].b = 255;
+				}
+
 			}
+			this->iterationCloud++;
 		//}
 
 		/*

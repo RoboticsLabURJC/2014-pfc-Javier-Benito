@@ -160,6 +160,7 @@ namespace real_rt_estimator {
 		std::vector<jderobot::RGBPoint> pc, pc_converted;
 
     bool first;
+    int iterationCloud;
 
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc;
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc_converted;
@@ -174,7 +175,7 @@ namespace real_rt_estimator {
 
 
 
-		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);;
+		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);
 
 
     };//class
