@@ -48,44 +48,49 @@ namespace real_rt_estimator {
 
 	Model::~Model() {}
 
+	// Get Methods
 	std::vector<jderobot::RGBPoint> Model::get_pc() {
 		return this->pc;
 	}
-
 	std::vector<jderobot::RGBPoint> Model::get_pc_converted() {
 		return this->pc_converted;
 	}
-
 	cv::Mat Model::getImageCameraRGB() {
 		pthread_mutex_lock(&this->controlImgRGB);
-		cv::Mat result = this->imageRGB.clone();
+		cv::Mat result;
+		this->imageRGB.copyTo(result);
 		pthread_mutex_unlock(&this->controlImgRGB);
 		return result;
 	}
 	cv::Mat Model::getImageCameraRGBAux(){
-		//pthread_mutex_lock(&this->controlImgRGB);
-		cv::Mat result = this->imageRGB_aux.clone();
-		//pthread_mutex_unlock(&this->controlImgRGB);
+		pthread_mutex_lock(&this->controlImgRGB);
+		cv::Mat result;
+		this->imageRGB_aux.copyTo(result);
+		pthread_mutex_unlock(&this->controlImgRGB);
 		return result;
 	}
 	cv::Mat Model::getImageCameraDEPTH() {
 		pthread_mutex_lock(&this->controlImgRGB);
-		cv::Mat result = this->imageDEPTH.clone();
+		cv::Mat result;
+		this->imageDEPTH.copyTo(result);
 		pthread_mutex_unlock(&this->controlImgRGB);
 		return result;
 	}
 	cv::Mat Model::getImageCameraDEPTHAux() {
-		//pthread_mutex_lock(&this->controlImgDEPTH);
-		cv::Mat result = this->imageDEPTH_aux.clone();
-		//pthread_mutex_unlock(&this->controlImgDEPTH);
+		pthread_mutex_lock(&this->controlImgRGB);
+		cv::Mat result;
+		this->imageDEPTH_aux.copyTo(result);
+		pthread_mutex_unlock(&this->controlImgRGB);
 		return result;
 	}
 	cv::Mat Model::getImageCameraMatches() {
 		pthread_mutex_lock(&this->controlMatches);
-		cv::Mat result = this->imageMatches.clone();
+		cv::Mat result;
+		this->imageMatches.copyTo(result);
 		pthread_mutex_unlock(&this->controlMatches);
 		return result;
 	}
+
 
 	void Model::createImageRGB(cv::Mat data) {
 		this->dataRGB = data;
@@ -133,7 +138,7 @@ namespace real_rt_estimator {
 			this->updateImageRGBAux(this->dataRGB);
 			this->isChangeImageAux = false;
 		}
-		imageRGB = data.clone();
+		data.copyTo(imageRGB);
 		//memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
 
 		this->dataRGB = data;
@@ -142,7 +147,7 @@ namespace real_rt_estimator {
 
 	void Model::updateImageRGBAux(cv::Mat data){
 		//pthread_mutex_lock(&this->controlImgRGB);
-		imageRGB_aux = data.clone();
+		data.copyTo(imageRGB_aux);
 		//memcpy((unsigned char *) imageRGB_aux.data ,&(data.data), imageRGB_aux.cols*imageRGB_aux.rows * 3);
 		//pthread_mutex_unlock(&this->controlImgRGB);
 	}
@@ -150,7 +155,7 @@ namespace real_rt_estimator {
 	void Model::updateImageDEPTH(cv::Mat data){
 		pthread_mutex_lock(&this->controlImgRGB);
 		this->updateImageDEPTHAux(this->dataDEPTH);
-		imageDEPTH = data.clone();
+		data.copyTo(imageDEPTH);
 		//memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
 		this->dataDEPTH = data;
 		pthread_mutex_unlock(&this->controlImgRGB);
@@ -158,7 +163,7 @@ namespace real_rt_estimator {
 
 	void Model::updateImageDEPTHAux(cv::Mat data){
 		//pthread_mutex_lock(&this->controlImgDEPTH);
-		imageDEPTH_aux = data.clone();
+		data.copyTo(imageDEPTH_aux);
 		//memcpy((unsigned char *) imageDEPTH_aux.data ,&(data.data), imageDEPTH_aux.cols*imageDEPTH_aux.rows * 3);
 		//pthread_mutex_unlock(&this->controlImgDEPTH);
 	}
@@ -205,7 +210,7 @@ namespace real_rt_estimator {
 		//HPoint2D auxPoint2DCam1;
 		//HPoint3D auxPoint3DCam1;
 		float d = (float)realDepthDist;
-		std::cout <<  d << std::endl;
+		//std::cout <<  d << std::endl;
 		float xp,yp,zp,camx,camy,camz;
 		mypro->mybackproject(x, y, &xp, &yp, &zp, &camx, &camy, &camz,0);
 		//vector unitario
@@ -244,7 +249,7 @@ namespace real_rt_estimator {
 		p.z=t*uz+camz;
 
 		//std::cout <<  "coloeres dimensiones! " << p.r << ", " << p.g << ", " << p.b << std::endl;
-		std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+		//std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
 
 		//for(int i=0; i<(3*width*width); i++) {
 		//	int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[i+1]<<8)|(imgDepth->data[i+2]));
@@ -263,10 +268,10 @@ namespace real_rt_estimator {
 
 		// GetTems
 		pthread_mutex_lock(&this->controlImgRGB);
-			this->temp_imageRGB = this->imageRGB.clone();
-			this->temp_imageRGB_aux = this->imageRGB_aux.clone();
-			this->temp_imageDEPTH = this->imageDEPTH.clone();
-			this->temp_imageDEPTH_aux = this->imageDEPTH_aux.clone();
+			this->imageRGB.copyTo(this->temp_imageRGB);
+			this->imageRGB_aux.copyTo(this->temp_imageRGB_aux);
+			this->imageDEPTH.copyTo(this->temp_imageDEPTH);
+			this->imageDEPTH_aux.copyTo(this->temp_imageDEPTH_aux);
 		pthread_mutex_unlock(&this->controlImgRGB);
 
 		//Función doSIFT
@@ -381,6 +386,7 @@ namespace real_rt_estimator {
 			std::vector<cv::DMatch> matches_aux;
 			matches_aux.resize(0);
 
+			int count = 0;
 			for (int i=0; i<numBestPoints; i++) {
 
 				int bests_m = this->myMatches[i].matchNum;
@@ -389,11 +395,18 @@ namespace real_rt_estimator {
 				x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x+0.5f);
 				y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y+0.5f);
 
+				//std::cout <<  x_1 << y_1 << x_2 << y_2 << std::endl;
+				//std::cout <<  "Entramos funcion" << std::endl;
+				jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH);
+				jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux);
+				if (p1.x != 0 && p2.y != 0) {
+					this->v_rgbp.push_back(p1);
+					this->v_rgbp_aux.push_back(p2);
+				}
 
-				std::cout <<  "Entramos funcion" << std::endl;
-				this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
-				std::cout <<  "Entramos funcion2" << std::endl;
-				this->v_rgbp_aux.push_back(getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux));
+				//this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
+				//std::cout <<  "Entramos funcion2" << std::endl;
+				//this->v_rgbp_aux.push_back(getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux));
 
 
 				////////////////////////////////////////////////////////
@@ -401,7 +414,6 @@ namespace real_rt_estimator {
 				//std::vector<cv::KeyPoint> keypoints1_aux, keypoints2_aux;
 				//keypoints1_aux.resize(0);
 				//keypoints2_aux.resize(0);
-
 				matches_aux.push_back(matches[bests_m]);
 			}
 			cv::Mat imgMatches;
@@ -423,12 +435,7 @@ namespace real_rt_estimator {
 	void Model::estimateRT() {
 
 
-		for(int i=0; i<10; i++) {
-			std::cout <<  i << std::endl;
-			std::cout <<  "matchNUM " << this->myMatches[i].matchNum << std::endl;
-			std::cout <<  "matchDistance " << this->myMatches[i].matchDistance << std::endl;
-			std::cout <<  "matchAprox " << this->myMatches[i].matchAprox << std::endl;
-		}
+
 
 
 
@@ -453,9 +460,9 @@ namespace real_rt_estimator {
 			points_ref_2(i,1) = v_rgbp_aux[i].y;
 			points_ref_2(i,2) = v_rgbp_aux[i].z;
 			points_ref_2(i,3) = 1;
-			//std::cout << "v_rgbp_aux[i]" << std::endl;
-			//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
-			//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+			std::cout << "v_rgbp_aux[i]" << std::endl;
+			std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+			std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
 		}
 
 
