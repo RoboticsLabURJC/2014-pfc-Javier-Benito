@@ -446,7 +446,7 @@ namespace real_rt_estimator {
 
 
 		int num_points_for_RT = v_rgbp.size();
-		std::cout << "The points number for RT calculation is: \n" <<  num_points_for_RT << std::endl;
+		std::cout << "The points number for RT calculation is: \n" <<  (num_points_for_RT-1) << std::endl;
 
 		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
 		Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
