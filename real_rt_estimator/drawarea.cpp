@@ -369,12 +369,12 @@ namespace real_rt_estimator {
 		for(i=0;i<num_camera_lines;i++) {
 			glLineWidth(5); ///////////////////////////////////////////////////////////
 			glBegin(GL_LINES);
-				glVertex3f(camera_lines[i][0]/scale, camera_lines[i][1]/scale, camera_lines[i][2]/scale);
-				glVertex3f(camera_lines[i][4]/scale, camera_lines[i][5]/scale, camera_lines[i][6]/scale);
+				glVertex3f(camera_lines[i][0], camera_lines[i][1], camera_lines[i][2]);
+				glVertex3f(camera_lines[i][4], camera_lines[i][5], camera_lines[i][6]);
 			glEnd();
 			glPointSize(10); ///////////////////////////////////////////////////////////
 			glBegin(GL_POINTS);
-				glVertex3f(camera_lines[i][0]/scale, camera_lines[i][1]/scale, camera_lines[i][2]/scale);
+				glVertex3f(camera_lines[i][0], camera_lines[i][1], camera_lines[i][2]);
 			glEnd();
 		}
 		glColor3f( 0, 0, 0 );
@@ -454,7 +454,7 @@ namespace real_rt_estimator {
 	}
 
 	int DrawArea::load_line(FILE *myfile) {
-		const int limit = 256;	
+		const int limit = 256;
 		char word1[limit],words[10][limit];
 		int i=0;
 		char buffer_file[limit];
@@ -464,17 +464,17 @@ namespace real_rt_estimator {
 		if (feof(myfile))
 			return EOF;
 		if (buffer_file[0]==(char)255)
-			return EOF; 
+			return EOF;
 		if (buffer_file[0]=='#'){
 			while(fgetc(myfile)!='\n');
 				return 0;
 		}
 		if (buffer_file[0]==' '){
-			while(buffer_file[0]==' ') 
+			while(buffer_file[0]==' ')
 				buffer_file[0]=fgetc(myfile);
 		}
 		if (buffer_file[0]=='\t'){
-			while(buffer_file[0]=='\t') 
+			while(buffer_file[0]=='\t')
 				buffer_file[0]=fgetc(myfile);
 		}
 
@@ -490,8 +490,8 @@ namespace real_rt_estimator {
 		}
 		buffer_file[++i]='\0';
 
-		if (sscanf(buffer_file,"%s",word1)!=1) 
-			return 0; 
+		if (sscanf(buffer_file,"%s",word1)!=1)
+			return 0;
 		/* return EOF; empty line*/
 		else {
 			number=sscanf(buffer_file,"%s %s %s %s %s %s %s %s %s %s %s",word1,words[0],words[1],words[2],words[3],words[4],words[5],words[6],words[7],words[8],words[9]);
@@ -696,4 +696,3 @@ namespace real_rt_estimator {
 	}
 
 } // namespace
-

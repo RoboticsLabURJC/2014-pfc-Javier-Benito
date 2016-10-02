@@ -105,6 +105,44 @@ namespace real_rt_estimator {
     }
 
 	void Gui::putPointCloud() {
+
+      // Dibujamos la cámara
+      this->world->clear_camera_lines();
+      std::vector<jderobot::RGBPoint> line = this->sm->get_camera_line();
+      for (int i = 1; i < (int)line.size(); i++){
+        this->world->add_camera_line(
+                        line[0].x,
+                        line[0].y,
+                        line[0].z,
+                        line[i].x,
+                        line[i].y,
+                        line[i].z);
+      }
+      this->world->add_camera_line(
+                      line[1].x,
+                      line[1].y,
+                      line[1].z,
+                      line[0].x,
+                      line[0].y,
+                      line[0].z);
+      for (int i = 3; i < (int)line.size(); i++){
+        this->world->add_camera_line(
+                        line[i-1].x,
+                        line[i-1].y,
+                        line[i-1].z,
+                        line[i].x,
+                        line[i].y,
+                        line[i].z);
+      }
+      this->world->add_camera_line(
+                      line[line.size()-1].x,
+                      line[line.size()-1].y,
+                      line[line.size()-1].z,
+                      line[2].x,
+                      line[2].y,
+                      line[2].z);
+
+
 		//this->world->clear_points();
 		//if (this->model->isFinal()) {
 			std::vector<jderobot::RGBPoint> p = this->sm->get_pc_converted();

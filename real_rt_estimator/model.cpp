@@ -44,6 +44,36 @@ namespace real_rt_estimator {
 							0, 0, 1, 0,
 							0, 0, 0, 1;
 		std::cout << this->RT_final;
+
+
+		// Set camera TODO: COger de la configuración de progeo
+		this->pc_camera.resize(0);
+		jderobot::RGBPoint p;
+		p.x=0;
+		p.y=0;
+		p.z=0;
+		this->pc_camera.push_back(p);
+		p.x=0;
+		p.y=13;
+		p.z=0;
+		this->pc_camera.push_back(p);
+		p.x=-3;
+		p.y=7;
+		p.z=-3;
+		this->pc_camera.push_back(p);
+		p.x=-3;
+		p.y=7;
+		p.z=3;
+		this->pc_camera.push_back(p);
+		p.x=3;
+		p.y=7;
+		p.z=3;
+		this->pc_camera.push_back(p);
+		p.x=3;
+		p.y=7;
+		p.z=-3;
+		this->pc_camera.push_back(p);
+
 	}
 
 	Model::~Model() {}
@@ -55,6 +85,11 @@ namespace real_rt_estimator {
 	std::vector<jderobot::RGBPoint> Model::get_pc_converted() {
 		return this->pc_converted;
 	}
+
+	std::vector<jderobot::RGBPoint> Model::get_camera_line() {
+		return this->pc_camera;
+	}
+
 	cv::Mat Model::getImageCameraRGB() {
 		pthread_mutex_lock(&this->controlImgRGB);
 		cv::Mat result;

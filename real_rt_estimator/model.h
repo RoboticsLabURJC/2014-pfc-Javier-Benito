@@ -68,6 +68,7 @@ namespace real_rt_estimator {
 
 		std::vector<jderobot::RGBPoint> get_pc();
 		std::vector<jderobot::RGBPoint> get_pc_converted();
+    std::vector<jderobot::RGBPoint> get_camera_line();
 
 	    cv::Mat getImageCameraRGB();
 		cv::Mat getImageCameraRGBAux();
@@ -157,7 +158,7 @@ namespace real_rt_estimator {
 		//std::vector<cv::KeyPoint> vkp2;
 
 		std::vector<jderobot::RGBPoint> v_rgbp, v_rgbp_aux;
-		std::vector<jderobot::RGBPoint> pc, pc_converted;
+		std::vector<jderobot::RGBPoint> pc, pc_converted, pc_camera;
 
     bool first;
     int iterationCloud;
