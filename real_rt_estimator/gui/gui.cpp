@@ -24,8 +24,16 @@ namespace real_rt_estimator {
 
     //Button
     refXml->get_widget("button_estimate_rt", w_button_estimate_rt);
+    refXml->get_widget("button1", w_button1);
+    refXml->get_widget("button2", w_button2);
+    refXml->get_widget("button3", w_button3);
+    refXml->get_widget("button4", w_button4);
 
     w_button_estimate_rt->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
+    w_button1->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT1));
+    w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
+    w_button3->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT3));
+    w_button4->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT4));
 
 		//opengl world
 		refXml->get_widget_derived("drawingarea1",world);
@@ -97,6 +105,22 @@ namespace real_rt_estimator {
       //}
     }
 
+    void Gui::moveRT1() {
+      this->sm->moveLeftRT();
+      this->putPointCloud();
+    }
+    void Gui::moveRT2() {
+      this->sm->moveUpRT();
+      this->putPointCloud();
+    }
+    void Gui::moveRT3() {
+      this->sm->moveDownRT();
+      this->putPointCloud();
+    }
+    void Gui::moveRT4() {
+      this->sm->moveRightRT();
+      this->putPointCloud();
+    }
 
     void Gui::display() {
         ShowImage();
@@ -108,7 +132,7 @@ namespace real_rt_estimator {
 
       // Dibujamos la cámara
       this->world->clear_camera_lines();
-      std::vector<jderobot::RGBPoint> line = this->sm->get_camera_line();
+      std::vector<jderobot::RGBPoint> line = this->sm->get_pc_camera_converted();
       for (int i = 1; i < (int)line.size(); i++){
         this->world->add_camera_line(
                         line[0].x,

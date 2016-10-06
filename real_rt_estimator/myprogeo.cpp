@@ -18,7 +18,7 @@
 			Francisco Miguel Rivas Montero <franciscomiguel.rivas@urjc.es>
 
  */
- 
+
 #include "myprogeo.h"
 
 
@@ -52,13 +52,13 @@ void myprogeo::load_cam(char *fich_in,int cam, int w, int h)
 		this->cameras[cam].roll=0;
 		update_camera_matrix(&cameras[cam]);
 
-		
+
 	}
 	else{
 		xmlReader(&(this->cameras[cam]), fich_in);
 		update_camera_matrix(&cameras[cam]);
 	}
-  
+
   display_camerainfo(cameras[cam]);
 }
 
@@ -67,8 +67,8 @@ void
 myprogeo::mybackproject(float x, float y, float* xp, float* yp, float* zp, float* camx, float* camy, float* camz, int cam){
 	HPoint2D p;
 	HPoint3D pro;
-	
-	p.x=GRAPHIC_TO_OPTICAL_X(x,y); 
+
+	p.x=GRAPHIC_TO_OPTICAL_X(x,y);
 	p.y=GRAPHIC_TO_OPTICAL_Y(x,y);
 
 	p.h=1;
@@ -84,7 +84,7 @@ myprogeo::mybackproject(float x, float y, float* xp, float* yp, float* zp, float
 	*camz=cameras[cam].position.Z;
 }
 
-void 
+void
 myprogeo::myproject(float x, float y, float z, float* xp, float* yp, int cam){
 	HPoint2D p;
 	HPoint3D p3;
@@ -93,7 +93,7 @@ myprogeo::myproject(float x, float y, float z, float* xp, float* yp, int cam){
 	p3.Y=y;
 	p3.Z=z;
 	p3.H=1;
-	
+
 	project(p3, &p, cameras[cam]);
 	*xp=p.x;
 	*yp=p.y;
@@ -106,20 +106,20 @@ myprogeo::mygetcameraposition(float *x, float *y, float *z, int cam){
 	*z=cameras[cam].position.Z;
 }
 
-void 
+void
 myprogeo::mygetcamerafoa(float *x, float *y, float *z, int cam){
 	*x=cameras[cam].foa.X;
 	*y=cameras[cam].foa.Y;
 	*z=cameras[cam].foa.Z;
 }
 
-void 
+void
 myprogeo::mygetcamerasize(float *w, float *h, int cam){
 	*w = cameras[cam].columns;
 	*h = cameras[cam].rows;
 }
 
-TPinHoleCamera 
+TPinHoleCamera
 myprogeo::getCamera(int camera){
 	return cameras[camera];
 }

@@ -6,27 +6,57 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Real RT Estimator</property>
     <child>
-      <widget class="GtkHBox" id="hbox1">
+      <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <widget class="GtkVBox" id="vbox1">
+          <widget class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <widget class="GtkHBox" id="hbox2">
+              <widget class="GtkVBox" id="vbox1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <widget class="GtkEventBox" id="eventbox2">
+                  <widget class="GtkHBox" id="hbox2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <widget class="GtkImage" id="image1">
+                      <widget class="GtkEventBox" id="eventbox2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="stock">gtk-missing-image</property>
+                        <child>
+                          <widget class="GtkImage" id="image1">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="ypad">5</property>
+                            <property name="stock">gtk-missing-image</property>
+                          </widget>
+                        </child>
                       </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkEventBox" id="eventbox3">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <widget class="GtkImage" id="image2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="stock">gtk-missing-image</property>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
                   </widget>
                   <packing>
@@ -36,11 +66,11 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEventBox" id="eventbox3">
+                  <widget class="GtkEventBox" id="eventbox4">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <widget class="GtkImage" id="image2">
+                      <widget class="GtkImage" id="image3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="stock">gtk-missing-image</property>
@@ -61,15 +91,35 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEventBox" id="eventbox4">
+              <widget class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <widget class="GtkImage" id="image3">
+                  <widget class="GtkButton" id="button_estimate_rt">
+                    <property name="label" translatable="yes">Estimate RT</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_action_appearance">False</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkDrawingArea" id="drawingarea1">
+                    <property name="width_request">680</property>
+                    <property name="height_request">480</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="stock">gtk-missing-image</property>
                   </widget>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </widget>
               <packing>
@@ -86,12 +136,25 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkVBox" id="vbox2">
+          <widget class="GtkLabel" id="label1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">TESTS
+</property>
+          </widget>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkHBox" id="hbox3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <widget class="GtkButton" id="button_estimate_rt">
-                <property name="label" translatable="yes">Estimate RT</property>
+              <widget class="GtkButton" id="button1">
+                <property name="label" translatable="yes">left</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -104,11 +167,12 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkDrawingArea" id="drawingarea1">
-                <property name="width_request">680</property>
-                <property name="height_request">480</property>
+              <widget class="GtkButton" id="button2">
+                <property name="label" translatable="yes">down</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
               </widget>
               <packing>
                 <property name="expand">True</property>
@@ -116,11 +180,39 @@
                 <property name="position">1</property>
               </packing>
             </child>
+            <child>
+              <widget class="GtkButton" id="button3">
+                <property name="label" translatable="yes">up</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+              </widget>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="button4">
+                <property name="label" translatable="yes">right</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+              </widget>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </widget>

@@ -48,31 +48,30 @@ namespace real_rt_estimator {
 
 		// Set camera TODO: COger de la configuración de progeo
 		this->pc_camera.resize(0);
-		jderobot::RGBPoint p;
-		p.x=0;
-		p.y=0;
-		p.z=0;
-		this->pc_camera.push_back(p);
-		p.x=0;
-		p.y=13;
-		p.z=0;
-		this->pc_camera.push_back(p);
-		p.x=-3;
-		p.y=7;
-		p.z=-3;
-		this->pc_camera.push_back(p);
-		p.x=-3;
-		p.y=7;
-		p.z=3;
-		this->pc_camera.push_back(p);
-		p.x=3;
-		p.y=7;
-		p.z=3;
-		this->pc_camera.push_back(p);
-		p.x=3;
-		p.y=7;
-		p.z=-3;
-		this->pc_camera.push_back(p);
+		this->p_aux.x=0;
+		this->p_aux.y=0;
+		this->p_aux.z=0;
+		this->pc_camera.push_back(this->p_aux);
+		this->p_aux.x=0;
+		this->p_aux.y=13;
+		this->p_aux.z=0;
+		this->pc_camera.push_back(this->p_aux);
+		this->p_aux.x=-3;
+		this->p_aux.y=7;
+		this->p_aux.z=-3;
+		this->pc_camera.push_back(this->p_aux);
+		this->p_aux.x=-3;
+		this->p_aux.y=7;
+		this->p_aux.z=3;
+		this->pc_camera.push_back(this->p_aux);
+		this->p_aux.x=3;
+		this->p_aux.y=7;
+		this->p_aux.z=3;
+		this->pc_camera.push_back(this->p_aux);
+		this->p_aux.x=3;
+		this->p_aux.y=7;
+		this->p_aux.z=-3;
+		this->pc_camera.push_back(this->p_aux);
 
 	}
 
@@ -83,11 +82,17 @@ namespace real_rt_estimator {
 		return this->pc;
 	}
 	std::vector<jderobot::RGBPoint> Model::get_pc_converted() {
+		//pthread_mutex_lock(&this->controlPcConverted);
 		return this->pc_converted;
+		//pthread_mutex_unlock(&this->controlPcConverted);
 	}
 
-	std::vector<jderobot::RGBPoint> Model::get_camera_line() {
+	std::vector<jderobot::RGBPoint> Model::get_pc_camera() {
 		return this->pc_camera;
+	}
+
+	std::vector<jderobot::RGBPoint> Model::get_pc_camera_converted() {
+		return this->pc_camera_converted;
 	}
 
 	cv::Mat Model::getImageCameraRGB() {
@@ -259,6 +264,8 @@ namespace real_rt_estimator {
 
 		modulo = sqrt(1/(((camx-xp)*(camx-xp))+((camy-yp)*(camy-yp))+((camz-zp)*(camz-zp))));
 						mypro->mygetcamerafoa(&c1x, &c1y, &c1z, 0);
+
+		//std::cout <<  "MODULO " << modulo << std::endl;
 
 		fmod = sqrt(1/(((camx-c1x)*(camx-c1x))+((camy-c1y)*(camy-c1y))+((camz-c1z)*(camz-c1z))));
 		fx = (c1x - camx)*fmod;
@@ -434,6 +441,9 @@ namespace real_rt_estimator {
 				//std::cout <<  "Entramos funcion" << std::endl;
 				jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH);
 				jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux);
+				//std::cout <<  "Puntos calculados" <<  p1.z << std::endl;
+				//std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
+				//std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
 				if (p1.x != 0 && p2.y != 0) {
 					this->v_rgbp.push_back(p1);
 					this->v_rgbp_aux.push_back(p2);
@@ -468,7 +478,7 @@ namespace real_rt_estimator {
 	}
 
 	void Model::estimateRT() {
-
+		//pthread_mutex_lock(&this->controlPcConverted);
 
 
 
@@ -552,12 +562,12 @@ namespace real_rt_estimator {
 			Eigen::Vector4f points_ref_1_aux;
 			Eigen::Vector4f points_ref_2_aux;
 
-			this->pc_converted.resize(sift_points);
+			this->pc_converted.resize(num_points_for_RT);
 
-			for(int i=0; i<sift_points; i++){
-				points_ref_2_aux(0) = this->pc[i].x;
-				points_ref_2_aux(1) = this->pc[i].y;
-				points_ref_2_aux(2) = this->pc[i].z;
+			for(int i=0; i<num_points_for_RT; i++){
+				points_ref_2_aux(0) = this->v_rgbp[i].x;
+				points_ref_2_aux(1) = this->v_rgbp[i].y;
+				points_ref_2_aux(2) = this->v_rgbp[i].z;
 				points_ref_2_aux(3) = 1;
 
 				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
@@ -608,6 +618,21 @@ namespace real_rt_estimator {
 
 			}
 			this->iterationCloud++;
+
+			// Camera camera converted
+			this->pc_camera_converted.resize(pc_camera.size());
+			for(int i=0; i<pc_camera.size(); i++) {
+				points_ref_2_aux(0) = this->pc_camera[i].x;
+				points_ref_2_aux(1) = this->pc_camera[i].y;
+				points_ref_2_aux(2) = this->pc_camera[i].z;
+				points_ref_2_aux(3) = 1;
+
+				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+
+				this->pc_camera_converted[i].x = points_ref_1_aux(0);
+				this->pc_camera_converted[i].y = points_ref_1_aux(1);
+				this->pc_camera_converted[i].z = points_ref_1_aux(2);
+			}
 		//}
 
 		/*
@@ -624,10 +649,142 @@ namespace real_rt_estimator {
 		}*/
 
 		//this->is_final = true;
+		//pthread_mutex_unlock(&this->controlPcConverted);
 	}
 
+	void Model::moveLeftRT() {
 
 
+			Eigen::Matrix4f RT_estimate;
+			RT_estimate << 1, 0, 0, 10,
+								0, 1, 0, 0,
+								0, 0, 1, 10,
+								0, 0, 0, 1;
 
+			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+
+			this->RT_final = this->RT_final*RT_estimate;
+
+			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+
+			Eigen::Vector4f points_ref_1_aux;
+			Eigen::Vector4f points_ref_2_aux;
+
+			// Camera camera converted
+			this->pc_camera_converted.resize(pc_camera.size());
+			for(int i=0; i<pc_camera.size(); i++) {
+				points_ref_2_aux(0) = this->pc_camera[i].x;
+				points_ref_2_aux(1) = this->pc_camera[i].y;
+				points_ref_2_aux(2) = this->pc_camera[i].z;
+				points_ref_2_aux(3) = 1;
+
+				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+
+				this->pc_camera_converted[i].x = points_ref_1_aux(0);
+				this->pc_camera_converted[i].y = points_ref_1_aux(1);
+				this->pc_camera_converted[i].z = points_ref_1_aux(2);
+			}
+	}
+
+	void Model::moveUpRT() {
+
+
+			Eigen::Matrix4f RT_estimate;
+			RT_estimate << 1, 0, 0, 10,
+								0, 1, 0, 0,
+								0, 0, 1, -10,
+								0, 0, 0, 1;
+
+			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+
+			this->RT_final = this->RT_final*RT_estimate;
+
+			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+
+			Eigen::Vector4f points_ref_1_aux;
+			Eigen::Vector4f points_ref_2_aux;
+
+			// Camera camera converted
+			this->pc_camera_converted.resize(pc_camera.size());
+			for(int i=0; i<pc_camera.size(); i++) {
+				points_ref_2_aux(0) = this->pc_camera[i].x;
+				points_ref_2_aux(1) = this->pc_camera[i].y;
+				points_ref_2_aux(2) = this->pc_camera[i].z;
+				points_ref_2_aux(3) = 1;
+
+				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+
+				this->pc_camera_converted[i].x = points_ref_1_aux(0);
+				this->pc_camera_converted[i].y = points_ref_1_aux(1);
+				this->pc_camera_converted[i].z = points_ref_1_aux(2);
+			}
+	}
+
+	void Model::moveDownRT() {
+
+
+			Eigen::Matrix4f RT_estimate;
+			RT_estimate << 1, 0, 0, -10,
+								0, 1, 0, 0,
+								0, 0, 1, 10,
+								0, 0, 0, 1;
+
+			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+
+			this->RT_final = this->RT_final*RT_estimate;
+
+			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+
+			Eigen::Vector4f points_ref_1_aux;
+			Eigen::Vector4f points_ref_2_aux;
+
+			// Camera camera converted
+			this->pc_camera_converted.resize(pc_camera.size());
+			for(int i=0; i<pc_camera.size(); i++) {
+				points_ref_2_aux(0) = this->pc_camera[i].x;
+				points_ref_2_aux(1) = this->pc_camera[i].y;
+				points_ref_2_aux(2) = this->pc_camera[i].z;
+				points_ref_2_aux(3) = 1;
+
+				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+
+				this->pc_camera_converted[i].x = points_ref_1_aux(0);
+				this->pc_camera_converted[i].y = points_ref_1_aux(1);
+				this->pc_camera_converted[i].z = points_ref_1_aux(2);
+			}
+	}
+	void Model::moveRightRT() {
+
+
+			Eigen::Matrix4f RT_estimate;
+			RT_estimate << 1, 0, 0, -10,
+								0, 1, 0, 0,
+								0, 0, 1, -10,
+								0, 0, 0, 1;
+
+			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+
+			this->RT_final = this->RT_final*RT_estimate;
+
+			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+
+			Eigen::Vector4f points_ref_1_aux;
+			Eigen::Vector4f points_ref_2_aux;
+
+			// Camera camera converted
+			this->pc_camera_converted.resize(pc_camera.size());
+			for(int i=0; i<pc_camera.size(); i++) {
+				points_ref_2_aux(0) = this->pc_camera[i].x;
+				points_ref_2_aux(1) = this->pc_camera[i].y;
+				points_ref_2_aux(2) = this->pc_camera[i].z;
+				points_ref_2_aux(3) = 1;
+
+				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+
+				this->pc_camera_converted[i].x = points_ref_1_aux(0);
+				this->pc_camera_converted[i].y = points_ref_1_aux(1);
+				this->pc_camera_converted[i].z = points_ref_1_aux(2);
+			}
+	}
 
 }

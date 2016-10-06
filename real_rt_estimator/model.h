@@ -65,10 +65,12 @@ namespace real_rt_estimator {
 	    pthread_mutex_t controlImgRGB;
 		pthread_mutex_t controlImgDEPTH;
 		pthread_mutex_t controlMatches;
+    pthread_mutex_t controlPcConverted;
 
 		std::vector<jderobot::RGBPoint> get_pc();
 		std::vector<jderobot::RGBPoint> get_pc_converted();
-    std::vector<jderobot::RGBPoint> get_camera_line();
+    std::vector<jderobot::RGBPoint> get_pc_camera();
+    std::vector<jderobot::RGBPoint> get_pc_camera_converted();
 
 	    cv::Mat getImageCameraRGB();
 		cv::Mat getImageCameraRGBAux();
@@ -92,6 +94,11 @@ namespace real_rt_estimator {
 
 		int doSiftAndGetPoints();
 		void estimateRT();
+
+    void moveLeftRT();
+    void moveUpRT();
+    void moveDownRT();
+    void moveRightRT();
 /*
 // 	    jderobot::EncodersDataPtr encodersData;
 // 	    jderobot::LaserDataPtr laserData;
@@ -152,13 +159,13 @@ namespace real_rt_estimator {
 		TPinHoleCamera TPHcamaraDepth;
 
 		Eigen::Matrix4f RT_final;
-
+    jderobot::RGBPoint p_aux;
 
 		//std::vector<cv::KeyPoint> vkp1;
 		//std::vector<cv::KeyPoint> vkp2;
 
 		std::vector<jderobot::RGBPoint> v_rgbp, v_rgbp_aux;
-		std::vector<jderobot::RGBPoint> pc, pc_converted, pc_camera;
+		std::vector<jderobot::RGBPoint> pc, pc_converted, pc_camera, pc_camera_converted;
 
     bool first;
     int iterationCloud;

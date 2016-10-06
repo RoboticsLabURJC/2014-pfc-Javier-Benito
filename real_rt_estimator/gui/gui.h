@@ -64,6 +64,10 @@ namespace real_rt_estimator {
 
       // Button
       Gtk::Button *w_button_estimate_rt;
+      Gtk::Button *w_button1;
+      Gtk::Button *w_button2;
+      Gtk::Button *w_button3;
+      Gtk::Button *w_button4;
 
   		//DrawArea* world1;
   		DrawArea* world;
@@ -74,6 +78,10 @@ namespace real_rt_estimator {
   		void ShowImage();
 
       void estimateCurrentRT();
+      void moveRT1();
+      void moveRT2();
+      void moveRT3();
+      void moveRT4();
 
   		void putPointCloud();
   		void putCamera();
