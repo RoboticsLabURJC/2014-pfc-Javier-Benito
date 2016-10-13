@@ -551,11 +551,12 @@ namespace real_rt_estimator {
 			//JacobiSVD<MatrixXf> svd(points_ref_1, Eigen::ComputeThinU | Eigen::ComputeThinV);
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
-			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
-
+			// <<<<<<< >>>> Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
+			Eigen::Matrix4f RT_estimate = RT_final;
+			
 			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
 
-			this->RT_final = this->RT_final*RT_estimate;
+			//this->RT_final = this->RT_final*RT_estimate;
 
 			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
 
@@ -620,19 +621,7 @@ namespace real_rt_estimator {
 			this->iterationCloud++;
 
 			// Camera camera converted
-			this->pc_camera_converted.resize(pc_camera.size());
-			for(int i=0; i<pc_camera.size(); i++) {
-				points_ref_2_aux(0) = this->pc_camera[i].x;
-				points_ref_2_aux(1) = this->pc_camera[i].y;
-				points_ref_2_aux(2) = this->pc_camera[i].z;
-				points_ref_2_aux(3) = 1;
-
-				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
-
-				this->pc_camera_converted[i].x = points_ref_1_aux(0);
-				this->pc_camera_converted[i].y = points_ref_1_aux(1);
-				this->pc_camera_converted[i].z = points_ref_1_aux(2);
-			}
+			moveCamera(RT_estimate);
 		//}
 
 		/*
@@ -652,139 +641,65 @@ namespace real_rt_estimator {
 		//pthread_mutex_unlock(&this->controlPcConverted);
 	}
 
-	void Model::moveLeftRT() {
-
-
-			Eigen::Matrix4f RT_estimate;
-			RT_estimate << 1, 0, 0, 10,
-								0, 1, 0, 0,
-								0, 0, 1, 10,
-								0, 0, 0, 1;
-
-			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
-
-			this->RT_final = this->RT_final*RT_estimate;
-
-			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
-
-			Eigen::Vector4f points_ref_1_aux;
-			Eigen::Vector4f points_ref_2_aux;
-
-			// Camera camera converted
-			this->pc_camera_converted.resize(pc_camera.size());
-			for(int i=0; i<pc_camera.size(); i++) {
-				points_ref_2_aux(0) = this->pc_camera[i].x;
-				points_ref_2_aux(1) = this->pc_camera[i].y;
-				points_ref_2_aux(2) = this->pc_camera[i].z;
-				points_ref_2_aux(3) = 1;
-
-				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
-
-				this->pc_camera_converted[i].x = points_ref_1_aux(0);
-				this->pc_camera_converted[i].y = points_ref_1_aux(1);
-				this->pc_camera_converted[i].z = points_ref_1_aux(2);
-			}
+	void Model::RotateXAxis() {
+		Eigen::Matrix4f RT_estimate;
+		RT_estimate << 1, 0, 			 0, 			 0,
+									 0, cos(30), -sin(30), 0,
+									 0, sin(30), cos(30),  0,
+									 0, 0, 			 0, 			 1;
+		moveCamera(RT_estimate);
 	}
 
-	void Model::moveUpRT() {
-
-
-			Eigen::Matrix4f RT_estimate;
-			RT_estimate << 1, 0, 0, 10,
-								0, 1, 0, 0,
-								0, 0, 1, -10,
-								0, 0, 0, 1;
-
-			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
-
-			this->RT_final = this->RT_final*RT_estimate;
-
-			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
-
-			Eigen::Vector4f points_ref_1_aux;
-			Eigen::Vector4f points_ref_2_aux;
-
-			// Camera camera converted
-			this->pc_camera_converted.resize(pc_camera.size());
-			for(int i=0; i<pc_camera.size(); i++) {
-				points_ref_2_aux(0) = this->pc_camera[i].x;
-				points_ref_2_aux(1) = this->pc_camera[i].y;
-				points_ref_2_aux(2) = this->pc_camera[i].z;
-				points_ref_2_aux(3) = 1;
-
-				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
-
-				this->pc_camera_converted[i].x = points_ref_1_aux(0);
-				this->pc_camera_converted[i].y = points_ref_1_aux(1);
-				this->pc_camera_converted[i].z = points_ref_1_aux(2);
-			}
+	void Model::RotateYAxis() {
+		Eigen::Matrix4f RT_estimate;
+		RT_estimate << cos(30),  0, sin(30), 0,
+									 0, 			 1, 0, 			 0,
+									 -sin(30), 0, cos(30), 0,
+									 0, 			 0, 0, 			 1;
+		moveCamera(RT_estimate);
 	}
 
 	void Model::moveDownRT() {
-
-
-			Eigen::Matrix4f RT_estimate;
-			RT_estimate << 1, 0, 0, -10,
-								0, 1, 0, 0,
-								0, 0, 1, 10,
-								0, 0, 0, 1;
-
-			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
-
-			this->RT_final = this->RT_final*RT_estimate;
-
-			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
-
-			Eigen::Vector4f points_ref_1_aux;
-			Eigen::Vector4f points_ref_2_aux;
-
-			// Camera camera converted
-			this->pc_camera_converted.resize(pc_camera.size());
-			for(int i=0; i<pc_camera.size(); i++) {
-				points_ref_2_aux(0) = this->pc_camera[i].x;
-				points_ref_2_aux(1) = this->pc_camera[i].y;
-				points_ref_2_aux(2) = this->pc_camera[i].z;
-				points_ref_2_aux(3) = 1;
-
-				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
-
-				this->pc_camera_converted[i].x = points_ref_1_aux(0);
-				this->pc_camera_converted[i].y = points_ref_1_aux(1);
-				this->pc_camera_converted[i].z = points_ref_1_aux(2);
-			}
-	}
-	void Model::moveRightRT() {
-
-
-			Eigen::Matrix4f RT_estimate;
-			RT_estimate << 1, 0, 0, -10,
-								0, 1, 0, 0,
-								0, 0, 1, -10,
-								0, 0, 0, 1;
-
-			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
-
-			this->RT_final = this->RT_final*RT_estimate;
-
-			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
-
-			Eigen::Vector4f points_ref_1_aux;
-			Eigen::Vector4f points_ref_2_aux;
-
-			// Camera camera converted
-			this->pc_camera_converted.resize(pc_camera.size());
-			for(int i=0; i<pc_camera.size(); i++) {
-				points_ref_2_aux(0) = this->pc_camera[i].x;
-				points_ref_2_aux(1) = this->pc_camera[i].y;
-				points_ref_2_aux(2) = this->pc_camera[i].z;
-				points_ref_2_aux(3) = 1;
-
-				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
-
-				this->pc_camera_converted[i].x = points_ref_1_aux(0);
-				this->pc_camera_converted[i].y = points_ref_1_aux(1);
-				this->pc_camera_converted[i].z = points_ref_1_aux(2);
-			}
+		Eigen::Matrix4f RT_estimate;
+		RT_estimate << 1, 0, 0, -10,
+									 0, 1, 0, 0,
+									 0, 0, 1, -10,
+									 0, 0, 0, 1;
+	  moveCamera(RT_estimate);
 	}
 
+	void Model::moveUpRT() {
+		Eigen::Matrix4f RT_estimate;
+		RT_estimate << 1, 0, 0, 10,
+									 0, 1, 0, 0,
+									 0, 0, 1, 10,
+									 0, 0, 0, 1;
+		moveCamera(RT_estimate);
+	}
+
+	void Model::moveCamera(Eigen::Matrix4f RT_estimate) {
+		std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+
+		this->RT_final = this->RT_final*RT_estimate;
+
+		std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+
+		Eigen::Vector4f points_ref_1_aux;
+		Eigen::Vector4f points_ref_2_aux;
+
+		// Camera camera converted
+		this->pc_camera_converted.resize(pc_camera.size());
+		for(int i=0; i<pc_camera.size(); i++) {
+			points_ref_2_aux(0) = this->pc_camera[i].x;
+			points_ref_2_aux(1) = this->pc_camera[i].y;
+			points_ref_2_aux(2) = this->pc_camera[i].z;
+			points_ref_2_aux(3) = 1;
+
+			points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+
+			this->pc_camera_converted[i].x = points_ref_1_aux(0);
+			this->pc_camera_converted[i].y = points_ref_1_aux(1);
+			this->pc_camera_converted[i].z = points_ref_1_aux(2);
+		}
+	}
 }

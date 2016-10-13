@@ -95,10 +95,12 @@ namespace real_rt_estimator {
 		int doSiftAndGetPoints();
 		void estimateRT();
 
-    void moveLeftRT();
-    void moveUpRT();
+    void RotateXAxis();
+    void RotateYAxis();
     void moveDownRT();
-    void moveRightRT();
+    void moveUpRT();
+
+    void moveCamera();
 /*
 // 	    jderobot::EncodersDataPtr encodersData;
 // 	    jderobot::LaserDataPtr laserData;
@@ -181,9 +183,11 @@ namespace real_rt_estimator {
 		static bool sortByDistance(const myMatch &lhs, const myMatch &rhs);
 
 
+    void moveCamera(Eigen::Matrix4f RT_estimate);
 
 
 		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);
+
 
 
     };//class

@@ -106,11 +106,11 @@ namespace real_rt_estimator {
     }
 
     void Gui::moveRT1() {
-      this->sm->moveLeftRT();
+      this->sm->RotateXAxis();
       this->putPointCloud();
     }
     void Gui::moveRT2() {
-      this->sm->moveUpRT();
+      this->sm->RotateYAxis();
       this->putPointCloud();
     }
     void Gui::moveRT3() {
@@ -118,7 +118,7 @@ namespace real_rt_estimator {
       this->putPointCloud();
     }
     void Gui::moveRT4() {
-      this->sm->moveRightRT();
+      this->sm->moveUpRT();
       this->putPointCloud();
     }
 
