@@ -53,24 +53,24 @@ namespace real_rt_estimator {
 		this->p_aux.z=0;
 		this->pc_camera.push_back(this->p_aux);
 		this->p_aux.x=0;
-		this->p_aux.y=13;
+		this->p_aux.y=1000;
 		this->p_aux.z=0;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=-3;
-		this->p_aux.y=7;
-		this->p_aux.z=-3;
+		this->p_aux.x=-200;
+		this->p_aux.y=500;
+		this->p_aux.z=-200;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=-3;
-		this->p_aux.y=7;
-		this->p_aux.z=3;
+		this->p_aux.x=-200;
+		this->p_aux.y=500;
+		this->p_aux.z=200;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=3;
-		this->p_aux.y=7;
-		this->p_aux.z=3;
+		this->p_aux.x=200;
+		this->p_aux.y=500;
+		this->p_aux.z=200;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=3;
-		this->p_aux.y=7;
-		this->p_aux.z=-3;
+		this->p_aux.x=200;
+		this->p_aux.y=500;
+		this->p_aux.z=-200;
 		this->pc_camera.push_back(this->p_aux);
 
 	}
@@ -352,6 +352,7 @@ namespace real_rt_estimator {
 
 		this->sift_points = matches.size();
 		if (matches.size() != 0) {
+			pthread_mutex_lock(&this->controlPcConverted);
 			/*std::cout <<  "puntos de la kp1 " << keypoints1.size() << std::endl;
 			std::cout <<  "puntos de la kp2 " << keypoints2.size() << std::endl;
 			std::cout <<  "puntos de los maches " << matches.size() << std::endl;*/
@@ -441,10 +442,11 @@ namespace real_rt_estimator {
 				//std::cout <<  "Entramos funcion" << std::endl;
 				jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH);
 				jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux);
-				//std::cout <<  "Puntos calculados" <<  p1.z << std::endl;
-				//std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
-				//std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
-				if (p1.x != 0 && p2.y != 0) {
+				std::cout <<  "Puntos calculados" <<  p1.z << std::endl;
+				std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
+				std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
+				if (p1.x != 0 && p2.x != 0) {
+					std::cout <<  "entra" << std::endl;
 					this->v_rgbp.push_back(p1);
 					this->v_rgbp_aux.push_back(p2);
 				}
@@ -470,7 +472,7 @@ namespace real_rt_estimator {
 			//this->pc->points = v_rgbp;
 			//this->pc_aux->points = v_rgbp_aux;
 
-
+			pthread_mutex_unlock(&this->controlPcConverted);
 			return 1;
 		} else {
 			return 0;
@@ -478,7 +480,7 @@ namespace real_rt_estimator {
 	}
 
 	void Model::estimateRT() {
-		//pthread_mutex_lock(&this->controlPcConverted);
+		pthread_mutex_lock(&this->controlPcConverted);
 
 
 
@@ -551,12 +553,12 @@ namespace real_rt_estimator {
 			//JacobiSVD<MatrixXf> svd(points_ref_1, Eigen::ComputeThinU | Eigen::ComputeThinV);
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
-			// <<<<<<< >>>> Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
-			Eigen::Matrix4f RT_estimate = RT_final;
-			
+			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
+			//Eigen::Matrix4f RT_estimate = RT_final;
+
 			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
 
-			//this->RT_final = this->RT_final*RT_estimate;
+			this->RT_final = this->RT_final*RT_estimate;
 
 			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
 
@@ -581,6 +583,8 @@ namespace real_rt_estimator {
 				//this->pc_converted[i].r = this->pc[i].r;
 				//this->pc_converted[i].g = this->pc[i].g;
 				//this->pc_converted[i].b = this->pc[i].b;
+				std::cout << "ANTES DE CONVERTIR: \n" << this->v_rgbp[i].x << ", " << this->v_rgbp[i].y << ", " << this->v_rgbp[i].z << std::endl;
+				std::cout << "FINAL >>>>>>>: \n" << this->pc_converted[i].x << ", " << this->pc_converted[i].y << ", " << this->pc_converted[i].z << std::endl;
 				if (this->iterationCloud == 0) {
 					this->pc_converted[i].r = 255;
 					this->pc_converted[i].g = 0;
@@ -638,7 +642,7 @@ namespace real_rt_estimator {
 		}*/
 
 		//this->is_final = true;
-		//pthread_mutex_unlock(&this->controlPcConverted);
+		pthread_mutex_unlock(&this->controlPcConverted);
 	}
 
 	void Model::RotateXAxis() {
@@ -678,11 +682,11 @@ namespace real_rt_estimator {
 	}
 
 	void Model::moveCamera(Eigen::Matrix4f RT_estimate) {
-		std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+		//std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
 
-		this->RT_final = this->RT_final*RT_estimate;
+		//this->RT_final = this->RT_final*RT_estimate;
 
-		std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+		//std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
 
 		Eigen::Vector4f points_ref_1_aux;
 		Eigen::Vector4f points_ref_2_aux;

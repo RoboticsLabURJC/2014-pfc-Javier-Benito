@@ -369,12 +369,12 @@ namespace real_rt_estimator {
 		for(i=0;i<num_camera_lines;i++) {
 			glLineWidth(5); ///////////////////////////////////////////////////////////
 			glBegin(GL_LINES);
-				glVertex3f(camera_lines[i][0], camera_lines[i][1], camera_lines[i][2]);
-				glVertex3f(camera_lines[i][4], camera_lines[i][5], camera_lines[i][6]);
+				glVertex3f(camera_lines[i][0]/scale, camera_lines[i][1]/scale, camera_lines[i][2]/scale);
+				glVertex3f(camera_lines[i][4]/scale, camera_lines[i][5]/scale, camera_lines[i][6]/scale);
 			glEnd();
 			glPointSize(10); ///////////////////////////////////////////////////////////
 			glBegin(GL_POINTS);
-				glVertex3f(camera_lines[i][0], camera_lines[i][1], camera_lines[i][2]);
+				glVertex3f(camera_lines[i][0]/scale, camera_lines[i][1]/scale, camera_lines[i][2]/scale);
 			glEnd();
 		}
 		glColor3f( 0, 0, 0 );
