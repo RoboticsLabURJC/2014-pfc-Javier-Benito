@@ -43,7 +43,7 @@
 
 //#define IMG_X 320
 //#define IMG_Y 240
-#define N_ESTIMATOR_POINTS 20
+#define N_ESTIMATOR_POINTS 10
 
 /* Traslation of graphic coordinates to optical coordinates and vice versa */
 /*#define GRAPHIC_TO_OPTICAL_X(x,y) (SIFNTSC_ROWS-1-y)

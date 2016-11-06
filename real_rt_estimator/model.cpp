@@ -176,7 +176,6 @@ namespace real_rt_estimator {
 		pthread_mutex_lock(&this->controlImgRGB);
 		if (this->isChangeImageAux) {
 			this->updateImageRGBAux(this->dataRGB);
-			this->isChangeImageAux = false;
 		}
 		data.copyTo(imageRGB);
 		//memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
@@ -194,7 +193,10 @@ namespace real_rt_estimator {
 
 	void Model::updateImageDEPTH(cv::Mat data){
 		pthread_mutex_lock(&this->controlImgRGB);
-		this->updateImageDEPTHAux(this->dataDEPTH);
+		if (this->isChangeImageAux) {
+			this->updateImageDEPTHAux(this->dataDEPTH);
+			this->isChangeImageAux = false;
+		}
 		data.copyTo(imageDEPTH);
 		//memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
 		this->dataDEPTH = data;
@@ -429,24 +431,26 @@ namespace real_rt_estimator {
 			std::vector<cv::DMatch> matches_aux;
 			matches_aux.resize(0);
 
+			std::cout <<  "WEEEEEEEEEEEEEEEEEEEEE---------------->" << std::endl;
+
 			int count = 0;
 			for (int i=0; i<numBestPoints; i++) {
 
 				int bests_m = this->myMatches[i].matchNum;
-				x_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.x+0.5f);
-				y_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.y+0.5f);
-				x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x+0.5f);
-				y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y+0.5f);
+				x_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.x);//+0.5f);
+				y_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.y);//+0.5f);
+				x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x);//+0.5f);
+				y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y);//+0.5f);
 
-				//std::cout <<  x_1 << y_1 << x_2 << y_2 << std::endl;
-				//std::cout <<  "Entramos funcion" << std::endl;
+				std::cout <<  "Entramos funcion" << std::endl;
+				std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
 				jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH);
 				jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux);
 				std::cout <<  "Puntos calculados" <<  p1.z << std::endl;
 				std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
 				std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
-				if (p1.x != 0 && p2.x != 0) {
-					std::cout <<  "entra" << std::endl;
+
+				if (p1.z != 0 && p2.z != 0) {
 					this->v_rgbp.push_back(p1);
 					this->v_rgbp_aux.push_back(p2);
 				}
@@ -558,9 +562,9 @@ namespace real_rt_estimator {
 
 			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
 
-			this->RT_final = this->RT_final*RT_estimate;
+			//this->RT_final = this->RT_final*RT_estimate;
 
-			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+			//std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
 
 			Eigen::Vector4f points_ref_1_aux;
 			Eigen::Vector4f points_ref_2_aux;
@@ -573,7 +577,7 @@ namespace real_rt_estimator {
 				points_ref_2_aux(2) = this->v_rgbp[i].z;
 				points_ref_2_aux(3) = 1;
 
-				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+				points_ref_1_aux = RT_estimate.inverse()*points_ref_2_aux;
 				//points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
 				//points_ref_1_aux = RT_final*points_ref_2_aux;
 				//std::cout << "asdfasdfasdfasdftrix is: \n" << points_ref_2_aux << std::endl;
@@ -699,7 +703,7 @@ namespace real_rt_estimator {
 			points_ref_2_aux(2) = this->pc_camera[i].z;
 			points_ref_2_aux(3) = 1;
 
-			points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
+			points_ref_1_aux = RT_estimate.inverse()*points_ref_2_aux;
 
 			this->pc_camera_converted[i].x = points_ref_1_aux(0);
 			this->pc_camera_converted[i].y = points_ref_1_aux(1);

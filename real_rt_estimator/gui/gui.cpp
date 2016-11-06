@@ -57,7 +57,7 @@ namespace real_rt_estimator {
     }
 
     void Gui::ShowImage() {
-
+      /*
   		this->image1 = this->sm->getImageCameraRGB();
       this->image2 = this->sm->getImageCameraRGBAux();
 
@@ -70,10 +70,25 @@ namespace real_rt_estimator {
       setCamara(this->image1, 1);
       setCamara(this->image2, 2);
       setCamara(this->image3, 3);
-
+      */
     }
 
     void Gui::estimateCurrentRT() {
+      this->image1 = this->sm->getImageCameraRGB();
+      this->image2 = this->sm->getImageCameraRGBAux();
+
+
+      if (this->sm->doSiftAndGetPoints()) {
+        this->processDone = true;
+      }
+
+
+
+
+
+
+
+
       //this->image2 = this->sm->getImageCameraRGBAux();
 
       struct timeval t_ini, t_fin;
@@ -103,6 +118,9 @@ namespace real_rt_estimator {
       //  this->putPointCloud();
         //this->putCamera();
       //}
+      setCamara(this->image1, 1);
+      setCamara(this->image2, 2);
+      setCamara(this->image3, 3);
     }
 
     void Gui::moveRT1() {
