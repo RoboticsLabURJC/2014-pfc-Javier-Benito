@@ -32,6 +32,7 @@ class Control {
 
 		Control(Ice::CommunicatorPtr ic, real_rt_estimator::Model* sm);	//constructor
 		void update();
+		void estimate();
 
 	private:
 

@@ -74,13 +74,16 @@ namespace real_rt_estimator {
     }
 
     void Gui::estimateCurrentRT() {
+      std::cout << "2" << std::endl;
+      this->ctrl->estimate();
+      std::cout << "3" << std::endl;
       this->image1 = this->sm->getImageCameraRGB();
       this->image2 = this->sm->getImageCameraRGBAux();
 
-
-      if (this->sm->doSiftAndGetPoints()) {
+std::cout << "4" << std::endl;
+      /*if (this->sm->doSiftAndGetPoints()) {
         this->processDone = true;
-      }
+      }*/
 
 
 
@@ -90,7 +93,7 @@ namespace real_rt_estimator {
 
 
       //this->image2 = this->sm->getImageCameraRGBAux();
-
+      /*
       struct timeval t_ini, t_fin;
       long total_ini, total_fin;
       long diff;
@@ -107,12 +110,12 @@ namespace real_rt_estimator {
       total_fin = t_fin.tv_sec * 1000000 + t_fin.tv_usec;
 
       diff = (total_fin - total_ini) / 1000;;
-      std::cout <<  "Tiempo procesado-> " << diff << " ms" << std::endl;
-
-      this->image3 = this->sm->getImageCameraMatches();
+      std::cout <<  "Tiempo procesado-> " << diff << " ms" << std::endl;*/
 
 
-      this->sm->changeImageAux();
+
+std::cout << "5" << std::endl;
+      //this->sm->changeImageAux();
 
       //if (done) {
       //  this->putPointCloud();
@@ -120,7 +123,13 @@ namespace real_rt_estimator {
       //}
       setCamara(this->image1, 1);
       setCamara(this->image2, 2);
-      setCamara(this->image3, 3);
+
+      std::cout << "6" << std::endl;
+      if (this->sm->isEstimated()) {
+        this->image3 = this->sm->getImageCameraMatches();
+        setCamara(this->image3, 3);
+        this->putPointCloud();
+      }
     }
 
     void Gui::moveRT1() {

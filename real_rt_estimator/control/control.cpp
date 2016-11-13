@@ -5,6 +5,7 @@ namespace real_rt_estimator {
 
   bool cameraRGBOn = false;
   bool cameraDEPTHOn = false;
+  bool estimateOn = false;
   jderobot::cameraClient* camRGB=NULL;
   jderobot::cameraClient* camDEPTH=NULL;
 
@@ -107,6 +108,22 @@ namespace real_rt_estimator {
   		cv::Size depthSize = dataDEPTH.size();
       this->sm->updateImageDEPTH(dataDEPTH);
     }
+
+    if(estimateOn) {
+      std::cout << "1" << std::endl;
+      if (this->sm->doSiftAndGetPoints()) {
+        std::cout << "ESTIMATE" << std::endl;
+        this->sm->estimateRT();
+        std::cout << "ESTIMATE FIN" << std::endl;
+        //this->sm->putPointCloud();
+        estimateOn = false;
+
+      }
+    }
+  }
+
+  void Control::estimate() {
+    estimateOn = true;
   }
 
 }

@@ -94,6 +94,7 @@ namespace real_rt_estimator {
 
 		int doSiftAndGetPoints();
 		void estimateRT();
+    bool isEstimated();
 
     void RotateXAxis();
     void RotateYAxis();
@@ -101,6 +102,7 @@ namespace real_rt_estimator {
     void moveUpRT();
 
     void moveCamera();
+
 /*
 // 	    jderobot::EncodersDataPtr encodersData;
 // 	    jderobot::LaserDataPtr laserData;
@@ -169,7 +171,7 @@ namespace real_rt_estimator {
 		std::vector<jderobot::RGBPoint> v_rgbp, v_rgbp_aux;
 		std::vector<jderobot::RGBPoint> pc, pc_converted, pc_camera, pc_camera_converted;
 
-    bool first;
+    bool _firstIteration;
     int iterationCloud;
 
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc;

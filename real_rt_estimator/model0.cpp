@@ -17,7 +17,7 @@ namespace real_rt_estimator {
 		display_camerainfo(TPHcamaraDepth);*/
 
 
-		this->_firstIteration = true;
+		this->first = true;
 		this->iterationCloud = 0;
 
 
@@ -174,13 +174,13 @@ namespace real_rt_estimator {
 
 	void Model::updateImageRGB(cv::Mat data){
 		pthread_mutex_lock(&this->controlImgRGB);
-		/*if (this->isChangeImageAux) {
+		if (this->isChangeImageAux) {
 			this->updateImageRGBAux(this->dataRGB);
-		}*/
-		data.copyTo(imageRGB); // FIXME: Evitar copyTo
+		}
+		data.copyTo(imageRGB);
 		//memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
 
-		//this->dataRGB = data;
+		this->dataRGB = data;
 		pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
@@ -193,13 +193,13 @@ namespace real_rt_estimator {
 
 	void Model::updateImageDEPTH(cv::Mat data){
 		pthread_mutex_lock(&this->controlImgRGB);
-		/*if (this->isChangeImageAux) {
+		if (this->isChangeImageAux) {
 			this->updateImageDEPTHAux(this->dataDEPTH);
 			this->isChangeImageAux = false;
-		}*/
+		}
 		data.copyTo(imageDEPTH);
 		//memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
-		//this->dataDEPTH = data;
+		this->dataDEPTH = data;
 		pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
@@ -311,173 +311,174 @@ namespace real_rt_estimator {
 	int Model::doSiftAndGetPoints() {
 
 		// GetTems
-		/*pthread_mutex_lock(&this->controlImgRGB);
+		pthread_mutex_lock(&this->controlImgRGB);
 			this->imageRGB.copyTo(this->temp_imageRGB);
 			this->imageRGB_aux.copyTo(this->temp_imageRGB_aux);
 			this->imageDEPTH.copyTo(this->temp_imageDEPTH);
 			this->imageDEPTH_aux.copyTo(this->temp_imageDEPTH_aux);
+		pthread_mutex_unlock(&this->controlImgRGB);
+
+		//Función doSIFT
+		std::vector<cv::KeyPoint> keypoints1, keypoints2;
+		cv::Mat descriptors1, descriptors2;
+		cv::SiftDescriptorExtractor extractor;
+		cv::Mat inputGray1, inputGray2;
+
+		cv::cvtColor(this->temp_imageRGB, inputGray1, CV_BGR2GRAY);
+		cv::cvtColor(this->temp_imageRGB_aux, inputGray2, CV_BGR2GRAY);
+
+		cv::SiftFeatureDetector siftdet;
+		siftdet.detect(inputGray1, keypoints1);
+		siftdet.detect(inputGray2, keypoints2);
+
+		extractor.compute(inputGray1, keypoints1, descriptors1);
+		extractor.compute(inputGray2, keypoints2, descriptors2);
+
+		cv::BruteForceMatcher<cv::L2<float> > matcher;
+		std::vector<cv::DMatch> matches;
+
+		matcher.match(descriptors1, descriptors2, matches);
+
+		//cv::Mat imgMatches;
+		//cv::drawMatches(this->temp_imageRGB, keypoints1, this->temp_imageRGB_aux, keypoints2, matches, imgMatches);
+		//this->imageMatches = imgMatches;
+
+		/*pthread_mutex_lock(&this->controlImgRGB);
+		cv::drawKeypoints(this->imageRGB, keypoints1, this->imageRGB);
+		pthread_mutex_unlock(&this->controlImgRGB);
+
+		pthread_mutex_lock(&this->controlImgRGB);
+		cv::drawKeypoints(this->imageRGB_aux, keypoints2, this->imageRGB_aux);
 		pthread_mutex_unlock(&this->controlImgRGB);*/
 
 
-		if (!_firstIteration) {
-			std::cout <<  "SEGUNDA 22222 ITERACIÓN" << std::endl;
+		this->sift_points = matches.size();
+		if (matches.size() != 0) {
+			pthread_mutex_lock(&this->controlPcConverted);
+			/*std::cout <<  "puntos de la kp1 " << keypoints1.size() << std::endl;
+			std::cout <<  "puntos de la kp2 " << keypoints2.size() << std::endl;
+			std::cout <<  "puntos de los maches " << matches.size() << std::endl;*/
 
-			// Local vars
-			std::vector<cv::KeyPoint> keypoints1, keypoints2;
-			cv::Mat descriptors_n, descriptors_n_aux;
-			cv::Mat inputGray1, inputGray2;
-			cv::SiftDescriptorExtractor extractor;
+			//Model::myMatch[matches.size()] myMatches = { };
 
-			cv::cvtColor(this->imageRGB, inputGray1, CV_BGR2GRAY);
-			cv::cvtColor(this->imageRGB_aux, inputGray2, CV_BGR2GRAY);
+			//For save the matches
+			this->myMatches.resize(matches.size());
+			this->pc.resize(0);
 
-			// Sift
-			cv::SiftFeatureDetector siftdet;
-			siftdet.detect(inputGray1, keypoints1);
-			siftdet.detect(inputGray2, keypoints2);
-			extractor.compute(inputGray1, keypoints1, descriptors_n);
-			extractor.compute(inputGray2, keypoints2, descriptors_n_aux);
+				for(int i=0; i<((int)matches.size()); i++){
 
-			descriptors_n.copyTo(descriptors_n_aux);
+					////////////////////////////////////////////////////////////////////////////////////////////////
+					// Save the point cloud...
 
-			// matcher
-			cv::BruteForceMatcher<cv::L2<float> > matcher;
-			std::vector<cv::DMatch> matches;
-			matcher.match(descriptors_n, descriptors_n_aux, matches);
+					this->pc.push_back(getPoints3D(keypoints1[i].pt.x, keypoints1[i].pt.y, &this->temp_imageRGB, &this->temp_imageDEPTH));
 
-			this->sift_points = matches.size();
+					////////////////////////////////////////////////////////////////////////////////////////////////
 
-			std::cout <<  "MATCHES SIZE!!!!! !=0 " << matches.size() << std::endl;
-			if (matches.size() != 0) { // FIXME
+					if (matches[i].distance < 100) {
+						/*int bu1 = ((int) matches[i].queryIdx);
+						int bu2 = ((int) matches[i].trainIdx);
 
-				//Model::myMatch[matches.size()] myMatches = { };
-
-				//For save the matches
-				this->myMatches.resize(matches.size());
-				this->pc.resize(0);
-
-					for(int i=0; i<((int)matches.size()); i++){
-
-						////////////////////////////////////////////////////////////////////////////////////////////////
-						// Save the point cloud...
-
-						this->pc.push_back(getPoints3D(keypoints1[i].pt.x, keypoints1[i].pt.y, &this->imageRGB, &this->imageDEPTH));
-
-						////////////////////////////////////////////////////////////////////////////////////////////////
-
-						if (matches[i].distance < 100) {
-							/*int bu1 = ((int) matches[i].queryIdx);
-							int bu2 = ((int) matches[i].trainIdx);
-
-							std::cout <<  "" << std::endl;
-							std::cout <<  "[Match: " << i <<  "]" << std::endl;
-							std::cout <<  "match.distance: " << matches[i].distance << std::endl;
-							std::cout << " Img point 1:" << keypoints1[bu1].pt << std::endl;
-							std::cout << " Img point 2:" << keypoints2[bu2].pt << std::endl;
-							float resul = (abs(keypoints1[bu1].pt.x - keypoints2[bu2].pt.x) + abs(keypoints1[bu1].pt.y - keypoints2[bu2].pt.y));
-							std::cout << "My distance (aproximity): " << resul << std::endl;*/
-							//std::cout <<  "imgIdx " << matches[i].imgIdx << std::endl;
-							//std::cout <<  "queryIdx " << matches[i].queryIdx << std::endl;
-							//std::cout <<  "trainIdx " << matches[i].trainIdx << std::endl;
-						}
-						this->myMatches[i].matchNum = i;
-						this->myMatches[i].matchDistance = matches[i].distance;
-						this->myMatches[i].matchAprox = (abs(keypoints1[((int) matches[i].queryIdx)].pt.x - keypoints2[((int) matches[i].trainIdx)].pt.x) + abs(keypoints1[((int) matches[i].queryIdx)].pt.y - keypoints2[((int) matches[i].trainIdx)].pt.y));
+						std::cout <<  "" << std::endl;
+						std::cout <<  "[Match: " << i <<  "]" << std::endl;
+						std::cout <<  "match.distance: " << matches[i].distance << std::endl;
+						std::cout << " Img point 1:" << keypoints1[bu1].pt << std::endl;
+						std::cout << " Img point 2:" << keypoints2[bu2].pt << std::endl;
+						float resul = (abs(keypoints1[bu1].pt.x - keypoints2[bu2].pt.x) + abs(keypoints1[bu1].pt.y - keypoints2[bu2].pt.y));
+						std::cout << "My distance (aproximity): " << resul << std::endl;*/
+						//std::cout <<  "imgIdx " << matches[i].imgIdx << std::endl;
+						//std::cout <<  "queryIdx " << matches[i].queryIdx << std::endl;
+						//std::cout <<  "trainIdx " << matches[i].trainIdx << std::endl;
 					}
-
-
-
-				//Sort new match vector, best first
-				std::sort(this->myMatches.begin(), this->myMatches.end(), sortByDistance);
-
-				/*for(int i=0; i<this->myMatches.size(); i++){
-					std::cout <<  i << std::endl;
-					std::cout <<  "matchNUM " << this->myMatches[i].matchNum << std::endl;
-					std::cout <<  "matchDistance " << this->myMatches[i].matchDistance << std::endl;
-					std::cout <<  "matchAprox " << this->myMatches[i].matchAprox << std::endl;
-				}*/
-
-
-
-
-
-
-				int bestMatch = this->myMatches[0].matchNum;
-
-				//std::cout <<  "matchNUM " << this->myMatches[0].matchNum << std::endl;
-				//std::cout <<  "best match " << bestMatch << std::endl;
-				//std::cout <<  "best match 1" << keypoints1[matches[bestMatch].queryIdx].pt.x << std::endl;
-				//std::cout <<  "best match 2" << keypoints1[matches[bestMatch].queryIdx].pt.y << std::endl;
-
-				// Save X best points to Points Cloud
-				int numBestPoints = N_ESTIMATOR_POINTS;
-				if ((int)matches.size() < numBestPoints) {
-					numBestPoints = matches.size();
+					this->myMatches[i].matchNum = i;
+					this->myMatches[i].matchDistance = matches[i].distance;
+					this->myMatches[i].matchAprox = (abs(keypoints1[((int) matches[i].queryIdx)].pt.x - keypoints2[((int) matches[i].trainIdx)].pt.x) + abs(keypoints1[((int) matches[i].queryIdx)].pt.y - keypoints2[((int) matches[i].trainIdx)].pt.y));
 				}
-				int x_1, y_1, x_2, y_2;
-
-				this->v_rgbp.resize(0);
-				this->v_rgbp_aux.resize(0);
-
-				std::vector<cv::DMatch> matches_aux;
-				matches_aux.resize(0);
-
-				std::cout <<  "WEEEEEEEEEEEEEEEEEEEEE---------------->" << std::endl;
-
-				int count = 0;
-				for (int i=0; i<numBestPoints; i++) {
-
-					int bests_m = this->myMatches[i].matchNum;
-					x_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.x);//+0.5f);
-					y_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.y);//+0.5f);
-					x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x);//+0.5f);
-					y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y);//+0.5f);
-
-					std::cout <<  "Entramos funcion" << std::endl;
-					std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
-					jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
-					jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
-					std::cout <<  "Puntos calculados" <<  p1.z << std::endl;
-					std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
-					std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
-
-					if (p1.z != 0 && p2.z != 0) {
-						this->v_rgbp.push_back(p1);
-						this->v_rgbp_aux.push_back(p2);
-					}
-
-					//this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
-					//std::cout <<  "Entramos funcion2" << std::endl;
-					//this->v_rgbp_aux.push_back(getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux));
 
 
-					////////////////////////////////////////////////////////
-					// Draw the chosen points of interest
-					//std::vector<cv::KeyPoint> keypoints1_aux, keypoints2_aux;
-					//keypoints1_aux.resize(0);
-					//keypoints2_aux.resize(0);
-					matches_aux.push_back(matches[bests_m]);
-				}
-				cv::Mat imgMatches;
-				cv::drawMatches(this->imageRGB, keypoints1, this->imageRGB_aux, keypoints2, matches_aux, imgMatches);
-				this->imageMatches = imgMatches;
-				/////////////////////////////////////////////////////////////
 
-				//std::cout << "tamaño puntos: " << v_rgbp.size() << " y " << v_rgbp_aux.size() << std::endl;
-				//this->pc->points = v_rgbp;
-				//this->pc_aux->points = v_rgbp_aux;
+			//Sort new match vector, best first
+			std::sort(this->myMatches.begin(), this->myMatches.end(), sortByDistance);
 
-				pthread_mutex_unlock(&this->controlPcConverted);
-				return 1;
-			} else {
-				return 0;
+			/*for(int i=0; i<this->myMatches.size(); i++){
+				std::cout <<  i << std::endl;
+				std::cout <<  "matchNUM " << this->myMatches[i].matchNum << std::endl;
+				std::cout <<  "matchDistance " << this->myMatches[i].matchDistance << std::endl;
+				std::cout <<  "matchAprox " << this->myMatches[i].matchAprox << std::endl;
+			}*/
+
+
+
+
+
+
+			int bestMatch = this->myMatches[0].matchNum;
+
+			//std::cout <<  "matchNUM " << this->myMatches[0].matchNum << std::endl;
+			//std::cout <<  "best match " << bestMatch << std::endl;
+			//std::cout <<  "best match 1" << keypoints1[matches[bestMatch].queryIdx].pt.x << std::endl;
+			//std::cout <<  "best match 2" << keypoints1[matches[bestMatch].queryIdx].pt.y << std::endl;
+
+			// Save X best points to Points Cloud
+			int numBestPoints = N_ESTIMATOR_POINTS;
+			if ((int)matches.size() < numBestPoints) {
+				numBestPoints = matches.size();
 			}
-		} else { // First iteration
-			std::cout <<  "PRIMERA ITERACIÓN 1111111111" << std::endl;
-			// FIXME: LOCK
-			this->imageRGB.copyTo(this->imageRGB_aux);
-			this->imageDEPTH.copyTo(this->imageDEPTH_aux);
-			_firstIteration = false;
+			int x_1, y_1, x_2, y_2;
+
+			this->v_rgbp.resize(0);
+			this->v_rgbp_aux.resize(0);
+
+			std::vector<cv::DMatch> matches_aux;
+			matches_aux.resize(0);
+
+			std::cout <<  "WEEEEEEEEEEEEEEEEEEEEE---------------->" << std::endl;
+
+			int count = 0;
+			for (int i=0; i<numBestPoints; i++) {
+
+				int bests_m = this->myMatches[i].matchNum;
+				x_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.x);//+0.5f);
+				y_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.y);//+0.5f);
+				x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x);//+0.5f);
+				y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y);//+0.5f);
+
+				std::cout <<  "Entramos funcion" << std::endl;
+				std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+				jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH);
+				jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux);
+				std::cout <<  "Puntos calculados" <<  p1.z << std::endl;
+				std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
+				std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
+
+				if (p1.z != 0 && p2.z != 0) {
+					this->v_rgbp.push_back(p1);
+					this->v_rgbp_aux.push_back(p2);
+				}
+
+				//this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
+				//std::cout <<  "Entramos funcion2" << std::endl;
+				//this->v_rgbp_aux.push_back(getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux));
+
+
+				////////////////////////////////////////////////////////
+				// Draw the chosen points of interest
+				//std::vector<cv::KeyPoint> keypoints1_aux, keypoints2_aux;
+				//keypoints1_aux.resize(0);
+				//keypoints2_aux.resize(0);
+				matches_aux.push_back(matches[bests_m]);
+			}
+			cv::Mat imgMatches;
+			cv::drawMatches(this->temp_imageRGB, keypoints1, this->temp_imageRGB_aux, keypoints2, matches_aux, imgMatches);
+			this->imageMatches = imgMatches;
+			/////////////////////////////////////////////////////////////
+
+			//std::cout << "tamaño puntos: " << v_rgbp.size() << " y " << v_rgbp_aux.size() << std::endl;
+			//this->pc->points = v_rgbp;
+			//this->pc_aux->points = v_rgbp_aux;
+
+			pthread_mutex_unlock(&this->controlPcConverted);
+			return 1;
+		} else {
 			return 0;
 		}
 	}
@@ -646,15 +647,6 @@ namespace real_rt_estimator {
 
 		//this->is_final = true;
 		pthread_mutex_unlock(&this->controlPcConverted);
-
-		// Save image n to n-1 if sucess estimate
-		// FIXME: LOCK
-		this->imageRGB.copyTo(this->imageRGB_aux);
-		this->imageDEPTH.copyTo(this->imageDEPTH_aux);
-	}
-
-	bool Model::isEstimated() {
-		return (this->iterationCloud > 0);
 	}
 
 	void Model::RotateXAxis() {

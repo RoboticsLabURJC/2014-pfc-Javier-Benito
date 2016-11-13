@@ -26,6 +26,7 @@
 #include <sys/time.h>
 
 #include "../model.h"
+#include "../control/control.h"
 #include "../drawarea.h"
 
 
@@ -46,6 +47,7 @@ namespace real_rt_estimator {
     private:
 
   		Model* sm;
+      Control* ctrl;
 
       bool processDone;
       bool firstProcess;
