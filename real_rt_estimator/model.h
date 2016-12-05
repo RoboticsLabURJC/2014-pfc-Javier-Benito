@@ -43,7 +43,7 @@
 
 //#define IMG_X 320
 //#define IMG_Y 240
-#define N_ESTIMATOR_POINTS 10
+#define N_ESTIMATOR_POINTS 15
 
 /* Traslation of graphic coordinates to optical coordinates and vice versa */
 /*#define GRAPHIC_TO_OPTICAL_X(x,y) (SIFNTSC_ROWS-1-y)
@@ -189,6 +189,7 @@ namespace real_rt_estimator {
 
 
 		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);
+    bool isBorderPoint(int x, int y, cv::Mat* imgDepth);
 
 
 

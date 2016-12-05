@@ -222,7 +222,8 @@ namespace real_rt_estimator {
 	}
 
 	bool Model::sortByDistance(const Model::myMatch &lhs, const Model::myMatch &rhs) {
-		return ((lhs.matchDistance + lhs.matchAprox) < (rhs.matchDistance + rhs.matchAprox));
+		//return ((lhs.matchDistance + lhs.matchAprox) < (rhs.matchDistance + rhs.matchAprox));
+		return ((lhs.matchAprox) < (rhs.matchAprox));
 	}
 
 	jderobot::RGBPoint Model::getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth) {
@@ -308,6 +309,42 @@ namespace real_rt_estimator {
 
 	}
 
+	bool Model::isBorderPoint(int x, int y, cv::Mat* imgDepth) {
+		//int width = imgDepth->cols;
+		int height = imgDepth->rows;
+
+		//std::cout << x <<  "asdf" << y << std::endl;
+
+		int d_aux = 0;
+		int distance = 0;
+
+		// 5 pixel window
+		//std::cout <<  "----------------------------- VENTANA ------------- " << std::endl;
+		for(int i=-2; i<3; i++) {
+			for(int j=-2; j<3; j++) {
+				if (((x+i) >= 0) && ((y+j) >= 0)) {
+					int d = ((0 << 24)|(0 << 16)|(imgDepth->data[3*(x+i)+height*(y+j)+1]<<8)|(imgDepth->data[3*(x+i)+height*(y+j)+2]));
+					//std::cout << d << std::endl;
+					if (d != 0) {
+						if (d_aux != 0) {
+							distance += abs(d - d_aux);
+						}
+						d_aux = d;
+					}
+				} else {
+					//std::cout <<  "borde de la imagen" << std::endl;
+				}
+			}
+		}
+		std::cout <<  "distance : " << distance << std::endl;
+		//std::cout <<  "------------------------------------------ " << std::endl;
+		if (distance < 3000) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	int Model::doSiftAndGetPoints() {
 
 		// GetTems
@@ -347,8 +384,11 @@ namespace real_rt_estimator {
 
 			this->sift_points = matches.size();
 
-			std::cout <<  "MATCHES SIZE!!!!! !=0 " << matches.size() << std::endl;
+			//std::cout <<  "KEYPOINTS1 --> " << keypoints1.size() << std::endl;
+			//std::cout <<  "KEYPOINTS2 --> " << keypoints2.size() << std::endl;
+
 			if (matches.size() != 0) { // FIXME
+			std::cout <<  "MATCHES SIZE!!!!! !=0 --> " << matches.size() << std::endl;
 
 				//Model::myMatch[matches.size()] myMatches = { };
 
@@ -422,7 +462,7 @@ namespace real_rt_estimator {
 				std::vector<cv::DMatch> matches_aux;
 				matches_aux.resize(0);
 
-				std::cout <<  "WEEEEEEEEEEEEEEEEEEEEE---------------->" << std::endl;
+				std::cout <<  "WEEEEEEEEEEEEEEEEEEEEE---------------->" << numBestPoints << std::endl;
 
 				int count = 0;
 				for (int i=0; i<numBestPoints; i++) {
@@ -433,17 +473,21 @@ namespace real_rt_estimator {
 					x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x);//+0.5f);
 					y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y);//+0.5f);
 
-					std::cout <<  "Entramos funcion" << std::endl;
-					std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+					//std::cout <<  "Entramos funcion" << std::endl;
+					//std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
 					jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
 					jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
-					std::cout <<  "Puntos calculados" <<  p1.z << std::endl;
-					std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
-					std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
 
-					if (p1.z != 0 && p2.z != 0) {
-						this->v_rgbp.push_back(p1);
-						this->v_rgbp_aux.push_back(p2);
+					if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) || !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
+						if (p1.z != 0 && p2.z != 0) {
+							std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+							std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
+							std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
+							this->v_rgbp.push_back(p1);
+							this->v_rgbp_aux.push_back(p2);
+						}
+					} else {
+						std::cout << "es border point" << std::endl;
 					}
 
 					//this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
@@ -499,20 +543,30 @@ namespace real_rt_estimator {
 		std::cout << "The points number for RT calculation is: \n" <<  (num_points_for_RT-1) << std::endl;
 
 		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
-		Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
-
+		//Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
+		Eigen::Vector4f points_ref_2;
+		Eigen::Vector4f points_ref_2_ant;
+		Eigen::MatrixXf points_ref_2_world(num_points_for_RT, 4);
+		std::cout << "The FINAL RT Matrix is: \n" << "[" << this->RT_final << "]" << std::endl;
 		for (int i=0; i<num_points_for_RT; i++) {
 			points_ref_1(i,0) = v_rgbp[i].x;
 			points_ref_1(i,1) = v_rgbp[i].y;
 			points_ref_1(i,2) = v_rgbp[i].z;
 			points_ref_1(i,3) = 1;
-			points_ref_2(i,0) = v_rgbp_aux[i].x;
-			points_ref_2(i,1) = v_rgbp_aux[i].y;
-			points_ref_2(i,2) = v_rgbp_aux[i].z;
-			points_ref_2(i,3) = 1;
+			points_ref_2(0) = v_rgbp_aux[i].x;
+			points_ref_2(1) = v_rgbp_aux[i].y;
+			points_ref_2(2) = v_rgbp_aux[i].z;
+			points_ref_2(3) = 1;
+			points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+			points_ref_2_world(i,0) = points_ref_2_ant(0);
+			points_ref_2_world(i,1) = points_ref_2_ant(1);
+			points_ref_2_world(i,2) = points_ref_2_ant(2);
+			points_ref_2_world(i,3) = 1;
 			std::cout << "v_rgbp_aux[i]" << std::endl;
 			std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
 			std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+			std::cout << "Magia y... " << std::endl;
+			std::cout << points_ref_2_ant(0) << ", " << points_ref_2_ant(1) << ", " << points_ref_2_ant(2) << std::endl;
 		}
 
 
@@ -556,7 +610,9 @@ namespace real_rt_estimator {
 			//JacobiSVD<MatrixXf> svd(points_ref_1, Eigen::ComputeThinU | Eigen::ComputeThinV);
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
-			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
+
+			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2_world).transpose();
+
 			//Eigen::Matrix4f RT_estimate = RT_final;
 
 			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
@@ -629,6 +685,8 @@ namespace real_rt_estimator {
 
 			// Camera camera converted
 			moveCamera(RT_estimate);
+			std::cout << "ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ: \n" << std::endl;
+			this->RT_final = RT_estimate;
 		//}
 
 		/*
