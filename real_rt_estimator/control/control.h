@@ -32,8 +32,10 @@ class Control {
 
 		Control(Ice::CommunicatorPtr ic, real_rt_estimator::Model* sm);	//constructor
 		void update();
-		void estimate();
-
+		void estimatePoints();
+		void estimateMatrix();
+		bool isEstimatePointsDone();
+		bool isEstimateMatrixDone();
 	private:
 
 		Model* sm;	//Shared memory

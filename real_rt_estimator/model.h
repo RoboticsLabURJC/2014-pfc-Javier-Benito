@@ -149,7 +149,7 @@ namespace real_rt_estimator {
 
 		struct myMatch {
 			int matchNum;
-			int matchDistance;
+			double matchDistance;
 			double matchAprox;
 		};
 

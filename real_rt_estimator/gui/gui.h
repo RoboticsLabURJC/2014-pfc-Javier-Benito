@@ -71,6 +71,13 @@ namespace real_rt_estimator {
       Gtk::Button *w_button3;
       Gtk::Button *w_button4;
 
+      Gtk::VScale* percentage_points;
+      Gtk::CheckButton * button_sift;
+      Gtk::CheckButton * button_surf;
+      Gtk::CheckButton * button_bruteforce;
+      Gtk::CheckButton * button_flann;
+      Gtk::Button *button_refresh;
+
   		//DrawArea* world1;
   		DrawArea* world;
   		std::string worldpath;
@@ -79,6 +86,7 @@ namespace real_rt_estimator {
       void setCamara(const cv::Mat image, int id);
   		void ShowImage();
 
+      void estimatePoints();
       void estimateCurrentRT();
       void moveRT1();
       void moveRT2();

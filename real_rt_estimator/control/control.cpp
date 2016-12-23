@@ -5,7 +5,13 @@ namespace real_rt_estimator {
 
   bool cameraRGBOn = false;
   bool cameraDEPTHOn = false;
-  bool estimateOn = false;
+  bool estimatePointsOn = false;
+  bool estimateMatrixOn = false;
+  bool correctEstimate = false;
+
+  bool estimatePointsDone = false;
+  bool estimateMatrixDone = false;
+
   jderobot::cameraClient* camRGB=NULL;
   jderobot::cameraClient* camDEPTH=NULL;
 
@@ -109,21 +115,50 @@ namespace real_rt_estimator {
       this->sm->updateImageDEPTH(dataDEPTH);
     }
 
-    if(estimateOn) {
-      std::cout << "1" << std::endl;
+    if (estimatePointsOn) {
       if (this->sm->doSiftAndGetPoints()) {
-        std::cout << "ESTIMATE" << std::endl;
-        this->sm->estimateRT();
-        std::cout << "ESTIMATE FIN" << std::endl;
         //this->sm->putPointCloud();
-        estimateOn = false;
-
+        estimatePointsOn = false;
+        correctEstimate = true;
+        estimatePointsDone = true;
       }
+    }
+
+    if (estimateMatrixOn && correctEstimate) {
+      //std::cout << "ESTIMATE" << std::endl;
+      this->sm->estimateRT();
+      //std::cout << "ESTIMATE FIN" << std::endl;
+      correctEstimate = false;
+      estimateMatrixOn = false;
+      estimateMatrixDone = true;
+    }
+
+  }
+
+  void Control::estimatePoints() {
+    estimatePointsOn = true;
+  }
+
+  void Control::estimateMatrix() {
+    estimateMatrixOn = true;
+  }
+
+  bool Control::isEstimatePointsDone() {
+    if (estimatePointsDone) {
+      estimatePointsDone = false;
+      return true;
+    } else {
+      return false;
     }
   }
 
-  void Control::estimate() {
-    estimateOn = true;
+  bool Control::isEstimateMatrixDone() {
+    if (estimateMatrixDone) {
+      estimateMatrixDone = false;
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

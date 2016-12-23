@@ -29,11 +29,20 @@ namespace real_rt_estimator {
     refXml->get_widget("button3", w_button3);
     refXml->get_widget("button4", w_button4);
 
+    refXml->get_widget("percentage_points", percentage_points);
+    refXml->get_widget("button_sift", button_sift);
+    refXml->get_widget("button_surf", button_surf);
+    refXml->get_widget("button_bruteforce", button_bruteforce);
+    refXml->get_widget("button_flann", button_flann);
+    refXml->get_widget("button_refresh", button_refresh);
+
     w_button_estimate_rt->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
     w_button1->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT1));
     w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
     w_button3->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT3));
     w_button4->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT4));
+
+    button_refresh->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimatePoints));
 
 		//opengl world
 		refXml->get_widget_derived("drawingarea1",world);
@@ -57,6 +66,11 @@ namespace real_rt_estimator {
     }
 
     void Gui::ShowImage() {
+      //std::cout << "show image" << std::endl;
+      this->image2 = this->sm->getImageCameraRGB();
+      std::cout << "2" << std::endl;
+      setCamara(this->image2, 2);
+      //std::cout << "3" << std::endl;
       /*
   		this->image1 = this->sm->getImageCameraRGB();
       this->image2 = this->sm->getImageCameraRGBAux();
@@ -71,16 +85,35 @@ namespace real_rt_estimator {
       setCamara(this->image2, 2);
       setCamara(this->image3, 3);
       */
+      if (this->ctrl->isEstimatePointsDone()) {
+        this->image1 = this->sm->getImageCameraRGBAux();
+        setCamara(this->image1, 1);
+
+        this->image3 = this->sm->getImageCameraMatches();
+        setCamara(this->image3, 3);
+
+        std::cout << "5" << std::endl;
+      }
+      if (this->ctrl->isEstimateMatrixDone()) {
+
+        this->putPointCloud();
+        std::cout << "6" << std::endl;
+      }
+
+      std::cout << "7" << std::endl;
+    }
+
+    void Gui::estimatePoints() {
+      this->ctrl->estimatePoints();
     }
 
     void Gui::estimateCurrentRT() {
-      std::cout << "2" << std::endl;
-      this->ctrl->estimate();
-      std::cout << "3" << std::endl;
-      this->image1 = this->sm->getImageCameraRGB();
-      this->image2 = this->sm->getImageCameraRGBAux();
+      //std::cout << "2" << std::endl;
+      this->ctrl->estimateMatrix();
 
-std::cout << "4" << std::endl;
+      //std::cout << "3" << std::endl;
+
+      //std::cout << "4" << std::endl;
       /*if (this->sm->doSiftAndGetPoints()) {
         this->processDone = true;
       }*/
@@ -114,22 +147,21 @@ std::cout << "4" << std::endl;
 
 
 
-std::cout << "5" << std::endl;
+      //std::cout << "5" << std::endl;
       //this->sm->changeImageAux();
 
       //if (done) {
       //  this->putPointCloud();
         //this->putCamera();
       //}
-      setCamara(this->image1, 1);
-      setCamara(this->image2, 2);
 
-      std::cout << "6" << std::endl;
-      if (this->sm->isEstimated()) {
+
+      //std::cout << "6" << std::endl;
+      /*if (this->sm->isEstimated()) {
         this->image3 = this->sm->getImageCameraMatches();
         setCamara(this->image3, 3);
         this->putPointCloud();
-      }
+      }*/
     }
 
     void Gui::moveRT1() {
@@ -235,16 +267,22 @@ std::cout << "5" << std::endl;
                 image.rows,
                 image.step);
         switch (id) {
-			case 1:
-				gtk_image1->clear();
-				gtk_image1->set(imgBuff);
-			case 2:
-				gtk_image2->clear();
-				gtk_image2->set(imgBuff);
-			case 3:
-				gtk_image3->clear();
-				gtk_image3->set(imgBuff);
-        }
+    			case 1:
+            //std::cout << "2111" << std::endl;
+    				gtk_image1->clear();
+    				gtk_image1->set(imgBuff);
+            break;
+    			case 2:
+            //std::cout << "2222" << std::endl;
+    				gtk_image2->clear();
+    				gtk_image2->set(imgBuff);
+            break;
+    			case 3:
+            //std::cout << "22222" << std::endl;
+    				gtk_image3->clear();
+    				gtk_image3->set(imgBuff);
+            break;
+            }
     }
 
 

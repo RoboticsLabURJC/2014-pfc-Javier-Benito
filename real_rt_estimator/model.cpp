@@ -222,8 +222,8 @@ namespace real_rt_estimator {
 	}
 
 	bool Model::sortByDistance(const Model::myMatch &lhs, const Model::myMatch &rhs) {
-		//return ((lhs.matchDistance + lhs.matchAprox) < (rhs.matchDistance + rhs.matchAprox));
-		return ((lhs.matchAprox) < (rhs.matchAprox));
+		return ((lhs.matchDistance + lhs.matchAprox) < (rhs.matchDistance + rhs.matchAprox));
+		//return ((lhs.matchDistance) < (rhs.matchDistance));
 	}
 
 	jderobot::RGBPoint Model::getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth) {
@@ -319,25 +319,27 @@ namespace real_rt_estimator {
 		int distance = 0;
 
 		// 5 pixel window
-		//std::cout <<  "----------------------------- VENTANA ------------- " << std::endl;
-		for(int i=-2; i<3; i++) {
-			for(int j=-2; j<3; j++) {
+		std::cout <<  "-------- Window 3x3 --------" << std::endl;
+		for(int i=-1; i<2; i++) {
+			for(int j=-1; j<2; j++) {
 				if (((x+i) >= 0) && ((y+j) >= 0)) {
 					int d = ((0 << 24)|(0 << 16)|(imgDepth->data[3*(x+i)+height*(y+j)+1]<<8)|(imgDepth->data[3*(x+i)+height*(y+j)+2]));
-					//std::cout << d << std::endl;
+					std::cout << d << std::endl;
 					if (d != 0) {
 						if (d_aux != 0) {
 							distance += abs(d - d_aux);
 						}
 						d_aux = d;
+					} else {
+						distance += 1000;
 					}
 				} else {
 					//std::cout <<  "borde de la imagen" << std::endl;
 				}
 			}
 		}
-		std::cout <<  "distance : " << distance << std::endl;
-		//std::cout <<  "------------------------------------------ " << std::endl;
+		std::cout <<  "Typical deviation ¿?: " << distance << std::endl;
+ 		std::cout <<  "-------------------------" << std::endl;
 		if (distance < 3000) {
 			return false;
 		} else {
@@ -368,10 +370,15 @@ namespace real_rt_estimator {
 			cv::cvtColor(this->imageRGB, inputGray1, CV_BGR2GRAY);
 			cv::cvtColor(this->imageRGB_aux, inputGray2, CV_BGR2GRAY);
 
+			// SURF Detector
+		  int minHessian = 400;
+		  cv::SurfFeatureDetector surfdet(minHessian);
+
 			// Sift
 			cv::SiftFeatureDetector siftdet;
-			siftdet.detect(inputGray1, keypoints1);
-			siftdet.detect(inputGray2, keypoints2);
+
+			surfdet.detect(inputGray1, keypoints1);
+			surfdet.detect(inputGray2, keypoints2);
 			extractor.compute(inputGray1, keypoints1, descriptors_n);
 			extractor.compute(inputGray2, keypoints2, descriptors_n_aux);
 
@@ -379,8 +386,10 @@ namespace real_rt_estimator {
 
 			// matcher
 			cv::BruteForceMatcher<cv::L2<float> > matcher;
+			//cv::FlannBasedMatcher matcher;
 			std::vector<cv::DMatch> matches;
 			matcher.match(descriptors_n, descriptors_n_aux, matches);
+			//matcher.knnMatch(descriptors_n, descriptors_n_aux, 20, matches);
 
 			this->sift_points = matches.size();
 
@@ -404,7 +413,7 @@ namespace real_rt_estimator {
 						this->pc.push_back(getPoints3D(keypoints1[i].pt.x, keypoints1[i].pt.y, &this->imageRGB, &this->imageDEPTH));
 
 						////////////////////////////////////////////////////////////////////////////////////////////////
-
+						std::cout <<  "match.distance: " << matches[i].distance << std::endl;
 						if (matches[i].distance < 100) {
 							/*int bu1 = ((int) matches[i].queryIdx);
 							int bu2 = ((int) matches[i].trainIdx);
@@ -478,17 +487,19 @@ namespace real_rt_estimator {
 					jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
 					jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
 
-					if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) || !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
+					if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
 						if (p1.z != 0 && p2.z != 0) {
 							std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
 							std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
 							std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
 							this->v_rgbp.push_back(p1);
 							this->v_rgbp_aux.push_back(p2);
+							count++;
 						}
 					} else {
 						std::cout << "es border point" << std::endl;
 					}
+
 
 					//this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
 					//std::cout <<  "Entramos funcion2" << std::endl;
@@ -502,9 +513,11 @@ namespace real_rt_estimator {
 					//keypoints2_aux.resize(0);
 					matches_aux.push_back(matches[bests_m]);
 				}
+
 				cv::Mat imgMatches;
 				cv::drawMatches(this->imageRGB, keypoints1, this->imageRGB_aux, keypoints2, matches_aux, imgMatches);
 				this->imageMatches = imgMatches;
+
 				/////////////////////////////////////////////////////////////
 
 				//std::cout << "tamaño puntos: " << v_rgbp.size() << " y " << v_rgbp_aux.size() << std::endl;
@@ -512,7 +525,11 @@ namespace real_rt_estimator {
 				//this->pc_aux->points = v_rgbp_aux;
 
 				pthread_mutex_unlock(&this->controlPcConverted);
-				return 1;
+				if (count < 5) {
+					return 0;
+				} else {
+					return 1;
+				}
 			} else {
 				return 0;
 			}
@@ -627,9 +644,9 @@ namespace real_rt_estimator {
 			this->pc_converted.resize(num_points_for_RT);
 
 			for(int i=0; i<num_points_for_RT; i++){
-				points_ref_2_aux(0) = this->v_rgbp[i].x;
-				points_ref_2_aux(1) = this->v_rgbp[i].y;
-				points_ref_2_aux(2) = this->v_rgbp[i].z;
+				points_ref_2_aux(0) = points_ref_2_world(i,0);
+				points_ref_2_aux(1) = points_ref_2_world(i,1);
+				points_ref_2_aux(2) = points_ref_2_world(i,2);
 				points_ref_2_aux(3) = 1;
 
 				points_ref_1_aux = RT_estimate.inverse()*points_ref_2_aux;
@@ -642,7 +659,7 @@ namespace real_rt_estimator {
 				//this->pc_converted[i].r = this->pc[i].r;
 				//this->pc_converted[i].g = this->pc[i].g;
 				//this->pc_converted[i].b = this->pc[i].b;
-				std::cout << "ANTES DE CONVERTIR: \n" << this->v_rgbp[i].x << ", " << this->v_rgbp[i].y << ", " << this->v_rgbp[i].z << std::endl;
+				std::cout << "ANTES DE CONVERTIR: \n" << points_ref_2_world(i,0) << ", " << points_ref_2_world(i,1) << ", " << points_ref_2_world(i,2) << std::endl;
 				std::cout << "FINAL >>>>>>>: \n" << this->pc_converted[i].x << ", " << this->pc_converted[i].y << ", " << this->pc_converted[i].z << std::endl;
 				if (this->iterationCloud == 0) {
 					this->pc_converted[i].r = 255;
@@ -686,7 +703,9 @@ namespace real_rt_estimator {
 			// Camera camera converted
 			moveCamera(RT_estimate);
 			std::cout << "ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ: \n" << std::endl;
-			this->RT_final = RT_estimate;
+			for(int i=0; i<16; i++) {
+				this->RT_final(i) = RT_estimate(i);
+			}
 		//}
 
 		/*
