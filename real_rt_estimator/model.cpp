@@ -367,22 +367,24 @@ namespace real_rt_estimator {
 			cv::Mat inputGray1, inputGray2;
 			cv::SiftDescriptorExtractor extractor;
 
+			//inputGray1 = cv::imread( this->imageRGB, CV_LOAD_IMAGE_GRAYSCALE );
+			//inputGray2 = cv::imread( this->imageRGB_aux, CV_LOAD_IMAGE_GRAYSCALE );
 			cv::cvtColor(this->imageRGB, inputGray1, CV_BGR2GRAY);
 			cv::cvtColor(this->imageRGB_aux, inputGray2, CV_BGR2GRAY);
 
 			// SURF Detector
-		  int minHessian = 400;
-		  cv::SurfFeatureDetector surfdet(minHessian);
+		  //int minHessian = 400;
+		  //cv::SurfFeatureDetector surfdet(minHessian);
 
 			// Sift
 			cv::SiftFeatureDetector siftdet;
 
-			surfdet.detect(inputGray1, keypoints1);
-			surfdet.detect(inputGray2, keypoints2);
+			siftdet.detect(inputGray1, keypoints1);
+			siftdet.detect(inputGray2, keypoints2);
 			extractor.compute(inputGray1, keypoints1, descriptors_n);
 			extractor.compute(inputGray2, keypoints2, descriptors_n_aux);
 
-			descriptors_n.copyTo(descriptors_n_aux);
+			//descriptors_n.copyTo(descriptors_n_aux);
 
 			// matcher
 			cv::BruteForceMatcher<cv::L2<float> > matcher;

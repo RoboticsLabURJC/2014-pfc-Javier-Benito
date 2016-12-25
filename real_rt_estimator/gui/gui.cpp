@@ -18,31 +18,33 @@ namespace real_rt_estimator {
     //Get widgets
     refXml->get_widget("secondarywindow", secondarywindow);
     // Camera images
-    refXml->get_widget("image1", gtk_image1);
-    refXml->get_widget("image2", gtk_image2);
-    refXml->get_widget("image3", gtk_image3);
+    refXml->get_widget("image_rgb", gtk_image_rgb);
+    //refXml->get_widget("image2", gtk_image2);
+    refXml->get_widget("image_depth", gtk_image_depth);
 
     //Button
-    refXml->get_widget("button_estimate_rt", w_button_estimate_rt);
-    refXml->get_widget("button1", w_button1);
-    refXml->get_widget("button2", w_button2);
-    refXml->get_widget("button3", w_button3);
-    refXml->get_widget("button4", w_button4);
+    refXml->get_widget("button_update", button_update);
+    refXml->get_widget("button_update", button_detection);
+    refXml->get_widget("button_update", button_matching);
+    refXml->get_widget("button_estimate", button_estimate);
+    //refXml->get_widget("button1", w_button1);
+    //refXml->get_widget("button2", w_button2);
+    //refXml->get_widget("button3", w_button3);
+    //refXml->get_widget("button4", w_button4);
 
     refXml->get_widget("percentage_points", percentage_points);
     refXml->get_widget("button_sift", button_sift);
     refXml->get_widget("button_surf", button_surf);
     refXml->get_widget("button_bruteforce", button_bruteforce);
     refXml->get_widget("button_flann", button_flann);
-    refXml->get_widget("button_refresh", button_refresh);
 
-    w_button_estimate_rt->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
-    w_button1->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT1));
-    w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
-    w_button3->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT3));
-    w_button4->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT4));
+    button_estimate->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
+    //w_button1->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT1));
+    //w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
+    //w_button3->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT3));
+    //w_button4->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT4));
 
-    button_refresh->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimatePoints));
+    button_update->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimatePoints));
 
 		//opengl world
 		refXml->get_widget_derived("drawingarea1",world);
@@ -67,12 +69,12 @@ namespace real_rt_estimator {
 
     void Gui::ShowImage() {
       //std::cout << "show image" << std::endl;
-      this->image2 = this->sm->getImageCameraRGB();
-      std::cout << "2" << std::endl;
-      setCamara(this->image2, 2);
+      //this->image2 = this->sm->getImageCameraRGB();
+      //std::cout << "2" << std::endl;
+      //setCamara(this->image2, 2);
       //std::cout << "3" << std::endl;
       /*
-  		this->image1 = this->sm->getImageCameraRGB();
+  		this->image_rgb = this->sm->getImageCameraRGB();
       this->image2 = this->sm->getImageCameraRGBAux();
 
 
@@ -81,16 +83,16 @@ namespace real_rt_estimator {
       }
 
 
-      setCamara(this->image1, 1);
+      setCamara(this->image_rgb, 1);
       setCamara(this->image2, 2);
-      setCamara(this->image3, 3);
+      setCamara(this->image_depth, 3);
       */
       if (this->ctrl->isEstimatePointsDone()) {
-        this->image1 = this->sm->getImageCameraRGBAux();
-        setCamara(this->image1, 1);
+        this->image_rgb = this->sm->getImageCameraRGBAux();
+        setCamara(this->image_rgb, 1);
 
-        this->image3 = this->sm->getImageCameraMatches();
-        setCamara(this->image3, 3);
+        this->image_depth = this->sm->getImageCameraMatches();
+        setCamara(this->image_depth, 3);
 
         std::cout << "5" << std::endl;
       }
@@ -158,8 +160,8 @@ namespace real_rt_estimator {
 
       //std::cout << "6" << std::endl;
       /*if (this->sm->isEstimated()) {
-        this->image3 = this->sm->getImageCameraMatches();
-        setCamara(this->image3, 3);
+        this->image_depth = this->sm->getImageCameraMatches();
+        setCamara(this->image_depth, 3);
         this->putPointCloud();
       }*/
     }
@@ -268,19 +270,12 @@ namespace real_rt_estimator {
                 image.step);
         switch (id) {
     			case 1:
-            //std::cout << "2111" << std::endl;
-    				gtk_image1->clear();
-    				gtk_image1->set(imgBuff);
+    				gtk_image_rgb->clear();
+    				gtk_image_rgb->set(imgBuff);
             break;
     			case 2:
-            //std::cout << "2222" << std::endl;
-    				gtk_image2->clear();
-    				gtk_image2->set(imgBuff);
-            break;
-    			case 3:
-            //std::cout << "22222" << std::endl;
-    				gtk_image3->clear();
-    				gtk_image3->set(imgBuff);
+            gtk_image_depth->clear();
+    				gtk_image_depth->set(imgBuff);
             break;
             }
     }

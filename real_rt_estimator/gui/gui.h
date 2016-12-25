@@ -40,9 +40,9 @@ namespace real_rt_estimator {
 
       void display();
 
-      cv::Mat image1; // Image camera1 processed to manipulate with openCV
-      cv::Mat image2; // Image camera1 processed to manipulate with openCV
-      cv::Mat image3; // Image camera1 processed to manipulate with openCV
+      cv::Mat image_rgb; // Image camera1 processed to manipulate with openCV
+      cv::Mat image_depth; // Image camera1 processed to manipulate with openCV
+      //cv::Mat image3; // Image camera1 processed to manipulate with openCV
 
     private:
 
@@ -60,23 +60,25 @@ namespace real_rt_estimator {
       Gtk::Window *secondarywindow;
 
       // Cameras
-      Gtk::Image *gtk_image1;
-  		Gtk::Image *gtk_image2;
-  		Gtk::Image *gtk_image3;
+      Gtk::Image *gtk_image_rgb;
+  		//Gtk::Image *gtk_image2;
+  		Gtk::Image *gtk_image_depth;
 
       // Button
-      Gtk::Button *w_button_estimate_rt;
-      Gtk::Button *w_button1;
-      Gtk::Button *w_button2;
-      Gtk::Button *w_button3;
-      Gtk::Button *w_button4;
+      Gtk::Button *button_update;
+      Gtk::Button *button_detection;
+      Gtk::Button *button_matching;
+      Gtk::Button *button_estimate;
+      //Gtk::Button *w_button1;
+      //Gtk::Button *w_button2;
+      //Gtk::Button *w_button3;
+      //Gtk::Button *w_button4;
 
       Gtk::VScale* percentage_points;
       Gtk::CheckButton * button_sift;
       Gtk::CheckButton * button_surf;
       Gtk::CheckButton * button_bruteforce;
       Gtk::CheckButton * button_flann;
-      Gtk::Button *button_refresh;
 
   		//DrawArea* world1;
   		DrawArea* world;
