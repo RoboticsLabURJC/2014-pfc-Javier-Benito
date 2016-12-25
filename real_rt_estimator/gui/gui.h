@@ -40,9 +40,10 @@ namespace real_rt_estimator {
 
       void display();
 
-      cv::Mat image_rgb; // Image camera1 processed to manipulate with openCV
-      cv::Mat image_depth; // Image camera1 processed to manipulate with openCV
-      //cv::Mat image3; // Image camera1 processed to manipulate with openCV
+      cv::Mat image_rgb_aux;
+      cv::Mat image_rgb;
+      cv::Mat image_depth_aux;
+      cv::Mat image_depth;
 
     private:
 
@@ -61,8 +62,9 @@ namespace real_rt_estimator {
 
       // Cameras
       Gtk::Image *gtk_image_rgb;
-  		//Gtk::Image *gtk_image2;
+      Gtk::Image *gtk_image_rgb_aux;
   		Gtk::Image *gtk_image_depth;
+      Gtk::Image *gtk_image_depth_aux;
 
       // Button
       Gtk::Button *button_update;
@@ -94,6 +96,9 @@ namespace real_rt_estimator {
       void moveRT2();
       void moveRT3();
       void moveRT4();
+
+      // Button Methods
+      void updateImages();
 
   		void putPointCloud();
   		void putCamera();

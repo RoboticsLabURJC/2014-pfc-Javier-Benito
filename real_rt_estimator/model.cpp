@@ -95,39 +95,51 @@ namespace real_rt_estimator {
 		return this->pc_camera_converted;
 	}
 
+	// Gets Images from GUI
 	cv::Mat Model::getImageCameraRGB() {
-		pthread_mutex_lock(&this->controlImgRGB);
+		/*pthread_mutex_lock(&this->controlImgRGB);
 		cv::Mat result;
-		this->imageRGB.copyTo(result);
+		returnthis->imageRGB.copyTo(result);
 		pthread_mutex_unlock(&this->controlImgRGB);
-		return result;
+		return result;*/
+		return this->imageRGB;
 	}
 	cv::Mat Model::getImageCameraRGBAux(){
-		pthread_mutex_lock(&this->controlImgRGB);
+		/*pthread_mutex_lock(&this->controlImgRGB);
 		cv::Mat result;
 		this->imageRGB_aux.copyTo(result);
 		pthread_mutex_unlock(&this->controlImgRGB);
-		return result;
+		return result;*/
+		return this->imageRGB_aux;
 	}
 	cv::Mat Model::getImageCameraDEPTH() {
-		pthread_mutex_lock(&this->controlImgRGB);
+		/*pthread_mutex_lock(&this->controlImgDEPTH);
 		cv::Mat result;
 		this->imageDEPTH.copyTo(result);
-		pthread_mutex_unlock(&this->controlImgRGB);
-		return result;
+		pthread_mutex_unlock(&this->controlImgDEPTH);
+		return result;*/
+		return this->imageDEPTH;
 	}
 	cv::Mat Model::getImageCameraDEPTHAux() {
-		pthread_mutex_lock(&this->controlImgRGB);
+		/*pthread_mutex_lock(&this->controlImgDEPTH);
 		cv::Mat result;
 		this->imageDEPTH_aux.copyTo(result);
-		pthread_mutex_unlock(&this->controlImgRGB);
+		pthread_mutex_unlock(&this->controlImgDEPTH);
+		return result;*/
+		return this->imageDEPTH_aux;
+	}
+	cv::Mat Model::getImageCameraRGBMatches() {
+		pthread_mutex_lock(&this->controlImgMatches);
+		cv::Mat result;
+		this->imageRGBMatches.copyTo(result);
+		pthread_mutex_unlock(&this->controlImgMatches);
 		return result;
 	}
-	cv::Mat Model::getImageCameraMatches() {
-		pthread_mutex_lock(&this->controlMatches);
+	cv::Mat Model::getImageCameraDEPTHMatches() {
+		pthread_mutex_lock(&this->controlImgMatches);
 		cv::Mat result;
-		this->imageMatches.copyTo(result);
-		pthread_mutex_unlock(&this->controlMatches);
+		this->imageDEPTHMatches.copyTo(result);
+		pthread_mutex_unlock(&this->controlImgMatches);
 		return result;
 	}
 
@@ -177,45 +189,48 @@ namespace real_rt_estimator {
 		/*if (this->isChangeImageAux) {
 			this->updateImageRGBAux(this->dataRGB);
 		}*/
-		data.copyTo(imageRGB); // FIXME: Evitar copyTo
+		data.copyTo(currentImageRGB); // FIXME: Evitar copyTo
 		//memcpy((unsigned char *) imageRGB.data ,&(data.data), imageRGB.cols*imageRGB.rows * 3);
 
 		//this->dataRGB = data;
 		pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
-	void Model::updateImageRGBAux(cv::Mat data){
-		//pthread_mutex_lock(&this->controlImgRGB);
-		data.copyTo(imageRGB_aux);
-		//memcpy((unsigned char *) imageRGB_aux.data ,&(data.data), imageRGB_aux.cols*imageRGB_aux.rows * 3);
-		//pthread_mutex_unlock(&this->controlImgRGB);
+	void Model::updateImageRGBAux(){
+		imageRGB.copyTo(imageRGB_aux);
 	}
 
 	void Model::updateImageDEPTH(cv::Mat data){
+		//std::cout <<  "-------- Window 3x3 --------" << std::endl;
 		pthread_mutex_lock(&this->controlImgRGB);
+		//std::cout <<  "-------- Window 3x11111113 --------" << std::endl;
 		/*if (this->isChangeImageAux) {
 			this->updateImageDEPTHAux(this->dataDEPTH);
 			this->isChangeImageAux = false;
 		}*/
-		data.copyTo(imageDEPTH);
+		data.copyTo(currentImageDEPTH);
 		//memcpy((unsigned char *) imageDEPTH.data ,&(data.data), imageDEPTH.cols*imageDEPTH.rows * 3);
 		//this->dataDEPTH = data;
 		pthread_mutex_unlock(&this->controlImgRGB);
 	}
 
-	void Model::updateImageDEPTHAux(cv::Mat data){
-		//pthread_mutex_lock(&this->controlImgDEPTH);
-		data.copyTo(imageDEPTH_aux);
-		//memcpy((unsigned char *) imageDEPTH_aux.data ,&(data.data), imageDEPTH_aux.cols*imageDEPTH_aux.rows * 3);
-		//pthread_mutex_unlock(&this->controlImgDEPTH);
+	void Model::updateImageDEPTHAux() {
+		imageDEPTH.copyTo(imageDEPTH_aux);
 	}
-// 	cv::Mat Model::getImage() {
-// 		pthread_mutex_lock(&this->controlGui);
-// 		cv::Mat result = image1.clone();
-// 		pthread_mutex_unlock(&this->controlGui);
-// 		return result;
-// 	}
 
+	void Model::updateGuiImages() {
+		// update aux (n-1)
+		this->updateImageRGBAux();
+		this->updateImageDEPTHAux();
+
+		// update current (n)
+		pthread_mutex_lock(&this->controlImgRGB);
+		currentImageRGB.copyTo(imageRGB);
+		pthread_mutex_unlock(&this->controlImgRGB);
+		pthread_mutex_lock(&this->controlImgRGB);
+		currentImageDEPTH.copyTo(imageDEPTH);
+		pthread_mutex_unlock(&this->controlImgRGB);
+	}
 
 	void Model::changeImageAux() {
 		this->isChangeImageAux = true;
@@ -518,7 +533,7 @@ namespace real_rt_estimator {
 
 				cv::Mat imgMatches;
 				cv::drawMatches(this->imageRGB, keypoints1, this->imageRGB_aux, keypoints2, matches_aux, imgMatches);
-				this->imageMatches = imgMatches;
+				this->imageRGBMatches = imgMatches;
 
 				/////////////////////////////////////////////////////////////
 

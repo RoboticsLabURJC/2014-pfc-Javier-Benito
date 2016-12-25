@@ -62,9 +62,9 @@ namespace real_rt_estimator {
 		Model();
 		virtual ~Model();
 
-	    pthread_mutex_t controlImgRGB;
+	  pthread_mutex_t controlImgRGB;
 		pthread_mutex_t controlImgDEPTH;
-		pthread_mutex_t controlMatches;
+		pthread_mutex_t controlImgMatches;
     pthread_mutex_t controlPcConverted;
 
 		std::vector<jderobot::RGBPoint> get_pc();
@@ -72,23 +72,23 @@ namespace real_rt_estimator {
     std::vector<jderobot::RGBPoint> get_pc_camera();
     std::vector<jderobot::RGBPoint> get_pc_camera_converted();
 
-	    cv::Mat getImageCameraRGB();
+	  cv::Mat getImageCameraRGB();
 		cv::Mat getImageCameraRGBAux();
-	    cv::Mat getImageCameraDEPTH();
+	  cv::Mat getImageCameraDEPTH();
 		cv::Mat getImageCameraDEPTHAux();
-		cv::Mat getImageCameraMatches();
+		cv::Mat getImageCameraRGBMatches();
+    cv::Mat getImageCameraDEPTHMatches();
 
 		void createImageRGB(cv::Mat data);
 		void createImageRGBAux(cv::Mat data);
 		void createImageDEPTH(cv::Mat data);
 		void createImageDEPTHAux(cv::Mat data);
 
-	    void createEmptyImageRGB();
+	  void createEmptyImageRGB();
  		void createEmptyImageDEPTH();
-	    void updateImageRGB(cv::Mat data);
-		void updateImageRGBAux(cv::Mat data);
+	  void updateImageRGB(cv::Mat data);
 		void updateImageDEPTH(cv::Mat data);
-		void updateImageDEPTHAux(cv::Mat data);
+    void updateGuiImages();
 
     void changeImageAux();
 
@@ -130,11 +130,14 @@ namespace real_rt_estimator {
 
 	    //typedef std::vector<cv::KeyPoint> vectorkp;
 
-		cv::Mat imageRGB;
+		cv::Mat currentImageRGB;
+    cv::Mat imageRGB;
 		cv::Mat imageRGB_aux;
+    cv::Mat currentImageDEPTH;
 		cv::Mat imageDEPTH;
 		cv::Mat imageDEPTH_aux;
-		cv::Mat imageMatches;
+		cv::Mat imageRGBMatches;
+    cv::Mat imageDEPTHMatches;
 
 		cv::Mat temp_imageRGB;
 		cv::Mat temp_imageRGB_aux;
@@ -173,6 +176,10 @@ namespace real_rt_estimator {
 
     bool _firstIteration;
     int iterationCloud;
+
+    // private methods
+    void updateImageRGBAux();
+		void updateImageDEPTHAux();
 
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc;
 		//pcl::PointCloud<pcl::PointXYZRGBA>::Ptr pc_converted;

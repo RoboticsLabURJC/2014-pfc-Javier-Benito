@@ -98,7 +98,7 @@ namespace real_rt_estimator {
   }
 
   void Control::update() {
-
+    // FIXME: SE ACTUALIZAN A LA VEZ LA IMAGEN RGB Y PROFUNDIDAD?? PROBLEMAS CONCURRENCIA??
     if(cameraRGBOn) {
   	  //Get de data from the camera and stores de image in the shared memory periodically (see threadcontrol)
   		//jderobot::ImageDataPtr data = cprxRGB->getImageData();

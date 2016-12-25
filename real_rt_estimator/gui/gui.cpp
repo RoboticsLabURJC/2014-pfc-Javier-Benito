@@ -19,8 +19,9 @@ namespace real_rt_estimator {
     refXml->get_widget("secondarywindow", secondarywindow);
     // Camera images
     refXml->get_widget("image_rgb", gtk_image_rgb);
-    //refXml->get_widget("image2", gtk_image2);
+    refXml->get_widget("image_rgb_aux", gtk_image_rgb_aux);
     refXml->get_widget("image_depth", gtk_image_depth);
+    refXml->get_widget("image_depth_aux", gtk_image_depth_aux);
 
     //Button
     refXml->get_widget("button_update", button_update);
@@ -38,13 +39,13 @@ namespace real_rt_estimator {
     refXml->get_widget("button_bruteforce", button_bruteforce);
     refXml->get_widget("button_flann", button_flann);
 
+    button_update->signal_clicked().connect(sigc::mem_fun(this,&Gui::updateImages));
     button_estimate->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
     //w_button1->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT1));
     //w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
     //w_button3->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT3));
     //w_button4->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT4));
 
-    button_update->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimatePoints));
 
 		//opengl world
 		refXml->get_widget_derived("drawingarea1",world);
@@ -91,7 +92,7 @@ namespace real_rt_estimator {
         this->image_rgb = this->sm->getImageCameraRGBAux();
         setCamara(this->image_rgb, 1);
 
-        this->image_depth = this->sm->getImageCameraMatches();
+        this->image_depth = this->sm->getImageCameraRGBMatches();
         setCamara(this->image_depth, 3);
 
         std::cout << "5" << std::endl;
@@ -160,7 +161,7 @@ namespace real_rt_estimator {
 
       //std::cout << "6" << std::endl;
       /*if (this->sm->isEstimated()) {
-        this->image_depth = this->sm->getImageCameraMatches();
+        this->image_depth = this->sm->getImageCameraRGBMatches();
         setCamara(this->image_depth, 3);
         this->putPointCloud();
       }*/
@@ -184,10 +185,23 @@ namespace real_rt_estimator {
     }
 
     void Gui::display() {
-        ShowImage();
+        //ShowImage();
         while (gtkmain.events_pending())
             gtkmain.iteration();
     }
+
+
+  void Gui::updateImages() {
+    this->sm->updateGuiImages();
+    this->image_rgb_aux = this->sm->getImageCameraRGBAux();
+    setCamara(this->image_rgb_aux, 1);
+    this->image_rgb = this->sm->getImageCameraRGB();
+    setCamara(this->image_rgb, 2);
+    this->image_depth_aux = this->sm->getImageCameraDEPTHAux();
+    setCamara(this->image_depth_aux, 3);
+    this->image_depth = this->sm->getImageCameraDEPTH();
+    setCamara(this->image_depth, 4);
+  }
 
 	void Gui::putPointCloud() {
 
@@ -260,24 +274,32 @@ namespace real_rt_estimator {
     // First parameter is the widget which will show the image and the id indicates which widget is. This is useful when we have
     // two cameras and we want to choose which one will offer us the image.
     void Gui::setCamara(const cv::Mat image, int id) {
-        // Set image
-        Glib::RefPtr<Gdk::Pixbuf> imgBuff = Gdk::Pixbuf::create_from_data((const guint8*) image.data,
-                Gdk::COLORSPACE_RGB,
-                false,
-                8,
-                image.cols,
-                image.rows,
-                image.step);
-        switch (id) {
-    			case 1:
-    				gtk_image_rgb->clear();
-    				gtk_image_rgb->set(imgBuff);
-            break;
-    			case 2:
-            gtk_image_depth->clear();
-    				gtk_image_depth->set(imgBuff);
-            break;
-            }
+      // Set image
+      Glib::RefPtr<Gdk::Pixbuf> imgBuff = Gdk::Pixbuf::create_from_data((const guint8*) image.data,
+              Gdk::COLORSPACE_RGB,
+              false,
+              8,
+              image.cols,
+              image.rows,
+              image.step);
+      switch (id) {
+  			case 1:
+  				gtk_image_rgb_aux->clear();
+  				gtk_image_rgb_aux->set(imgBuff);
+          break;
+  			case 2:
+          gtk_image_rgb->clear();
+  				gtk_image_rgb->set(imgBuff);
+          break;
+        case 3:
+          gtk_image_depth_aux->clear();
+          gtk_image_depth_aux->set(imgBuff);
+          break;
+        case 4:
+          gtk_image_depth->clear();
+          gtk_image_depth->set(imgBuff);
+          break;
+      }
     }
 
 
