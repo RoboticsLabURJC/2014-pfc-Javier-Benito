@@ -362,6 +362,14 @@ namespace real_rt_estimator {
 		}
 	}
 
+	void Model::calculatePoints(cv::String detectionMode, cv::String detectionFilterMode) {
+		if (!detectionMode.empty()) {
+			
+		}
+		std::cout <<  "wa: " << detectionMode << std::endl;
+		std::cout <<  "weee: " << detectionFilterMode << std::endl;
+	}
+
 	int Model::doSiftAndGetPoints() {
 
 		// GetTems

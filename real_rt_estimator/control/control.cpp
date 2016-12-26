@@ -3,9 +3,12 @@
 
 namespace real_rt_estimator {
 
+  cv::String detectionMode;
+  cv::String detectionFilterMode;
+
   bool cameraRGBOn = false;
   bool cameraDEPTHOn = false;
-  bool estimatePointsOn = false;
+  bool calculatePointsOn = false;
   bool estimateMatrixOn = false;
   bool correctEstimate = false;
 
@@ -115,13 +118,13 @@ namespace real_rt_estimator {
       this->sm->updateImageDEPTH(dataDEPTH);
     }
 
-    if (estimatePointsOn) {
-      if (this->sm->doSiftAndGetPoints()) {
+    if (calculatePointsOn) {
+        this->sm->calculatePoints(detectionMode, detectionFilterMode);
         //this->sm->putPointCloud();
-        estimatePointsOn = false;
+        calculatePointsOn = false;
         correctEstimate = true;
         estimatePointsDone = true;
-      }
+
     }
 
     if (estimateMatrixOn && correctEstimate) {
@@ -135,8 +138,10 @@ namespace real_rt_estimator {
 
   }
 
-  void Control::estimatePoints() {
-    estimatePointsOn = true;
+  void Control::calculatePoints(cv::String mode, cv::String filter) {
+    detectionMode = mode;
+    detectionFilterMode = filter;
+    calculatePointsOn = true;
   }
 
   void Control::estimateMatrix() {

@@ -66,19 +66,24 @@ namespace real_rt_estimator {
   		Gtk::Image *gtk_image_depth;
       Gtk::Image *gtk_image_depth_aux;
 
-      // Button
+      // Buttons
       Gtk::Button *button_update;
       Gtk::Button *button_detection;
       Gtk::Button *button_matching;
       Gtk::Button *button_estimate;
+
       //Gtk::Button *w_button1;
       //Gtk::Button *w_button2;
       //Gtk::Button *w_button3;
       //Gtk::Button *w_button4;
 
+      // Detection check buttons
       Gtk::VScale* percentage_points;
       Gtk::CheckButton * button_sift;
       Gtk::CheckButton * button_surf;
+      Gtk::CheckButton * button_borderline;
+
+
       Gtk::CheckButton * button_bruteforce;
       Gtk::CheckButton * button_flann;
 
@@ -90,7 +95,7 @@ namespace real_rt_estimator {
       void setCamara(const cv::Mat image, int id);
   		void ShowImage();
 
-      void estimatePoints();
+      //void estimatePoints();
       void estimateCurrentRT();
       void moveRT1();
       void moveRT2();
@@ -99,10 +104,21 @@ namespace real_rt_estimator {
 
       // Button Methods
       void updateImages();
+      void detectionPoints();
 
   		void putPointCloud();
   		void putCamera();
 
+
+      //Checks if the button has been clicked
+      void button_sift_clicked();
+      void button_surf_clicked();
+      void button_borderline_clicked();
+
+      // Checkbox control
+      int sift_box;
+      int surf_box;
+      int borderline_box;
 
 
     }; //class

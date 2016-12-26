@@ -4,7 +4,12 @@ namespace real_rt_estimator {
 
     Gui::Gui(Model* sm) : gtkmain(0, 0) {
 
-        this->sm = sm;
+    this->sm = sm;
+
+    // Checkbuttons value
+    sift_box=1;
+    surf_box=0;
+    borderline_box=0;
 
 		/*Init OpenGL*/
 		if(!Gtk::GL::init_check(NULL, NULL)) {
@@ -23,23 +28,29 @@ namespace real_rt_estimator {
     refXml->get_widget("image_depth", gtk_image_depth);
     refXml->get_widget("image_depth_aux", gtk_image_depth_aux);
 
-    //Button
+    //Buttons
     refXml->get_widget("button_update", button_update);
     refXml->get_widget("button_update", button_detection);
     refXml->get_widget("button_update", button_matching);
     refXml->get_widget("button_estimate", button_estimate);
+
     //refXml->get_widget("button1", w_button1);
     //refXml->get_widget("button2", w_button2);
     //refXml->get_widget("button3", w_button3);
     //refXml->get_widget("button4", w_button4);
 
-    refXml->get_widget("percentage_points", percentage_points);
+    // Checkbuttons
     refXml->get_widget("button_sift", button_sift);
     refXml->get_widget("button_surf", button_surf);
+    refXml->get_widget("button_borderline", button_borderline);
+
     refXml->get_widget("button_bruteforce", button_bruteforce);
     refXml->get_widget("button_flann", button_flann);
 
+    refXml->get_widget("percentage_points", percentage_points);
+
     button_update->signal_clicked().connect(sigc::mem_fun(this,&Gui::updateImages));
+    button_detection->signal_clicked().connect(sigc::mem_fun(this,&Gui::detectionPoints));
     button_estimate->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
     //w_button1->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT1));
     //w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
@@ -106,9 +117,9 @@ namespace real_rt_estimator {
       std::cout << "7" << std::endl;
     }
 
-    void Gui::estimatePoints() {
+    /*void Gui::estimatePoints() {
       this->ctrl->estimatePoints();
-    }
+    }*/
 
     void Gui::estimateCurrentRT() {
       //std::cout << "2" << std::endl;
@@ -201,6 +212,25 @@ namespace real_rt_estimator {
     setCamara(this->image_depth_aux, 3);
     this->image_depth = this->sm->getImageCameraDEPTH();
     setCamara(this->image_depth, 4);
+  }
+
+  void Gui::detectionPoints() {
+    cv::String detectionMode;
+    if (sift_box) {
+      detectionMode = "sift";
+    } else if (surf_box) {
+      detectionMode = "surf";
+    }
+
+    // Filters
+    cv::String filterMode;
+    if (borderline_box) {
+      filterMode = "borderline";
+    }
+
+    this->ctrl->calculatePoints(detectionMode, filterMode);
+
+
   }
 
 	void Gui::putPointCloud() {
@@ -304,10 +334,23 @@ namespace real_rt_estimator {
 
 
 	// PRIVATE buttons
-	/*void Gui::on_clicked_button1() {
-		std::cout << "Resetting... " << std::endl;
-		model->calculateNewPointCloudxRT();
-		std::cout << "Done." << std::endl;
-	}*/
+  void Gui::button_sift_clicked() {
+		if(sift_box)
+			sift_box = 0;
+		else
+			sift_box = 1;
+  }
+  void Gui::button_surf_clicked() {
+    if(surf_box)
+      surf_box = 0;
+    else
+      surf_box = 1;
+  }
+  void Gui::button_borderline_clicked() {
+    if(borderline_box)
+      borderline_box = 0;
+    else
+      borderline_box = 1;
+  }
 
 } // namespace

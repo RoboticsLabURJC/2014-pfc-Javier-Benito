@@ -92,6 +92,9 @@ namespace real_rt_estimator {
 
     void changeImageAux();
 
+    // New
+    void calculatePoints(cv::String detectionMode, cv::String detectionFilterMode);
+
 		int doSiftAndGetPoints();
 		void estimateRT();
     bool isEstimated();
