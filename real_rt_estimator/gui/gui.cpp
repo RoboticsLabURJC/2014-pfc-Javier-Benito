@@ -30,8 +30,8 @@ namespace real_rt_estimator {
 
     //Buttons
     refXml->get_widget("button_update", button_update);
-    refXml->get_widget("button_update", button_detection);
-    refXml->get_widget("button_update", button_matching);
+    refXml->get_widget("button_detection", button_detection);
+    refXml->get_widget("button_matching", button_matching);
     refXml->get_widget("button_estimate", button_estimate);
 
     //refXml->get_widget("button1", w_button1);
@@ -203,6 +203,7 @@ namespace real_rt_estimator {
 
 
   void Gui::updateImages() {
+    std::cout << "button_update pressed" << std::endl;
     this->sm->updateGuiImages();
     this->image_rgb_aux = this->sm->getImageCameraRGBAux();
     setCamara(this->image_rgb_aux, 1);
@@ -215,6 +216,7 @@ namespace real_rt_estimator {
   }
 
   void Gui::detectionPoints() {
+    std::cout << "button_detection pressed" << std::endl;
     cv::String detectionMode;
     if (sift_box) {
       detectionMode = "sift";
@@ -229,7 +231,14 @@ namespace real_rt_estimator {
     }
 
     this->ctrl->calculatePoints(detectionMode, filterMode);
-
+    this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
+    setCamara(this->image_rgb_aux, 1);
+    this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
+    setCamara(this->image_rgb, 2);
+    /*this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
+    setCamara(this->image_depth_aux, 3);
+    this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
+    setCamara(this->image_depth, 4);*/
 
   }
 

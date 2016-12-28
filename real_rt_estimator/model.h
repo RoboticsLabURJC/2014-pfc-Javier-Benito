@@ -73,9 +73,13 @@ namespace real_rt_estimator {
     std::vector<jderobot::RGBPoint> get_pc_camera_converted();
 
 	  cv::Mat getImageCameraRGB();
+    cv::Mat getImageCameraRGBKeyPoints();
 		cv::Mat getImageCameraRGBAux();
+    cv::Mat getImageCameraRGBAuxKeyPoints();
 	  cv::Mat getImageCameraDEPTH();
+    cv::Mat getImageCameraDEPTHKeyPoints();
 		cv::Mat getImageCameraDEPTHAux();
+    cv::Mat getImageCameraDEPTHAuxKeyPoints();
 		cv::Mat getImageCameraRGBMatches();
     cv::Mat getImageCameraDEPTHMatches();
 
@@ -93,7 +97,7 @@ namespace real_rt_estimator {
     void changeImageAux();
 
     // New
-    void calculatePoints(cv::String detectionMode, cv::String detectionFilterMode);
+    bool calculatePoints(cv::String detectionMode, cv::String detectionFilterMode);
 
 		int doSiftAndGetPoints();
 		void estimateRT();
@@ -135,10 +139,14 @@ namespace real_rt_estimator {
 
 		cv::Mat currentImageRGB;
     cv::Mat imageRGB;
+    cv::Mat imageRGB_kp;
 		cv::Mat imageRGB_aux;
+    cv::Mat imageRGB_aux_kp;
     cv::Mat currentImageDEPTH;
 		cv::Mat imageDEPTH;
+    cv::Mat imageDEPTH_kp;
 		cv::Mat imageDEPTH_aux;
+    cv::Mat imageDEPTH_aux_kp;
 		cv::Mat imageRGBMatches;
     cv::Mat imageDEPTHMatches;
 

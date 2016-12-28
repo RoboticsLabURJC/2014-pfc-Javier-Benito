@@ -104,6 +104,9 @@ namespace real_rt_estimator {
 		return result;*/
 		return this->imageRGB;
 	}
+	cv::Mat Model::getImageCameraRGBKeyPoints() {
+		return this->imageRGB_kp;
+	}
 	cv::Mat Model::getImageCameraRGBAux(){
 		/*pthread_mutex_lock(&this->controlImgRGB);
 		cv::Mat result;
@@ -111,6 +114,9 @@ namespace real_rt_estimator {
 		pthread_mutex_unlock(&this->controlImgRGB);
 		return result;*/
 		return this->imageRGB_aux;
+	}
+	cv::Mat Model::getImageCameraRGBAuxKeyPoints() {
+		return this->imageRGB_aux_kp;
 	}
 	cv::Mat Model::getImageCameraDEPTH() {
 		/*pthread_mutex_lock(&this->controlImgDEPTH);
@@ -120,6 +126,9 @@ namespace real_rt_estimator {
 		return result;*/
 		return this->imageDEPTH;
 	}
+	cv::Mat Model::getImageCameraDEPTHKeyPoints() {
+		return this->imageDEPTH_kp;
+	}
 	cv::Mat Model::getImageCameraDEPTHAux() {
 		/*pthread_mutex_lock(&this->controlImgDEPTH);
 		cv::Mat result;
@@ -127,6 +136,9 @@ namespace real_rt_estimator {
 		pthread_mutex_unlock(&this->controlImgDEPTH);
 		return result;*/
 		return this->imageDEPTH_aux;
+	}
+	cv::Mat Model::getImageCameraDEPTHAuxKeyPoints() {
+		return this->imageDEPTH_kp;
 	}
 	cv::Mat Model::getImageCameraRGBMatches() {
 		pthread_mutex_lock(&this->controlImgMatches);
@@ -362,12 +374,40 @@ namespace real_rt_estimator {
 		}
 	}
 
-	void Model::calculatePoints(cv::String detectionMode, cv::String detectionFilterMode) {
-		if (!detectionMode.empty()) {
-			
+	bool Model::calculatePoints(cv::String detectionMode, cv::String detectionFilterMode) {
+		std::cout <<  "detectionMode: " << detectionMode << std::endl;
+		std::cout <<  "detectionFilterMode: " << detectionFilterMode << std::endl;
+		if (detectionMode.empty()) {
+			return false;
 		}
-		std::cout <<  "wa: " << detectionMode << std::endl;
-		std::cout <<  "weee: " << detectionFilterMode << std::endl;
+		// Local vars
+		std::vector<cv::KeyPoint> keypoints1, keypoints2;
+		cv::Mat descriptors_n, descriptors_n_aux;
+		cv::Mat inputGray1, inputGray2;
+		cv::SiftDescriptorExtractor extractor;
+
+		cv::cvtColor(this->imageRGB, inputGray1, CV_BGR2GRAY);
+		cv::cvtColor(this->imageRGB_aux, inputGray2, CV_BGR2GRAY);
+
+		cv::SiftFeatureDetector detector;
+		if (detectionMode.compare("sift") == 0) { // SIFT Detector
+			cv::SiftFeatureDetector detector;
+		} else if (detectionMode.compare("surf") == 0) { // SURF Detector
+		  int minHessian = 400;
+		  cv::SurfFeatureDetector detector(minHessian);
+		} else {
+			return false;
+		}
+		detector.detect(inputGray1, keypoints1);
+		detector.detect(inputGray2, keypoints2);
+		extractor.compute(inputGray1, keypoints1, descriptors_n);
+		extractor.compute(inputGray2, keypoints2, descriptors_n_aux);
+
+		//-- Draw keypoints
+		cv::drawKeypoints(inputGray1, keypoints1, this->imageRGB_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		cv::drawKeypoints(inputGray2, keypoints2, this->imageRGB_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		cv::drawKeypoints(this->imageDEPTH, keypoints1, this->imageDEPTH_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		cv::drawKeypoints(this->imageDEPTH_aux, keypoints2, this->imageDEPTH_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 	}
 
 	int Model::doSiftAndGetPoints() {

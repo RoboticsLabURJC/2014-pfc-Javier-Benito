@@ -119,12 +119,14 @@ namespace real_rt_estimator {
     }
 
     if (calculatePointsOn) {
-        this->sm->calculatePoints(detectionMode, detectionFilterMode);
-        //this->sm->putPointCloud();
+      if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {
         calculatePointsOn = false;
         correctEstimate = true;
         estimatePointsDone = true;
+      }
 
+
+        //this->sm->putPointCloud();
     }
 
     if (estimateMatrixOn && correctEstimate) {
