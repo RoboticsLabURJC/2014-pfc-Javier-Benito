@@ -1,5 +1,5 @@
-#ifndef SENSORS_H
-#define SENSORS_H
+#ifndef REAL_RT_ESTIMATOR_CONTROL_H
+#define REAL_RT_ESTIMATOR_CONTROL_H
 
 //ICE
 #include <iostream>
@@ -31,10 +31,11 @@ class Control {
 	public:
 
 		Control(Ice::CommunicatorPtr ic, real_rt_estimator::Model* sm);	//constructor
+
 		void update();
 		void calculatePoints(cv::String mode, cv::String filter);
 		void estimateMatrix();
-		bool isEstimatePointsDone();
+		bool isCalculatePointsDone();
 		bool isEstimateMatrixDone();
 	private:
 
@@ -49,4 +50,4 @@ class Control {
 	};
 }
 
-#endif // SENSORS_H
+#endif // REAL_RT_ESTIMATOR_CONTROL_H

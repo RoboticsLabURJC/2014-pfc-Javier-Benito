@@ -56,6 +56,9 @@ namespace real_rt_estimator {
     //w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
     //w_button3->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT3));
     //w_button4->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT4));
+    button_sift->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_sift_clicked));
+    button_surf->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_surf_clicked));
+    button_borderline->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_borderline_clicked));
 
 
 		//opengl world
@@ -79,7 +82,29 @@ namespace real_rt_estimator {
 
     }
 
+    // PUBLIC METHODS
+    void Gui::display() {
+      ShowImage();
+      while (gtkmain.events_pending())
+        gtkmain.iteration();
+    }
+
+    // PRIVATE METHODS
     void Gui::ShowImage() {
+      if (this->ctrl->isCalculatePointsDone()) {
+        this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
+        setCamara(this->image_rgb_aux, 1);
+        this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
+        setCamara(this->image_rgb, 2);
+        this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
+        setCamara(this->image_depth_aux, 3);
+        this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
+        setCamara(this->image_depth, 4);
+      }
+
+
+
+
       //std::cout << "show image" << std::endl;
       //this->image2 = this->sm->getImageCameraRGB();
       //std::cout << "2" << std::endl;
@@ -99,6 +124,7 @@ namespace real_rt_estimator {
       setCamara(this->image2, 2);
       setCamara(this->image_depth, 3);
       */
+/*
       if (this->ctrl->isEstimatePointsDone()) {
         this->image_rgb = this->sm->getImageCameraRGBAux();
         setCamara(this->image_rgb, 1);
@@ -114,7 +140,7 @@ namespace real_rt_estimator {
         std::cout << "6" << std::endl;
       }
 
-      std::cout << "7" << std::endl;
+      std::cout << "7" << std::endl;*/
     }
 
     /*void Gui::estimatePoints() {
@@ -195,11 +221,6 @@ namespace real_rt_estimator {
       this->putPointCloud();
     }
 
-    void Gui::display() {
-        //ShowImage();
-        while (gtkmain.events_pending())
-            gtkmain.iteration();
-    }
 
 
   void Gui::updateImages() {
@@ -231,15 +252,6 @@ namespace real_rt_estimator {
     }
 
     this->ctrl->calculatePoints(detectionMode, filterMode);
-    this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
-    setCamara(this->image_rgb_aux, 1);
-    this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
-    setCamara(this->image_rgb, 2);
-    /*this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
-    setCamara(this->image_depth_aux, 3);
-    this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
-    setCamara(this->image_depth, 4);*/
-
   }
 
 	void Gui::putPointCloud() {

@@ -12,7 +12,7 @@ namespace real_rt_estimator {
   bool estimateMatrixOn = false;
   bool correctEstimate = false;
 
-  bool estimatePointsDone = false;
+  bool calculatePointsDone = false;
   bool estimateMatrixDone = false;
 
   jderobot::cameraClient* camRGB=NULL;
@@ -119,14 +119,12 @@ namespace real_rt_estimator {
     }
 
     if (calculatePointsOn) {
-      if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {
+        if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {}
+        //this->sm->putPointCloud();
         calculatePointsOn = false;
         correctEstimate = true;
-        estimatePointsDone = true;
-      }
+        calculatePointsDone = true;
 
-
-        //this->sm->putPointCloud();
     }
 
     if (estimateMatrixOn && correctEstimate) {
@@ -150,9 +148,9 @@ namespace real_rt_estimator {
     estimateMatrixOn = true;
   }
 
-  bool Control::isEstimatePointsDone() {
-    if (estimatePointsDone) {
-      estimatePointsDone = false;
+  bool Control::isCalculatePointsDone() {
+    if (calculatePointsDone) {
+      calculatePointsDone = false;
       return true;
     } else {
       return false;
