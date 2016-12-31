@@ -5,14 +5,20 @@ namespace real_rt_estimator {
 
   cv::String detectionMode;
   cv::String detectionFilterMode;
+  cv::String matchingMode;
+  cv::String matchingFilterMode;
 
   bool cameraRGBOn = false;
   bool cameraDEPTHOn = false;
   bool calculatePointsOn = false;
   bool estimateMatrixOn = false;
-  bool correctEstimate = false;
+  bool calculateMatchingOn = false;
 
-  bool calculatePointsDone = false;
+  bool correctPointsCalculation = false;
+  bool correctMatchingCalculation = false;
+
+  bool calculationPointsDone = false;
+  bool calculationMatchingDone = false;
   bool estimateMatrixDone = false;
 
   jderobot::cameraClient* camRGB=NULL;
@@ -119,23 +125,22 @@ namespace real_rt_estimator {
     }
 
     if (calculatePointsOn) {
-        if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {}
-        //this->sm->putPointCloud();
+      if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {
         calculatePointsOn = false;
-        correctEstimate = true;
-        calculatePointsDone = true;
-
+        correctPointsCalculation = true;
+        calculationPointsDone = true;
+      }
+    }
+    if (calculateMatchingOn && correctPointsCalculation) {
+      if (this->sm->calculateMatching(matchingMode, matchingFilterMode)) {
+        calculateMatchingOn = false;
+        correctMatchingCalculation = true;
+        calculationMatchingDone = true;
+      }
     }
 
-    if (estimateMatrixOn && correctEstimate) {
-      //std::cout << "ESTIMATE" << std::endl;
-      this->sm->estimateRT();
-      //std::cout << "ESTIMATE FIN" << std::endl;
-      correctEstimate = false;
-      estimateMatrixOn = false;
-      estimateMatrixDone = true;
-    }
-
+    //this->sm->estimateRT();
+    //std::cout << "ESTIMATE FIN" << std::endl;
   }
 
   void Control::calculatePoints(cv::String mode, cv::String filter) {
@@ -144,13 +149,28 @@ namespace real_rt_estimator {
     calculatePointsOn = true;
   }
 
+  void Control::calculateMatching(cv::String mode, cv::String filter) {
+    matchingMode = mode;
+    matchingFilterMode = filter;
+    calculateMatchingOn = true;
+  }
+
   void Control::estimateMatrix() {
     estimateMatrixOn = true;
   }
 
-  bool Control::isCalculatePointsDone() {
-    if (calculatePointsDone) {
-      calculatePointsDone = false;
+  bool Control::isCalculationPointsDone() {
+    if (calculationPointsDone) {
+      calculationPointsDone = false;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool Control::isCalculationMatchingDone() {
+    if (calculationMatchingDone) {
+      calculationMatchingDone = false;
       return true;
     } else {
       return false;

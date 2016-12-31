@@ -34,8 +34,10 @@ class Control {
 
 		void update();
 		void calculatePoints(cv::String mode, cv::String filter);
+		void calculateMatching(cv::String mode, cv::String filter);
 		void estimateMatrix();
-		bool isCalculatePointsDone();
+		bool isCalculationPointsDone();
+		bool isCalculationMatchingDone();
 		bool isEstimateMatrixDone();
 	private:
 

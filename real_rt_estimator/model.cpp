@@ -248,9 +248,9 @@ namespace real_rt_estimator {
 		this->isChangeImageAux = true;
 	}
 
-	bool Model::sortByDistance(const Model::myMatch &lhs, const Model::myMatch &rhs) {
-		return ((lhs.matchDistance + lhs.matchAprox) < (rhs.matchDistance + rhs.matchAprox));
-		//return ((lhs.matchDistance) < (rhs.matchDistance));
+	bool Model::sortByDistance(const cv::DMatch &lhs, const cv::DMatch &rhs) {
+		//return ((lhs.matchDistance + lhs.matchAprox) < (rhs.matchDistance + rhs.matchAprox));
+		return ((lhs.distance) < (rhs.distance));
 	}
 
 	jderobot::RGBPoint Model::getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth) {
@@ -382,7 +382,6 @@ namespace real_rt_estimator {
 		}
 		// Local vars
 		std::vector<cv::KeyPoint> keypoints1, keypoints2;
-		cv::Mat descriptors_n, descriptors_n_aux;
 		cv::Mat inputGray1, inputGray2;
 		cv::SiftDescriptorExtractor extractor;
 
@@ -400,14 +399,42 @@ namespace real_rt_estimator {
 		}
 		detector.detect(inputGray1, keypoints1);
 		detector.detect(inputGray2, keypoints2);
-		extractor.compute(inputGray1, keypoints1, descriptors_n);
-		extractor.compute(inputGray2, keypoints2, descriptors_n_aux);
+		extractor.compute(inputGray1, keypoints1, this->descriptors_n);
+		extractor.compute(inputGray2, keypoints2, this->descriptors_n_aux);
 
 		//-- Draw keypoints
 		cv::drawKeypoints(inputGray1, keypoints1, this->imageRGB_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(inputGray2, keypoints2, this->imageRGB_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(this->imageDEPTH, keypoints1, this->imageDEPTH_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(this->imageDEPTH_aux, keypoints2, this->imageDEPTH_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+	}
+
+	bool Model::calculateMatching(cv::String matchingMode, cv::String matchingFilterMode) {
+		std::cout <<  "matchingMode: " << matchingMode << std::endl;
+		std::cout <<  "matchingFilterMode: " << matchingFilterMode << std::endl;
+		if (matchingMode.empty()) {
+			return false;
+		}
+
+		std::vector<cv::DMatch> matches;
+		if (matchingMode.compare("bruteforce") == 0) { // brute force matcher
+			cv::BruteForceMatcher<cv::L2<float> > matcher;
+			matcher.match(this->descriptors_n, this->descriptors_n_aux, matches);
+		} else if (matchingMode.compare("flann") == 0) { // flann matcher
+			cv::FlannBasedMatcher matcher;
+			matcher.match(this->descriptors_n, this->descriptors_n_aux, matches);
+		//} else if (matchingMode.compare("correlation") == 0) { // manual correlation matcher
+		}
+
+
+
+		//Sort new match vector, best first
+		std::sort(matches.begin(), matches.end(), sortByDistance);
+
+		for(int i=0; i<((int)matches.size()); i++){
+			std::cout <<  "matcherrrr: " << matches[i].distance << std::endl;
+		}
+
 	}
 
 	int Model::doSiftAndGetPoints() {
@@ -426,7 +453,6 @@ namespace real_rt_estimator {
 
 			// Local vars
 			std::vector<cv::KeyPoint> keypoints1, keypoints2;
-			cv::Mat descriptors_n, descriptors_n_aux;
 			cv::Mat inputGray1, inputGray2;
 			cv::SiftDescriptorExtractor extractor;
 
@@ -502,7 +528,7 @@ namespace real_rt_estimator {
 
 
 				//Sort new match vector, best first
-				std::sort(this->myMatches.begin(), this->myMatches.end(), sortByDistance);
+				//std::sort(this->myMatches.begin(), this->myMatches.end(), sortByDistance);
 
 				/*for(int i=0; i<this->myMatches.size(); i++){
 					std::cout <<  i << std::endl;

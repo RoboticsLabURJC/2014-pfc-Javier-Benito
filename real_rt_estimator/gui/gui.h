@@ -82,10 +82,11 @@ namespace real_rt_estimator {
       Gtk::CheckButton * button_sift;
       Gtk::CheckButton * button_surf;
       Gtk::CheckButton * button_borderline;
-
-
       Gtk::CheckButton * button_bruteforce;
       Gtk::CheckButton * button_flann;
+      Gtk::CheckButton * button_correlation;
+      Gtk::CheckButton * button_outstanding;
+
 
   		//DrawArea* world1;
   		DrawArea* world;
@@ -105,6 +106,7 @@ namespace real_rt_estimator {
       // Button Methods
       void updateImages();
       void detectionPoints();
+      void matchingPoints();
 
   		void putPointCloud();
   		void putCamera();
@@ -114,11 +116,19 @@ namespace real_rt_estimator {
       void button_sift_clicked();
       void button_surf_clicked();
       void button_borderline_clicked();
+      void button_bruteforce_clicked();
+      void button_flann_clicked();
+      void button_correlation_clicked();
+      void button_outstanding_clicked();
 
       // Checkbox control
       int sift_box;
       int surf_box;
       int borderline_box;
+      int bruteforce_box;
+      int flann_box;
+      int correlation_box;
+      int outstanding_box;
 
 
     }; //class

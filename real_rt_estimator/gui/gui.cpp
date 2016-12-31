@@ -10,6 +10,10 @@ namespace real_rt_estimator {
     sift_box=1;
     surf_box=0;
     borderline_box=0;
+    bruteforce_box=1;
+    flann_box = 0;
+    correlation_box = 0;
+    outstanding_box = 0;
 
 		/*Init OpenGL*/
 		if(!Gtk::GL::init_check(NULL, NULL)) {
@@ -43,22 +47,31 @@ namespace real_rt_estimator {
     refXml->get_widget("button_sift", button_sift);
     refXml->get_widget("button_surf", button_surf);
     refXml->get_widget("button_borderline", button_borderline);
-
     refXml->get_widget("button_bruteforce", button_bruteforce);
     refXml->get_widget("button_flann", button_flann);
+    refXml->get_widget("button_correlation", button_correlation);
+    refXml->get_widget("button_outstanding", button_outstanding);
+
 
     refXml->get_widget("percentage_points", percentage_points);
 
     button_update->signal_clicked().connect(sigc::mem_fun(this,&Gui::updateImages));
     button_detection->signal_clicked().connect(sigc::mem_fun(this,&Gui::detectionPoints));
+    button_matching->signal_clicked().connect(sigc::mem_fun(this,&Gui::matchingPoints));
     button_estimate->signal_clicked().connect(sigc::mem_fun(this,&Gui::estimateCurrentRT));
+
     //w_button1->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT1));
     //w_button2->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT2));
     //w_button3->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT3));
     //w_button4->signal_clicked().connect(sigc::mem_fun(this,&Gui::moveRT4));
+
     button_sift->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_sift_clicked));
     button_surf->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_surf_clicked));
     button_borderline->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_borderline_clicked));
+    button_bruteforce->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_bruteforce_clicked));
+    button_flann->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_flann_clicked));
+    button_correlation->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_correlation_clicked));
+    button_outstanding->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_outstanding_clicked));
 
 
 		//opengl world
@@ -91,7 +104,7 @@ namespace real_rt_estimator {
 
     // PRIVATE METHODS
     void Gui::ShowImage() {
-      if (this->ctrl->isCalculatePointsDone()) {
+      if (this->ctrl->isCalculationPointsDone()) {
         this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
         setCamara(this->image_rgb_aux, 1);
         this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
@@ -254,6 +267,26 @@ namespace real_rt_estimator {
     this->ctrl->calculatePoints(detectionMode, filterMode);
   }
 
+  void Gui::matchingPoints() {
+    std::cout << "button_matching pressed" << std::endl;
+    cv::String detectionMode;
+    if (bruteforce_box) {
+      detectionMode = "bruteforce";
+    } else if (flann_box) {
+      detectionMode = "flann";
+    } else if (correlation_box) {
+      detectionMode = "correlation";
+    }
+
+    // Filters
+    cv::String filterMode;
+    if (outstanding_box) {
+      filterMode = "outstanding";
+    }
+
+    this->ctrl->calculateMatching(detectionMode, filterMode);
+  }
+
 	void Gui::putPointCloud() {
 
       // Dibujamos la cámara
@@ -372,6 +405,30 @@ namespace real_rt_estimator {
       borderline_box = 0;
     else
       borderline_box = 1;
+  }
+  void Gui::button_bruteforce_clicked() {
+    if(bruteforce_box)
+      bruteforce_box = 0;
+    else
+      bruteforce_box = 1;
+  }
+  void Gui::button_flann_clicked() {
+    if(flann_box)
+      flann_box = 0;
+    else
+      flann_box = 1;
+  }
+  void Gui::button_correlation_clicked() {
+    if(correlation_box)
+      correlation_box = 0;
+    else
+      correlation_box = 1;
+  }
+  void Gui::button_outstanding_clicked() {
+    if(outstanding_box)
+      outstanding_box = 0;
+    else
+      outstanding_box = 1;
   }
 
 } // namespace

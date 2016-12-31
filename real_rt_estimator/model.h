@@ -98,6 +98,7 @@ namespace real_rt_estimator {
 
     // New
     bool calculatePoints(cv::String detectionMode, cv::String detectionFilterMode);
+    bool calculateMatching(cv::String matchingMode, cv::String matchingFilterMode);
 
 		int doSiftAndGetPoints();
 		void estimateRT();
@@ -155,6 +156,8 @@ namespace real_rt_estimator {
 		cv::Mat temp_imageDEPTH;
 		cv::Mat temp_imageDEPTH_aux;
 
+    cv::Mat descriptors_n, descriptors_n_aux;
+
     bool isChangeImageAux;
 
 		real_rt_estimator::myprogeo *mypro;
@@ -200,7 +203,7 @@ namespace real_rt_estimator {
 
 
 
-		static bool sortByDistance(const myMatch &lhs, const myMatch &rhs);
+		static bool sortByDistance(const cv::DMatch &lhs, const cv::DMatch &rhs);
 
 
     void moveCamera(Eigen::Matrix4f RT_estimate);
