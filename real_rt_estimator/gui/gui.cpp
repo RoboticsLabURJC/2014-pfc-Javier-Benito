@@ -43,6 +43,8 @@ namespace real_rt_estimator {
     //refXml->get_widget("button3", w_button3);
     //refXml->get_widget("button4", w_button4);
 
+    refXml->get_widget("percentage_points", percentage_points);
+
     // Checkbuttons
     refXml->get_widget("button_sift", button_sift);
     refXml->get_widget("button_surf", button_surf);
@@ -52,8 +54,6 @@ namespace real_rt_estimator {
     refXml->get_widget("button_correlation", button_correlation);
     refXml->get_widget("button_outstanding", button_outstanding);
 
-
-    refXml->get_widget("percentage_points", percentage_points);
 
     button_update->signal_clicked().connect(sigc::mem_fun(this,&Gui::updateImages));
     button_detection->signal_clicked().connect(sigc::mem_fun(this,&Gui::detectionPoints));
@@ -112,6 +112,14 @@ namespace real_rt_estimator {
         this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
         setCamara(this->image_depth_aux, 3);
         this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
+        setCamara(this->image_depth, 4);
+      }
+      if (this->ctrl->isCalculationMatchingDone()) {
+        gtk_image_rgb_aux->clear();
+        gtk_image_depth_aux->clear();
+        this->image_rgb = this->sm->getImageCameraRGBMatches();
+        setCamara(this->image_rgb, 2);
+        this->image_depth = this->sm->getImageCameraDEPTHMatches();
         setCamara(this->image_depth, 4);
       }
 
@@ -284,7 +292,9 @@ namespace real_rt_estimator {
       filterMode = "outstanding";
     }
 
-    this->ctrl->calculateMatching(detectionMode, filterMode);
+    int percentagePoints = percentage_points->get_value();
+
+    this->ctrl->calculateMatching(detectionMode, filterMode, percentagePoints);
   }
 
 	void Gui::putPointCloud() {

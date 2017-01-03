@@ -381,12 +381,10 @@ namespace real_rt_estimator {
 			return false;
 		}
 		// Local vars
-		std::vector<cv::KeyPoint> keypoints1, keypoints2;
-		cv::Mat inputGray1, inputGray2;
-		cv::SiftDescriptorExtractor extractor;
+		cv::SiftDescriptorExtractor extractor; // TODO: WTF SIFT
 
-		cv::cvtColor(this->imageRGB, inputGray1, CV_BGR2GRAY);
-		cv::cvtColor(this->imageRGB_aux, inputGray2, CV_BGR2GRAY);
+		cv::cvtColor(this->imageRGB, this->imageGray, CV_BGR2GRAY);
+		cv::cvtColor(this->imageRGB_aux, this->imageGray_aux, CV_BGR2GRAY);
 
 		cv::SiftFeatureDetector detector;
 		if (detectionMode.compare("sift") == 0) { // SIFT Detector
@@ -397,19 +395,20 @@ namespace real_rt_estimator {
 		} else {
 			return false;
 		}
-		detector.detect(inputGray1, keypoints1);
-		detector.detect(inputGray2, keypoints2);
-		extractor.compute(inputGray1, keypoints1, this->descriptors_n);
-		extractor.compute(inputGray2, keypoints2, this->descriptors_n_aux);
+		detector.detect(this->imageGray, this->keypoints_n);
+		detector.detect(this->imageGray_aux, this->keypoints_n_aux);
+		extractor.compute(this->imageGray, this->keypoints_n, this->descriptors_n);
+		extractor.compute(this->imageGray_aux, this->keypoints_n_aux, this->descriptors_n_aux);
 
 		//-- Draw keypoints
-		cv::drawKeypoints(inputGray1, keypoints1, this->imageRGB_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
-		cv::drawKeypoints(inputGray2, keypoints2, this->imageRGB_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
-		cv::drawKeypoints(this->imageDEPTH, keypoints1, this->imageDEPTH_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
-		cv::drawKeypoints(this->imageDEPTH_aux, keypoints2, this->imageDEPTH_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		cv::drawKeypoints(this->imageGray, this->keypoints_n, this->imageRGB_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		cv::drawKeypoints(this->imageGray_aux, this->keypoints_n_aux, this->imageRGB_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		cv::drawKeypoints(this->imageDEPTH, this->keypoints_n, this->imageDEPTH_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		cv::drawKeypoints(this->imageDEPTH_aux, this->keypoints_n_aux, this->imageDEPTH_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+		return true;
 	}
 
-	bool Model::calculateMatching(cv::String matchingMode, cv::String matchingFilterMode) {
+	bool Model::calculateMatching(cv::String matchingMode, cv::String matchingFilterMode, int percentagePoints) {
 		std::cout <<  "matchingMode: " << matchingMode << std::endl;
 		std::cout <<  "matchingFilterMode: " << matchingFilterMode << std::endl;
 		if (matchingMode.empty()) {
@@ -426,15 +425,52 @@ namespace real_rt_estimator {
 		//} else if (matchingMode.compare("correlation") == 0) { // manual correlation matcher
 		}
 
-
-
-		//Sort new match vector, best first
+		//Sort match vector, best first
 		std::sort(matches.begin(), matches.end(), sortByDistance);
 
-		for(int i=0; i<((int)matches.size()); i++){
+		/*for(int i=0; i<((int)matches.size()); i++){
 			std::cout <<  "matcherrrr: " << matches[i].distance << std::endl;
+		}*/
+
+		int matchingPoints_all = matches.size();
+		int matchingPoints_best = (int)(((percentagePoints+0.0)/100)*matchingPoints_all+0.49);
+
+		this->v_rgbp.resize(0);
+		this->v_rgbp_aux.resize(0);
+		std::vector<cv::DMatch> matches_aux;
+		matches_aux.resize(0);
+
+		int x_1, y_1, x_2, y_2;
+		int count = 0;
+
+		for (int i=0; i<matchingPoints_best; i++) {
+
+			x_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.x);//+0.5f);
+			y_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.y);//+0.5f);
+			x_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.x);//+0.5f);
+			y_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.y);//+0.5f);
+
+			std::cout <<  "Entramos funcion" << std::endl;
+			std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+
+			jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
+			jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
+
+			//if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
+			if (p1.z != 0 && p2.z != 0) {
+				std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+				std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
+				std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
+				this->v_rgbp.push_back(p1);
+				this->v_rgbp_aux.push_back(p2);
+				count++;
+			}
+			matches_aux.push_back(matches[i]);
 		}
 
+		cv::drawMatches(this->imageGray, this->keypoints_n, this->imageGray_aux, this->keypoints_n_aux, matches_aux, this->imageRGBMatches);
+		cv::drawMatches(this->imageDEPTH, this->keypoints_n, this->imageDEPTH_aux, this->keypoints_n_aux, matches_aux, this->imageDEPTHMatches);
+		return true;
 	}
 
 	int Model::doSiftAndGetPoints() {

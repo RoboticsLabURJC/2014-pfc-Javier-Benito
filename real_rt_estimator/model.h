@@ -98,7 +98,7 @@ namespace real_rt_estimator {
 
     // New
     bool calculatePoints(cv::String detectionMode, cv::String detectionFilterMode);
-    bool calculateMatching(cv::String matchingMode, cv::String matchingFilterMode);
+    bool calculateMatching(cv::String matchingMode, cv::String matchingFilterMode, int percentagePoints);
 
 		int doSiftAndGetPoints();
 		void estimateRT();
@@ -150,6 +150,8 @@ namespace real_rt_estimator {
     cv::Mat imageDEPTH_aux_kp;
 		cv::Mat imageRGBMatches;
     cv::Mat imageDEPTHMatches;
+    cv::Mat imageGray;
+    cv::Mat imageGray_aux;
 
 		cv::Mat temp_imageRGB;
 		cv::Mat temp_imageRGB_aux;
@@ -157,6 +159,7 @@ namespace real_rt_estimator {
 		cv::Mat temp_imageDEPTH_aux;
 
     cv::Mat descriptors_n, descriptors_n_aux;
+    std::vector<cv::KeyPoint> keypoints_n, keypoints_n_aux;
 
     bool isChangeImageAux;
 

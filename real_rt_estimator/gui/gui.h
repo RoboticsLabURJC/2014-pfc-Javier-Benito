@@ -77,8 +77,10 @@ namespace real_rt_estimator {
       //Gtk::Button *w_button3;
       //Gtk::Button *w_button4;
 
-      // Detection check buttons
+      // VScale bar
       Gtk::VScale* percentage_points;
+
+      // Detection check buttons
       Gtk::CheckButton * button_sift;
       Gtk::CheckButton * button_surf;
       Gtk::CheckButton * button_borderline;

@@ -21,6 +21,8 @@ namespace real_rt_estimator {
   bool calculationMatchingDone = false;
   bool estimateMatrixDone = false;
 
+  int percentagePoints = 100;
+
   jderobot::cameraClient* camRGB=NULL;
   jderobot::cameraClient* camDEPTH=NULL;
 
@@ -132,7 +134,7 @@ namespace real_rt_estimator {
       }
     }
     if (calculateMatchingOn && correctPointsCalculation) {
-      if (this->sm->calculateMatching(matchingMode, matchingFilterMode)) {
+      if (this->sm->calculateMatching(matchingMode, matchingFilterMode, percentagePoints)) {
         calculateMatchingOn = false;
         correctMatchingCalculation = true;
         calculationMatchingDone = true;
@@ -149,9 +151,10 @@ namespace real_rt_estimator {
     calculatePointsOn = true;
   }
 
-  void Control::calculateMatching(cv::String mode, cv::String filter) {
+  void Control::calculateMatching(cv::String mode, cv::String filter, int percentage) {
     matchingMode = mode;
     matchingFilterMode = filter;
+    percentagePoints = percentage;
     calculateMatchingOn = true;
   }
 
