@@ -380,16 +380,15 @@ namespace real_rt_estimator {
 		if (detectionMode.empty()) {
 			return false;
 		}
-		// Local vars
-		cv::SiftDescriptorExtractor extractor; // TODO: WTF SIFT
 
 		cv::cvtColor(this->imageRGB, this->imageGray, CV_BGR2GRAY);
 		cv::cvtColor(this->imageRGB_aux, this->imageGray_aux, CV_BGR2GRAY);
 
+		cv::SiftDescriptorExtractor extractor;
 		cv::SiftFeatureDetector detector;
 		if (detectionMode.compare("sift") == 0) { // SIFT Detector
-			cv::SiftFeatureDetector detector;
 		} else if (detectionMode.compare("surf") == 0) { // SURF Detector
+			cv::SurfDescriptorExtractor extractor;
 		  int minHessian = 400;
 		  cv::SurfFeatureDetector detector(minHessian);
 		} else {
@@ -416,9 +415,44 @@ namespace real_rt_estimator {
 		}
 
 		std::vector<cv::DMatch> matches;
+		matches.resize(0);
 		if (matchingMode.compare("bruteforce") == 0) { // brute force matcher
 			cv::BruteForceMatcher<cv::L2<float> > matcher;
-			matcher.match(this->descriptors_n, this->descriptors_n_aux, matches);
+			if (matchingFilterMode.compare("outstanding") != 0) {
+				matcher.match(this->descriptors_n, this->descriptors_n_aux, matches);
+
+			} else { // outstanding filter
+				std::vector<std::vector<cv::DMatch> > matches_vector;
+				matcher.knnMatch(this->descriptors_n, this->descriptors_n_aux, matches_vector, 2);
+
+				int outNumber = 0;
+				for (int i=0; i<matches_vector.size(); i++) {
+					std::cout <<  "-----------------------------------------------------" << std::endl;
+					/*
+					for (int j=0; j<matches_vector[i].size(); j++) {
+						std::cout <<  "--------------------------" << std::endl;
+						std::cout <<  "queryIdx" << matches_vector[i][j].queryIdx << std::endl;
+						std::cout <<  "trainIdx" << matches_vector[i][j].trainIdx << std::endl;
+						std::cout <<  "imgIdx" << matches_vector[i][j].imgIdx << std::endl;
+						std::cout <<  "distance" << matches_vector[i][j].distance << std::endl;
+					}*/
+					outNumber = matches_vector[i][1].distance - matches_vector[i][0].distance;
+					if (outNumber >= 100) {
+						matches.push_back(matches_vector[i][0]);
+					}
+				}
+				std::cout <<  "CUANTAS:" << matches.size() << std::endl;
+				for (int j=0; j<matches.size(); j++) {
+					std::cout <<  "queryIdx" << matches[j].queryIdx << std::endl;
+					std::cout <<  "trainIdx" << matches[j].trainIdx << std::endl;
+					std::cout <<  "imgIdx" << matches[j].imgIdx << std::endl;
+					std::cout <<  "distance" << matches[j].distance << std::endl;
+				}
+
+
+
+
+			}
 		} else if (matchingMode.compare("flann") == 0) { // flann matcher
 			cv::FlannBasedMatcher matcher;
 			matcher.match(this->descriptors_n, this->descriptors_n_aux, matches);
@@ -450,17 +484,17 @@ namespace real_rt_estimator {
 			x_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.x);//+0.5f);
 			y_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.y);//+0.5f);
 
-			std::cout <<  "Entramos funcion" << std::endl;
-			std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+			//std::cout <<  "Entramos funcion" << std::endl;
+			//std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
 
 			jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
 			jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
 
 			//if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
 			if (p1.z != 0 && p2.z != 0) {
-				std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
-				std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
-				std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
+				//std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+				//std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
+				//std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
 				this->v_rgbp.push_back(p1);
 				this->v_rgbp_aux.push_back(p2);
 				count++;
