@@ -19,7 +19,7 @@ namespace real_rt_estimator {
 
   bool calculationPointsDone = false;
   bool calculationMatchingDone = false;
-  bool estimateMatrixDone = false;
+  bool calculationEstimateRTDone = false;
 
   int percentagePoints = 100;
 
@@ -140,9 +140,13 @@ namespace real_rt_estimator {
         calculationMatchingDone = true;
       }
     }
-
-    //this->sm->estimateRT();
-    //std::cout << "ESTIMATE FIN" << std::endl;
+    if (estimateMatrixOn && correctMatchingCalculation) {
+      //if (this->sm->estimateRT()) {
+        this->sm->estimateRT();
+        estimateMatrixOn = false;
+        calculationEstimateRTDone = true;
+      //}
+    }
   }
 
   void Control::calculatePoints(cv::String mode, cv::String filter) {
@@ -180,9 +184,9 @@ namespace real_rt_estimator {
     }
   }
 
-  bool Control::isEstimateMatrixDone() {
-    if (estimateMatrixDone) {
-      estimateMatrixDone = false;
+  bool Control::isCalculationEstimateRTDone() {
+    if (calculationEstimateRTDone) {
+      calculationEstimateRTDone = false;
       return true;
     } else {
       return false;

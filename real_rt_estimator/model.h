@@ -172,8 +172,15 @@ namespace real_rt_estimator {
 			double matchDistance;
 			double matchAprox;
 		};
+    std::vector<myMatch> myMatches;
 
-		std::vector<myMatch> myMatches;
+    struct myPoint {
+      int x;
+      int y;
+      jderobot::RGBPoint rgbPoint;
+    };
+    std::vector<myPoint> myPrevPoints;
+
 
 		cv::Mat dataRGB;
 		cv::Mat dataDEPTH;

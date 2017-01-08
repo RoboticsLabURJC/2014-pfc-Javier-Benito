@@ -122,7 +122,9 @@ namespace real_rt_estimator {
         this->image_depth = this->sm->getImageCameraDEPTHMatches();
         setCamara(this->image_depth, 4);
       }
-
+      if (this->ctrl->isCalculationEstimateRTDone()) {
+        this->putPointCloud();
+      }
 
 
 

@@ -38,7 +38,7 @@ class Control {
 		void estimateMatrix();
 		bool isCalculationPointsDone();
 		bool isCalculationMatchingDone();
-		bool isEstimateMatrixDone();
+		bool isCalculationEstimateRTDone();
 	private:
 
 		Model* sm;	//Shared memory

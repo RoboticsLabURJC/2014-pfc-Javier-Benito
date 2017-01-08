@@ -475,7 +475,6 @@ namespace real_rt_estimator {
 		matches_aux.resize(0);
 
 		int x_1, y_1, x_2, y_2;
-		int count = 0;
 
 		for (int i=0; i<matchingPoints_best; i++) {
 
@@ -497,11 +496,10 @@ namespace real_rt_estimator {
 				//std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
 				this->v_rgbp.push_back(p1);
 				this->v_rgbp_aux.push_back(p2);
-				count++;
 			}
 			matches_aux.push_back(matches[i]);
 		}
-
+		std::cout <<  ">>>>>>>>>> maches calculados ---------------------------> " << this->v_rgbp.size() << std::endl;
 		cv::drawMatches(this->imageGray, this->keypoints_n, this->imageGray_aux, this->keypoints_n_aux, matches_aux, this->imageRGBMatches);
 		cv::drawMatches(this->imageDEPTH, this->keypoints_n, this->imageDEPTH_aux, this->keypoints_n_aux, matches_aux, this->imageDEPTHMatches);
 		return true;
@@ -705,20 +703,15 @@ namespace real_rt_estimator {
 	}
 
 	void Model::estimateRT() {
-		pthread_mutex_lock(&this->controlPcConverted);
-
-
-
-
-
-
+		//pthread_mutex_lock(&this->controlPcConverted);
 
 
 		// TODO: Comprobar número mínimo de puntos!!!!!!!!!
+		// FIXME: Arruba mejor
 
 
 		int num_points_for_RT = v_rgbp.size();
-		std::cout << "The points number for RT calculation is: \n" <<  (num_points_for_RT-1) << std::endl;
+		std::cout << "The points number for RT calculation is: \n" << num_points_for_RT << std::endl;
 
 		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
 		//Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
@@ -883,7 +876,7 @@ namespace real_rt_estimator {
 		}*/
 
 		//this->is_final = true;
-		pthread_mutex_unlock(&this->controlPcConverted);
+		//pthread_mutex_unlock(&this->controlPcConverted);
 
 		// Save image n to n-1 if sucess estimate
 		// FIXME: LOCK
