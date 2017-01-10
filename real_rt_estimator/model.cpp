@@ -375,7 +375,19 @@ namespace real_rt_estimator {
 	}
 
 	jderobot::RGBPoint Model::findPoint(int x, int y, std::vector<myPoint> points) {
-		// TODO:
+		for (int i=0; i<points.size(); i++) {
+			if ((x == points[i].x) && (y == points[i].y)) {
+				std::cout <<  "ENCONTRADO ////////////////////////////////////////////////////////////////" << std::endl;
+				return points[i].rgbPoint;
+			}
+		}
+		// Not found -> Default (0,0,0)
+		std::cout <<  "NOOOO ENCONTRADO ////////////////////////////////////////////////////////////////" << std::endl;
+		jderobot::RGBPoint p;
+		p.x=0;
+		p.y=0;
+		p.z=0;
+		return p;
 	}
 
 	bool Model::calculatePoints(cv::String detectionMode, cv::String detectionFilterMode) {
