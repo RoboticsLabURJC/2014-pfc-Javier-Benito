@@ -221,7 +221,7 @@ namespace real_rt_estimator {
 
 		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);
     bool isBorderPoint(int x, int y, cv::Mat* imgDepth);
-
+    jderobot::RGBPoint findPoint(int x, int y, std::vector<myPoint> points);
 
 
     };//class

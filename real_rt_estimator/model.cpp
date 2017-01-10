@@ -374,6 +374,10 @@ namespace real_rt_estimator {
 		}
 	}
 
+	jderobot::RGBPoint Model::findPoint(int x, int y, std::vector<myPoint> points) {
+		// TODO:
+	}
+
 	bool Model::calculatePoints(cv::String detectionMode, cv::String detectionFilterMode) {
 		std::cout <<  "detectionMode: " << detectionMode << std::endl;
 		std::cout <<  "detectionFilterMode: " << detectionFilterMode << std::endl;
@@ -404,6 +408,19 @@ namespace real_rt_estimator {
 		cv::drawKeypoints(this->imageGray_aux, this->keypoints_n_aux, this->imageRGB_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(this->imageDEPTH, this->keypoints_n, this->imageDEPTH_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(this->imageDEPTH_aux, this->keypoints_n_aux, this->imageDEPTH_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
+
+		// Save keypoints_prev, if firstTime
+		if (this->_firstIteration) {
+			this->myPrevPoints.resize(0);
+			for (int i=0; i<this->keypoints_n.size(); i++) {
+				int x = keypoints_n[i].pt.x;
+				int y = keypoints_n[i].pt.y;
+				this->myPrevPoints[i].x = x;
+				this->myPrevPoints[i].y = y;
+				this->myPrevPoints[i].rgbPoint = getPoints3D(x, y, &this->imageRGB, &this->imageDEPTH);
+			}
+			this->_firstIteration = false;
+		}
 		return true;
 	}
 
