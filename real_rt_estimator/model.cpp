@@ -396,9 +396,12 @@ namespace real_rt_estimator {
 		if (detectionMode.empty()) {
 			return false;
 		}
-
+		if (this->_firstIteration) { // Get from image_rgb_aux
+			cv::cvtColor(this->imageRGB_aux, this->imageGray_aux, CV_BGR2GRAY);
+		} else { // Copy from present
+			this->imageGray.copyTo(this->imageGray_aux);
+		}
 		cv::cvtColor(this->imageRGB, this->imageGray, CV_BGR2GRAY);
-		cv::cvtColor(this->imageRGB_aux, this->imageGray_aux, CV_BGR2GRAY);
 
 		cv::SiftDescriptorExtractor extractor;
 		cv::SiftFeatureDetector detector;
@@ -410,10 +413,16 @@ namespace real_rt_estimator {
 		} else {
 			return false;
 		}
+		if (this->_firstIteration) {
+			detector.detect(this->imageGray_aux, this->keypoints_n_aux);
+			extractor.compute(this->imageGray_aux, this->keypoints_n_aux, this->descriptors_n_aux);
+		} else {
+			//this->keypoints_n.copyTo(this->keypoints_n_aux);
+			this->descriptors_n.copyTo(this->descriptors_n_aux);
+		}
 		detector.detect(this->imageGray, this->keypoints_n);
-		detector.detect(this->imageGray_aux, this->keypoints_n_aux);
 		extractor.compute(this->imageGray, this->keypoints_n, this->descriptors_n);
-		extractor.compute(this->imageGray_aux, this->keypoints_n_aux, this->descriptors_n_aux);
+
 
 		//-- Draw keypoints
 		cv::drawKeypoints(this->imageGray, this->keypoints_n, this->imageRGB_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
@@ -421,18 +430,34 @@ namespace real_rt_estimator {
 		cv::drawKeypoints(this->imageDEPTH, this->keypoints_n, this->imageDEPTH_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(this->imageDEPTH_aux, this->keypoints_n_aux, this->imageDEPTH_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 
-		// Save keypoints_prev, if firstTime
+		// Save keypoints_prev, if firstTime and news
 		if (this->_firstIteration) {
 			this->myPrevPoints.resize(0);
-			for (int i=0; i<this->keypoints_n.size(); i++) {
-				int x = keypoints_n[i].pt.x;
-				int y = keypoints_n[i].pt.y;
-				this->myPrevPoints[i].x = x;
-				this->myPrevPoints[i].y = y;
-				this->myPrevPoints[i].rgbPoint = getPoints3D(x, y, &this->imageRGB, &this->imageDEPTH);
+			for (int i=0; i<this->keypoints_n_aux.size(); i++) {
+				int x = this->keypoints_n_aux[i].pt.x; // TODO: Round???
+				int y = this->keypoints_n_aux[i].pt.y;
+				Model::myPoint point_aux;
+				point_aux.x = x;
+				point_aux.y = y;
+				point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB_aux, &this->imageDEPTH_aux);
+				this->myPrevPoints.push_back(point_aux);
 			}
 			this->_firstIteration = false;
+		} else {
+			this->myPrevPoints = this->myNewPoints;
 		}
+		std::vector<myPoint> points_aux;
+		points_aux.resize(0);
+		for (int i=0; i<this->keypoints_n.size(); i++) {
+			int x = this->keypoints_n[i].pt.x; // TODO: Round???
+			int y = this->keypoints_n[i].pt.y;
+			Model::myPoint point_aux;
+			point_aux.x = x;
+			point_aux.y = y;
+			point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB_aux, &this->imageDEPTH_aux);
+			points_aux.push_back(point_aux);
+		}
+		this->myNewPoints = points_aux;
 		return true;
 	}
 
@@ -470,13 +495,13 @@ namespace real_rt_estimator {
 						matches.push_back(matches_vector[i][0]);
 					}
 				}
-				std::cout <<  "CUANTAS:" << matches.size() << std::endl;
+				/*std::cout <<  "CUANTAS:" << matches.size() << std::endl;
 				for (int j=0; j<matches.size(); j++) {
 					std::cout <<  "queryIdx" << matches[j].queryIdx << std::endl;
 					std::cout <<  "trainIdx" << matches[j].trainIdx << std::endl;
 					std::cout <<  "imgIdx" << matches[j].imgIdx << std::endl;
 					std::cout <<  "distance" << matches[j].distance << std::endl;
-				}
+				}*/
 
 
 
@@ -499,7 +524,7 @@ namespace real_rt_estimator {
 		int matchingPoints_best = (int)(((percentagePoints+0.0)/100)*matchingPoints_all+0.49);
 
 		this->v_rgbp.resize(0);
-		this->v_rgbp_aux.resize(0);
+		//this->v_rgbp_aux.resize(0);
 		std::vector<cv::DMatch> matches_aux;
 		matches_aux.resize(0);
 
@@ -515,14 +540,16 @@ namespace real_rt_estimator {
 			//std::cout <<  "Entramos funcion" << std::endl;
 			//std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
 
-			jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
-			jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
+			jderobot::RGBPoint p1 = findPoint(x_1, y_1, this->myNewPoints);
+			jderobot::RGBPoint p2 = findPoint(x_2, y_2, this->myPrevPoints);
+			//jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
+			//jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
 
 			//if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
 			if (p1.z != 0 && p2.z != 0) {
-				//std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
-				//std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
-				//std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
+				std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
+				std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
+				std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
 				this->v_rgbp.push_back(p1);
 				this->v_rgbp_aux.push_back(p2);
 			}
@@ -743,21 +770,21 @@ namespace real_rt_estimator {
 		std::cout << "The points number for RT calculation is: \n" << num_points_for_RT << std::endl;
 
 		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
-		//Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
-		Eigen::Vector4f points_ref_2;
+		Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
+		/*Eigen::Vector4f points_ref_2;
 		Eigen::Vector4f points_ref_2_ant;
-		Eigen::MatrixXf points_ref_2_world(num_points_for_RT, 4);
+		Eigen::MatrixXf points_ref_2_world(num_points_for_RT, 4);*/
 		std::cout << "The FINAL RT Matrix is: \n" << "[" << this->RT_final << "]" << std::endl;
 		for (int i=0; i<num_points_for_RT; i++) {
 			points_ref_1(i,0) = v_rgbp[i].x;
 			points_ref_1(i,1) = v_rgbp[i].y;
 			points_ref_1(i,2) = v_rgbp[i].z;
 			points_ref_1(i,3) = 1;
-			points_ref_2(0) = v_rgbp_aux[i].x;
-			points_ref_2(1) = v_rgbp_aux[i].y;
-			points_ref_2(2) = v_rgbp_aux[i].z;
-			points_ref_2(3) = 1;
-			points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+			points_ref_2(i,0) = v_rgbp_aux[i].x;
+			points_ref_2(i,1) = v_rgbp_aux[i].y;
+			points_ref_2(i,2) = v_rgbp_aux[i].z;
+			points_ref_2(i,3) = 1;
+			/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
 			points_ref_2_world(i,0) = points_ref_2_ant(0);
 			points_ref_2_world(i,1) = points_ref_2_ant(1);
 			points_ref_2_world(i,2) = points_ref_2_ant(2);
@@ -766,7 +793,7 @@ namespace real_rt_estimator {
 			std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
 			std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
 			std::cout << "Magia y... " << std::endl;
-			std::cout << points_ref_2_ant(0) << ", " << points_ref_2_ant(1) << ", " << points_ref_2_ant(2) << std::endl;
+			std::cout << points_ref_2_ant(0) << ", " << points_ref_2_ant(1) << ", " << points_ref_2_ant(2) << std::endl;*/
 		}
 
 
@@ -811,7 +838,7 @@ namespace real_rt_estimator {
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
 
-			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2_world).transpose();
+			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
 
 			//Eigen::Matrix4f RT_estimate = RT_final;
 
@@ -821,18 +848,35 @@ namespace real_rt_estimator {
 
 			//std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
 
-			Eigen::Vector4f points_ref_1_aux;
-			Eigen::Vector4f points_ref_2_aux;
+			Eigen::Vector4f points_ref_aux;
+			Eigen::Vector4f points_ref_1_world;
 
-			this->pc_converted.resize(num_points_for_RT);
+			this->pc_converted.resize(myNewPoints.size());
 
-			for(int i=0; i<num_points_for_RT; i++){
-				points_ref_2_aux(0) = points_ref_2_world(i,0);
-				points_ref_2_aux(1) = points_ref_2_world(i,1);
-				points_ref_2_aux(2) = points_ref_2_world(i,2);
-				points_ref_2_aux(3) = 1;
+			for (int i=0; i<this->myNewPoints.size(); i++) {
+				points_ref_aux(0) = this->myNewPoints[i].rgbPoint.x;
+				points_ref_aux(1) = this->myNewPoints[i].rgbPoint.y;
+				points_ref_aux(2) = this->myNewPoints[i].rgbPoint.z;
+				points_ref_aux(3) = 1;
 
-				points_ref_1_aux = RT_estimate.inverse()*points_ref_2_aux;
+				points_ref_1_world = RT_estimate.inverse()*points_ref_aux;
+
+				this->myNewPoints[i].rgbPoint.x = points_ref_1_world(0);
+				this->myNewPoints[i].rgbPoint.y = points_ref_1_world(1);
+				this->myNewPoints[i].rgbPoint.z = points_ref_1_world(2);
+
+				this->pc_converted[i] = this->myNewPoints[i].rgbPoint;
+
+			}
+
+
+			/*for(int i=0; i<num_points_for_RT; i++){
+				points_ref_aux(0) = points_ref_1(i,0);
+				points_ref_aux(1) = points_ref_1(i,1);
+				points_ref_aux(2) = points_ref_1(i,2);
+				points_ref_aux(3) = 1;
+
+				points_ref_1_world = RT_estimate.inverse()*points_ref_aux;
 				//points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
 				//points_ref_1_aux = RT_final*points_ref_2_aux;
 				//std::cout << "asdfasdfasdfasdftrix is: \n" << points_ref_2_aux << std::endl;
@@ -842,7 +886,7 @@ namespace real_rt_estimator {
 				//this->pc_converted[i].r = this->pc[i].r;
 				//this->pc_converted[i].g = this->pc[i].g;
 				//this->pc_converted[i].b = this->pc[i].b;
-				std::cout << "ANTES DE CONVERTIR: \n" << points_ref_2_world(i,0) << ", " << points_ref_2_world(i,1) << ", " << points_ref_2_world(i,2) << std::endl;
+				std::cout << "ANTES DE CONVERTIR: \n" << points_ref_1_world(i,0) << ", " << points_ref_1_world(i,1) << ", " << points_ref_1_world(i,2) << std::endl;
 				std::cout << "FINAL >>>>>>>: \n" << this->pc_converted[i].x << ", " << this->pc_converted[i].y << ", " << this->pc_converted[i].z << std::endl;
 				if (this->iterationCloud == 0) {
 					this->pc_converted[i].r = 255;
@@ -881,14 +925,14 @@ namespace real_rt_estimator {
 				}
 
 			}
-			this->iterationCloud++;
+			this->iterationCloud++;*/
 
 			// Camera camera converted
 			moveCamera(RT_estimate);
 			std::cout << "ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ: \n" << std::endl;
-			for(int i=0; i<16; i++) {
+			/*for(int i=0; i<16; i++) {
 				this->RT_final(i) = RT_estimate(i);
-			}
+			}*/
 		//}
 
 		/*
@@ -909,8 +953,8 @@ namespace real_rt_estimator {
 
 		// Save image n to n-1 if sucess estimate
 		// FIXME: LOCK
-		this->imageRGB.copyTo(this->imageRGB_aux);
-		this->imageDEPTH.copyTo(this->imageDEPTH_aux);
+		//this->imageRGB.copyTo(this->imageRGB_aux);
+		//this->imageDEPTH.copyTo(this->imageDEPTH_aux);
 	}
 
 	bool Model::isEstimated() {

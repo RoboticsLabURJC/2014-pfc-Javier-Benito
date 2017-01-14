@@ -180,6 +180,7 @@ namespace real_rt_estimator {
       jderobot::RGBPoint rgbPoint;
     };
     std::vector<myPoint> myPrevPoints;
+    std::vector<myPoint> myNewPoints;
 
 
 		cv::Mat dataRGB;
