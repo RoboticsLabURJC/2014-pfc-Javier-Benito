@@ -418,9 +418,13 @@ namespace real_rt_estimator {
 			extractor.compute(this->imageGray_aux, this->keypoints_n_aux, this->descriptors_n_aux);
 		} else {
 			//this->keypoints_n.copyTo(this->keypoints_n_aux);
+			this->keypoints_n_aux = this->keypoints_n;
 			this->descriptors_n.copyTo(this->descriptors_n_aux);
 		}
+		//ºstd::vector<cv::KeyPoint> kp_aux;
+		//kp_aux.resize(0);
 		detector.detect(this->imageGray, this->keypoints_n);
+		//this->keypoints_n = kp_aux;
 		extractor.compute(this->imageGray, this->keypoints_n, this->descriptors_n);
 
 
@@ -524,7 +528,7 @@ namespace real_rt_estimator {
 		int matchingPoints_best = (int)(((percentagePoints+0.0)/100)*matchingPoints_all+0.49);
 
 		this->v_rgbp.resize(0);
-		//this->v_rgbp_aux.resize(0);
+		this->v_rgbp_aux.resize(0);
 		std::vector<cv::DMatch> matches_aux;
 		matches_aux.resize(0);
 
@@ -546,7 +550,7 @@ namespace real_rt_estimator {
 			//jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
 
 			//if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
-			if (p1.z != 0 && p2.z != 0) {
+			if (p1.z > 0 && p2.z > 0) {
 				std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
 				std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
 				std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
@@ -789,11 +793,11 @@ namespace real_rt_estimator {
 			points_ref_2_world(i,1) = points_ref_2_ant(1);
 			points_ref_2_world(i,2) = points_ref_2_ant(2);
 			points_ref_2_world(i,3) = 1;
-			std::cout << "v_rgbp_aux[i]" << std::endl;
+			std::cout << "v_rgbp_aux[i]" << std::endl;*/
+			std::cout << "--------zz------" << std::endl;
 			std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
 			std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
-			std::cout << "Magia y... " << std::endl;
-			std::cout << points_ref_2_ant(0) << ", " << points_ref_2_ant(1) << ", " << points_ref_2_ant(2) << std::endl;*/
+
 		}
 
 
@@ -838,7 +842,7 @@ namespace real_rt_estimator {
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
 
-			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose();
+			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose(); //TODO: cambiar a ver que pasa
 
 			//Eigen::Matrix4f RT_estimate = RT_final;
 
