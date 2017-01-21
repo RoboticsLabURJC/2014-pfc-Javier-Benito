@@ -124,7 +124,11 @@ namespace real_rt_estimator {
 		this->imageDEPTH.copyTo(result);
 		pthread_mutex_unlock(&this->controlImgDEPTH);
 		return result;*/
-		return this->imageDEPTH;
+		cv::Mat colorDepth(this->imageDEPTH.size(),this->imageDEPTH.type());
+		std::vector<cv::Mat> layers;
+		cv::split(this->imageDEPTH, layers);
+		cv::cvtColor(layers[0],colorDepth,CV_GRAY2RGB);
+		return colorDepth;
 	}
 	cv::Mat Model::getImageCameraDEPTHKeyPoints() {
 		return this->imageDEPTH_kp;
@@ -270,17 +274,33 @@ namespace real_rt_estimator {
 		//std::cout << imgDepth->data[3*x+imgDepth->rows*y+1] << std::endl;
 		//std::cout << (3*x+imgDepth->rows*y+2) << std::endl;
 
-		int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[3*x+imgDepth->rows*y+1]<<8)|(imgDepth->data[3*x+imgDepth->rows*y+2]));
+		unsigned int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[3*x+imgDepth->rows*y+1]<<8)|(imgDepth->data[3*x+imgDepth->rows*y+2]));
 
-		//std::cout <<  "Mejor punto x! " << x << std::endl;
-		//std::cout <<  "Mejor punto y! " << y << std::endl;
-		//std::cout <<  "Distandica best! " << realDepthDist << std::endl;
+
+		std::cout <<  "---------------------" << std::endl;
+		std::cout <<  "Puntos a 3D: " << x << ", " << y << std::endl;
+
+		/*std::vector<cv::Mat> layers;
+		cv::split(this->imageDEPTH, layers);
+		cv::Mat* distance;
+		distance = new cv::Mat(cv::Size(width, height),CV_32FC1,cv::Scalar(0,0,0));
+		for (int x=0; x< layers[1].cols ; x++) {
+				for (int y=0; y<layers[1].rows; y++) {
+						distance->at<float>(y,x) = ((int)layers[1].at<unsigned char>(y,x)<<8)|(int)layers[2].at<unsigned char>(y,x);
+				}
+		}
+		double dis=distance->at<float>(y,x);
+
+		std::cout <<  "Distancia WAPA: " << dis << std::endl;*/
+
 
 		/* Defining auxiliar points*/
 		//HPoint2D auxPoint2DCam1;
 		//HPoint3D auxPoint3DCam1;
 		float d = (float)realDepthDist;
-		//std::cout <<  d << std::endl;
+		d = d*2.0;
+		std::cout <<  "Distancia: " << d << std::endl;
+
 		float xp,yp,zp,camx,camy,camz;
 		mypro->mybackproject(x, y, &xp, &yp, &zp, &camx, &camy, &camz,0);
 		//vector unitario
@@ -293,10 +313,9 @@ namespace real_rt_estimator {
 		float ux,uy,uz;
 
 		modulo = sqrt(1/(((camx-xp)*(camx-xp))+((camy-yp)*(camy-yp))+((camz-zp)*(camz-zp))));
-						mypro->mygetcamerafoa(&c1x, &c1y, &c1z, 0);
+		mypro->mygetcamerafoa(&c1x, &c1y, &c1z, 0);
 
 		//std::cout <<  "MODULO " << modulo << std::endl;
-
 		fmod = sqrt(1/(((camx-c1x)*(camx-c1x))+((camy-c1y)*(camy-c1y))+((camz-c1z)*(camz-c1z))));
 		fx = (c1x - camx)*fmod;
 		fy = (c1y - camy)*fmod;
@@ -304,7 +323,6 @@ namespace real_rt_estimator {
 		ux = (xp-camx)*modulo;
 		uy = (yp-camy)*modulo;
 		uz = (zp-camz)*modulo;
-
 		Fx= d*fx + camx;
 		Fy= d*fy + camy;
 		Fz= d*fz + camz;
@@ -320,8 +338,8 @@ namespace real_rt_estimator {
 		p.y=t*uy+camy;
 		p.z=t*uz+camz;
 
-		//std::cout <<  "coloeres dimensiones! " << p.r << ", " << p.g << ", " << p.b << std::endl;
-		//std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+		std::cout <<  "coloeres dimensiones! " << p.r << ", " << p.g << ", " << p.b << std::endl;
+		std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
 
 		//for(int i=0; i<(3*width*width); i++) {
 		//	int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[i+1]<<8)|(imgDepth->data[i+2]));
@@ -458,10 +476,20 @@ namespace real_rt_estimator {
 			Model::myPoint point_aux;
 			point_aux.x = x;
 			point_aux.y = y;
-			point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB_aux, &this->imageDEPTH_aux);
+			point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB, &this->imageDEPTH);
 			points_aux.push_back(point_aux);
 		}
 		this->myNewPoints = points_aux;
+
+		// Degub
+		/*pc_converted.resize(0);
+		for (int i=0; i<this->imageRGB.cols; i++) {
+			for (int j=0; j<this->imageRGB.rows; j++) {
+				pc_converted.push_back(getPoints3D(i, j, &this->imageRGB, &this->imageDEPTH));
+			}
+		}*/
+
+
 		return true;
 	}
 

@@ -113,6 +113,7 @@ namespace real_rt_estimator {
         setCamara(this->image_depth_aux, 3);
         this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
         setCamara(this->image_depth, 4);
+        this->putPointCloud();
       }
       if (this->ctrl->isCalculationMatchingDone()) {
         gtk_image_rgb_aux->clear();
@@ -302,7 +303,7 @@ namespace real_rt_estimator {
 	void Gui::putPointCloud() {
 
       // Dibujamos la cámara
-      this->world->clear_camera_lines();
+      /*this->world->clear_camera_lines();
       std::vector<jderobot::RGBPoint> line = this->sm->get_pc_camera_converted();
       for (int i = 1; i < (int)line.size(); i++){
         this->world->add_camera_line(
@@ -335,7 +336,7 @@ namespace real_rt_estimator {
                       line[line.size()-1].z,
                       line[2].x,
                       line[2].y,
-                      line[2].z);
+                      line[2].z);*/
 
 
 		//this->world->clear_points();
