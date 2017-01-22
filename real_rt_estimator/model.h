@@ -145,8 +145,10 @@ namespace real_rt_estimator {
     cv::Mat imageRGB_aux_kp;
     cv::Mat currentImageDEPTH;
 		cv::Mat imageDEPTH;
+    cv::Mat imageDEPTH_gray;
     cv::Mat imageDEPTH_kp;
 		cv::Mat imageDEPTH_aux;
+    cv::Mat imageDEPTH_aux_gray;
     cv::Mat imageDEPTH_aux_kp;
 		cv::Mat imageRGBMatches;
     cv::Mat imageDEPTHMatches;
@@ -160,6 +162,9 @@ namespace real_rt_estimator {
 
     cv::Mat descriptors_n, descriptors_n_aux;
     std::vector<cv::KeyPoint> keypoints_n, keypoints_n_aux;
+
+    cv::Mat* distance;
+    cv::Mat* distance_aux;
 
     bool isChangeImageAux;
 
@@ -220,7 +225,7 @@ namespace real_rt_estimator {
     void moveCamera(Eigen::Matrix4f RT_estimate);
 
 
-		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);
+		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth, cv::Mat* distances);
     bool isBorderPoint(int x, int y, cv::Mat* imgDepth);
     jderobot::RGBPoint findPoint(int x, int y, std::vector<myPoint> points);
 

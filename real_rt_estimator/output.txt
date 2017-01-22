@@ -29,13 +29,18 @@ Camera
 [0m[1;32m[INFO] Negotiated format DEPTH8_16_Z for camera cameraB
 [0m[1;33m[WARNING] --------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0mLoading glade... 
-[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
+[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0mDone.
-[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
+[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
@@ -43,58 +48,6 @@ Camera
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0mbutton_update pressed
-[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
@@ -134,7 +87,11 @@ Camera
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0mbutton_update pressed
+[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
@@ -152,77 +109,398 @@ Camera
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0mbutton_detection pressed
+[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
+[0mdetectionMode: sift
+detectionFilterMode: 
+[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
 [0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraDEPTH. adquisition timeout-
-[0m[1;33m--------real_rt_estimator.CameraRGB. adquisition timeout-
+[0m---------------------
+Puntos a 3D: 117, 7
+Distancia WAPA: 1959
+Distancia: 2016
+240 holaquetal 7071
+coloeres dimensiones! 92, 78, 64
+punto en todas las dimensiones! -163.567, 1959, 1338.97
+---------------------
+Puntos a 3D: 79, 14
+Distancia WAPA: 1947
+Distancia: 1904
+240 holaquetal 13677
+coloeres dimensiones! 62, 49, 13
+punto en todas las dimensiones! -306.227, 1947, 1304.3
+---------------------
+Puntos a 3D: 310, 18
+Distancia WAPA: 0
+Distancia: 0
+240 holaquetal 18210
+coloeres dimensiones! 28, 26, 38
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 55, 29
+Distancia WAPA: 1915
+Distancia: 1792
+240 holaquetal 28005
+coloeres dimensiones! 111, 148, 170
+punto en todas las dimensiones! -390.437, 1915, 1227.09
+---------------------
+Puntos a 3D: 55, 29
+Distancia WAPA: 1915
+Distancia: 1792
+240 holaquetal 28005
+coloeres dimensiones! 111, 148, 170
+punto en todas las dimensiones! -390.437, 1915, 1227.09
+---------------------
+Puntos a 3D: 52, 36
+Distancia WAPA: 1904
+Distancia: 1936
+240 holaquetal 34716
+coloeres dimensiones! 50, 44, 12
+punto en todas las dimensiones! -399.285, 1904, 1194.16
+---------------------
+Puntos a 3D: 52, 40
+Distancia WAPA: 1904
+Distancia: 1903
+240 holaquetal 38556
+coloeres dimensiones! 72, 63, 59
+punto en todas las dimensiones! -399.285, 1904, 1179.37
+---------------------
+Puntos a 3D: 55, 40
+Distancia WAPA: 1904
+Distancia: 1792
+240 holaquetal 38565
+coloeres dimensiones! 204, 252, 255
+punto en todas las dimensiones! -388.194, 1904, 1179.37
+---------------------
+Puntos a 3D: 55, 40
+Distancia WAPA: 1904
+Distancia: 1792
+240 holaquetal 38565
+coloeres dimensiones! 204, 252, 255
+punto en todas las dimensiones! -388.194, 1904, 1179.37
+---------------------
+Puntos a 3D: 104, 42
+Distancia WAPA: 1915
+Distancia: 1911
+240 holaquetal 40632
+coloeres dimensiones! 12, 10, 18
+punto en todas las dimensiones! -208.233, 1915, 1178.75
+---------------------
+Puntos a 3D: 283, 63
+Distancia WAPA: 0
+Distancia: 156
+240 holaquetal 61329
+coloeres dimensiones! 42, 38, 32
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 297, 65
+Distancia WAPA: 0
+Distancia: 0
+240 holaquetal 63291
+coloeres dimensiones! 55, 73, 72
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 294, 70
+Distancia WAPA: 0
+Distancia: 2
+240 holaquetal 68082
+coloeres dimensiones! 0, 0, 0
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 85, 76
+Distancia WAPA: 1904
+Distancia: 1846
+240 holaquetal 73215
+coloeres dimensiones! 129, 91, 72
+punto en todas las dimensiones! -277.282, 1904, 1046.28
+---------------------
+Puntos a 3D: 287, 76
+Distancia WAPA: 0
+Distancia: 48
+240 holaquetal 73821
+coloeres dimensiones! 35, 44, 68
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 299, 76
+Distancia WAPA: 0
+Distancia: 46
+240 holaquetal 73857
+coloeres dimensiones! 0, 0, 0
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 81, 80
+Distancia WAPA: 1915
+Distancia: 1965
+240 holaquetal 77043
+coloeres dimensiones! 197, 182, 191
+punto en todas las dimensiones! -293.757, 1915, 1037.45
+---------------------
+Puntos a 3D: 81, 80
+Distancia WAPA: 1915
+Distancia: 1965
+240 holaquetal 77043
+coloeres dimensiones! 197, 182, 191
+punto en todas las dimensiones! -293.757, 1915, 1037.45
+---------------------
+Puntos a 3D: 58, 82
+Distancia WAPA: 1883
+Distancia: 1952
+240 holaquetal 78894
+coloeres dimensiones! 142, 120, 112
+punto en todas las dimensiones! -372.944, 1883, 1012.8
+---------------------
+Puntos a 3D: 58, 82
+Distancia WAPA: 1883
+Distancia: 1952
+240 holaquetal 78894
+coloeres dimensiones! 142, 120, 112
+punto en todas las dimensiones! -372.944, 1883, 1012.8
+---------------------
+Puntos a 3D: 87, 83
+Distancia WAPA: 1915
+Distancia: 1936
+240 holaquetal 79941
+coloeres dimensiones! 255, 250, 251
+punto en todas las dimensiones! -271.447, 1915, 1026.29
+---------------------
+Puntos a 3D: 314, 83
+Distancia WAPA: 0
+Distancia: 218
+240 holaquetal 80622
+coloeres dimensiones! 0, 14, 29
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 286, 84
+Distancia WAPA: 0
+Distancia: 240
+240 holaquetal 81498
+coloeres dimensiones! 66, 90, 107
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 286, 84
+Distancia WAPA: 0
+Distancia: 240
+240 holaquetal 81498
+coloeres dimensiones! 66, 90, 107
+punto en todas las dimensiones! 0, 0, 0
+---------------------
+Puntos a 3D: 62, 84
+Distancia WAPA: 1894
+Distancia: 1964
+240 holaquetal 80826
+coloeres dimensiones! 161, 124, 116
+punto en todas las dimensiones! -360.412, 1894, 1011.36
+---------------------
+Puntos a 3D: 85, 100
+Distancia WAPA: 1883
+Distancia: 1997
+240 holaquetal 96255
+coloeres dimensiones! 11, 25, 9
+punto en todas las dimensiones! -274.223, 1883, 946.984
+---------------------
+Puntos a 3D: 85, 100
+Distancia WAPA: 1883
+Distancia: 1997
+240 holaquetal 96255
+coloeres dimensiones! 11, 25, 9
+punto en todas las dimensiones! -274.223, 1883, 946.984
+---------------------
+Puntos a 3D: 176, 102
+Distancia WAPA: 1959
+Distancia: 1834
+240 holaquetal 98448
+coloeres dimensiones! 0, 0, 7
+punto en todas las dimensiones! 60.8621, 1959, 977.598
+---------------------
+Puntos a 3D: 60, 104
+Distancia WAPA: 1883
+Distancia: 1977
+240 holaquetal 100020
+coloeres dimensiones! 168, 135, 132
+punto en todas las dimensiones! -365.631, 1883, 932.359
+---------------------
+Puntos a 3D: 85, 105
+Distancia WAPA: 1894
+Distancia: 1867
+240 holaquetal 101055
+coloeres dimensiones! 180, 152, 141
+punto en todas las dimensiones! -275.825, 1894, 934.128
+---------------------
+Puntos a 3D: 80, 108
+Distancia WAPA: 1904
+Distancia: 2017
+240 holaquetal 103920
+coloeres dimensiones! 208, 173, 165
+punto en todas las dimensiones! -295.767, 1904, 927.969
+---------------------
+Puntos a 3D: 85, 113
+Distancia WAPA: 1894
+Distancia: 1828
+240 holaquetal 108735
+coloeres dimensiones! 189, 140, 131
+punto en todas las dimensiones! -275.825, 1894, 904.707
+---------------------
+Puntos a 3D: 57, 114
+Distancia WAPA: 1873
+Distancia: 1957
+240 holaquetal 109611
+coloeres dimensiones! 147, 128, 130
+punto en todas las dimensiones! -374.6, 1873, 891.039
+---------------------
+Puntos a 3D: 87, 115
+Distancia WAPA: 1904
+Distancia: 1933
+240 holaquetal 110661
+coloeres dimensiones! 255, 255, 255
+punto en todas las dimensiones! -269.887, 1904, 902.089
+---------------------
+Puntos a 3D: 92, 115
+Distancia WAPA: 1904
+Distancia: 1978
+240 holaquetal 110676
+coloeres dimensiones! 255, 255, 255
+punto en todas las dimensiones! -251.402, 1904, 902.089
+---------------------
+Puntos a 3D: 93, 121
+Distancia WAPA: 1904
+Distancia: 2024
+240 holaquetal 116439
+coloeres dimensiones! 255, 255, 255
+punto en todas las dimensiones! -247.705, 1904, 879.907
+---------------------
+Puntos a 3D: 188, 123
+Distancia WAPA: 1959
+Distancia: 1961
+240 holaquetal 118644
+coloeres dimensiones! 199, 162, 136
+punto en todas las dimensiones! 106.509, 1959, 897.717
+---------------------
+Puntos a 3D: 106, 128
+Distancia WAPA: 1915
+Distancia: 1893
+240 holaquetal 123198
+coloeres dimensiones! 171, 193, 254
+punto en todas las dimensiones! -200.796, 1915, 858.961
+---------------------
+Puntos a 3D: 167, 128
+Distancia WAPA: 1970
+Distancia: 1951
+240 holaquetal 123381
+coloeres dimensiones! 239, 203, 174
+punto en todas las dimensiones! 26.7767, 1970, 883.631
+---------------------
+Puntos a 3D: 218, 131
+Distancia WAPA: 1970
+Distancia: 1792
+240 holaquetal 126414
+coloeres dimensiones! 169, 136, 104
+punto en todas las dimensiones! 221.864, 1970, 872.155
+---------------------
+Puntos a 3D: 218, 131
+Distancia WAPA: 1970
+Distancia: 1792
+240 holaquetal 126414
+coloeres dimensiones! 169, 136, 104
+punto en todas las dimensiones! 221.864, 1970, 872.155
+---------------------
+Puntos a 3D: 175, 133
+Distancia WAPA: 1776
+Distancia: 1599
+240 holaquetal 128205
+coloeres dimensiones! 19, 0, 0
+punto en todas las dimensiones! 51.7282, 1776, 779.371
+---------------------
+Puntos a 3D: 175, 133
+Distancia WAPA: 1776
+Distancia: 1599
+240 holaquetal 128205
+coloeres dimensiones! 19, 0, 0
+punto en todas las dimensiones! 51.7282, 1776, 779.371
+---------------------
+Puntos a 3D: 166, 136
+Distancia WAPA: 1804
+Distancia: 1967
+240 holaquetal 131058
+coloeres dimensiones! 0, 0, 0
+punto en todas las dimensiones! 21.0175, 1804, 781.15
+---------------------
+Puntos a 3D: 232, 136
+Distancia WAPA: 1904
+Distancia: 1969
+240 holaquetal 131256
+coloeres dimensiones! 0, 0, 0
+punto en todas las dimensiones! 266.19, 1904, 824.45
+---------------------
+Puntos a 3D: 232, 136
+Distancia WAPA: 1904
+Distancia: 1969
+240 holaquetal 131256
+coloeres dimensiones! 0, 0, 0
+punto en todas las dimensiones! 266.19, 1904, 824.45
+---------------------
+Puntos a 3D: 235, 138
+Distancia WAPA: 2005
+Distancia: 1792
+240 holaquetal 133185
+coloeres dimensiones! 167, 145, 125
+punto en todas las dimensiones! 291.99, 2005, 860.398
+---------------------
+Puntos a 3D: 236, 142
+Distancia WAPA: 2005
+Distancia: 1944
+240 holaquetal 137028
+coloeres dimensiones! 173, 147, 108
+punto en todas las dimensiones! 295.884, 2005, 844.825
+---------------------
+Puntos a 3D: 87, 145
+Distancia WAPA: 1873
+Distancia: 1854
+240 holaquetal 139461
+coloeres dimensiones! 194, 160, 160
+punto en todas las dimensiones! -265.493, 1873, 778.295
+---------------------
+Puntos a 3D: 165, 145
+Distancia WAPA: 1804
+Distancia: 1988
+240 holaquetal 139695
+coloeres dimensiones! 26, 51, 79
+punto en todas las dimensiones! 17.5146, 1804, 749.623
+---------------------
+Puntos a 3D: 110, 149
+Distancia WAPA: 1894
+Distancia: 1792
+240 holaquetal 143370
+coloeres dimensiones! 22, 17, 9
+punto en todas las dimensiones! -183.883, 1894, 772.311
+---------------------
+Puntos a 3D: 60, 153
+Distancia WAPA: 1853
+Distancia: 1800
+240 holaquetal 147060
+coloeres dimensiones! 218, 207, 203
+punto en todas las dimensiones! -359.806, 1853, 741.2
+---------------------
+Puntos a 3D: 76, 152
+Distancia WAPA: 1863
+Distancia: 1962
+240 holaquetal 146148
+coloeres dimensiones! 201, 179, 177
+punto en todas las dimensiones! -303.868, 1863, 748.818
+---------------------
+Puntos a 3D: 64, 153
+Distancia WAPA: 1863
+Distancia: 1939
+240 holaquetal 147072
+coloeres dimensiones! 210, 191, 195
+punto en todas las dimensiones! -347.278, 1863, 745.2
