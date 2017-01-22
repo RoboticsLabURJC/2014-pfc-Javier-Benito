@@ -299,8 +299,7 @@ namespace real_rt_estimator {
 		//std::cout << imgDepth->data[3*x+imgDepth->rows*y+1] << std::endl;
 		//std::cout << imgDepth->data[3*x+imgDepth->rows*y+1] << std::endl;
 		//std::cout << (3*x+imgDepth->rows*y+2) << std::endl;
-
-		unsigned int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[3*(y*imgRGB->cols+x)+1]<<8)|(imgDepth->data[3*(y*imgRGB->cols+x)*y+2]));
+		unsigned int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[3*(y*imgDepth->cols+x)+1]<<8)|(imgDepth->data[3*(y*imgDepth->cols+x)+2]));
 
 
 		std::cout <<  "---------------------" << std::endl;
@@ -350,9 +349,9 @@ namespace real_rt_estimator {
 		ux = (xp-camx)*modulo;
 		uy = (yp-camy)*modulo;
 		uz = (zp-camz)*modulo;
-		Fx= dis*fx + camx;
-		Fy= dis*fy + camy;
-		Fz= dis*fz + camz;
+		Fx= d*fx + camx;
+		Fy= d*fy + camy;
+		Fz= d*fz + camz;
 
 		// Calculamos el punto real
 		t = (-(fx*camx) + (fx*Fx) - (fy*camy) + (fy*Fy) - (fz*camz) + (fz*Fz))/((fx*ux) + (fy*uy) + (fz*uz));
@@ -361,8 +360,6 @@ namespace real_rt_estimator {
 		p.r=(int)imgRGB->data[3*(y*imgRGB->cols+x)];
 		p.g=(int)imgRGB->data[3*(y*imgRGB->cols+x)+1];
 		p.b=(int)imgRGB->data[3*(y*imgRGB->cols+x)+2];
-		int holaquetal = 3*(y*imgRGB->cols+x);
-		std::cout <<  imgRGB->rows << " holaquetal " << holaquetal << std::endl;
 
 		p.x=t*ux+camx;
 		p.y=t*uy+camy;
@@ -492,7 +489,9 @@ namespace real_rt_estimator {
 				point_aux.x = x;
 				point_aux.y = y;
 				point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB_aux, &this->imageDEPTH_aux, this->distance_aux);
-				this->myPrevPoints.push_back(point_aux);
+				if (point_aux.rgbPoint.z != 0) {
+					this->myPrevPoints.push_back(point_aux);
+				}
 			}
 			this->_firstIteration = false;
 		} else {
@@ -507,7 +506,9 @@ namespace real_rt_estimator {
 			point_aux.x = x;
 			point_aux.y = y;
 			point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB, &this->imageDEPTH, this->distance);
-			points_aux.push_back(point_aux);
+			if (point_aux.rgbPoint.z != 0) {
+				points_aux.push_back(point_aux);
+			}
 		}
 		this->myNewPoints = points_aux;
 
