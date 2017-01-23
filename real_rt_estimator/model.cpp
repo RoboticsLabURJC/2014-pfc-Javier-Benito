@@ -901,7 +901,7 @@ namespace real_rt_estimator {
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
 
-			Eigen::Matrix4f RT_estimate = points_ref_1.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_2).transpose(); //TODO: cambiar a ver que pasa
+			Eigen::Matrix4f RT_estimate = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose(); //TODO: cambiar a ver que pasa
 
 			//Eigen::Matrix4f RT_estimate = RT_final;
 
