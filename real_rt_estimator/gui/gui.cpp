@@ -105,14 +105,14 @@ namespace real_rt_estimator {
     // PRIVATE METHODS
     void Gui::ShowImage() {
       if (this->ctrl->isCalculationPointsDone()) {
-        this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
-        setCamara(this->image_rgb_aux, 1);
         this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
-        setCamara(this->image_rgb, 2);
-        this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
-        setCamara(this->image_depth_aux, 3);
+        setCamara(this->image_rgb, 1);
+        this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
+        setCamara(this->image_rgb_aux, 2);
         this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
-        setCamara(this->image_depth, 4);
+        setCamara(this->image_depth, 3);
+        this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
+        setCamara(this->image_depth_aux, 4);
         //this->putPointCloud();
       }
       if (this->ctrl->isCalculationMatchingDone()) {
@@ -250,14 +250,14 @@ namespace real_rt_estimator {
   void Gui::updateImages() {
     std::cout << "button_update pressed" << std::endl;
     this->sm->updateGuiImages();
-    this->image_rgb_aux = this->sm->getImageCameraRGBAux();
-    setCamara(this->image_rgb_aux, 1);
     this->image_rgb = this->sm->getImageCameraRGB();
-    setCamara(this->image_rgb, 2);
-    this->image_depth_aux = this->sm->getImageCameraDEPTHAux();
-    setCamara(this->image_depth_aux, 3);
+    setCamara(this->image_rgb, 1);
+    this->image_rgb_aux = this->sm->getImageCameraRGBAux();
+    setCamara(this->image_rgb_aux, 2);
     this->image_depth = this->sm->getImageCameraDEPTH();
-    setCamara(this->image_depth, 4);
+    setCamara(this->image_depth, 3);
+    this->image_depth_aux = this->sm->getImageCameraDEPTHAux();
+    setCamara(this->image_depth_aux, 4);
   }
 
   void Gui::detectionPoints() {

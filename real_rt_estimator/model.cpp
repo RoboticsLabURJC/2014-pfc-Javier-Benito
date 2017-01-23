@@ -620,7 +620,7 @@ namespace real_rt_estimator {
 		}
 		std::cout <<  ">>>>>>>>>> maches calculados ---------------------------> " << this->v_rgbp.size() << std::endl;
 		cv::drawMatches(this->imageGray, this->keypoints_n, this->imageGray_aux, this->keypoints_n_aux, matches_aux, this->imageRGBMatches);
-		cv::drawMatches(this->imageDEPTH, this->keypoints_n, this->imageDEPTH_aux, this->keypoints_n_aux, matches_aux, this->imageDEPTHMatches);
+		cv::drawMatches(this->imageDEPTH_gray, this->keypoints_n, this->imageDEPTH_aux_gray, this->keypoints_n_aux, matches_aux, this->imageDEPTHMatches);
 		return true;
 	}
 
