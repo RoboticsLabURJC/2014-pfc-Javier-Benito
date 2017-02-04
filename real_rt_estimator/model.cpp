@@ -513,12 +513,12 @@ namespace real_rt_estimator {
 		this->myNewPoints = points_aux;
 
 		// Debug
-		/*pc_converted.resize(0);
-		for (int i=0; i<this->imageRGB.cols; i++) {
-			for (int j=0; j<this->imageRGB.rows; j++) {
-				pc_converted.push_back(getPoints3D(i, j, &this->imageRGB, &this->imageDEPTH, this->distance));
+		pc.resize(0);
+		for (int i=0; i<this->imageRGB.cols; i+=4) {
+			for (int j=0; j<this->imageRGB.rows; j+=4) {
+				pc.push_back(getPoints3D(i, j, &this->imageRGB, &this->imageDEPTH, this->distance));
 			}
-		}*/
+		}
 
 
 		return true;
@@ -914,8 +914,6 @@ namespace real_rt_estimator {
 			Eigen::Vector4f points_ref_aux;
 			Eigen::Vector4f points_ref_1_world;
 
-			this->pc_converted.resize(myNewPoints.size());
-
 			for (int i=0; i<this->myNewPoints.size(); i++) {
 				points_ref_aux(0) = this->myNewPoints[i].rgbPoint.x;
 				points_ref_aux(1) = this->myNewPoints[i].rgbPoint.y;
@@ -927,10 +925,24 @@ namespace real_rt_estimator {
 				this->myNewPoints[i].rgbPoint.x = points_ref_1_world(0);
 				this->myNewPoints[i].rgbPoint.y = points_ref_1_world(1);
 				this->myNewPoints[i].rgbPoint.z = points_ref_1_world(2);
-
-				this->pc_converted[i] = this->myNewPoints[i].rgbPoint;
-
 			}
+
+			this->pc_converted.resize(pc.size());
+			for (int i=0; i<this->pc.size(); i++) {
+				points_ref_aux(0) = this->pc[i].x;
+				points_ref_aux(1) = this->pc[i].y;
+				points_ref_aux(2) = this->pc[i].z;
+				points_ref_aux(3) = 1;
+
+				points_ref_1_world = RT_estimate.inverse()*points_ref_aux;
+
+				this->pc[i].x = points_ref_1_world(0);
+				this->pc[i].y = points_ref_1_world(1);
+				this->pc[i].z = points_ref_1_world(2);
+
+				this->pc_converted[i] = this->pc[i];
+			}
+
 
 
 			/*for(int i=0; i<num_points_for_RT; i++){
