@@ -6,6 +6,9 @@ namespace real_rt_estimator {
 
     this->sm = sm;
 
+    first_time = true;
+    finish_cycle = true;
+
     // Checkbuttons value
     sift_box=1;
     surf_box=0;
@@ -14,6 +17,8 @@ namespace real_rt_estimator {
     flann_box = 0;
     correlation_box = 0;
     outstanding_box = 0;
+
+    automatic_mode = 0;
 
 		/*Init OpenGL*/
 		if(!Gtk::GL::init_check(NULL, NULL)) {
@@ -54,6 +59,7 @@ namespace real_rt_estimator {
     refXml->get_widget("button_correlation", button_correlation);
     refXml->get_widget("button_outstanding", button_outstanding);
 
+    refXml->get_widget("button_automatic", button_automatic);
 
     button_update->signal_clicked().connect(sigc::mem_fun(this,&Gui::updateImages));
     button_detection->signal_clicked().connect(sigc::mem_fun(this,&Gui::detectionPoints));
@@ -72,6 +78,8 @@ namespace real_rt_estimator {
     button_flann->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_flann_clicked));
     button_correlation->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_correlation_clicked));
     button_outstanding->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_outstanding_clicked));
+
+    button_automatic->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_automatic_clicked));
 
 
 		//opengl world
@@ -104,27 +112,42 @@ namespace real_rt_estimator {
 
     // PRIVATE METHODS
     void Gui::ShowImage() {
-      if (this->ctrl->isCalculationPointsDone()) {
-        this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
-        setCamara(this->image_rgb, 1);
-        this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
-        setCamara(this->image_rgb_aux, 2);
-        this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
-        setCamara(this->image_depth, 3);
-        this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
-        setCamara(this->image_depth_aux, 4);
-        //this->putPointCloud();
-      }
-      if (this->ctrl->isCalculationMatchingDone()) {
-        gtk_image_rgb_aux->clear();
-        gtk_image_depth_aux->clear();
-        this->image_rgb = this->sm->getImageCameraRGBMatches();
-        setCamara(this->image_rgb, 2);
-        this->image_depth = this->sm->getImageCameraDEPTHMatches();
-        setCamara(this->image_depth, 4);
+      if (automatic_mode) {
+        if (finish_cycle) {
+          if (first_time) {
+            this->updateImages();
+            first_time = false;
+          }
+          this->updateImages();
+          this->detectionPoints();
+          this->matchingPoints();
+          this->estimateCurrentRT();
+          finish_cycle = false;
+        }
+      } else {
+        if (this->ctrl->isCalculationPointsDone()) {
+          this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
+          setCamara(this->image_rgb, 1);
+          this->image_rgb_aux = this->sm->getImageCameraRGBAuxKeyPoints();
+          setCamara(this->image_rgb_aux, 2);
+          this->image_depth = this->sm->getImageCameraDEPTHKeyPoints();
+          setCamara(this->image_depth, 3);
+          this->image_depth_aux = this->sm->getImageCameraDEPTHAuxKeyPoints();
+          setCamara(this->image_depth_aux, 4);
+          //this->putPointCloud();
+        }
+        if (this->ctrl->isCalculationMatchingDone()) {
+          gtk_image_rgb_aux->clear();
+          gtk_image_depth_aux->clear();
+          this->image_rgb = this->sm->getImageCameraRGBMatches();
+          setCamara(this->image_rgb, 2);
+          this->image_depth = this->sm->getImageCameraDEPTHMatches();
+          setCamara(this->image_depth, 4);
+        }
       }
       if (this->ctrl->isCalculationEstimateRTDone()) {
         this->putPointCloud();
+        finish_cycle = true;
       }
 
 
@@ -442,6 +465,12 @@ namespace real_rt_estimator {
       outstanding_box = 0;
     else
       outstanding_box = 1;
+  }
+  void Gui::button_automatic_clicked() {
+    if(automatic_mode)
+      automatic_mode = 0;
+    else
+      automatic_mode = 1;
   }
 
 } // namespace

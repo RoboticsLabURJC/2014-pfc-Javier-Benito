@@ -89,6 +89,7 @@ namespace real_rt_estimator {
       Gtk::CheckButton * button_correlation;
       Gtk::CheckButton * button_outstanding;
 
+      Gtk::ToggleButton * button_automatic;
 
   		//DrawArea* world1;
   		DrawArea* world;
@@ -122,6 +123,7 @@ namespace real_rt_estimator {
       void button_flann_clicked();
       void button_correlation_clicked();
       void button_outstanding_clicked();
+      void button_automatic_clicked();
 
       // Checkbox control
       int sift_box;
@@ -131,7 +133,10 @@ namespace real_rt_estimator {
       int flann_box;
       int correlation_box;
       int outstanding_box;
+      int automatic_mode;
 
+      bool first_time;
+      bool finish_cycle;
 
     }; //class
 }//namespace
