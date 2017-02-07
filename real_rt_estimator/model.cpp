@@ -302,8 +302,8 @@ namespace real_rt_estimator {
 		unsigned int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[3*(y*imgDepth->cols+x)+1]<<8)|(imgDepth->data[3*(y*imgDepth->cols+x)+2]));
 
 
-		std::cout <<  "---------------------" << std::endl;
-		std::cout <<  "Puntos a 3D: " << x << ", " << y << std::endl;
+		//std::cout <<  "---------------------" << std::endl;
+		//std::cout <<  "Puntos a 3D: " << x << ", " << y << std::endl;
 
 		/*std::vector<cv::Mat> layers;
 		cv::split(this->imageDEPTH, layers);
@@ -317,7 +317,7 @@ namespace real_rt_estimator {
 
 		double dis=distance->at<float>(y,x);*/
 		double dis=distances->at<float>(y,x);
-		std::cout <<  "Distancia WAPA: " << dis << std::endl;
+		//std::cout <<  "Distancia WAPA: " << dis << std::endl;
 
 
 		/* Defining auxiliar points*/
@@ -325,7 +325,7 @@ namespace real_rt_estimator {
 		//HPoint3D auxPoint3DCam1;
 		float d = (float)realDepthDist;
 		d = d;
-		std::cout <<  "Distancia: " << d << std::endl;
+		//std::cout <<  "Distancia: " << d << std::endl;
 
 		float xp,yp,zp,camx,camy,camz;
 		mypro->mybackproject(x, y, &xp, &yp, &zp, &camx, &camy, &camz,0);
@@ -365,8 +365,8 @@ namespace real_rt_estimator {
 		p.y=t*uy+camy;
 		p.z=t*uz+camz;
 
-		std::cout <<  "coloeres dimensiones! " << p.r << ", " << p.g << ", " << p.b << std::endl;
-		std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+		//std::cout <<  "coloeres dimensiones! " << p.r << ", " << p.g << ", " << p.b << std::endl;
+		//std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
 
 		//for(int i=0; i<(3*width*width); i++) {
 		//	int realDepthDist = ((0 << 24)|(0 << 16)|(imgDepth->data[i+1]<<8)|(imgDepth->data[i+2]));
@@ -514,8 +514,8 @@ namespace real_rt_estimator {
 
 		// Debug
 		pc.resize(0);
-		for (int i=0; i<this->imageRGB.cols; i+=4) {
-			for (int j=0; j<this->imageRGB.rows; j+=4) {
+		for (int i=0; i<this->imageRGB.cols; i+=10) {
+			for (int j=0; j<this->imageRGB.rows; j+=10) {
 				pc.push_back(getPoints3D(i, j, &this->imageRGB, &this->imageDEPTH, this->distance));
 			}
 		}
@@ -544,7 +544,7 @@ namespace real_rt_estimator {
 
 				int outNumber = 0;
 				for (int i=0; i<matches_vector.size(); i++) {
-					std::cout <<  "-----------------------------------------------------" << std::endl;
+					//std::cout <<  "-----------------------------------------------------" << std::endl;
 					/*
 					for (int j=0; j<matches_vector[i].size(); j++) {
 						std::cout <<  "--------------------------" << std::endl;
@@ -576,6 +576,10 @@ namespace real_rt_estimator {
 		//} else if (matchingMode.compare("correlation") == 0) { // manual correlation matcher
 		}
 
+		if (matches.size() < 10) {
+			return false;
+		}
+
 		//Sort match vector, best first
 		std::sort(matches.begin(), matches.end(), sortByDistance);
 
@@ -592,7 +596,7 @@ namespace real_rt_estimator {
 		matches_aux.resize(0);
 
 		int x_1, y_1, x_2, y_2;
-
+		std::cout <<  "matchingPoints_best-> " << matchingPoints_best << std::endl;
 		for (int i=0; i<matchingPoints_best; i++) {
 
 			x_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.x);//+0.5f);

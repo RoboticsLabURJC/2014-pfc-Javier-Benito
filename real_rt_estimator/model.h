@@ -192,8 +192,8 @@ namespace real_rt_estimator {
 		cv::Mat dataDEPTH;
 
 		/* It is supposed that camera parameters are defined */
-		TPinHoleCamera TPHcamera1;
-		TPinHoleCamera TPHcamaraDepth;
+		//TPinHoleCamera TPHcamera1;
+		//TPinHoleCamera TPHcamaraDepth;
 
 		Eigen::Matrix4f RT_final;
     jderobot::RGBPoint p_aux;

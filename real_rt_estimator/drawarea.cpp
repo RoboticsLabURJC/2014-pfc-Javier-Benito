@@ -93,7 +93,7 @@ namespace real_rt_estimator {
 		this->glcam_foa.Y=100.;
 		this->glcam_foa.Z=20.;
 
-		this->scale = 50;
+		this->scale = 30;
 		this->radius = 20.0;
 		this->lati = 0.2;
 		this->longi = -1.0;
