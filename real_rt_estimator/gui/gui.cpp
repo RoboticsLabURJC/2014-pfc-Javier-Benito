@@ -8,6 +8,7 @@ namespace real_rt_estimator {
 
     first_time = true;
     finish_cycle = true;
+    first_draw = false;
 
     // Checkbuttons value
     sift_box=1;
@@ -360,7 +361,23 @@ namespace real_rt_estimator {
                       line[2].x,
                       line[2].y,
                       line[2].z);
-
+      // Dibujamos estela
+      if (this->first_draw) {
+        prev_pos.x = line[0].x;
+        prev_pos.y = line[0].y;
+        prev_pos.z = line[0].z;
+      } else {
+        this->world->add_line(
+                        prev_pos.x,
+                        prev_pos.y,
+                        prev_pos.z,
+                        line[0].x,
+                        line[0].y,
+                        line[0].z);
+        prev_pos.x = line[0].x;
+        prev_pos.y = line[0].y;
+        prev_pos.z = line[0].z;
+      }
 
 		//this->world->clear_points();
 		//if (this->model->isFinal()) {

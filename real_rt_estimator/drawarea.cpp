@@ -93,7 +93,7 @@ namespace real_rt_estimator {
 		this->glcam_foa.Y=100.;
 		this->glcam_foa.Z=20.;
 
-		this->scale = 30;
+		this->scale = 20;
 		this->radius = 20.0;
 		this->lati = 0.2;
 		this->longi = -1.0;
@@ -364,15 +364,15 @@ namespace real_rt_estimator {
 				glVertex3f(extra_lines[i][4]/scale, extra_lines[i][5]/scale, extra_lines[i][6]/scale);
 			glEnd();
 		}
-		glLineWidth(3.0f);
+		glLineWidth(1.0f);
 		glColor3f( 0, 0.5, 0.5 );
 		for(i=0;i<num_camera_lines;i++) {
-			glLineWidth(5); ///////////////////////////////////////////////////////////
+			glLineWidth(2); ///////////////////////////////////////////////////////////
 			glBegin(GL_LINES);
 				glVertex3f(camera_lines[i][0]/scale, camera_lines[i][1]/scale, camera_lines[i][2]/scale);
 				glVertex3f(camera_lines[i][4]/scale, camera_lines[i][5]/scale, camera_lines[i][6]/scale);
 			glEnd();
-			glPointSize(10); ///////////////////////////////////////////////////////////
+			glPointSize(5); ///////////////////////////////////////////////////////////
 			glBegin(GL_POINTS);
 				glVertex3f(camera_lines[i][0]/scale, camera_lines[i][1]/scale, camera_lines[i][2]/scale);
 			glEnd();

@@ -53,6 +53,7 @@ namespace real_rt_estimator {
       bool processDone;
       bool firstProcess;
 
+
       Gtk::Main gtkmain;
       Glib::RefPtr<Gnome::Glade::Xml> refXml;
       std::string gladepath;
@@ -137,6 +138,8 @@ namespace real_rt_estimator {
 
       bool first_time;
       bool finish_cycle;
+      bool first_draw;
+      jderobot::RGBPoint prev_pos;
 
     }; //class
 }//namespace
