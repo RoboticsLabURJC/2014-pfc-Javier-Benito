@@ -92,7 +92,7 @@ namespace real_rt_estimator {
  		void createEmptyImageDEPTH();
 	  void updateImageRGB(cv::Mat data);
 		void updateImageDEPTH(cv::Mat data);
-    void updateGuiImages();
+    void updateImages();
 
     void changeImageAux();
 
@@ -101,7 +101,7 @@ namespace real_rt_estimator {
     bool calculateMatching(cv::String matchingMode, cv::String matchingFilterMode, int percentagePoints);
 
 		int doSiftAndGetPoints();
-		void estimateRT();
+		bool estimateRT();
     bool isEstimated();
 
     void RotateXAxis();
@@ -225,7 +225,7 @@ namespace real_rt_estimator {
     void moveCamera(Eigen::Matrix4f RT_estimate);
 
 
-		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth, cv::Mat* distances);
+		jderobot::RGBPoint getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth);
     bool isBorderPoint(int x, int y, cv::Mat* imgDepth);
     jderobot::RGBPoint findPoint(int x, int y, std::vector<myPoint> points);
 

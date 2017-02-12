@@ -3,13 +3,14 @@
 
 namespace real_rt_estimator {
 
-  cv::String detectionMode;
+  cv::String detectionMode = "sift"; // FIXME: Incluir por el .conf
   cv::String detectionFilterMode;
-  cv::String matchingMode;
+  cv::String matchingMode = "bruteforce";
   cv::String matchingFilterMode;
 
   bool cameraRGBOn = false;
   bool cameraDEPTHOn = false;
+  bool updateImageOn = false;
   bool calculatePointsOn = false;
   bool estimateMatrixOn = false;
   bool calculateMatchingOn = false;
@@ -17,11 +18,15 @@ namespace real_rt_estimator {
   bool correctPointsCalculation = false;
   bool correctMatchingCalculation = false;
 
+  bool updateImageDone = false;
   bool calculationPointsDone = false;
   bool calculationMatchingDone = false;
   bool calculationEstimateRTDone = false;
+  bool calculationFail = false;
 
-  int percentagePoints = 100;
+  bool automaticMode = false;
+
+  int percentagePoints;
 
   jderobot::cameraClient* camRGB=NULL;
   jderobot::cameraClient* camDEPTH=NULL;
@@ -109,44 +114,62 @@ namespace real_rt_estimator {
   }
 
   void Control::update() {
-    // FIXME: SE ACTUALIZAN A LA VEZ LA IMAGEN RGB Y PROFUNDIDAD?? PROBLEMAS CONCURRENCIA??
     if(cameraRGBOn) {
   	  //Get de data from the camera and stores de image in the shared memory periodically (see threadcontrol)
   		//jderobot::ImageDataPtr data = cprxRGB->getImageData();
       cv::Mat data;
   		camRGB->getImage(data,true);
-  		cv::Size rgbSize = data.size();
+  		//cv::Size rgbSize = data.size();
   		this->sm->updateImageRGB(data);
     }
     if(cameraDEPTHOn) {
       //Get de data from the camera and stores de image in the shared memory periodically (see threadcontrol)
       cv::Mat dataDEPTH;
   		camDEPTH->getImage(dataDEPTH,true);
-  		cv::Size depthSize = dataDEPTH.size();
+  		//cv::Size depthSize = dataDEPTH.size();
       this->sm->updateImageDEPTH(dataDEPTH);
     }
 
-    if (calculatePointsOn) {
+    ////////////////////////////////////////////////////////////////////////////
+    calculationFail = false;
+    if (updateImageOn || automaticMode) {
+      this->sm->updateImages();
+      updateImageOn = false;
+      updateImageDone = true;
+    }
+    if (calculatePointsOn || automaticMode) {
       if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {
         calculatePointsOn = false;
         correctPointsCalculation = true;
         calculationPointsDone = true;
+      } else {
+        calculationFail = true;
+        correctPointsCalculation = false;
       }
     }
-    if (calculateMatchingOn && correctPointsCalculation) {
+    if ((calculateMatchingOn || automaticMode) && correctPointsCalculation) {
       if (this->sm->calculateMatching(matchingMode, matchingFilterMode, percentagePoints)) {
         calculateMatchingOn = false;
         correctMatchingCalculation = true;
         calculationMatchingDone = true;
+      } else {
+        calculationFail = true;
+        correctMatchingCalculation = false;
       }
     }
-    if (estimateMatrixOn && correctMatchingCalculation) {
-      //if (this->sm->estimateRT()) {
-        this->sm->estimateRT();
+    if ((estimateMatrixOn || automaticMode) && correctMatchingCalculation) {
+      if (this->sm->estimateRT()) {
         estimateMatrixOn = false;
         calculationEstimateRTDone = true;
-      //}
+      } else {
+        calculationFail = true;
+      }
     }
+    ////////////////////////////////////////////////////////////////////////////
+  }
+
+  void Control::updateImage() {
+    updateImageOn = true;
   }
 
   void Control::calculatePoints(cv::String mode, cv::String filter) {
@@ -164,6 +187,19 @@ namespace real_rt_estimator {
 
   void Control::estimateMatrix() {
     estimateMatrixOn = true;
+  }
+
+  void Control::automaticModeOn() {
+    automaticMode = true;
+  }
+
+  bool Control::isImageUpdated() {
+    if (updateImageDone) {
+      updateImageDone = false;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   bool Control::isCalculationPointsDone() {

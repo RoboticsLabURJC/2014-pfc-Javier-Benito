@@ -233,16 +233,14 @@ namespace real_rt_estimator {
 		imageDEPTH.copyTo(imageDEPTH_aux);
 	}
 
-	void Model::updateGuiImages() {
+	void Model::updateImages() { // FIXME: Está obsoleto y no se va a usar
+    pthread_mutex_lock(&this->controlImgRGB);
 		// update aux (n-1)
 		this->updateImageRGBAux();
 		this->updateImageDEPTHAux();
 
 		// update current (n)
-		pthread_mutex_lock(&this->controlImgRGB);
 		currentImageRGB.copyTo(imageRGB);
-		pthread_mutex_unlock(&this->controlImgRGB);
-		pthread_mutex_lock(&this->controlImgRGB);
 		currentImageDEPTH.copyTo(imageDEPTH);
 		pthread_mutex_unlock(&this->controlImgRGB);
 
@@ -253,25 +251,25 @@ namespace real_rt_estimator {
 			cv::split(imageDEPTH_aux, layers_aux);
 			cv::cvtColor(layers_aux[0],colorDepth_aux,CV_GRAY2RGB);
 			this->imageDEPTH_aux_gray = colorDepth_aux;
-			for (int x=0; x< layers_aux[1].cols ; x++) {
+			/*for (int x=0; x< layers_aux[1].cols ; x++) {
 				for (int y=0; y<layers_aux[1].rows; y++) {
 					this->distance_aux->at<float>(y,x) = ((int)layers_aux[1].at<unsigned char>(y,x)<<8)|(int)layers_aux[2].at<unsigned char>(y,x);
 				}
-			}
+			}*/
 		} else {
 			this->imageDEPTH_aux_gray = this->imageDEPTH_gray;
-			this->distance_aux = this->distance;
+			//this->distance_aux = this->distance;
 		}
 		cv::Mat colorDepth(imageDEPTH.size(),imageDEPTH.type());
 		std::vector<cv::Mat> layers;
 		cv::split(imageDEPTH, layers);
 		cv::cvtColor(layers[0],colorDepth,CV_GRAY2RGB);
 		this->imageDEPTH_gray = colorDepth;
-		for (int x=0; x< layers[1].cols ; x++) {
+		/*for (int x=0; x< layers[1].cols ; x++) {
 			for (int y=0; y<layers[1].rows; y++) {
 				this->distance->at<float>(y,x) = ((int)layers[1].at<unsigned char>(y,x)<<8)|(int)layers[2].at<unsigned char>(y,x);
 			}
-		}
+		}*/
 	}
 
 	void Model::changeImageAux() {
@@ -283,7 +281,7 @@ namespace real_rt_estimator {
 		return ((lhs.distance) < (rhs.distance));
 	}
 
-	jderobot::RGBPoint Model::getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth, cv::Mat* distances) {
+	jderobot::RGBPoint Model::getPoints3D(int x, int y, cv::Mat* imgRGB, cv::Mat* imgDepth/*, cv::Mat* distances*/) {
 
 		int width = imgDepth->cols;
 		int height = imgDepth->rows;
@@ -316,7 +314,7 @@ namespace real_rt_estimator {
 		}
 
 		double dis=distance->at<float>(y,x);*/
-		double dis=distances->at<float>(y,x);
+		//double dis=distances->at<float>(y,x);
 		//std::cout <<  "Distancia WAPA: " << dis << std::endl;
 
 
@@ -488,7 +486,7 @@ namespace real_rt_estimator {
 				Model::myPoint point_aux;
 				point_aux.x = x;
 				point_aux.y = y;
-				point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB_aux, &this->imageDEPTH_aux, this->distance_aux);
+				point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB_aux, &this->imageDEPTH_aux);
 				if (point_aux.rgbPoint.z != 0) {
 					this->myPrevPoints.push_back(point_aux);
 				}
@@ -505,7 +503,7 @@ namespace real_rt_estimator {
 			Model::myPoint point_aux;
 			point_aux.x = x;
 			point_aux.y = y;
-			point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB, &this->imageDEPTH, this->distance);
+			point_aux.rgbPoint = getPoints3D(x, y, &this->imageRGB, &this->imageDEPTH);
 			if (point_aux.rgbPoint.z != 0) {
 				points_aux.push_back(point_aux);
 			}
@@ -516,7 +514,7 @@ namespace real_rt_estimator {
 		pc.resize(0);
 		for (int i=0; i<this->imageRGB.cols; i+=10) {
 			for (int j=0; j<this->imageRGB.rows; j+=10) {
-				pc.push_back(getPoints3D(i, j, &this->imageRGB, &this->imageDEPTH, this->distance));
+				pc.push_back(getPoints3D(i, j, &this->imageRGB, &this->imageDEPTH));
 			}
 		}
 
@@ -692,7 +690,7 @@ namespace real_rt_estimator {
 						////////////////////////////////////////////////////////////////////////////////////////////////
 						// Save the point cloud...
 
-						this->pc.push_back(getPoints3D(keypoints1[i].pt.x, keypoints1[i].pt.y, &this->imageRGB, &this->imageDEPTH, distance)); // FIXME: Delete
+						this->pc.push_back(getPoints3D(keypoints1[i].pt.x, keypoints1[i].pt.y, &this->imageRGB, &this->imageDEPTH)); // FIXME: Delete
 
 						////////////////////////////////////////////////////////////////////////////////////////////////
 						std::cout <<  "match.distance: " << matches[i].distance << std::endl;
@@ -766,8 +764,8 @@ namespace real_rt_estimator {
 
 					//std::cout <<  "Entramos funcion" << std::endl;
 					//std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
-					jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH, distance); // FIXME: Delete
-					jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux, distance);
+					jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
+					jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
 
 					if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
 						if (p1.z != 0 && p2.z != 0) {
@@ -825,7 +823,7 @@ namespace real_rt_estimator {
 		}
 	}
 
-	void Model::estimateRT() {
+	bool Model::estimateRT() {
 		//pthread_mutex_lock(&this->controlPcConverted);
 
 
@@ -1034,6 +1032,7 @@ namespace real_rt_estimator {
 		// FIXME: LOCK
 		//this->imageRGB.copyTo(this->imageRGB_aux);
 		//this->imageDEPTH.copyTo(this->imageDEPTH_aux);
+    return true;
 	}
 
 	bool Model::isEstimated() {

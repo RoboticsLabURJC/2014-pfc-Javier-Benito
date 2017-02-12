@@ -113,19 +113,32 @@ namespace real_rt_estimator {
 
     // PRIVATE METHODS
     void Gui::ShowImage() {
+      if (this->ctrl->isImageUpdated()) {
+        this->image_rgb = this->sm->getImageCameraRGB();
+        setCamara(this->image_rgb, 1);
+        this->image_rgb_aux = this->sm->getImageCameraRGBAux();
+        setCamara(this->image_rgb_aux, 2);
+        this->image_depth = this->sm->getImageCameraDEPTH();
+        setCamara(this->image_depth, 3);
+        this->image_depth_aux = this->sm->getImageCameraDEPTHAux();
+        setCamara(this->image_depth_aux, 4);
+      }
       if (automatic_mode) {
-        if (finish_cycle) {
-          if (first_time) {
-            this->updateImages();
-            first_time = false;
-          }
-          this->updateImages();
-          this->detectionPoints();
-          this->matchingPoints();
-          this->estimateCurrentRT();
-          finish_cycle = false;
-        }
+
+        //this->ctrl->automaticModeOn();
+              /*if (finish_cycle) {
+                if (first_time) {
+                  this->updateImages();
+                  first_time = false;
+                }
+                this->updateImages();
+                this->detectionPoints();
+                this->matchingPoints();
+                this->estimateCurrentRT();
+                finish_cycle = false;
+              }*/
       } else {
+        //this->ctrl->automaticModeOn();
         if (this->ctrl->isCalculationPointsDone()) {
           this->image_rgb = this->sm->getImageCameraRGBKeyPoints();
           setCamara(this->image_rgb, 1);
@@ -148,7 +161,7 @@ namespace real_rt_estimator {
       }
       if (this->ctrl->isCalculationEstimateRTDone()) {
         this->putPointCloud();
-        finish_cycle = true;
+        //finish_cycle = true;
       }
 
 
@@ -202,7 +215,7 @@ namespace real_rt_estimator {
       //std::cout << "3" << std::endl;
 
       //std::cout << "4" << std::endl;
-      /*if (this->sm->doSiftAndGetPoints()) {
+      /*if (this->sm->doSiftAndGetPoints()) {button_correlation_clicked
         this->processDone = true;
       }*/
 
@@ -273,15 +286,11 @@ namespace real_rt_estimator {
 
   void Gui::updateImages() {
     std::cout << "button_update pressed" << std::endl;
-    this->sm->updateGuiImages();
-    this->image_rgb = this->sm->getImageCameraRGB();
-    setCamara(this->image_rgb, 1);
-    this->image_rgb_aux = this->sm->getImageCameraRGBAux();
-    setCamara(this->image_rgb_aux, 2);
-    this->image_depth = this->sm->getImageCameraDEPTH();
-    setCamara(this->image_depth, 3);
-    this->image_depth_aux = this->sm->getImageCameraDEPTHAux();
-    setCamara(this->image_depth_aux, 4);
+    //this->sm->updateGuiImages();
+    this->ctrl->updateImage();
+
+
+    //this->ctrl->updateImages();
   }
 
   void Gui::detectionPoints() {
@@ -485,9 +494,12 @@ namespace real_rt_estimator {
   }
   void Gui::button_automatic_clicked() {
     if(automatic_mode)
+      //this->ctrl->automaticModeOff();
       automatic_mode = 0;
-    else
+    else {
+      this->ctrl->automaticModeOn();
       automatic_mode = 1;
+    }
   }
 
 } // namespace

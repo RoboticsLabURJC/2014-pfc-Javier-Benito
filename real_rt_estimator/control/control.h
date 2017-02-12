@@ -33,12 +33,19 @@ class Control {
 		Control(Ice::CommunicatorPtr ic, real_rt_estimator::Model* sm);	//constructor
 
 		void update();
+
+    void updateImage();
 		void calculatePoints(cv::String mode, cv::String filter);
 		void calculateMatching(cv::String mode, cv::String filter, int percentagePoints);
 		void estimateMatrix();
+
+		void automaticModeOn();
+
+    bool isImageUpdated();
 		bool isCalculationPointsDone();
 		bool isCalculationMatchingDone();
 		bool isCalculationEstimateRTDone();
+
 	private:
 
 		Model* sm;	//Shared memory
@@ -46,7 +53,6 @@ class Control {
 		Ice::CommunicatorPtr ic;
 		jderobot::CameraPrx cprxRGB;
 		jderobot::CameraPrx cprxDEPTH;
-
 
 		//jderobot::cameraClient* camDEPTH;
 	};
