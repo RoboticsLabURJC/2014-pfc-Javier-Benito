@@ -594,7 +594,7 @@ namespace real_rt_estimator {
 		matches_aux.resize(0);
 
 		int x_1, y_1, x_2, y_2;
-		std::cout <<  "matchingPoints_best-> " << matchingPoints_best << std::endl;
+		std::cout <<  "matchingPoints_best-> " << matchingPoints_all << "/" << matchingPoints_best << std::endl;
 		for (int i=0; i<matchingPoints_best; i++) {
 
 			x_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.x);//+0.5f);

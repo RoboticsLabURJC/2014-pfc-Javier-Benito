@@ -15,6 +15,7 @@ namespace real_rt_estimator {
   bool estimateMatrixOn = false;
   bool calculateMatchingOn = false;
 
+  bool correctUpdateImages = false;
   bool correctPointsCalculation = false;
   bool correctMatchingCalculation = false;
 
@@ -25,8 +26,10 @@ namespace real_rt_estimator {
   bool calculationFail = false;
 
   bool automaticMode = false;
+  bool firstTime = true;
+  bool processDone = true;
 
-  int percentagePoints;
+  int percentagePoints = 20;
 
   jderobot::cameraClient* camRGB=NULL;
   jderobot::cameraClient* camDEPTH=NULL;
@@ -131,38 +134,52 @@ namespace real_rt_estimator {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    calculationFail = false;
-    if (updateImageOn || automaticMode) {
+    if (automaticMode && processDone) {
+      processDone = false;
+      if (firstTime) {
+        this->sm->updateImages();
+        firstTime = false;
+      }
+      updateImageOn = true;
+      calculatePointsOn = true;
+      calculateMatchingOn = true;
+      estimateMatrixOn = true;
+    }
+
+
+
+    if (updateImageOn) {
       this->sm->updateImages();
       updateImageOn = false;
       updateImageDone = true;
+      correctUpdateImages = true;
     }
-    if (calculatePointsOn || automaticMode) {
+    if (calculatePointsOn && correctUpdateImages) {
       if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {
         calculatePointsOn = false;
         correctPointsCalculation = true;
         calculationPointsDone = true;
+        correctUpdateImages = false;
       } else {
-        calculationFail = true;
         correctPointsCalculation = false;
       }
     }
-    if ((calculateMatchingOn || automaticMode) && correctPointsCalculation) {
+    if (calculateMatchingOn && correctPointsCalculation) {
       if (this->sm->calculateMatching(matchingMode, matchingFilterMode, percentagePoints)) {
         calculateMatchingOn = false;
         correctMatchingCalculation = true;
         calculationMatchingDone = true;
+        correctPointsCalculation = false;
       } else {
-        calculationFail = true;
         correctMatchingCalculation = false;
       }
     }
-    if ((estimateMatrixOn || automaticMode) && correctMatchingCalculation) {
+    if (estimateMatrixOn && correctMatchingCalculation) {
       if (this->sm->estimateRT()) {
         estimateMatrixOn = false;
         calculationEstimateRTDone = true;
-      } else {
-        calculationFail = true;
+        correctMatchingCalculation = false;
+        processDone = true;
       }
     }
     ////////////////////////////////////////////////////////////////////////////
