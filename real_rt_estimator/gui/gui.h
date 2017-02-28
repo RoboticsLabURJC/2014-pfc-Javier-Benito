@@ -92,6 +92,9 @@ namespace real_rt_estimator {
 
       Gtk::ToggleButton * button_automatic;
 
+      Gtk::Label* p_matching;
+      Gtk::Label* p_total;
+
   		//DrawArea* world1;
   		DrawArea* world;
   		std::string worldpath;

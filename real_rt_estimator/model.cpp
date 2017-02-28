@@ -20,6 +20,8 @@ namespace real_rt_estimator {
 		this->_firstIteration = true;
 		this->iterationCloud = 0;
 
+    this->matchingPoints = 0;
+    this->totalPoints = 0;
 
 		this->isChangeImageAux = true;
 
@@ -157,6 +159,17 @@ namespace real_rt_estimator {
 		pthread_mutex_unlock(&this->controlImgMatches);
 		return result;
 	}
+
+  int Model::getMatchingPoints() {
+    //pthread_mutex_lock(&this->controlVars);
+    return matchingPoints;
+    //pthread_mutex_unlock(&this->controlVars);
+  }
+  int Model::getTotalPoints() {
+    //pthread_mutex_lock(&this->controlVars);
+    return totalPoints;
+    //pthread_mutex_unlock(&this->controlVars);
+  }
 
 
 	void Model::createImageRGB(cv::Mat data) {
@@ -623,6 +636,14 @@ namespace real_rt_estimator {
 		std::cout <<  ">>>>>>>>>> maches calculados ---------------------------> " << this->v_rgbp.size() << std::endl;
 		cv::drawMatches(this->imageGray, this->keypoints_n, this->imageGray_aux, this->keypoints_n_aux, matches_aux, this->imageRGBMatches);
 		cv::drawMatches(this->imageDEPTH_gray, this->keypoints_n, this->imageDEPTH_aux_gray, this->keypoints_n_aux, matches_aux, this->imageDEPTHMatches);
+
+    /* Save data to Gui */
+    pthread_mutex_lock(&this->controlVars);
+    this->matchingPoints = matchingPoints_best;
+    this->totalPoints = matchingPoints_all;
+    pthread_mutex_unlock(&this->controlVars);
+    /********************/
+
 		return true;
 	}
 

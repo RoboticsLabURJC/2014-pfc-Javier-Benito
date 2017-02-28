@@ -8,7 +8,7 @@
 
 #include "../model.h"
 
-#define cycle_gui 500 //miliseconds
+#define cycle_gui 200 //miliseconds
 
 namespace real_rt_estimator {
 class ThreadGui

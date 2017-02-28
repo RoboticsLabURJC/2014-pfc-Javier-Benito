@@ -26,6 +26,8 @@ void ThreadControl::start()
         totalb = b.tv_sec * 1000000 + b.tv_usec;
         diff = (totalb - totala) / 1000;
 
+        std::cout << "Processing time: " << diff << "ms" << std::endl;
+
         if (diff < 0 || diff > cycle_control)
             diff = cycle_control;
         else
@@ -33,11 +35,12 @@ void ThreadControl::start()
 
 
         /*Sleep Algorithm*/
+        /*
         usleep(diff * 1000);
         if (diff < 33)
             usleep(33 * 1000);
+        */
     }
 }
 
 }
- 

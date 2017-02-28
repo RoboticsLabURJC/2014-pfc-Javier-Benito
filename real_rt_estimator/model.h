@@ -66,6 +66,7 @@ namespace real_rt_estimator {
 		pthread_mutex_t controlImgDEPTH;
 		pthread_mutex_t controlImgMatches;
     pthread_mutex_t controlPcConverted;
+    pthread_mutex_t controlVars;
 
 		std::vector<jderobot::RGBPoint> get_pc();
 		std::vector<jderobot::RGBPoint> get_pc_converted();
@@ -82,6 +83,9 @@ namespace real_rt_estimator {
     cv::Mat getImageCameraDEPTHAuxKeyPoints();
 		cv::Mat getImageCameraRGBMatches();
     cv::Mat getImageCameraDEPTHMatches();
+
+    int getMatchingPoints();
+    int getTotalPoints();
 
 		void createImageRGB(cv::Mat data);
 		void createImageRGBAux(cv::Mat data);
@@ -206,6 +210,9 @@ namespace real_rt_estimator {
 
     bool _firstIteration;
     int iterationCloud;
+
+    int matchingPoints;
+    int totalPoints;
 
     // private methods
     void updateImageRGBAux();

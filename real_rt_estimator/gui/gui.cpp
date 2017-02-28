@@ -51,6 +51,9 @@ namespace real_rt_estimator {
 
     refXml->get_widget("percentage_points", percentage_points);
 
+    refXml->get_widget("p_matching", p_matching);
+    refXml->get_widget("p_total", p_total);
+
     // Checkbuttons
     refXml->get_widget("button_sift", button_sift);
     refXml->get_widget("button_surf", button_surf);
@@ -164,6 +167,11 @@ namespace real_rt_estimator {
         //finish_cycle = true;
       }
 
+      std::stringstream matchingPoints, totalPoints;
+      matchingPoints << this->sm->getMatchingPoints();
+      p_matching->set_label(matchingPoints.str());
+      totalPoints << this->sm->getTotalPoints();
+      p_total->set_label(totalPoints.str());
 
 
       //std::cout << "show image" << std::endl;
