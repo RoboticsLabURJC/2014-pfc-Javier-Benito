@@ -31,7 +31,8 @@ class Control {
 	public:
 
 		Control(Ice::CommunicatorPtr ic, real_rt_estimator::Model* sm);	//constructor
-
+		~Control();
+		
 		void update();
 
     void updateImage();

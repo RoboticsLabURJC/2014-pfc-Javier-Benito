@@ -36,7 +36,8 @@ namespace real_rt_estimator {
     public:
 
       Gui(Model* sm);
-      virtual ~Gui();
+      //virtual ~Gui();
+      ~Gui();
 
       void display();
 

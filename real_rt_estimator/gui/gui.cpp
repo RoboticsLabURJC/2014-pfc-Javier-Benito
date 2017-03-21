@@ -104,7 +104,7 @@ namespace real_rt_estimator {
     }
 
     Gui::~Gui() {
-
+      std::cout << "Exit Gui" << std::endl;
     }
 
     // PUBLIC METHODS

@@ -113,7 +113,19 @@ namespace real_rt_estimator {
       std::cout << "No camera DEPTH connected" << std::endl;
     }
 
+    //Let's check if the user want to show the gui or not. This setting must be in the .cfg file
+    std::string gui = prop->getPropertyWithDefault("real_rt_estimator.Gui", "miss");
+      if (!boost::iequals(gui , "miss") && !boost::iequals(gui, "OFF")) {
+    } else {
+      std::cout << "No Gui mode -> automatic control mode" << std::endl;
+      automaticMode = true;
+    }
 
+
+  }
+
+  Control::~Control() {
+    std::cout << "Exit control" << std::endl;
   }
 
   void Control::update() {
