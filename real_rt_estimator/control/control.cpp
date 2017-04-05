@@ -31,6 +31,16 @@ namespace real_rt_estimator {
 
   int percentagePoints = 20;
 
+  struct timeval it, ft;
+  double updateImagesTime = 0.0;
+  int updateImagesCount = 0;
+  double calculatePointsTime = 0.0;
+  int calculatePointsCount = 0;
+  double calculateMatchingTime = 0.0;
+  int calculateMatchingCount = 0;
+  double estimateRTTime = 0.0;
+  int estimateRTCount = 0;
+
   jderobot::cameraClient* camRGB=NULL;
   jderobot::cameraClient* camDEPTH=NULL;
 
@@ -161,13 +171,27 @@ namespace real_rt_estimator {
 
 
     if (updateImageOn) {
+      //////////////////////////
+      gettimeofday(&it, NULL);
       this->sm->updateImages();
+      gettimeofday(&ft, NULL);
+      double t = (ft.tv_sec - it.tv_sec)*1000 + (ft.tv_usec - it.tv_usec)/1000.0;
+      updateImagesTime+= t;
+      updateImagesCount++;
+      //////////////////////////
       updateImageOn = false;
       updateImageDone = true;
       correctUpdateImages = true;
     }
     if (calculatePointsOn && correctUpdateImages) {
+      //////////////////////////
+      gettimeofday(&it, NULL);
       if (this->sm->calculatePoints(detectionMode, detectionFilterMode)) {
+        gettimeofday(&ft, NULL);
+        double t = (ft.tv_sec - it.tv_sec)*1000 + (ft.tv_usec - it.tv_usec)/1000.0;
+        calculatePointsTime+= t;
+        calculatePointsCount++;
+        //////////////////////////
         calculatePointsOn = false;
         correctPointsCalculation = true;
         calculationPointsDone = true;
@@ -177,7 +201,14 @@ namespace real_rt_estimator {
       }
     }
     if (calculateMatchingOn && correctPointsCalculation) {
+      //////////////////////////
+      gettimeofday(&it, NULL);
       if (this->sm->calculateMatching(matchingMode, matchingFilterMode, percentagePoints)) {
+        gettimeofday(&ft, NULL);
+        double t = (ft.tv_sec - it.tv_sec)*1000 + (ft.tv_usec - it.tv_usec)/1000.0;
+        calculateMatchingTime+= t;
+        calculateMatchingCount++;
+        //////////////////////////
         calculateMatchingOn = false;
         correctMatchingCalculation = true;
         calculationMatchingDone = true;
@@ -187,7 +218,14 @@ namespace real_rt_estimator {
       }
     }
     if (estimateMatrixOn && correctMatchingCalculation) {
+      //////////////////////////
+      gettimeofday(&it, NULL);
       if (this->sm->estimateRT()) {
+        gettimeofday(&ft, NULL);
+        double t = (ft.tv_sec - it.tv_sec)*1000 + (ft.tv_usec - it.tv_usec)/1000.0;
+        estimateRTTime+= t;
+        estimateRTCount++;
+        //////////////////////////
         estimateMatrixOn = false;
         calculationEstimateRTDone = true;
         correctMatchingCalculation = false;
@@ -256,6 +294,18 @@ namespace real_rt_estimator {
     } else {
       return false;
     }
+  }
+
+  void Control::printTimes() {
+    std::cout << "Average times:" << std::endl;
+    std::cout << "- Update images: " << updateImagesTime/updateImagesCount << " ms" << std::endl;
+    std::cout << "- Points detection: " << calculatePointsTime/calculatePointsCount << " ms" << std::endl;
+    std::cout << "- Points matching: " << calculateMatchingTime/calculateMatchingCount << " ms" << std::endl;
+    std::cout << "- Estimate matrix: " << estimateRTTime/estimateRTCount << " ms" << std::endl;
+    std::cout << "-----------------------------" << std::endl;
+    double total = updateImagesTime/updateImagesCount + calculatePointsTime/calculatePointsCount +
+                   calculateMatchingTime/calculateMatchingCount + estimateRTTime/estimateRTCount;
+    std::cout << "- TOTAL: " << total << " ms" << std::endl;
   }
 
 }

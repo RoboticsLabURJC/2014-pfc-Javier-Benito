@@ -20,8 +20,6 @@
 
 #include <boost/algorithm/string.hpp>
 
-
-
 #include <parallelIce/cameraClient.h>
 #include "easyiceconfig/EasyIce.h"
 
@@ -32,7 +30,6 @@ class Control {
 
 		Control(Ice::CommunicatorPtr ic, real_rt_estimator::Model* sm);	//constructor
 		~Control();
-		
 		void update();
 
     void updateImage();
@@ -46,6 +43,8 @@ class Control {
 		bool isCalculationPointsDone();
 		bool isCalculationMatchingDone();
 		bool isCalculationEstimateRTDone();
+
+    void printTimes();
 
 	private:
 

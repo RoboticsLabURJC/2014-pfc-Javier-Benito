@@ -168,7 +168,7 @@ namespace real_rt_estimator {
   int Model::getTotalPoints() {
     //pthread_mutex_lock(&this->controlVars);
     return totalPoints;
-    //pthread_mutex_unlock(&this->controlVars);
+    pthread_mutex_unlock(&this->controlVars);
   }
 
 
@@ -924,11 +924,12 @@ namespace real_rt_estimator {
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
 
-			Eigen::Matrix4f RT_estimate = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose(); //TODO: cambiar a ver que pasa
+			Eigen::Matrix4f RT_estimate = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
 
 			//Eigen::Matrix4f RT_estimate = RT_final;
 
 			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+
 
 			//this->RT_final = this->RT_final*RT_estimate;
 
@@ -965,7 +966,6 @@ namespace real_rt_estimator {
 
 				this->pc_converted[i] = this->pc[i];
 			}
-
 
 
 			/*for(int i=0; i<num_points_for_RT; i++){

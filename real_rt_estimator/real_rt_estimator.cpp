@@ -2,6 +2,7 @@
 #include <Ice/Ice.h>
 #include <IceUtil/IceUtil.h>
 #include <pthread.h>
+#include <signal.h>
 
 #include "gui/threadgui.h"
 #include "gui/gui.h"
@@ -25,7 +26,15 @@ void* guiThread(void*) {
     threadGui->start();
 }
 
+void exitHandler(int signum){
+   std::cout << "Ctrl+c exit with code " << signum << std::endl;
+   threadControl->printTimes();
+   exit(1);
+}
+
 int main(int argc, char* argv[]) {
+
+    signal (SIGINT, exitHandler);
 
     try{
 
