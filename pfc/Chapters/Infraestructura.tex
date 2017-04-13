@@ -4,6 +4,8 @@
 
 \label{Chapter1} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
+En este capítulo se detallarán las herramientas base empleadas en la realización de este trabajo.
+
 %----------------------------------------------------------------------------------------
 %	SECTION Hardware
 %----------------------------------------------------------------------------------------
@@ -12,9 +14,54 @@
 %-----------------------------------
 %	SUBSECTION Sensor
 %-----------------------------------
-\subsection{Sensor}
+\subsection{Sensores RGBD}
+
+Los sensores RGBD son sensores capaces de captar a parte de las componentes roja, verde y azul de la luz, información de profundidad (o "D" depth en inglés). 
+
+En el 2010 Microsoft publicó el sensor Kinect para la consola de juegos Xbox 360 y Xbox One. Pronto se convirtió en uno de los dispositivos electrónicos más vendidos en todo el mundo después de su lanzamiento.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.9]{Figures/ros_kinect.jpg}
+\decoRule
+\caption[Kinect sensor]{Sensor Microsoft Kinect}
+\label{fig:Kinect}
+\end{figure}
+
+El sensor es capaz de combinar por cada pixel, la información de color con su correspondiente componente de profundidad. Esta tecnología fue desarrollada por la empresa israelí PrimeSense. El sensor Kinect dispone también de un micrófono multiarray con el cual puede predecir de dónde proviene el sonido.
+
+Este sensor salió al mercado a un precio mucho más reducido que algunos que existían antes que él por lo que el interés por este tipo de sensores se disparó y comenzaron a aparecen en diferentes áreas de la tecnología, como interfaces naturales de usuario (en inglés natural user interface, NUI), reconstrucción y realidad virtual o cartografía 3D.
+
+El sensor utilizado en este trabajo es el \textbf{Asus Xtion PRO LIVE} que dispone de la misma tecnología comercializado por Asus, que proporciona profundidad, color y audio (utilizando un micrófono multiarray como el sensor Kinect). \footnote{https://www.asus.com/3D-Sensor/Xtion\_PRO\_LIVE/}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.9]{Figures/xtion-pro-live.jpg}
+\decoRule
+\caption[Kinect sensor]{Asus Xtion PRO LIVE}
+\label{fig:Kinect}
+\end{figure}
 
 
+\begin{table}
+\caption{Especificaciones técnicas del Asus Xtion PRO LIVE}
+\label{tab:xtion}
+\centering
+\begin{tabular}{ l | l }
+\toprule
+Campo de visión: & 58º H, 45º V, 70º D\\
+\hline
+Distancia de uso: & Entre 0.8m y 3.5m\\
+\hline
+Tamaño de la imagen de profundidad: & VGA (640x480) : 30 fps \\
+				& QVGA (320x240): 60 fps\\
+\hline
+Resolución: & SXGA (1280*1024) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Las especificaciones técnicas de este sensor se encuentran recogidas en la tabla ~\ref{tab:xtion}
 %----------------------------------------------------------------------------------------
 %	SECTION Software
 %----------------------------------------------------------------------------------------
@@ -22,11 +69,11 @@
 
 
 %-----------------------------------
-%	SUBSECTION JDeRobot
-%-----------------------------------
-\subsection{JDeRobot}
-
-%-----------------------------------
 %	SUBSECTION OpenCV
 %-----------------------------------
 \subsection{OpenCV}
+
+%-----------------------------------
+%	SUBSECTION JDeRobot
+%-----------------------------------
+\subsection{JDeRobot}
