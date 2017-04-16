@@ -855,67 +855,128 @@ namespace real_rt_estimator {
 		int num_points_for_RT = v_rgbp.size();
 		std::cout << "The points number for RT calculation is: \n" << num_points_for_RT << std::endl;
 
-		Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
-		Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
+
 		/*Eigen::Vector4f points_ref_2;
 		Eigen::Vector4f points_ref_2_ant;
 		Eigen::MatrixXf points_ref_2_world(num_points_for_RT, 4);*/
-		std::cout << "The FINAL RT Matrix is: \n" << "[" << this->RT_final << "]" << std::endl;
-		for (int i=0; i<num_points_for_RT; i++) {
-			points_ref_1(i,0) = v_rgbp[i].x;
-			points_ref_1(i,1) = v_rgbp[i].y;
-			points_ref_1(i,2) = v_rgbp[i].z;
-			points_ref_1(i,3) = 1;
-			points_ref_2(i,0) = v_rgbp_aux[i].x;
-			points_ref_2(i,1) = v_rgbp_aux[i].y;
-			points_ref_2(i,2) = v_rgbp_aux[i].z;
-			points_ref_2(i,3) = 1;
-			/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
-			points_ref_2_world(i,0) = points_ref_2_ant(0);
-			points_ref_2_world(i,1) = points_ref_2_ant(1);
-			points_ref_2_world(i,2) = points_ref_2_ant(2);
-			points_ref_2_world(i,3) = 1;
-			std::cout << "v_rgbp_aux[i]" << std::endl;*/
-			std::cout << "--------zz------" << std::endl;
-			std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
-			std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
-
-		}
+		//std::cout << "The FINAL RT Matrix is: \n" << "[" << this->RT_final << "]" << std::endl;
 
 
-		/*if (this->first) {
-			this->RT_final << 1, 0, 0, 0,
-								0, 1, 0, 0,
-								0, 0, 1, 0,double d=this->distance->at<float>(y,x);
-								0, 0, 0, 1;
-			std::cout << this->RT_final;
 
-			Eigen::Vector4f points_ref_1_aux;
-			Eigen::Vector4f points_ref_2_aux;
 
-			this->pc_converted.resize(num_points_for_RT);
+		int iSecret, iGuess;
 
-			for(int i=0; i<num_points_for_RT; i++){
-				points_ref_2_aux(0) = this->pc[i].x;
-				points_ref_2_aux(1) = this->pc[i].y;
-				points_ref_2_aux(2) = this->pc[i].z;
-				points_ref_2_aux(3) = 1;
+   	/* initialize random seed: */
+   	srand (time(NULL));
 
-				Eigen::Vector4f points_ref_1_aux;
-				Eigen::Vector4f points_ref_2_aux;
+   	/* generate secret number between 1 and 10: */
+   	iSecret = rand() % 10 + 1;
+    //std::cout << "----------------------------------------: \n" << iSecret << std::endl;
 
-				points_ref_1_aux = RT_final.inverse()*points_ref_2_aux;
-				//points_ref_1_aux = 2*points_ref_2_aux;
-				//std::cout << "asdfasdfasdfasdftrix is: \n" << points_ref_2_aux << std::endl;
-				this->pc_converted[i].x = points_ref_1_aux(0);
-				this->pc_converted[i].y = points_ref_1_aux(1);
-				this->pc_converted[i].z = points_ref_1_aux(2);
-				this->pc_converted[i].r = this->pc[i].r;
-				this->pc_converted[i].g = this->pc[i].g;
-				this->pc_converted[i].b = this->pc[i].b;
+		int part = (int)(num_points_for_RT/4);
+		std::cout << "-------------------------------------dd---: \n" << part << std::endl;
+
+		Eigen::MatrixXf points_ref_1((num_points_for_RT-part), 4);
+		Eigen::MatrixXf points_ref_2((num_points_for_RT-part), 4);
+
+		std::cout << "-------------------------------------dd---: \n" << (num_points_for_RT-part) << std::endl;
+		int count = 0;
+		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+			std::cout << (i+1) << std::endl;
+			if ((i+1) > part) {
+				std::cout << count << std::endl;
+				points_ref_1(count,0) = v_rgbp[i].x;
+				points_ref_1(count,1) = v_rgbp[i].y;
+				points_ref_1(count,2) = v_rgbp[i].z;
+				points_ref_1(count,3) = 1;
+				points_ref_2(count,0) = v_rgbp_aux[i].x;
+				points_ref_2(count,1) = v_rgbp_aux[i].y;
+				points_ref_2(count,2) = v_rgbp_aux[i].z;
+				points_ref_2(count,3) = 1;
+				count++;
+				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+				points_ref_2_world(i,0) = points_ref_2_ant(0);
+				points_ref_2_world(i,1) = points_ref_2_ant(1);
+				points_ref_2_world(i,2) = points_ref_2_ant(2);
+				points_ref_2_world(i,3) = 1;
+				std::cout << "v_rgbp_aux[i]" << std::endl;*/
+				//std::cout << "--------zz------" << std::endl;
+				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
 			}
-			this->first = false;
-		} else {*/
+		}
+		Eigen::Matrix4f RT_estimate1 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+		std::cout << "The estimate RT Matrix 1 is: \n" << "[" << RT_estimate1 << "]" << std::endl;
+		count = 0;
+		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+			if (((i+1) > (part*2)) || ((i+1) <= part)) {
+				points_ref_1(count,0) = v_rgbp[i].x;
+				points_ref_1(count,1) = v_rgbp[i].y;
+				points_ref_1(count,2) = v_rgbp[i].z;
+				points_ref_1(count,3) = 1;
+				points_ref_2(count,0) = v_rgbp_aux[i].x;
+				points_ref_2(count,1) = v_rgbp_aux[i].y;
+				points_ref_2(count,2) = v_rgbp_aux[i].z;
+				points_ref_2(count,3) = 1;				count++;
+				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+				points_ref_2_world(i,0) = points_ref_2_ant(0);
+				points_ref_2_world(i,1) = points_ref_2_ant(1);
+				points_ref_2_world(i,2) = points_ref_2_ant(2);
+				points_ref_2_world(i,3) = 1;
+				std::cout << "v_rgbp_aux[i]" << std::endl;*/
+				//std::cout << "--------zz------" << std::endl;
+				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+			}
+		}
+		count = 0;
+		Eigen::Matrix4f RT_estimate2 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+		std::cout << "The estimate RT Matrix 2 is: \n" << "[" << RT_estimate2 << "]" << std::endl;
+		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+			if (((i+1) > (part*3)) || ((i+1) <= (part*2))) {
+				points_ref_1(count,0) = v_rgbp[i].x;
+				points_ref_1(count,1) = v_rgbp[i].y;
+				points_ref_1(count,2) = v_rgbp[i].z;
+				points_ref_1(count,3) = 1;
+				points_ref_2(count,0) = v_rgbp_aux[i].x;
+				points_ref_2(count,1) = v_rgbp_aux[i].y;
+				points_ref_2(count,2) = v_rgbp_aux[i].z;
+				points_ref_2(count,3) = 1;				count++;
+				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+				points_ref_2_world(i,0) = points_ref_2_ant(0);
+				points_ref_2_world(i,1) = points_ref_2_ant(1);
+				points_ref_2_world(i,2) = points_ref_2_ant(2);
+				points_ref_2_world(i,3) = 1;
+				std::cout << "v_rgbp_aux[i]" << std::endl;*/
+				//std::cout << "--------zz------" << std::endl;
+				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+			}
+		}
+		count = 0;
+		Eigen::Matrix4f RT_estimate3 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+		std::cout << "The estimate RT Matrix 3 is: \n" << "[" << RT_estimate3 << "]" << std::endl;
+		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+			if ((i+1) <= (part*3)) {
+				points_ref_1(count,0) = v_rgbp[i].x;
+				points_ref_1(count,1) = v_rgbp[i].y;
+				points_ref_1(count,2) = v_rgbp[i].z;
+				points_ref_1(count,3) = 1;
+				points_ref_2(count,0) = v_rgbp_aux[i].x;
+				points_ref_2(count,1) = v_rgbp_aux[i].y;
+				points_ref_2(count,2) = v_rgbp_aux[i].z;
+				points_ref_2(count,3) = 1;				count++;
+				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+				points_ref_2_world(i,0) = points_ref_2_ant(0);
+				points_ref_2_world(i,1) = points_ref_2_ant(1);
+				points_ref_2_world(i,2) = points_ref_2_ant(2);
+				points_ref_2_world(i,3) = 1;
+				std::cout << "v_rgbp_aux[i]" << std::endl;*/
+				//std::cout << "--------zz------" << std::endl;
+				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+			}
+		}
 
 
 			//std::cout << "buuu: \n" << points_ref_1 << " --------- " << points_ref_2 << std::endl;
@@ -928,7 +989,7 @@ namespace real_rt_estimator {
 
 			//Eigen::Matrix4f RT_estimate = RT_final;
 
-			std::cout << "The estimate RT Matrix is: \n" << "[" << RT_estimate << "]" << std::endl;
+			std::cout << "The estimate RT Matrix 4 is: \n" << "[" << RT_estimate << "]" << std::endl;
 
 
 			//this->RT_final = this->RT_final*RT_estimate;
