@@ -67,13 +67,44 @@ Las especificaciones técnicas de este sensor se encuentran recogidas en la tabl
 %----------------------------------------------------------------------------------------
 \section{Software}
 
+%-----------------------------------
+%	SUBSECTION JDeRobot
+%-----------------------------------
+\subsection{JDeRobot}
+
+JDeRobot es un proyecto desarrollado por el grupo de robótica de la Universidad Rey Juan Carlos\footnote{http://jderobot.org}. Consiste en una plataforma de desarrollo de aplicaciones robóticas y de visión artificial. Está en su mayoría escrito en C++, donde disponen de una colección de componentes capaces de comunicarse a través de ICE middleware\footnote{https://zeroc.com/products/ice}, entre ellos se pueden encontrar herramientas, drivers, interfaces, librerías y tipos.
+
+\subsubsection{Gazebo}
+
+\subsubsection{Recorder y Replayer}
+
+\subsubsection{CameraServer}
+
+\subsubsection{RGBDViewer}
+
+%\subsubsection{RGBPoint}
+
+%Es una estructura de datos proporcionada por JDeRobot en la cual se pueden guardar puntos en tres dimensiones, y en la que es de mucha utilidad para crear nubes de puntos (o point cloud en inglés).
+
+\subsubsection{OpenniServer}
+
+OpenniServer es un driver de JDeRobot que es capaz de proporcionar a través de un sensor RGBD (Kinect o Xtion), imágenes de color, profundidad o nubes de puntos que son enviados a través de la interfaz ICE. Este driver se ha usado para este trabajo y es de donde se recogen tanto la imágen RGB como la de profundidad (DEPTH) para su posterior procesado.
+
+\subsubsection{Progeo}
+
+%-----------------------------------
+%	SUBSECTION ICE
+%-----------------------------------
+\subsection{ICE}
+
+%-----------------------------------
+%	SUBSECTION PCL
+%-----------------------------------
+\subsection{Point Cloud Library (PCL)}
 
 %-----------------------------------
 %	SUBSECTION OpenCV
 %-----------------------------------
 \subsection{OpenCV}
 
-%-----------------------------------
-%	SUBSECTION JDeRobot
-%-----------------------------------
-\subsection{JDeRobot}
+OpenCV (Open Source Computer Vision Library) es una librería que proporciona estructuras de datos para guardar los diferentes tipos de imágenes (RGB, Depth), así como puntos o matrices con una gran cantidad de algoritmos para poder hacer operaciones con ellos.
