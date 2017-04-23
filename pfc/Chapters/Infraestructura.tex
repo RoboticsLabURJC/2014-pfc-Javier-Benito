@@ -74,23 +74,58 @@ Las especificaciones técnicas de este sensor se encuentran recogidas en la tabl
 
 JDeRobot es un proyecto desarrollado por el grupo de robótica de la Universidad Rey Juan Carlos\footnote{http://jderobot.org}. Consiste en una plataforma de desarrollo de aplicaciones robóticas y de visión artificial. Está en su mayoría escrito en C++, donde disponen de una colección de componentes capaces de comunicarse a través de ICE middleware\footnote{https://zeroc.com/products/ice}, entre ellos se pueden encontrar herramientas, drivers, interfaces, librerías y tipos.
 
-\subsubsection{Gazebo}
+La versión de JdeRobot empleada ha sido la versión 5.4.0. A continuación se detallarán los componentes de JdeRobot que han sido de utilidad para la realización de este proyecto.
 
-\subsubsection{Recorder y Replayer}
 
-\subsubsection{CameraServer}
+\subsubsection{Progeo}
 
-\subsubsection{RGBDViewer}
+Es una biblioteca de geometría proyectiva incluida en JdeRobot, que proporciona funciones muy útiles que relacionan puntos en dos y tres dimensiones.
 
-%\subsubsection{RGBPoint}
+Será realmente útil en este trabajo para que a partir de puntos en dos dimensiones (píxeles) y su correspondiente información de profundidad (distancia), sacar los puntos relativos de la cámara en tres dimensiones.
 
-%Es una estructura de datos proporcionada por JDeRobot en la cual se pueden guardar puntos en tres dimensiones, y en la que es de mucha utilidad para crear nubes de puntos (o point cloud en inglés).
+Progeo usa el modelo de cámara \textbf{Pinhole}, en la Figura~\ref{fig:Pinhole} se puede observar la representación geométrica de la retroproyección y la proyección. Este modelo es definido por unos parámetros intrínsecos y extrínsecos que definen la composición de todos los parámetros iniciales de configuración de la cámara. Los parámetros extrínsecos que establecen la posición 3D, foco de atención (foa) y roll, mientras que los parámetros intrínsecos determinan la distancia focal y el centro óptico o píxel central.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{Figures/pinhole-model.jpg}
+\decoRule
+\caption[pinhole]{Modelo de cámara Pinhole}
+\label{fig:Pinhole}
+\end{figure}
+
+Las funciones que proporciona esta biblioteca son las siguientes:
+
+\begin{itemize}
+\item \textbf{Project}: Esta función permite proyectar un punto 3D del mundo al correspondiente pixel en 2D de la imagen de la cámara. 
+
+\item \textbf{Backproject}: Esta función es capaz de a partir de las coordenadas de un píxel en 2D, obtener la línea de proyección que conecta la cámara y el foco con el rayo 3D que proyecta dicho píxel en el plano imagen. Con esto y conociendo la distancia real del punto 3D a calcular, se calcula las coordenas reales del punto 3D.
+
+\item \textbf{DisplayLine}: Esta función permite conocer si una línea definida por dos puntos en 2D es visible dentro del plano imagen. 
+
+\item \textbf{Display\_info}: Esta función muestra toda la información sobre la cámara utilizada.
+
+\end{itemize}
+
+\subsubsection{parallelIce}
+
+Es otra librería incluída en JdeRobot, que soluciona el problema de latencia de información proveniente de los diferentes drivers, evitando la espera y proveniendo de un acceso asíncrono a una copia en local de las interfaces con muy bajo tiempo de procesado.
 
 \subsubsection{OpenniServer}
 
-OpenniServer es un driver de JDeRobot que es capaz de proporcionar a través de un sensor RGBD (Kinect o Xtion), imágenes de color, profundidad o nubes de puntos que son enviados a través de la interfaz ICE. Este driver se ha usado para este trabajo y es de donde se recogen tanto la imágen RGB como la de profundidad (DEPTH) para su posterior procesado.
+OpenniServer es un driver que se comporta como un servidor y es capaz de proporcionar con un sensor RGBD (Kinect o Xtion), imágenes de color, de profundidad o nubes de puntos que son enviados a través de la interfaz ICE a un puerto específico, donde se pueden escuchar los datos. Este driver es el que se necesita para el funcionamiento de este trabajo ya que es desde donde se recogen tanto las imagenes de color (RGB) como las de profundidad (Depth) para su posterior procesado.
 
-\subsubsection{Progeo}
+\subsubsection{RGBDViewer}
+
+Es una herramienta que permite enseñar la información proveniente de los sensores RGBD con openniServer como forma de visualización de los datos; imágenes RGB, DEPTH o nubes de puntos.
+
+\subsubsection{Pose3D}
+
+Es una interfaz que define una posición en tres dimensiones (x, y, z, h) y una orientación con un cuaternión (q0, q1, q2, q3).
+
+\subsubsection{RGBPoint}
+
+Es una estructura de datos en la cual se pueden guardar puntos en tres dimensiones con coordenadas (x, y, z), color (r, g, b) y un identificador (id). 
+Para generar las nubes de puntos se ha usado un vector de esta estructura.
 
 %-----------------------------------
 %	SUBSECTION ICE
