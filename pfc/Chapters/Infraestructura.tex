@@ -132,10 +132,29 @@ Para generar las nubes de puntos se ha usado un vector de esta estructura.
 %-----------------------------------
 \subsection{ICE}
 
+ICE (Internet Communications Engine) es un RPC framework desarrollado por ZeroC con soporte en C++, C\#, Java, JavaScript y Python entre otros. Se encuentra bajo doble licencia GNU GPL y código cerrado. Actúa como plataforma de comunicaciones y funciona bajo TCP/IP.
+
+En JdeRobot la podemos encontrar como librería y es utilizada como protocolo de comunicaciones entre los diferentes componentes de JdeRobot. En nuestro trabajo se ha usado para establecer la comunicación entre el componente y el driver del sensor, recogiendo las imágenes de éste.
+
 %-----------------------------------
 %	SUBSECTION PCL
 %-----------------------------------
 \subsection{Point Cloud Library (PCL)}
+
+PCL es una librería desarrollada en C++ para el procesamiento de imágenes 2D/3D y nubes de puntos. Está publicada con licencia BSD y libre bajo usos comerciales y de investicación. Está financialmente soportada por un consorcio de companías comerciales y su propia organización sin ánimo de lucro, Open Perception. A parte de los donadores y contribuidores individuales que aportan al proyecto. \footnote{http://pointclouds.org/}
+
+Para simplificar el uso y el desarrollo, esta librería se encuentra dividida en módulos individuales de los que destacan el filtrado de puntos \textit{outliers} o de ruido, estructuras de datos, estimación 3D, algoritmos para la detección de puntos de interés, combinación, segmentación, algoritmos para el reconocimiento de objetos. En la Figura~\ref{fig:Grouping} se puede ver un ejemplo de reconicimiento de objetos basado en el módulo pcl\_recognition.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/correspondence_grouping.png}
+\decoRule
+\caption[grouping]{Reconocimiento de objeto 3D con PCL}
+\label{fig:Grouping}
+\end{figure}
+
+En su página web disponen de mucha información y ejemplos prácticos que ayudan mucho a la compresión de todas las funcionalidades de esta librería. PCL también dispone de una librería i/o de entrada y salida para leer o crear nubes de puntos a partir de diferentes dispositivos, así como visualizadores 3D.
+
 
 %-----------------------------------
 %	SUBSECTION OpenCV
@@ -143,3 +162,8 @@ Para generar las nubes de puntos se ha usado un vector de esta estructura.
 \subsection{OpenCV}
 
 OpenCV (Open Source Computer Vision Library) es una librería que proporciona estructuras de datos para guardar los diferentes tipos de imágenes (RGB, Depth), así como puntos o matrices con una gran cantidad de algoritmos para poder hacer operaciones con ellos.
+
+\subsection{Interfaz gráfica GTK}
+
+
+\subsection{OpenGL}

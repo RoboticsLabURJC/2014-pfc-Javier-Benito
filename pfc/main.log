@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  24 APR 2017 00:01
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  4 MAY 2017 10:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1783,7 +1783,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 17.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 17.
-<Figures/ros_kinect.jpg, id=60, 433.62pt x 204.5241pt>
+<Figures/ros_kinect.jpg, id=68, 433.62pt x 204.5241pt>
 File: Figures/ros_kinect.jpg Graphic file (type jpg)
 
 <use Figures/ros_kinect.jpg>
@@ -1816,7 +1816,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 35.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 35.
- <Figures/xtion-pro-live.jpg, id=70, 430.17857pt x 203.04428pt>
+ <Figures/xtion-pro-live.jpg, id=78, 430.17857pt x 203.04428pt>
 File: Figures/xtion-pro-live.jpg Graphic file (type jpg)
 
 <use Figures/xtion-pro-live.jpg>
@@ -1875,7 +1875,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 80.
 
-<Figures/pinhole-model.jpg, id=85, 680.5425pt x 441.65pt>
+<Figures/pinhole-model.jpg, id=93, 680.5425pt x 441.65pt>
 File: Figures/pinhole-model.jpg Graphic file (type jpg)
 
 <use Figures/pinhole-model.jpg>
@@ -1969,6 +1969,9 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 133.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 133.
+LaTeX Info: Redefining \sptext on input line 138.
+LaTeX Info: Redefining \. on input line 138.
+LaTeX Info: Redefining \% on input line 138.
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 138.
 Package babel Info: Redefining spanish shorthand >>
@@ -1981,35 +1984,64 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 138.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 138.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 143.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 143.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 143.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 143.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 143.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 143.
-)
-LaTeX Info: Redefining \sptext on input line 166.
-LaTeX Info: Redefining \. on input line 166.
-LaTeX Info: Redefining \% on input line 166.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 166.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 166.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 166.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 166.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 166.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 166.
  [4]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 142.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 142.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 142.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 142.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 142.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 142.
+
+<Figures/correspondence_grouping.png, id=105, 638.385pt x 812.03375pt>
+File: Figures/correspondence_grouping.png Graphic file (type png)
+
+<use Figures/correspondence_grouping.png>
+Package pdftex.def Info: Figures/correspondence_grouping.png used on input line
+ 150.
+(pdftex.def)             Requested size: 383.03394pt x 487.22401pt.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 162.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 162.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 162.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 162.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 162.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 162.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 169.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 169.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 169.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 169.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 169.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 169.
+)
 LaTeX Info: Redefining \sptext on input line 166.
 LaTeX Info: Redefining \. on input line 166.
 LaTeX Info: Redefining \% on input line 166.
@@ -2026,10 +2058,25 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 166.
  [5]
+LaTeX Info: Redefining \sptext on input line 166.
+LaTeX Info: Redefining \. on input line 166.
+LaTeX Info: Redefining \% on input line 166.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 166.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 166.
+ [6 <./Figures/correspondence_grouping.png>]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 185.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 185.
-
-(./main.aux (./Chapters/Infraestructura.aux)
+ (./main.aux (./Chapters/Infraestructura.aux)
 LaTeX Info: Redefining \sptext on input line 29.
 LaTeX Info: Redefining \. on input line 29.
 LaTeX Info: Redefining \% on input line 29.
@@ -2037,7 +2084,7 @@ LaTeX Info: Redefining \% on input line 29.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 185.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 185.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1748076BB7D83FB55DE4B82B83B90972;1485.
+(rerunfilecheck)             Checksum: D069FB64C5BE7755D677E4D215F5EFB2;1738.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -2047,21 +2094,22 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 29064 strings out of 493304
- 591034 string characters out of 6139871
+ 29081 strings out of 493304
+ 591360 string characters out of 6139871
  680308 words of memory out of 5000000
- 32170 multiletter control sequences out of 15000+600000
- 31730 words of font info for 63 fonts, out of 8000000 for 9000
+ 32178 multiletter control sequences out of 15000+600000
+ 33283 words of font info for 65 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  57i,19n,83p,10402b,1391s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/urw/palatino/uplr8a.pfb>
-Output written on main.pdf (5 pages, 185452 bytes).
+/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatin
+o/uplri8a.pfb>
+Output written on main.pdf (6 pages, 928108 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 105 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
- 128 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 142 PDF objects out of 1000 (max. 8388607)
+ 124 compressed objects within 2 object streams
+ 32 named destinations out of 1000 (max. 500000)
+ 149 words of extra memory for PDF output out of 10000 (max. 10000000)
 
