@@ -16,19 +16,19 @@ En este capítulo se detallarán las herramientas base empleadas en la realizaci
 %-----------------------------------
 \subsection{Sensores RGBD}
 
-Los sensores RGBD son sensores capaces de captar a parte de las componentes roja, verde y azul de la luz, información de profundidad (o "D" depth en inglés). 
+Los sensores RGBD son sensores capaces de captar a parte de las componentes roja, verde y azul de la luz, información de profundidad (o "D"\ depth en inglés). 
 
-En el 2010 Microsoft publicó el sensor Kinect para la consola de juegos Xbox 360 y Xbox One. Pronto se convirtió en uno de los dispositivos electrónicos más vendidos en todo el mundo después de su lanzamiento.
+En el 2010 Microsoft publicó el sensor Kinect (Figura~\ref{fig:Kinect}) para la consola de juegos Xbox 360 y Xbox One. Pronto se convirtió en uno de los dispositivos electrónicos más vendidos en todo el mundo después de su lanzamiento.
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.9]{Figures/ros_kinect.jpg}
+\includegraphics[scale=0.85]{Figures/ros_kinect.jpg}
 \decoRule
 \caption[Kinect sensor]{Sensor Microsoft Kinect}
 \label{fig:Kinect}
 \end{figure}
 
-El sensor es capaz de combinar por cada pixel, la información de color con su correspondiente componente de profundidad. Esta tecnología fue desarrollada por la empresa israelí PrimeSense. El sensor Kinect dispone también de un micrófono multiarray con el cual puede predecir de dónde proviene el sonido.
+El sensor es capaz de combinar por cada pixel, la información de color con su correspondiente componente de profundidad. Esta tecnología fue desarrollada por la empresa israelí \textbf{PrimeSense}. El sensor Kinect dispone también de un micrófono multiarray con el cual puede predecir de dónde proviene el sonido.
 
 Este sensor salió al mercado a un precio mucho más reducido que algunos que existían antes que él por lo que el interés por este tipo de sensores se disparó y comenzaron a aparecen en diferentes áreas de la tecnología, como interfaces naturales de usuario (en inglés natural user interface, NUI), reconstrucción y realidad virtual o cartografía 3D.
 
@@ -36,7 +36,7 @@ El sensor utilizado en este trabajo es el \textbf{Asus Xtion PRO LIVE} que dispo
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.9]{Figures/xtion-pro-live.jpg}
+\includegraphics[scale=0.85]{Figures/xtion-pro-live.jpg}
 \decoRule
 \caption[Kinect sensor]{Asus Xtion PRO LIVE}
 \label{fig:Kinect}
@@ -72,10 +72,11 @@ Las especificaciones técnicas de este sensor se encuentran recogidas en la tabl
 %-----------------------------------
 \subsection{JDeRobot}
 
-JDeRobot es un proyecto desarrollado por el grupo de robótica de la Universidad Rey Juan Carlos\footnote{http://jderobot.org}. Consiste en una plataforma de desarrollo de aplicaciones robóticas y de visión artificial. Está en su mayoría escrito en C++, donde disponen de una colección de componentes capaces de comunicarse a través de ICE middleware\footnote{https://zeroc.com/products/ice}, entre ellos se pueden encontrar herramientas, drivers, interfaces, librerías y tipos.
+JDeRobot es un proyecto desarrollado por el grupo de robótica de la Universidad Rey Juan Carlos \footnote{http://jderobot.org}. El proyecto fue desarrollado en 2003 por la tesis doctoral de José María Cañas Plaza. Consiste en una plataforma de desarrollo de aplicaciones robóticas y de visión artificial. Está en su mayoría escrito en C++, donde disponen de una colección de componentes capaces de comunicarse a través de ICE middleware \footnote{https://zeroc.com/products/ice}, los componentes pueden ejecutarse en diferentes ordenadores y pueden ser programados en diferentes lenguajes.
+
+JdeRobot incluye numerosas herramientas, drivers, interfaces, librerías y tipos. Es \textit{software} libre con licencia GPL y LGPL. También utiliza \textit{software} de terceros como Gazebo, ROS, OpenGL, GTK y Eigen entre otros.
 
 La versión de JdeRobot empleada ha sido la versión 5.4.0. A continuación se detallarán los componentes de JdeRobot que han sido de utilidad para la realización de este proyecto.
-
 
 \subsubsection{Progeo}
 
@@ -108,7 +109,7 @@ Las funciones que proporciona esta biblioteca son las siguientes:
 
 \subsubsection{parallelIce}
 
-Es otra librería incluída en JdeRobot, que soluciona el problema de latencia de información proveniente de los diferentes drivers, evitando la espera y proveniendo de un acceso asíncrono a una copia en local de las interfaces con muy bajo tiempo de procesado.
+Es otra librería incluída en JdeRobot, que soluciona el problema de latencia de información proveniente de los diferentes drivers, evitando la espera y proviniendo de un acceso asíncrono a una copia en local de las interfaces con muy bajo tiempo de procesado.
 
 \subsubsection{OpenniServer}
 
@@ -141,7 +142,7 @@ En JdeRobot la podemos encontrar como librería y es utilizada como protocolo de
 %-----------------------------------
 \subsection{Point Cloud Library (PCL)}
 
-PCL es una librería desarrollada en C++ para el procesamiento de imágenes 2D/3D y nubes de puntos. Está publicada con licencia BSD y libre bajo usos comerciales y de investicación. Está financialmente soportada por un consorcio de companías comerciales y su propia organización sin ánimo de lucro, Open Perception. A parte de los donadores y contribuidores individuales que aportan al proyecto. \footnote{http://pointclouds.org/}
+PCL es una librería desarrollada en C++ para el procesamiento de imágenes 2D/3D y nubes de puntos. Está publicada con licencia BSD y libre bajo usos comerciales y de investicación. Está financialmente soportada por un consorcio de companías comerciales y su propia organización sin ánimo de lucro, \textbf{Open Perception}. A parte de los donadores y contribuidores individuales que aportan al proyecto. \footnote{http://pointclouds.org/}
 
 Para simplificar el uso y el desarrollo, esta librería se encuentra dividida en módulos individuales de los que destacan el filtrado de puntos \textit{outliers} o de ruido, estructuras de datos, estimación 3D, algoritmos para la detección de puntos de interés, combinación, segmentación, algoritmos para el reconocimiento de objetos.
 %En la Figura~\ref{fig:Grouping} se puede ver un ejemplo de reconicimiento de objetos basado en el módulo pcl\_recognition.
@@ -168,13 +169,13 @@ La librería contiene más de 2500 algoritmos. Estos algoritmos pueden ser usado
 
 OpenCV a sido diseñada de forma eficiente y con un fuerte enfoque en aplicaciones de tiempo real. Escrita en C/C++, la librería obtiene las ventajas del procesamiento multi-núcleo. Dispone de interfaces en C++, C, Python, Java y MATLAB y es soportada por diferentes sistemas operativos como Windows, Linux, Android y Mac OS.
 
-En este trabajo se ha usado a la hora de identificar puntos de interés y para los métodos de emparejamiento. En la Figura~\ref{fig:SiftDetector} se puede apreciar un ejemplo de su uso en la detección de puntos de interés sobre un entorno real.
+En este trabajo se ha usado a la hora de identificar puntos de interés y para los distintos métodos de emparejamiento. En la Figura~\ref{fig:SiftDetector} se puede apreciar un ejemplo de su uso en la detección de puntos de interés sobre un entorno real.
 
 \begin{figure}[th]
 \centering
 \includegraphics[scale=0.8]{Figures/sift-detector.png}
 \decoRule
-\caption[sift-detector]{Detección y emparejamiento de puntos de interés con OpenCV usando SIFT}
+\caption[sift-detector]{Detección y emparejamiento de puntos de interés con OpenCV usando SIFT.}
 \label{fig:SiftDetector}
 \end{figure}
 
@@ -188,19 +189,19 @@ Eigen es una librería de algebra lineal que permite hacer operaciones aritméti
 \centering
 \includegraphics[scale=0.65]{Figures/eigen-multiplication.png}
 \decoRule
-\caption[eigen]{Ejemplo de una multiplicación y división por un escalar con Eigen}
+\caption[eigen]{Ejemplo de una multiplicación y división por un escalar con Eigen.}
 \label{fig:Eigen}
 \end{figure}
 
-Eigen es software libre y desde la versión 3.1.1 tiene licencia MPL2 (LGPL3+ para las anteriores versiones). Ha sido usado en este trabajo para realizar los cálculos de la matriz RT a través del los vectores de puntos 3D ya emparejados.
+Eigen es \textit{software} libre y desde la versión 3.1.1 tiene licencia MPL2 (LGPL3+ para las anteriores versiones). Ha sido usado en este trabajo para realizar los cálculos de la matriz RT a través del los vectores de puntos 3D ya emparejados.
 
 %-----------------------------------
 %	SUBSECTION GTK
 %-----------------------------------
 \subsection{Interfaz gráfica GTK+}
-GTK+, o the GIMP Toolkit es una herramienta multiplataforma de creación de interfaces gráficas. Es multiplataforma y está escrito en C, pero a sido diseñado para tener soporte para un gran rango de lenguajes, tales como Perl y Python. GTK++ tiene una gran colección de widgets y interfaces para usar en la aplicación, tales como ventanas, botones, selectores, cajas de texto, etc.
+GTK+, o the GIMP Toolkit es una herramienta multiplataforma de creación de interfaces gráficas. Es multiplataforma y está escrito en C, pero a sido diseñado para tener soporte para un gran rango de lenguajes, tales como Perl y Python. GTK++ tiene una gran colección de \textit{widgets} y interfaces para usar en la aplicación, tales como ventanas, botones, selectores, cajas de texto, etc.
 
-Es software libre y parte del proyecto GNU. Con licencia LGPL, permite que sea utilizado por todos los desarrolladores, incluyendo aquellos que están desarrollando software privativo. Ha sido utilizado en muchos proyectos y grandes plataformas. \footnote{https://www.gtk.org/}
+Es \textit{software} libre y parte del proyecto GNU. Con licencia LGPL, permite que sea utilizado por todos los desarrolladores, incluyendo aquellos que están desarrollando un  \textit{software} privativo. GTK+ ha sido utilizado en muchos proyectos y en grandes plataformas. \footnote{https://www.gtk.org/}
 
 \subsubsection{Glade}
 Glade es una \textit{RAD tool} (Rapid Application Development Tool) que permite desarrollar de manera fácil y rápida interfaces de usuario en GTK+ para el entorno de escritorio GNOME. La interfaz gráfica diseñada en Glade es guardada en un XML que usando los objetos GTK+ de \textbf{GtkBuilder} pueden ser cargados y utilizados por aplicaciones de forma dinámica como se ha hecho en este trabajo. \footnote{https://glade.gnome.org/}
@@ -208,3 +209,16 @@ Glade es una \textit{RAD tool} (Rapid Application Development Tool) que permite 
 %	SUBSECTION OpenGL
 %-----------------------------------
 \subsection{OpenGL}
+OpenGL es el principal entorno para el desarrollo de aplicaciones gráficas 2D y 3D interactivas. Desde 1992, OpenGL se ha convertido en la interfaz de aplicaciones gráficas más utilizada y soportada en la industria 2D y 3D, con miles de aplicaciones diponibles en diferentes plataformas. OpenGL ayuda al desarrollo de aplicaciones al incorporar un amplio conjunto de renderizado, mapeo de texturas, efectos especiales y otras potentes funciones de visualización. Se puede usar OpenGL en la mayoría de entornos de escritorio y diferentes plataformas. Es muy utilizada y conocida en la industria de los videojuegos.
+
+Algunas de las ventajas de las que presume OpenGL son; que es un estándar de la industria, con soporte, multiplataforma y el único libre. Es estable, dispone de compatibilidad hacia atrás, escalable, fácil de usar y bien documentado. \footnote{https://www.opengl.org/}
+
+En este trabajo se ha usado para visualizar la posición de la cámara, su estela y la colección de nubes de puntos obtenida y procesada de las imágenes RGB y de profundidad. En la Figura~\ref{fig:OpenGL} se puede apreciar una captura de pantalla con la posición de la cámara dibujada en el espacio tridimensional con el visualizador utilizado con OpenGL.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.65]{Figures/camera-opengl.png}
+\decoRule
+\caption[opengl]{Captura de la posición de la cámara en el visualizador 3D con OpenGL.}
+\label{fig:OpenGL}
+\end{figure}
