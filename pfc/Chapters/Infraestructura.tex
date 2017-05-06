@@ -143,15 +143,16 @@ En JdeRobot la podemos encontrar como librería y es utilizada como protocolo de
 
 PCL es una librería desarrollada en C++ para el procesamiento de imágenes 2D/3D y nubes de puntos. Está publicada con licencia BSD y libre bajo usos comerciales y de investicación. Está financialmente soportada por un consorcio de companías comerciales y su propia organización sin ánimo de lucro, Open Perception. A parte de los donadores y contribuidores individuales que aportan al proyecto. \footnote{http://pointclouds.org/}
 
-Para simplificar el uso y el desarrollo, esta librería se encuentra dividida en módulos individuales de los que destacan el filtrado de puntos \textit{outliers} o de ruido, estructuras de datos, estimación 3D, algoritmos para la detección de puntos de interés, combinación, segmentación, algoritmos para el reconocimiento de objetos. En la Figura~\ref{fig:Grouping} se puede ver un ejemplo de reconicimiento de objetos basado en el módulo pcl\_recognition.
+Para simplificar el uso y el desarrollo, esta librería se encuentra dividida en módulos individuales de los que destacan el filtrado de puntos \textit{outliers} o de ruido, estructuras de datos, estimación 3D, algoritmos para la detección de puntos de interés, combinación, segmentación, algoritmos para el reconocimiento de objetos.
+%En la Figura~\ref{fig:Grouping} se puede ver un ejemplo de reconicimiento de objetos basado en el módulo pcl\_recognition.
 
-\begin{figure}[th]
-\centering
-\includegraphics[scale=0.6]{Figures/correspondence_grouping.png}
-\decoRule
-\caption[grouping]{Reconocimiento de objeto 3D con PCL}
-\label{fig:Grouping}
-\end{figure}
+%\begin{figure}[th]
+%\centering
+%\includegraphics[scale=0.6]{Figures/correspondence_grouping.png}
+%\decoRule
+%\caption[grouping]{Reconocimiento de objeto 3D con PCL}
+%\label{fig:Grouping}
+%\end{figure}
 
 En su página web disponen de mucha información y ejemplos prácticos que ayudan mucho a la compresión de todas las funcionalidades de esta librería. PCL también dispone de una librería i/o de entrada y salida para leer o crear nubes de puntos a partir de diferentes dispositivos, así como visualizadores 3D.
 
@@ -167,9 +168,43 @@ La librería contiene más de 2500 algoritmos. Estos algoritmos pueden ser usado
 
 OpenCV a sido diseñada de forma eficiente y con un fuerte enfoque en aplicaciones de tiempo real. Escrita en C/C++, la librería obtiene las ventajas del procesamiento multi-núcleo. Dispone de interfaces en C++, C, Python, Java y MATLAB y es soportada por diferentes sistemas operativos como Windows, Linux, Android y Mac OS.
 
-En este trabajo se ha usado para la identificación de puntos de interés, emparejamiento y estimación de movimiento. En la Figura se puede apreciar un ejemplo de su uso en la detección de puntos de interés en un entorno real. %TODO: Comprobar
+En este trabajo se ha usado a la hora de identificar puntos de interés y para los métodos de emparejamiento. En la Figura~\ref{fig:SiftDetector} se puede apreciar un ejemplo de su uso en la detección de puntos de interés sobre un entorno real.
 
-\subsection{Interfaz gráfica GTK}
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.8]{Figures/sift-detector.png}
+\decoRule
+\caption[sift-detector]{Detección y emparejamiento de puntos de interés con OpenCV usando SIFT}
+\label{fig:SiftDetector}
+\end{figure}
 
+%-----------------------------------
+%	SUBSECTION Eigen
+%-----------------------------------
+\subsection{Eigen}
+Eigen es una librería de algebra lineal que permite hacer operaciones aritméticas con matrices y vectores, a través de los operadores comunes de C++, tales como +, -, * o a través de métodos especiales tales como dot(), cross(), etc... Para la clase \textit{Matrix} (matrices y vectores) los operadores solo soportan operaciones de álgebra lineal. En Figura~\ref{fig:Eigen} se puede ver un ejemplo de como de simple es hacer una multiplicación y una división por un escalar. \footnote{http://eigen.tuxfamily.org/}
 
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.65]{Figures/eigen-multiplication.png}
+\decoRule
+\caption[eigen]{Ejemplo de una multiplicación y división por un escalar con Eigen}
+\label{fig:Eigen}
+\end{figure}
+
+Eigen es software libre y desde la versión 3.1.1 tiene licencia MPL2 (LGPL3+ para las anteriores versiones). Ha sido usado en este trabajo para realizar los cálculos de la matriz RT a través del los vectores de puntos 3D ya emparejados.
+
+%-----------------------------------
+%	SUBSECTION GTK
+%-----------------------------------
+\subsection{Interfaz gráfica GTK+}
+GTK+, o the GIMP Toolkit es una herramienta multiplataforma de creación de interfaces gráficas. Es multiplataforma y está escrito en C, pero a sido diseñado para tener soporte para un gran rango de lenguajes, tales como Perl y Python. GTK++ tiene una gran colección de widgets y interfaces para usar en la aplicación, tales como ventanas, botones, selectores, cajas de texto, etc.
+
+Es software libre y parte del proyecto GNU. Con licencia LGPL, permite que sea utilizado por todos los desarrolladores, incluyendo aquellos que están desarrollando software privativo. Ha sido utilizado en muchos proyectos y grandes plataformas. \footnote{https://www.gtk.org/}
+
+\subsubsection{Glade}
+Glade es una \textit{RAD tool} (Rapid Application Development Tool) que permite desarrollar de manera fácil y rápida interfaces de usuario en GTK+ para el entorno de escritorio GNOME. La interfaz gráfica diseñada en Glade es guardada en un XML que usando los objetos GTK+ de \textbf{GtkBuilder} pueden ser cargados y utilizados por aplicaciones de forma dinámica como se ha hecho en este trabajo. \footnote{https://glade.gnome.org/}
+%-----------------------------------
+%	SUBSECTION OpenGL
+%-----------------------------------
 \subsection{OpenGL}
