@@ -19,6 +19,29 @@
 
 \refsection{0}
   \sortlist{entry}{nyt}
+    \entry{Reference5}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=0af6316343972339070ea2db237ca93f}{Andrew\bibnamedelimb J.\bibnamedelimi Davison}{A\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim D\bibinitperiod}{Nicholas\bibnamedelimb D.\bibnamedelimi Molton}{N\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{Ian\bibnamedelimb D.\bibnamedelimi Reid}{I\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim R\bibinitperiod}}%
+        {{uniquename=0,hash=d976a252b6fa0efe1839e7c6de032d43}{Stasse}{S\bibinitperiod}{Olivier}{O\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=0af6316343972339070ea2db237ca93f}{Andrew\bibnamedelimb J.\bibnamedelimi Davison}{A\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim D\bibinitperiod}{Nicholas\bibnamedelimb D.\bibnamedelimi Molton}{N\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{Ian\bibnamedelimb D.\bibnamedelimi Reid}{I\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim R\bibinitperiod}}%
+        {{uniquename=0,hash=d976a252b6fa0efe1839e7c6de032d43}{Stasse}{S\bibinitperiod}{Olivier}{O\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{dec66eca9fa411c5154b6c796795aa26}
+      \strng{fullhash}{dec66eca9fa411c5154b6c796795aa26}
+      \field{sortinit}{A}
+      \field{labelyear}{2007}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labeltitle}{MonoSLAM: Real-Time Single Camera SLAM}
+      \field{journaltitle}{IEEE Transactions on	Pattern Analysis and Machine Intelligence}
+      \field{month}{6}
+      \field{title}{MonoSLAM: Real-Time Single Camera SLAM}
+      \field{volume}{29(6)}
+      \field{year}{2007}
+      \field{pages}{1052\bibrangedash 1067}
+    \endentry
     \entry{Reference1}{article}{}
       \name{labelname}{2}{}{%
         {{uniquename=0,hash=670f1f594b20e50f19019880d213f8ea}{Durrant-Whyte}{D\bibinithyphendelim W\bibinitperiod}{H.}{H\bibinitperiod}{}{}{}{}}%
@@ -43,15 +66,60 @@
       \field{year}{2006}
       \field{pages}{99\bibrangedash 110}
     \endentry
+    \entry{Reference4}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=ea987af098c553e56730615d244f1dd6}{Fraundorfer}{F\bibinitperiod}{Friedrich}{F\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=dac21ab4ede215439fcc6b051be53a11}{Scaramuzza}{S\bibinitperiod}{Davide}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=ea987af098c553e56730615d244f1dd6}{Fraundorfer}{F\bibinitperiod}{Friedrich}{F\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=dac21ab4ede215439fcc6b051be53a11}{Scaramuzza}{S\bibinitperiod}{Davide}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{44724906a522b988dbd950fd42f0fb80}
+      \strng{fullhash}{44724906a522b988dbd950fd42f0fb80}
+      \field{sortinit}{F}
+      \field{labelyear}{2012}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Visual	odometry: Part ii: Matching, robustness, optimization, and applications}
+      \field{journaltitle}{Robotics & Automation Magazine, IEEE}
+      \field{title}{Visual	odometry: Part ii: Matching, robustness, optimization, and applications}
+      \field{volume}{19(2)}
+      \field{year}{2012}
+      \field{pages}{78\bibrangedash 90}
+    \endentry
+    \entry{Reference6}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=81c119e7adf31efd54cf22ccc13a68b1}{Klein}{K\bibinitperiod}{G.}{G\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=0cc50e9ec701e228fa3b7fed848dc685}{Murray}{M\bibinitperiod}{D.}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=81c119e7adf31efd54cf22ccc13a68b1}{Klein}{K\bibinitperiod}{G.}{G\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=0cc50e9ec701e228fa3b7fed848dc685}{Murray}{M\bibinitperiod}{D.}{D\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{3b5f5bdc638aeead84e2852b8f2f2ad7}
+      \strng{fullhash}{3b5f5bdc638aeead84e2852b8f2f2ad7}
+      \field{sortinit}{K}
+      \field{labelyear}{2007}
+      \field{labelmonth}{11}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Parallel Tracking and Mapping for Small AR Workspaces}
+      \field{journaltitle}{6th IEEE and ACM International Symposium on Mixed and Augmented Reality (ISMAR)}
+      \field{month}{11}
+      \field{title}{Parallel Tracking and Mapping for Small AR Workspaces}
+      \field{year}{2007}
+      \field{pages}{225\bibrangedash 234}
+    \endentry
     \entry{Reference2}{article}{}
-      \name{labelname}{1}{}{%
-        {{uniquename=0,hash=3c528c18a86da40a088eebe19fc06843}{Noah\bibnamedelima Snavely}{N\bibinitperiod\bibinitdelim S\bibinitperiod}{y\bibnamedelima Richard\bibnamedelima Szeliski}{y\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{Steven\bibnamedelimb M.\bibnamedelimi Seitz}{S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod}}%
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=526c503cf96f450e6d39ea8a18ba191d}{Noah\bibnamedelima Snavely}{N\bibinitperiod\bibinitdelim S\bibinitperiod}{Steven\bibnamedelimb M.\bibnamedelimi Seitz}{S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=f2e556c93256e7d70895d67702e14f1a}{Szeliski}{S\bibinitperiod}{Richard}{R\bibinitperiod}{}{}{}{}}%
       }
-      \name{author}{1}{}{%
-        {{uniquename=0,hash=3c528c18a86da40a088eebe19fc06843}{Noah\bibnamedelima Snavely}{N\bibinitperiod\bibinitdelim S\bibinitperiod}{y\bibnamedelima Richard\bibnamedelima Szeliski}{y\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{Steven\bibnamedelimb M.\bibnamedelimi Seitz}{S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod}}%
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=526c503cf96f450e6d39ea8a18ba191d}{Noah\bibnamedelima Snavely}{N\bibinitperiod\bibinitdelim S\bibinitperiod}{Steven\bibnamedelimb M.\bibnamedelimi Seitz}{S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=f2e556c93256e7d70895d67702e14f1a}{Szeliski}{S\bibinitperiod}{Richard}{R\bibinitperiod}{}{}{}{}}%
       }
-      \strng{namehash}{3c528c18a86da40a088eebe19fc06843}
-      \strng{fullhash}{3c528c18a86da40a088eebe19fc06843}
+      \strng{namehash}{096090b53a261a4786cfdb1f8ac12ec4}
+      \strng{fullhash}{096090b53a261a4786cfdb1f8ac12ec4}
       \field{sortinit}{N}
       \field{labelyear}{2006}
       \field{datelabelsource}{}
@@ -60,6 +128,27 @@
       \field{title}{Photo tourism:	Exploring photo collections in 3d}
       \field{year}{2006}
       \field{pages}{835\bibrangedash 846}
+    \endentry
+    \entry{Reference3}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=dac21ab4ede215439fcc6b051be53a11}{Scaramuzza}{S\bibinitperiod}{Davide}{D\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=ea987af098c553e56730615d244f1dd6}{Fraundorfer}{F\bibinitperiod}{Friedrich}{F\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=dac21ab4ede215439fcc6b051be53a11}{Scaramuzza}{S\bibinitperiod}{Davide}{D\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=ea987af098c553e56730615d244f1dd6}{Fraundorfer}{F\bibinitperiod}{Friedrich}{F\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{e3fadefef92a28fcd8544db3cc769ba2}
+      \strng{fullhash}{e3fadefef92a28fcd8544db3cc769ba2}
+      \field{sortinit}{S}
+      \field{labelyear}{2011}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Visual	odometry [tutorial]}
+      \field{journaltitle}{Robotics & Automation Magazine, IEEE}
+      \field{title}{Visual	odometry [tutorial]}
+      \field{volume}{18(4)}
+      \field{year}{2011}
+      \field{pages}{80\bibrangedash 92}
     \endentry
   \endsortlist
 \endrefsection

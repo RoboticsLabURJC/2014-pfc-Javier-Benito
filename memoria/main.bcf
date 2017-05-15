@@ -1966,6 +1966,10 @@
   <bcf:section number="0">
     <bcf:citekey order="1">Reference2</bcf:citekey>
     <bcf:citekey order="2">Reference1</bcf:citekey>
+    <bcf:citekey order="3">Reference3</bcf:citekey>
+    <bcf:citekey order="4">Reference4</bcf:citekey>
+    <bcf:citekey order="5">Reference5</bcf:citekey>
+    <bcf:citekey order="6">Reference6</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" type="entry" label="nyt">
   <bcf:sorting>

@@ -34,14 +34,6 @@ MediaPro: distancia recorrida por un futbolista
 
 
 
-%-----------------------------------
-%	SECTION Odometría visual
-%-----------------------------------
-\section{Odometría visual}
-
-Entre todas posibilidades de visión artificial este proyecto se va a centrar en la odometría visual, que consiste en ubicar en el espacio el sensor de visión y conocer en qué posición está ubicado o si no saber cuanto y donde se mueve y registrar el movimiento.
-
-
 
 
 %-----------------------------------
@@ -81,3 +73,33 @@ La solución a este problema conseguiría hacer sistemas de robots completamente
 
 La resolución al problema SLAM ha suscitado un gran interés en el campo de la robótica y ha sido resuelto teóricamente de diversas formas como es el caso del artículo \parencite{Reference1}. Y aunque algunas de ellas han obtenido buenos resultados en la práctica siguen surgiendo problemas a la hora de buscar el método más rápido o el que genere un mejor resultado con menos índice de fallo. La búsqueda de algoritmos y métodos que resuelvan estos problemas sigue siendo una tarea pendiente.
 
+\subsubsection{Odometría visual}
+
+Dentro de las familias de técnicas pertenecientes a las de Visual SLAM se encuentra la de odometría visual, que es la que abordaremos en este trabajo. Consiste en la estimación del movimiento de la cámara en tiempo real. Es decir, el cálculo de la rotación y traslación de la cámara a partir de dos imágenes simultáneas. Se trata de una técnica incremental ya que se basa en la posición anterior para calcular la nueva.
+
+Este tipo de algoritmos se suelen utilizar técnicas de extracción de puntos de interés, cálculos de descriptores y algoritmos para el emparejamiento. Normalmente el proceso es el mismo, una vez calculados los puntos emparejados se calcula la matriz fundamental o esencial y descomponerlas mediante SVD para obtener la matriz de rotación y traslación (RT) (\cite{Reference3}. \cite{Reference4}).
+
+Uno de los trabajos más importantes en el ámbito es el de monoSLAM de Davison\footnote{http://www.doc.ic.ac.uk/\textasciitilde ajd/} \parencite{Reference5} que propone resolver este problema con una única cámara RGB como sensor y realizar el mapeado y la localización simultáneamente. El algoritmo propuesto por Davison utiliza un filtro extendido de Kalman para estimar la posición y la orientación de la cámara, así como la posición de una serie de puntos en el espacio 3D. Para determinar la posición inicial de la cámara es necesario a priori dotar de información con la posición 3D de por lo menos 3 puntos. Después el algoritmo es capaz de situar la cámara en el espacio tridimensional y de generar nuevos puntos para crear el mapa y servir como apoyo a la propia localización de la cámara. En la Figura~\ref{fig:Monoslam} se pueden ver unas capturas de pantalla sobre uno de los experimientos realizados.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.35]{Figures/monoslam.png}
+\decoRule
+\caption[MonoSlam]{MonoSLAM: Un robot humanoide camina en una trayectoria circular de radio 0.75m. La estela amarilla muestra la trayectoria estimada del robot, y las elipses muestran los errores de localización.}
+\label{fig:Monoslam}
+\end{figure}
+
+Es importante destacar también la trascendencia que ha tenido el trabajo PTAM \parencite{Reference6} que viene a solucionar uno de los principales problemas que tienen los algoritmos monoSLAM; el tiempo de cómputo, ya que aumenta exponencialmente con el número de puntos (Figura~\ref{fig:Ptam}). Para ello se aborda el problema separando el mapeado de la localización, de tal modo que solo la localización deba funcionar en tiempo real, dejando así que el mapeado trabaje de una manera asíncrona. Este algoritmo parte de la idea de que solo la localización es necesaria que funcione en tiempo real. PTAM hace uso de \textit{keyframes}, es decir, fotogramas clave que se utilizan tanto para la localización como para el mapeado y también de una técnica de optimización mediante ajuste de haces, como en SfM.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.4]{Figures/ptam.png}
+\decoRule
+\caption[Ptam]{PTAM: Funcionamiento típico del sistema sobre un escritorio.}
+\label{fig:Ptam}
+\end{figure}
+
+%-----------------------------------
+%	SECTION Realidad aumentada
+%-----------------------------------
+\section{Realidad aumentada}
