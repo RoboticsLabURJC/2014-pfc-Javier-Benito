@@ -14,27 +14,70 @@ sensor RGBD, dando por conocida la información sobre su posición y orientació
 través de algún método externo.
 
 %-----------------------------------
-%	SUBSECTION Visión artificial
+%	SECTION Visión artificial
 %-----------------------------------
 \section{Visión artificial}
 
 Dentro de la IA, se conoce la visión artificial como el procesado que hace nuestro celebro de las imágenes. Que es actualmente un amplio mundo de investigación y desarrollo. Dispositivos como móviles que usan cámaras (reconocimiento facial).
 
+bajo coste, permite extraer mucha información, procesamiento muy costoso, detección de bordes, features, texturas. Reconocimiento de formas, caras
+
+Aplicaciones:
+
+Medicina
+OCR
+Biometría
+Ojo de halcón (tenis)
+MediaPro: distancia recorrida por un futbolista
+
+
+
+
+
 %-----------------------------------
-%	SUBSECTION Odometría visual
+%	SECTION Odometría visual
 %-----------------------------------
 \section{Odometría visual}
 
 Entre todas posibilidades de visión artificial este proyecto se va a centrar en la odometría visual, que consiste en ubicar en el espacio el sensor de visión y conocer en qué posición está ubicado o si no saber cuanto y donde se mueve y registrar el movimiento.
 
+
+
+
+%-----------------------------------
+%	SECTION Técnicas de autolocalización
+%-----------------------------------
+\section{Técnicas de autolocalización}
+
+Las técnicas de autolocalización ha suscitado gran interés por los investigadores en los últimos años. Consiste en conocer la localización de la cámara en todo momento simplemente con las imágenes capturadas sin disponer de ninguna información extra.
+
+El problema a sido abordado por dos comunidades distintas, por un lado la de visión artificial que denominó al problema como \textbf{structure from motion (SfM)}, donde la información es procesada por lotes, capaz de representar un objeto 2D a 3D con solo unas cuantas imágenes desde diferentes puntos de vista. Y por otro lado la comunidad robótica denominó al problema \textbf{SLAM} (\textit{Simultaneous Localization and Mapping}) que trata de resolver el problema de una manera más compleja adaptando el funcionamiento de los sistemas en tiempo real.
+
+%-----------------------------------
+%	SUBSECTION Structure from Motion
+%-----------------------------------
+\subsection{Structure from Motion (SfM)}
+
+Las técnicas SfM se analizan generalmente de forma offline, las escenas se graban a través de un conjunto de imágenes y luego se procesa, lo que permite realizar optimizaciones para el cálculo de la trayectoria, como por ejemplo el llamado ajuste de haces.
+
+Existen aplicaciones comerciales que utilizan estas técnicas como es el caso de la aplicación PhotoTourism \parencite{Reference2} desarrollada por Microsoft. Que consiste en el cálculo de la posición 3D en la que fueron captadas las imágenes, por ejemplo de un monumento, para después extraer el modelo 3D con el que el usuario puede interactuar libremente (Figura~\ref{fig:Tourism}).
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.57]{Figures/phototourism.png}
+\decoRule
+\caption[PhotoTourism]{PhotoTourism: Se recogen una gran colección de imágenes (a), se reconstruyen los puntos 3D y los puntos de vista (b), por último la interfaz permite al usuario interactuar moviendose a través del espacio 3D mediante la transición entre fotografías.}
+\label{fig:Tourism}
+\end{figure}
+
 %-----------------------------------
 %	SUBSECTION Visual SLAM
 %-----------------------------------
-\section{Visual SLAM}
+\subsection{Visual SLAM}
 
-En el problema conocido como Simultaneous Localization and Mapping (SLAM) busca resolver los problemas que plantea colocar un robot móvil en un entorno y una posición desconocidas, y que él mismo se encuentre capaz de construir incrementalmente un mapa de su entorno consistente y a la vez utilizar dicho mapa para determinar su propia localización.
+En el problema conocido como \textit{Simultaneous Localization and Mapping} (SLAM) busca resolver los problemas que plantea colocar un robot móvil en un entorno y una posición desconocidas, y que él mismo se encuentre capaz de construir incrementalmente un mapa de su entorno consistente y a la vez utilizar dicho mapa para determinar su propia localización.
 
 La solución a este problema conseguiría hacer sistemas de robots completamente autónomos que junto con un mecanismo de navegación el sistema se encontrará con la capacidad para saber a dónde desplazarse, ser capaz de encontrar obstáculos y reaccionar ante ellos de manera inteligente.
 
-La resolución al problema SLAM ha suscitado un gran interés en el campo de la robótica y ha sido resuelto teóricamente de diversas formas como es el caso del artículo \parencite{Reference1}. Y aunque algunas de ellas han obtenido buenos resultados en la práctica siguen surgiendo problemas a la hora de buscar el método más rápido o el que genere un mejor resultado con menos índice de fallo. La búsqueda de algoritmos y métodos que resuelvan estos problemas sigue siendo una tarea pendiente en este ámbito.
+La resolución al problema SLAM ha suscitado un gran interés en el campo de la robótica y ha sido resuelto teóricamente de diversas formas como es el caso del artículo \parencite{Reference1}. Y aunque algunas de ellas han obtenido buenos resultados en la práctica siguen surgiendo problemas a la hora de buscar el método más rápido o el que genere un mejor resultado con menos índice de fallo. La búsqueda de algoritmos y métodos que resuelvan estos problemas sigue siendo una tarea pendiente.
 

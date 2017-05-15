@@ -43,6 +43,24 @@
       \field{year}{2006}
       \field{pages}{99\bibrangedash 110}
     \endentry
+    \entry{Reference2}{article}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=3c528c18a86da40a088eebe19fc06843}{Noah\bibnamedelima Snavely}{N\bibinitperiod\bibinitdelim S\bibinitperiod}{y\bibnamedelima Richard\bibnamedelima Szeliski}{y\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{Steven\bibnamedelimb M.\bibnamedelimi Seitz}{S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=3c528c18a86da40a088eebe19fc06843}{Noah\bibnamedelima Snavely}{N\bibinitperiod\bibinitdelim S\bibinitperiod}{y\bibnamedelima Richard\bibnamedelima Szeliski}{y\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{Steven\bibnamedelimb M.\bibnamedelimi Seitz}{S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod}}%
+      }
+      \strng{namehash}{3c528c18a86da40a088eebe19fc06843}
+      \strng{fullhash}{3c528c18a86da40a088eebe19fc06843}
+      \field{sortinit}{N}
+      \field{labelyear}{2006}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Photo tourism:	Exploring photo collections in 3d}
+      \field{journaltitle}{SIGGRAPH Conference Proceedings}
+      \field{title}{Photo tourism:	Exploring photo collections in 3d}
+      \field{year}{2006}
+      \field{pages}{835\bibrangedash 846}
+    \endentry
   \endsortlist
 \endrefsection
 \endinput
