@@ -20,13 +20,13 @@ Una manera simple de comprender este sistema es basarnos en nuestra propia exper
 Cada vez son más los dispositivos electrónicos que llevan incorporada al menos una cámara; \textit{smartphones}, ordenadores portátiles, \textit{tablets}, consolas de videojuegos... Debido a la gran cantidad de información que se puede extraer de las imágenes, el bajo coste, el reducido tamaño de las cámaras y el aumento de capacidad de cómputo de los dispositivos, es un área que ha suscitado el interés por los investigadores, ha crecido enormemente en los últimos años y está cogiendo cada vez más fuerza.
 
 % Dispositivos electrónicos
-Podemos ver cada vez más como los dispositivos electrónicos disponen de alguna nueva funcionalidad relacionada con el procesamiento de imágenes (Figura~\ref{fig:Face}), como puede ser el reconocimiento facial que incorporan algunos smartphones o tablets para desbloquear el dispositivo o procesado automático de fotos realizadas por la cámara como la que incluye el terminal chino \textbf{Meitu T8} que incorpora un software llamado \textit{AI Beautification} para embellecer las imágenes\footnote{https://www.cnet.com/products/meitu-t8/preview/}.
+Podemos ver cada vez más como los dispositivos electrónicos disponen de alguna nueva funcionalidad relacionada con el procesamiento de imágenes (Figura~\ref{fig:Face}), como puede ser el reconocimiento facial que incorporan algunos smartphones o tablets para desbloquear el dispositivo o procesado automático de fotos realizadas por la cámara como la que incluye el terminal chino \textbf{Meitu T8} que incorpora un software llamado \textit{AI Beautification} para embellecer las imágenes. \footnote{https://www.cnet.com/products/meitu-t8/preview/}
 
 \begin{figure}[th]
 \centering
 \includegraphics[scale=0.43]{Figures/face.png}
 \decoRule
-\caption[Face]{Embellecimiento de fotos (Meitu T8) (a), reconocimiento facial (b).}
+\caption[Face]{Embellecimiento de fotos (Meitu T8) (a). Reconocimiento facial (b).}
 \label{fig:Face}
 \end{figure}
 
@@ -45,9 +45,9 @@ blancas que aparecen en la misma.
 \end{figure}
 
 % Industria
-Son numerosas las aplicaciones de visión industrial relacionadas con el entorno de la alimentación. Permiten automatizar el control de calidad para tomar la decisión si un determinado producto cumple el estándar de calidad o no. Un ejemplo es el sistema EggInspector\footnote{http://www.moba.net/page/es/Grading/Moba-Grader-Options/Detection-Systems/Egg-inspector} por la empresa Moba que se utiliza para clasificar huevos de gallina de forma automática. El sistema está compuesto por 6 cámaras suspendidas por encima de la cinta transportadora que con unos complejos algoritmos no solo pueden comprobar si los huevos están rotos o sucios, sino que son capaces de determinar el tipo de rotura y suciedad, una vez determinada la calidad, los que no corresponden a los estándares mínimos, son separados de la línea por un robot.
+Son numerosas las aplicaciones de visión industrial relacionadas con el entorno de la alimentación. Permiten automatizar el control de calidad para tomar la decisión si un determinado producto cumple el estándar de calidad o no. Un ejemplo es el sistema \textbf{EggInspector}\footnote{http://www.moba.net/page/es/Grading/Moba-Grader-Options/Detection-Systems/Egg-inspector} por la empresa Moba que se utiliza para clasificar huevos de gallina de forma automática. El sistema está compuesto por 6 cámaras suspendidas por encima de la cinta transportadora que con unos complejos algoritmos no solo pueden comprobar si los huevos están rotos o sucios, sino que son capaces de determinar el tipo de rotura y suciedad, una vez determinada la calidad, los que no corresponden a los estándares mínimos, son separados de la línea por un robot.
 
-Siguiendo en la línea de la industria la inspección de embalajes se ha incrementado enormemente con la automatización del proceso y la visión artificial facilitando tareas como la detección del correcto nivel de llenado, verificación de tapones, control de calidad de sellado, lectura de óptica de caracteres (OCR), códigos de barras, verificación de posición, calidad de impresión de las equiquetas, contaje de productos en cajas o palets. Algunas de las aplicaciones típicas de la industria del \textit{packaging} están representadas en la Figura~\ref{fig:Industry}.
+Siguiendo en la línea de la industria la inspección de embalajes se ha incrementado enormemente con la automatización del proceso y la visión artificial facilitando tareas como la detección del correcto nivel de llenado, verificación de tapones, control de calidad de sellado, lectura de óptica de caracteres (OCR), códigos de barras, verificación de posición, calidad de impresión de las equiquetas, conteo de productos en cajas o \textit{palets}. Algunas de las aplicaciones típicas de la industria del \textit{packaging} están representadas en la Figura~\ref{fig:Industry}.
 
 \begin{figure}[th]
 \centering
@@ -58,7 +58,7 @@ Siguiendo en la línea de la industria la inspección de embalajes se ha increme
 \end{figure}
 
 % Deportes
-En los deportes quizás la aplicación más conocida sea el Ojo de Halcón (Figura~\ref{fig:Ojohalcon}), que se utiliza en los torneos de tenis de alto nivel para determinar la trayectoria de la pelota y saber si entró o no en el campo contrario, pero la visión artificial se usa en numerosos deportes sobretodo en estudios estadísticos para averiguar el tiempo de posesión del balón en los partidos de fútbol o los kilómetros hechos por cada jugador en el terreno de juego, entre muchos otros.
+En los deportes quizás la aplicación más conocida sea el Ojo de Halcón (Figura~\ref{fig:Ojohalcon}), que se utiliza en los torneos de tenis de alto nivel para determinar la trayectoria de la pelota y saber si entró o no en el campo contrario, pero la visión artificial se usa en numerosos deportes sobretodo en estudios estadísticos post-partido para averiguar el tiempo de posesión del balón en los partidos de fútbol o los kilómetros hechos por cada jugador en el terreno de juego, entre muchos otros.
 
 \begin{figure}[th]
 \centering
@@ -68,24 +68,49 @@ En los deportes quizás la aplicación más conocida sea el Ojo de Halcón (Figu
 \label{fig:Ojohalcon}
 \end{figure}
 
-
 %-----------------------------------
 %	SECTION Realidad aumentada
 %-----------------------------------
-\section{Autolocalización}
+\section{Autolocalización visual}
+La autolocalización visual consiste en conocer la localización de la cámara en todo momento simplemente con las imágenes capturadas sin disponer de ninguna información extra. Debido al gran abanico de posibilidades que propone este sistema, es uno de los retos más importantes dentro del campo de la robótica.
 
+%coches
+La autolocalización visual se plantea en los sistemas de navegación automáticos naúticos, terrestres y aéreos. Actualmente numerosas empresas están invirtiendo en este tipo de sistemas en el que apuestan por una navegación total o parcial.
+
+Actualmente se pueden encontrar sistemas de asistencia y seguridad en los vehículos más modernos como; sistemas de frenado automático de emergencia, asistente de mantenimiento de carril o aparcado automático. Aunque estos sistemas se entienden como asistentes o ayudas a la condución, el conductor sigue tomando la gran responsabilidad de la navegación.
+
+La empresa israelí \textbf{Mobileye}\footnote{https://www.mobileye.com/} presentará su primer modelo de vehículo completamente autónomo, junto a Intel y BMW, en 2021. El cerebro de la máquina se basa en un sensor, que identifica lo que ocurre a su alrededor al instante: los carriles, las señales de tráfico, otros automóviles, motos, bicicletas e incluso a los peatones. En la Figura~\ref{fig:Car} se puede ver una captura de la vista del coche antes de parar en un semáforo.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{Figures/car.png}
+\decoRule
+\caption[Car]{Vista del coche antes de parar en un semáforo.}
+\label{fig:Car}
+\end{figure}
 
 \subsection{Realidad aumentada}
 
+La realidad aumentada es el término que se usa para definir una visión directa o indirecta de un entorno físico del mundo real, cuyos elementos se combinan con elementos virtuales generados por ordenador para la creación de una realidad mixta en tiempo real.
+
+Aunque se ha popularizado con el juego de \textbf{Pokémon Go}\footnote{http://www.pokemongo.com/es-es/}, cada vez son más los gigantes tecnológicos que se interesan por ella. La empresa sueca Ikea ya cuenta con una aplicación móvil que permite ver su catálogo en realidad aumentada (Figura~\ref{fig:Ikea}).
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{Figures/ikea.jpg}
+\decoRule
+\caption[Ikea]{Catálogo Ikea con realidad aumentada.}
+\label{fig:Ikea}
+\end{figure}
+
+Puesto que la realidad virtual es una experiencia ficticia, tiene gran potencial en el mundo de los videojuegos. Pero no es el único. También puede tener aplicaciones en medicina, la industria del cine, la moda, los deportes o la publicidad.
 
 %-----------------------------------
 %	SECTION Técnicas de autolocalización
 %-----------------------------------
-\section{Técnicas de autolocalización}
+\section{Técnicas de autolocalización visual}
 
-Las técnicas de autolocalización ha suscitado gran interés por los investigadores en los últimos años. Consiste en conocer la localización de la cámara en todo momento simplemente con las imágenes capturadas sin disponer de ninguna información extra.
-
-El problema a sido abordado por dos comunidades distintas, por un lado la de visión artificial que denominó al problema como \textbf{structure from motion (SfM)}, donde la información es procesada por lotes, capaz de representar un objeto 2D a 3D con solo unas cuantas imágenes desde diferentes puntos de vista. Y por otro lado la comunidad robótica denominó al problema \textbf{SLAM} (\textit{Simultaneous Localization and Mapping}) que trata de resolver el problema de una manera más compleja adaptando el funcionamiento de los sistemas en tiempo real.
+Las técnicas de autolocalización ha suscitado gran interés por los investigadores en los últimos años. El problema ha sido abordado por dos comunidades distintas, por un lado la de visión artificial que denominó al problema como \textbf{structure from motion (SfM)}, donde la información es procesada por lotes, capaz de representar un objeto 2D a 3D con solo unas cuantas imágenes desde diferentes puntos de vista. Y por otro lado la comunidad robótica denominó al problema \textbf{SLAM} (\textit{Simultaneous Localization and Mapping}) que trata de resolver el problema de una manera más compleja adaptando el funcionamiento de los sistemas en tiempo real.
 
 %-----------------------------------
 %	SUBSECTION Structure from Motion
