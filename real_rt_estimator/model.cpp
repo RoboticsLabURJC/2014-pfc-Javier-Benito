@@ -78,6 +78,8 @@ namespace real_rt_estimator {
  		// TODO: Cambiar ocnstantes de tamaño por el que venga al inicializar el ojeto
 		this->distance = new cv::Mat(cv::Size(320, 240),CV_32FC1,cv::Scalar(0,0,0));
 		this->distance_aux = new cv::Mat(cv::Size(320, 240),CV_32FC1,cv::Scalar(0,0,0));
+
+    _finishedOk = true;
 	}
 
 	Model::~Model() {}
@@ -246,11 +248,14 @@ namespace real_rt_estimator {
 		imageDEPTH.copyTo(imageDEPTH_aux);
 	}
 
-	void Model::updateImages() { // FIXME: Está obsoleto y no se va a usar
+	void Model::updateImages() {
+
     pthread_mutex_lock(&this->controlImgRGB);
 		// update aux (n-1)
-		this->updateImageRGBAux();
-		this->updateImageDEPTHAux();
+    if (_finishedOk) {
+  		this->updateImageRGBAux();
+  		this->updateImageDEPTHAux();
+    }
 
 		// update current (n)
 		currentImageRGB.copyTo(imageRGB);
@@ -270,7 +275,9 @@ namespace real_rt_estimator {
 				}
 			}*/
 		} else {
-			this->imageDEPTH_aux_gray = this->imageDEPTH_gray;
+      if (_finishedOk) {
+        this->imageDEPTH_aux_gray = this->imageDEPTH_gray;
+      }
 			//this->distance_aux = this->distance;
 		}
 		cv::Mat colorDepth(imageDEPTH.size(),imageDEPTH.type());
@@ -484,7 +491,7 @@ namespace real_rt_estimator {
 		extractor.compute(this->imageGray, this->keypoints_n, this->descriptors_n);
 
 
-		//-- Draw keypoints
+		//-- Draw keypointsif (this->finishedOk)
 		cv::drawKeypoints(this->imageGray, this->keypoints_n, this->imageRGB_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(this->imageGray_aux, this->keypoints_n_aux, this->imageRGB_aux_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
 		cv::drawKeypoints(this->imageDEPTH_gray, this->keypoints_n, this->imageDEPTH_kp, cv::Scalar::all(-1), cv::DrawMatchesFlags::DEFAULT );
@@ -647,203 +654,6 @@ namespace real_rt_estimator {
 		return true;
 	}
 
-	int Model::doSiftAndGetPoints() {
-
-		// GetTems
-		/*pthread_mutex_lock(&this->controlImgRGB);
-			this->imageRGB.copyTo(this->temp_imageRGB);
-			this->imageRGB_aux.copyTo(this->temp_imageRGB_aux);
-			this->imageDEPTH.copyTo(this->temp_imageDEPTH);
-			this->imageDEPTH_aux.copyTo(this->temp_imageDEPTH_aux);
-		pthread_mutex_unlock(&this->controlImgRGB);*/
-
-
-		if (!_firstIteration) {
-			std::cout <<  "SEGUNDA 22222 ITERACIÓN" << std::endl;
-
-			// Local vars
-			std::vector<cv::KeyPoint> keypoints1, keypoints2;
-			cv::Mat inputGray1, inputGray2;
-			cv::SiftDescriptorExtractor extractor;
-
-			//inputGray1 = cv::imread( this->imageRGB, CV_LOAD_IMAGE_GRAYSCALE );
-			//inputGray2 = cv::imread( this->imageRGB_aux, CV_LOAD_IMAGE_GRAYSCALE );
-			cv::cvtColor(this->imageRGB, inputGray1, CV_BGR2GRAY);
-			cv::cvtColor(this->imageRGB_aux, inputGray2, CV_BGR2GRAY);
-
-			// SURF Detector
-		  //int minHessian = 400;
-		  //cv::SurfFeatureDetector surfdet(minHessian);
-
-			// Sift
-			cv::SiftFeatureDetector siftdet;
-
-			siftdet.detect(inputGray1, keypoints1);
-			siftdet.detect(inputGray2, keypoints2);
-			extractor.compute(inputGray1, keypoints1, descriptors_n);
-			extractor.compute(inputGray2, keypoints2, descriptors_n_aux);
-
-			//descriptors_n.copyTo(descriptors_n_aux);
-
-			// matcher
-			cv::BruteForceMatcher<cv::L2<float> > matcher;
-			//cv::FlannBasedMatcher matcher;
-			std::vector<cv::DMatch> matches;
-			matcher.match(descriptors_n, descriptors_n_aux, matches);
-			//matcher.knnMatch(descriptors_n, descriptors_n_aux, 20, matches);
-
-			this->sift_points = matches.size();
-
-			//std::cout <<  "KEYPOINTS1 --> " << keypoints1.size() << std::endl;
-			//std::cout <<  "KEYPOINTS2 --> " << keypoints2.size() << std::endl;
-
-			if (matches.size() != 0) { // FIXME
-			std::cout <<  "MATCHES SIZE!!!!! !=0 --> " << matches.size() << std::endl;
-
-				//Model::myMatch[matches.size()] myMatches = { };
-
-				//For save the matches
-				this->myMatches.resize(matches.size());
-				this->pc.resize(0);
-
-					for(int i=0; i<((int)matches.size()); i++){
-
-						////////////////////////////////////////////////////////////////////////////////////////////////
-						// Save the point cloud...
-
-						this->pc.push_back(getPoints3D(keypoints1[i].pt.x, keypoints1[i].pt.y, &this->imageRGB, &this->imageDEPTH)); // FIXME: Delete
-
-						////////////////////////////////////////////////////////////////////////////////////////////////
-						std::cout <<  "match.distance: " << matches[i].distance << std::endl;
-						if (matches[i].distance < 100) {
-							/*int bu1 = ((int) matches[i].queryIdx);
-							int bu2 = ((int) matches[i].trainIdx);
-
-							std::cout <<  "" << std::endl;
-							std::cout <<  "[Match: " << i <<  "]" << std::endl;
-							std::cout <<  "match.distance: " << matches[i].distance << std::endl;
-							std::cout << " Img point 1:" << keypoints1[bu1].pt << std::endl;
-							std::cout << " Img point 2:" << keypoints2[bu2].pt << std::endl;
-							float resul = (abs(keypoints1[bu1].pt.x - keypoints2[bu2].pt.x) + abs(keypoints1[bu1].pt.y - keypoints2[bu2].pt.y));
-							std::cout << "My distance (aproximity): " << resul << std::endl;*/
-							//std::cout <<  "imgIdx " << matches[i].imgIdx << std::endl;
-							//std::cout <<  "queryIdx " << matches[i].queryIdx << std::endl;
-							//std::cout <<  "trainIdx " << matches[i].trainIdx << std::endl;
-						}
-						this->myMatches[i].matchNum = i;
-						this->myMatches[i].matchDistance = matches[i].distance;
-						this->myMatches[i].matchAprox = (abs(keypoints1[((int) matches[i].queryIdx)].pt.x - keypoints2[((int) matches[i].trainIdx)].pt.x) + abs(keypoints1[((int) matches[i].queryIdx)].pt.y - keypoints2[((int) matches[i].trainIdx)].pt.y));
-					}
-
-
-
-				//Sort new match vector, best first
-				//std::sort(this->myMatches.begin(), this->myMatches.end(), sortByDistance);
-
-				/*for(int i=0; i<this->myMatches.size(); i++){
-					std::cout <<  i << std::endl;
-					std::cout <<  "matchNUM " << this->myMatches[i].matchNum << std::endl;
-					std::cout <<  "matchDistance " << this->myMatches[i].matchDistance << std::endl;
-					std::cout <<  "matchAprox " << this->myMatches[i].matchAprox << std::endl;
-				}*/
-
-
-
-
-
-
-				int bestMatch = this->myMatches[0].matchNum;
-
-				//std::cout <<  "matchNUM " << this->myMatches[0].matchNum << std::endl;
-				//std::cout <<  "best match " << bestMatch << std::endl;
-				//std::cout <<  "best match 1" << keypoints1[matches[bestMatch].queryIdx].pt.x << std::endl;
-				//std::cout <<  "best match 2" << keypoints1[matches[bestMatch].queryIdx].pt.y << std::endl;
-
-				// Save X best points to Points Cloud
-				int numBestPoints = N_ESTIMATOR_POINTS;
-				if ((int)matches.size() < numBestPoints) {
-					numBestPoints = matches.size();
-				}
-				int x_1, y_1, x_2, y_2;
-
-				this->v_rgbp.resize(0);
-				this->v_rgbp_aux.resize(0);
-
-				std::vector<cv::DMatch> matches_aux;
-				matches_aux.resize(0);
-
-				std::cout <<  "WEEEEEEEEEEEEEEEEEEEEE---------------->" << numBestPoints << std::endl;
-
-				int count = 0;
-				for (int i=0; i<numBestPoints; i++) {
-
-					int bests_m = this->myMatches[i].matchNum;
-					x_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.x);//+0.5f);
-					y_1 = (int)(keypoints1[matches[bests_m].queryIdx].pt.y);//+0.5f);
-					x_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.x);//+0.5f);
-					y_2 = (int)(keypoints2[matches[bests_m].trainIdx].pt.y);//+0.5f);
-
-					//std::cout <<  "Entramos funcion" << std::endl;
-					//std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
-					jderobot::RGBPoint p1 = getPoints3D(x_1, y_1, &this->imageRGB, &this->imageDEPTH);
-					jderobot::RGBPoint p2 = getPoints3D(x_2, y_2, &this->imageRGB_aux, &this->imageDEPTH_aux);
-
-					if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
-						if (p1.z != 0 && p2.z != 0) {
-							std::cout <<  "Puntos calculados ----------" <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
-							std::cout <<  p1.x << ", " << p1.y << ", " <<  p1.z << std::endl;
-							std::cout <<  p2.x << ", " << p2.y << ", " <<  p2.z << std::endl;
-							this->v_rgbp.push_back(p1);
-							this->v_rgbp_aux.push_back(p2);
-							count++;
-						}
-					} else {
-						std::cout << "es border point" << std::endl;
-					}
-
-
-					//this->v_rgbp.push_back(getPoints3D(x_1, y_1, &this->temp_imageRGB, &this->temp_imageDEPTH));
-					//std::cout <<  "Entramos funcion2" << std::endl;
-					//this->v_rgbp_aux.push_back(getPoints3D(x_2, y_2, &this->temp_imageRGB_aux, &this->temp_imageDEPTH_aux));
-
-
-					////////////////////////////////////////////////////////
-					// Draw the chosen points of interest
-					//std::vector<cv::KeyPoint> keypoints1_aux, keypoints2_aux;
-					//keypoints1_aux.resize(0);
-					//keypoints2_aux.resize(0);
-					matches_aux.push_back(matches[bests_m]);
-				}
-
-				cv::Mat imgMatches;
-				cv::drawMatches(this->imageRGB, keypoints1, this->imageRGB_aux, keypoints2, matches_aux, imgMatches);
-				this->imageRGBMatches = imgMatches;
-
-				/////////////////////////////////////////////////////////////
-
-				//std::cout << "tamaño puntos: " << v_rgbp.size() << " y " << v_rgbp_aux.size() << std::endl;
-				//this->pc->points = v_rgbp;
-				//this->pc_aux->points = v_rgbp_aux;
-
-				pthread_mutex_unlock(&this->controlPcConverted);
-				if (count < 5) {
-					return 0;
-				} else {
-					return 1;
-				}
-			} else {
-				return 0;
-			}
-		} else { // First iteration
-			std::cout <<  "PRIMERA ITERACIÓN 1111111111" << std::endl;
-			// FIXME: LOCK
-			this->imageRGB.copyTo(this->imageRGB_aux);
-			this->imageDEPTH.copyTo(this->imageDEPTH_aux);
-			_firstIteration = false;
-			return 0;
-		}
-	}
-
 	bool Model::estimateRT() {
 		//pthread_mutex_lock(&this->controlPcConverted);
 
@@ -862,16 +672,6 @@ namespace real_rt_estimator {
 		//std::cout << "The FINAL RT Matrix is: \n" << "[" << this->RT_final << "]" << std::endl;
 
 
-
-
-		int iSecret, iGuess;
-
-   	/* initialize random seed: */
-   	srand (time(NULL));
-
-   	/* generate secret number between 1 and 10: */
-   	iSecret = rand() % 10 + 1;
-    //std::cout << "----------------------------------------: \n" << iSecret << std::endl;
 
 		int part = (int)(num_points_for_RT/4);
 		std::cout << "-------------------------------------dd---: \n" << part << std::endl;
@@ -994,19 +794,103 @@ namespace real_rt_estimator {
 			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
 
 
-			Eigen::Matrix4f RT_estimate = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+			Eigen::Matrix4f RT_estimate4 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
 
-			//Eigen::Matrix4f RT_estimate = RT_final;
-
-			std::cout << "The estimate RT Matrix 4 is: \n" << "[" << RT_estimate << "]" << std::endl;
+			std::cout << "The estimate RT Matrix 4 is: \n" << "[" << RT_estimate4 << "]" << std::endl;
 
 
-			//this->RT_final = this->RT_final*RT_estimate;
+      // RANSAC ///////////////////////////////////////////////////////////////
+      int ransac_points = (int)(v_rgbp.size() * (1-RANSAC_PERC));
+      std::vector<jderobot::RGBPoint> points, points_aux;
+      Eigen::Matrix4f RT_estimate_final;
 
-			//std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
+      srand (time(NULL));
+      int best_error = 1000;
+
+      for (int i=0; i<RANSAC_ITER; i++) {
+        points.clear();
+        points_aux.clear();
+
+        for (int i=0; i<v_rgbp.size(); i++) {
+          points.push_back(v_rgbp[i]);
+          points_aux.push_back(v_rgbp_aux[i]);
+        }
+        for (int i=0; i<ransac_points; i++) {
+          int secret = rand() % points.size();
+          std::cout << "--------> Número aleatorio: " << "[" << secret << "]" << points.size() << std::endl;
+          points.erase(points.begin()+secret);
+          points_aux.erase(points_aux.begin()+secret);
+        }
+        Eigen::MatrixXf matrix_points(points.size(), 4);
+        Eigen::MatrixXf matrix_points_aux(points.size(), 4);
+        for (int i=0; i<points.size(); i++) {
+          matrix_points(i,0) = points[i].x;
+          matrix_points(i,1) = points[i].y;
+          matrix_points(i,2) = points[i].z;
+          matrix_points(i,3) = 1;
+          matrix_points_aux(i,0) = points_aux[i].x;
+          matrix_points_aux(i,1) = points_aux[i].y;
+          matrix_points_aux(i,2) = points_aux[i].z;
+          matrix_points_aux(i,3) = 1;
+        }
+        Eigen::Matrix4f RT_estimate_ransac = matrix_points_aux.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(matrix_points).transpose();
+        std::cout << "The estimate RT Matrix in RANSAC: \n" << "[" << RT_estimate_ransac << "]" << std::endl;
+
+        // Euclidean error
+        float euclidean_error = 0;
+
+  			Eigen::Vector4f vector_points;
+			  Eigen::Vector4f vector_points_world;
+
+        for (int i=0; i<points.size(); i++) {
+          vector_points(0) = points[i].x;
+          vector_points(1) = points[i].y;
+          vector_points(2) = points[i].z;
+          vector_points(3) = 1;
+
+          vector_points_world = RT_estimate_ransac.inverse()*vector_points;
+
+          euclidean_error += abs(vector_points_world(0) - points_aux[i].x);
+          euclidean_error += abs(vector_points_world(1) - points_aux[i].y);
+          euclidean_error += abs(vector_points_world(2) - points_aux[i].z);
+        }
+        euclidean_error /= points.size();
+        std::cout << "ERROR ESPACIAL EUCLÍDEO RANSAC: " << euclidean_error << std::endl;
+
+        if (euclidean_error < best_error) {
+          best_error = euclidean_error;
+          RT_estimate_final = RT_estimate_ransac;
+        }
+      }
+			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_estimate_final << "]" << std::endl;
+      // RANSAC ///////////////////////////////////////////////////////////////
+
+      //Eigen::Matrix4f RT_final = RT_estimate4;
+
 
 			Eigen::Vector4f points_ref_aux;
 			Eigen::Vector4f points_ref_1_world;
+
+      /* Medimos error espacial euclídeo */
+      float error = 0;
+      for (int i=0; i<this->v_rgbp.size(); i++) {
+        points_ref_aux(0) = this->v_rgbp[i].x;
+        points_ref_aux(1) = this->v_rgbp[i].y;
+        points_ref_aux(2) = this->v_rgbp[i].z;
+        points_ref_aux(3) = 1;
+
+        points_ref_1_world = RT_estimate_final.inverse()*points_ref_aux;
+
+        error += abs(points_ref_1_world(0) - this->v_rgbp_aux[i].x);
+        error += abs(points_ref_1_world(1) - this->v_rgbp_aux[i].y);
+        error += abs(points_ref_1_world(2) - this->v_rgbp_aux[i].z);
+      }
+      error /= v_rgbp.size();
+      std::cout << "ERROR ESPACIAL EUCLÍDEO: " << error << std::endl;
+      if (error > 50) {
+        _finishedOk = false;
+        return 1;
+      };
 
 			for (int i=0; i<this->myNewPoints.size(); i++) {
 				points_ref_aux(0) = this->myNewPoints[i].rgbPoint.x;
@@ -1014,7 +898,7 @@ namespace real_rt_estimator {
 				points_ref_aux(2) = this->myNewPoints[i].rgbPoint.z;
 				points_ref_aux(3) = 1;
 
-				points_ref_1_world = RT_estimate.inverse()*points_ref_aux;
+				points_ref_1_world = RT_estimate_final.inverse()*points_ref_aux;
 
 				this->myNewPoints[i].rgbPoint.x = points_ref_1_world(0);
 				this->myNewPoints[i].rgbPoint.y = points_ref_1_world(1);
@@ -1028,7 +912,7 @@ namespace real_rt_estimator {
 				points_ref_aux(2) = this->pc[i].z;
 				points_ref_aux(3) = 1;
 
-				points_ref_1_world = RT_estimate.inverse()*points_ref_aux;
+				points_ref_1_world = RT_estimate_final.inverse()*points_ref_aux;
 
 				this->pc[i].x = points_ref_1_world(0);
 				this->pc[i].y = points_ref_1_world(1);
@@ -1036,7 +920,6 @@ namespace real_rt_estimator {
 
 				this->pc_converted[i] = this->pc[i];
 			}
-
 
 			/*for(int i=0; i<num_points_for_RT; i++){
 				points_ref_aux(0) = points_ref_1(i,0);
@@ -1096,7 +979,7 @@ namespace real_rt_estimator {
 			this->iterationCloud++;*/
 
 			// Camera camera converted
-			moveCamera(RT_estimate);
+			moveCamera(RT_estimate_final);
 			std::cout << "ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ: \n" << std::endl;
 			/*for(int i=0; i<16; i++) {
 				this->RT_final(i) = RT_estimate(i);
@@ -1123,6 +1006,7 @@ namespace real_rt_estimator {
 		// FIXME: LOCK
 		//this->imageRGB.copyTo(this->imageRGB_aux);
 		//this->imageDEPTH.copyTo(this->imageDEPTH_aux);
+    _finishedOk = true;
     return true;
 	}
 
