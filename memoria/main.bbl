@@ -42,6 +42,25 @@
       \field{year}{2007}
       \field{pages}{1052\bibrangedash 1067}
     \endentry
+    \entry{Reference7}{article}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=54db700ce8c5ac044d73b55e2b9d386a}{Boehm}{B\bibinitperiod}{B.}{B\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=54db700ce8c5ac044d73b55e2b9d386a}{Boehm}{B\bibinitperiod}{B.}{B\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{54db700ce8c5ac044d73b55e2b9d386a}
+      \strng{fullhash}{54db700ce8c5ac044d73b55e2b9d386a}
+      \field{sortinit}{B}
+      \field{labelyear}{1986}
+      \field{datelabelsource}{}
+      \field{labeltitle}{A spiral model of software development and enhancement}
+      \field{journaltitle}{ACM SIGSOFT Software Engineering Notes}
+      \field{title}{A spiral model of software development and enhancement}
+      \field{volume}{11(4)}
+      \field{year}{1986}
+      \field{pages}{14\bibrangedash 24}
+    \endentry
     \entry{Reference1}{article}{}
       \name{labelname}{2}{}{%
         {{uniquename=0,hash=670f1f594b20e50f19019880d213f8ea}{Durrant-Whyte}{D\bibinithyphendelim W\bibinitperiod}{H.}{H\bibinitperiod}{}{}{}{}}%

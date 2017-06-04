@@ -1,0 +1,79 @@
+\chapter{Objetivos}
+
+\label{Chapter2} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+Una vez presentado el contexto, en este capítulo se abordarán los objetivos que se pretenden alcanzar. Tras una descripción del problema y unos requisitos obligatorios, se detallará la metodología y la planificación que se ha llevado a cabo en la elaboración de este trabajo.
+
+%------------------------------------------------
+%	SECTION Descripción del problema
+%------------------------------------------------
+\section{Descripción del problema}
+
+El objetivo principal de este trabajo es desarrollar una solución al problema SLAM.
+
+A través de técnicas de odometría visual incrementales, se ha construido un sistema capaz de averiguar la posición y orientación de un sensor RGBD que se mueve libremente por el espacio y que va alimentando al sistema con las imágenes obtenidas en tiempo real.
+
+A fin de abordar el objetivo principal de la manera más simple se han propuesto los siguientes subobjetivos:
+
+\begin{enumerate}
+\item \underline{Actualización de los datos del sensor}.
+Creación de un módulo encargado de recoger de manera dinámica las imágenes RGB y DEPTH del sensor, y actualizarlas en una memoria compartida.
+ 
+\item \underline{Detección de puntos de interés}.
+Creación de un componente capaz de recoger a través de diferentes técnicas (SIFT, SURF) puntos de interés de una imágen con la opción de añadir un filtro frontera para desechar los puntos cercanos a bordes o zonas con mucha profundidad.
+
+\item \underline{Emparejamiento de puntos}.
+Desarrollo de una funcionalidad encargada de relacionar los puntos de interés previamente obtenidos, a través de técnicas como Fuerza bruta o FLANN y la posibilidad de añadir un filtro de sobresaliencia.
+
+\item \underline{Estimación de matriz}.
+Implementación de la matemática necesaria para una vez tenidos los puntos emparejados calcular la matriz de rotación y traslación (RT) que se necesitará para calcular en ese instante el movimiento de la cámara.
+
+\item \underline{Pruebas y experimentos}.
+Ejecución de la aplicación con objetivo de ajustar, pulir y validar las funciones y algoritmos realizados.
+
+\end{enumerate}
+
+%------------------------------------------------
+%	SECTION Requisitos
+%------------------------------------------------
+\section{Requisitos}
+
+A parte de los requisitos mencionados en el apartado anterior. La implementación y solución final del proyecto debe satisfacer además los siguientes puntos:
+
+\begin{enumerate}
+
+\item Desarrollo del proyecto haciendo uso de la plataforma \textbf{JDeRobot 5.4.0}, que ha resultado de mucha utilidad en la realización del trabajo y ha permitido un ahorro significante de tiempo, ya que permite abstraerse de algunas de las funcionalidades de más bajo nivel como puede ser la captura de información del sensor o el protocolo de comunicaciones. Permite llevar un desarrollo modular y el aprovechamiento de componentes ya implementados en la plataforma. Como la mayoría de componentes están en C++, el trabajo también se ha desarrollado utilizando el mismo lenguaje. Tanto las ventajas como el uso de JDeRobot se tratarán en detalle en el siguiente capítulo.
+%~\ref{ch:Chapter3}.
+
+\item Funcional bajo sistema operativo linux, en este caso Ubuntu 14.04 LTS.
+
+\item Uso exclusivo de un único sensor RGBD.
+
+\item Implementación de una interfaz de usuario clara donde se pueda apreciar el proceso de estimación de posición. Incluyendo un entorno visual 3D donde se refleje la posición y movimiento de la cámara en tiempo real.
+
+\end{enumerate}
+
+
+%------------------------------------------------
+%	SECTION Metodología
+%------------------------------------------------
+\section{Metodología}
+
+Para abordar un proyecto de tal envergadura es necesaria una metodología de desarrollo para ir progresando de una manera ordenada y efectiva.
+
+En este caso se ha optado por el modelo en espiral basado en prototipos propuesto por B. Boehm en 1986 \parencite{Reference7}, ya que permite el desarrollo de una manera progresiva e incremental. En cada ciclo o iteración se va añadiendo complejidad a la vez que se van generando funcionalidades nuevas.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/spiral.png}
+\decoRule
+\caption[Spiral]{Ciclo de vida del desarrollo del \textit{software} en el modelo espiral.}
+\label{fig:spiral}
+\end{figure}
+
+%------------------------------------------------
+%	SECTION Planificación
+%------------------------------------------------
+\section{Planificación}
+
+

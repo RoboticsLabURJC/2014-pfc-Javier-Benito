@@ -1970,6 +1970,7 @@
     <bcf:citekey order="4">Reference4</bcf:citekey>
     <bcf:citekey order="5">Reference5</bcf:citekey>
     <bcf:citekey order="6">Reference6</bcf:citekey>
+    <bcf:citekey order="7">Reference7</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" type="entry" label="nyt">
   <bcf:sorting>
