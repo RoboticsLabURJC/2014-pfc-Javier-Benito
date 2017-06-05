@@ -40,9 +40,11 @@ Ejecución de la aplicación con objetivo de ajustar, pulir y validar las funcio
 
 A parte de los requisitos mencionados en el apartado anterior. La implementación y solución final del proyecto debe satisfacer además los siguientes puntos:
 
-\begin{enumerate}
+\begin{itemize}
 
-\item Desarrollo del proyecto haciendo uso de la plataforma \textbf{JDeRobot 5.4.0}, que ha resultado de mucha utilidad en la realización del trabajo y ha permitido un ahorro significante de tiempo, ya que permite abstraerse de algunas de las funcionalidades de más bajo nivel como puede ser la captura de información del sensor o el protocolo de comunicaciones. Permite llevar un desarrollo modular y el aprovechamiento de componentes ya implementados en la plataforma. Como la mayoría de componentes están en C++, el trabajo también se ha desarrollado utilizando el mismo lenguaje. Tanto las ventajas como el uso de JDeRobot se tratarán en detalle en el siguiente capítulo.
+\item Desarrollo del proyecto haciendo uso de la plataforma \textbf{JDeRobot 5.4.0}, que ha resultado de mucha utilidad y ha permitido un ahorro significante de tiempo, ya que permite abstraerse de algunas de las funcionalidades de más bajo nivel como puede ser la captura de información del sensor o el protocolo de comunicaciones. Permite llevar un desarrollo modular y el aprovechamiento de componentes ya implementados en la plataforma. Tanto las ventajas como el uso de JDeRobot se tratarán en detalle en el siguiente capítulo.
+
+\item Como la mayoría de componentes están en C++, el trabajo también se ha desarrollado utilizando el mismo lenguaje de programación. 
 %~\ref{ch:Chapter3}.
 
 \item Funcional bajo sistema operativo linux, en este caso Ubuntu 14.04 LTS.
@@ -51,7 +53,7 @@ A parte de los requisitos mencionados en el apartado anterior. La implementació
 
 \item Implementación de una interfaz de usuario clara donde se pueda apreciar el proceso de estimación de posición. Incluyendo un entorno visual 3D donde se refleje la posición y movimiento de la cámara en tiempo real.
 
-\end{enumerate}
+\end{itemize}
 
 
 %------------------------------------------------
@@ -59,21 +61,56 @@ A parte de los requisitos mencionados en el apartado anterior. La implementació
 %------------------------------------------------
 \section{Metodología}
 
-Para abordar un proyecto de tal envergadura es necesaria una metodología de desarrollo para ir progresando de una manera ordenada y efectiva.
+Para abordar un proyecto de tal envergadura es necesaria una metodología de desarrollo para ir progresando de una manera ordenada y efectiva. En este caso se ha optado por el modelo en espiral basado en prototipos propuesto por B. Boehm en 1986 \parencite{Reference7}, ya que permite el desarrollo de una manera progresiva e incremental. 
 
-En este caso se ha optado por el modelo en espiral basado en prototipos propuesto por B. Boehm en 1986 \parencite{Reference7}, ya que permite el desarrollo de una manera progresiva e incremental. En cada ciclo o iteración se va añadiendo complejidad a la vez que se van generando funcionalidades nuevas.
+Esta metodología permite el desarrollo de implementaciones parciales que van siendo probadas a medida que después de cada ciclo se va generando un prototipo más completo de lo que incorpora el ciclo anterior. Por lo tanto, en cada ciclo o iteración se va añadiendo complejidad a la vez que se van generando funcionalidades nuevas.
+
+Este modelo, utilizado en el trabajo, ha servido de gran ayuda, ya que permite ir avanzando de menos a más, con unos requisitos dependientes de los anteriores y a la vez diferentes para cada iteración. Además permite ir evaluando y adaptando la evolución del desarrollo a nuestros intereses, algo que suele ocurrir normalmente en los proyectos de investigación.
+
+En la Figura~\ref{fig:spiral} se puede observar el ciclo completo de desarrollo de software en el modelo en espiral. Cada etapa o ciclo completo está compuesto por cuatro fases:
+
+\begin{itemize}
+\item \underline{Identificación de objetivos}. En esta primera fase se deciden y se planifican los objetivos a alcanzar en la siguiente iteración partiendo de lo realizado en el ciclo anterior. En caso de la primera iteración se definen los objetivos iniciales.
+
+\item \underline{Evaluación alternativa}. Aquí se definen requisitos y se estudian las distintas maneras de abordar los objetivos marcados de la etapa anterior. Se estudian los riesgos y se evaluan de manera que se puedan reducir lo máximo posible. Se debe tener un prototipo antes de la siguiente etapa.
+
+\item \underline{Desarrollo del producto}. En esta fase se diseña y se implementa el producto en base a lo planteado en las anteriores fases. Por último, se verifica y se prueba.
+
+\item \underline{Planificación de la siguiente fase}. Considerando el resultado de la fase anterior, se planifica la siguiente considerando los errores cometidos y los resultados esperados, comenzando así una nueva iteración.
+
+\end{itemize}
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.6]{Figures/spiral.png}
+\includegraphics[scale=0.62]{Figures/spiral.png}
 \decoRule
 \caption[Spiral]{Ciclo de vida del desarrollo del \textit{software} en el modelo espiral.}
 \label{fig:spiral}
 \end{figure}
+
+En la siguiente sección se detallarán los ciclos que han seguido a lo largo de este proyecto. Para las fases de planificación y análisis se han mantenido reuniones semanales con el tutor, con intención de revisar, resolver problemas y encarar los nuevos objetivos establecidos.
+
+A fin de documentar y guardar los hitos realizados en el desarrollo del proyecto, así como los errores cometidos y su posible solución, se ha llevado un seguimiento en mediawiki\footnote{http://jderobot.org/J.benitod-tfg} con los detalles de las diferentes iteraciones, ayudadas a veces por imágenes y/o vídeos.
+
+Para la gestión de código se han usado herramientas \textit{software} de control de versiones, primeramente con Subversion (SVN)\footnote{http://svn.jderobot.org/users/j.benitod/pfc} y finalmente con GIT en un repositorio de GitHub\footnote{https://github.com/RoboticsURJC-students/2014-pfc-Javier-Benito}.
 
 %------------------------------------------------
 %	SECTION Planificación
 %------------------------------------------------
 \section{Planificación}
 
+A lo largo del trabajo se han ido proponiendo numerosas etapas asesoradas y con seguimiento del tutor del proyecto. Las más importantes pueden ser:
 
+\begin{enumerate}
+
+\item \textbf{Familiarización la herramienta JDeRobot}. Sensor RGVBD
+
+\item \textbf{Aprendizaje de las herramientas específicas}. PCL, Eigen
+
+\item \textbf{Implementación de un algoritmo para el cálculo de la matriz RT}.
+
+\item \textbf{Creación de un componente para la extración de puntos de interés y matching}.
+
+\item \textbf{Experimentos}.
+
+\end{enumerate}
