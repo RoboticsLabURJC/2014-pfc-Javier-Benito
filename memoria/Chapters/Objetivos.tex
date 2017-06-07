@@ -99,18 +99,57 @@ Para la gestión de código se han usado herramientas \textit{software} de contr
 %------------------------------------------------
 \section{Planificación}
 
-A lo largo del trabajo se han ido proponiendo numerosas etapas asesoradas y con seguimiento del tutor del proyecto. Las más importantes pueden ser:
+A lo largo del trabajo se han ido proponiendo etapas asesoradas y con supervisión del tutor. Las más importantes caben destacar:
 
 \begin{enumerate}
 
-\item \textbf{Familiarización la herramienta JDeRobot}. Sensor RGVBD
+\item \textbf{Familiarización de la herramienta JDeRobot}.
 
-\item \textbf{Aprendizaje de las herramientas específicas}. PCL, Eigen
+Esta etapa consistió en la instalación y el estudio de la plataforma, profundizando en el uso de algún componente con un objetivo muy concreto y sencillo.
+
+Después, y para entender el funcionamiento de algunos de los componentes a bajo nivel más importantes para el trabajo, se propuso el desarrollo de algunos de ellos en otros lenguajes de programación tales como Java o Python.
+
+\item \textbf{Aprendizaje de las herramientas específicas}.
+
+Aquí, a través de prácticas muy concretas se entendió el funcionamiento de algunas de las librerías esenciales para la práctica final.
+
+\begin{itemize}
+
+\item Se realizó un componente utilizando \textbf{PCL} para el cálculo de planos desde nubes de puntos.
+
+\item Se utilizó \textbf{Eigen} para otra práctica en el cálculo de sistemas sobredimensionados de ecuaciones, con descomposición QR y en valores singulares (SVD) resolviendo en diferentes casos una recta de regresión para distintos escenarios.
+
+\item \textbf{GSL}, para el cálculo de un componente rectificador de imágenes (Figura~\ref{fig:spiral}).
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{Figures/rectifier.png}
+\decoRule
+\caption[Rectifier]{Componente rectificador de imágenes.}
+\label{fig:rectifier}
+\end{figure}
+
+
+\end{itemize}
 
 \item \textbf{Implementación de un algoritmo para el cálculo de la matriz RT}.
 
-\item \textbf{Creación de un componente para la extración de puntos de interés y matching}.
+En esta parte se propuso una práctica que sirvió de base para la parte final en la que desde una nube de puntos y otra multiplicada por una matriz RT inventada, se sacaría a través de SVD dicha matriz a partir de las nubes de puntos iniciales y con la opción también de añadir ruido gaussiano a una de ellas. En la Figura~\ref{fig:rtsvd} se encuentra el esquema realizado.
 
-\item \textbf{Experimentos}.
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/rt_svd.png}
+\decoRule
+\caption[Rtsvd]{Esquema de la práctica de cálculo de matriz RT.}
+\label{fig:rtsvd}
+\end{figure}
+
+\item \textbf{Creación de un componente para la extración de puntos de interés y emparejamiento}.
+
+Aquí se empezó a desarrollar la práctica final, en donde se comenzó por la extracción de puntos de interés con SIFT de las imágenes y los diferentes algoritmos para los emparejamientos. Como esta parte corresponde al desarrollo de la práctica final será detallada en el capítulo 4.
+
+\item \textbf{Integración y pruebas experimentales}.
+
+Esta fue la etapa más larga y costosa, ya que el objetivo era dar una solución funcional al problema propuesto. Surgieron multitud de errores que se tuvieron que ir depurando con cada iteración, proponiendo soluciones y alternativas. Fueron necesarias numerosas pruebas para conseguir un desarrollo capaz de aportar una solución estable. Esta etapa también será detallada en los siguientes capítulos, en concreto en los capítulos 4 y 5.
 
 \end{enumerate}
