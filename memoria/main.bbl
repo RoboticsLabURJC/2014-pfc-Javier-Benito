@@ -106,6 +106,28 @@
       \field{year}{2012}
       \field{pages}{78\bibrangedash 90}
     \endentry
+    \entry{Reference8}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=26c2e30a214100e1224d04b183a1e7da}{Harris}{H\bibinitperiod}{Chris}{C\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=040c37e81c1c52d09c40b01f4474a405}{Stephens}{S\bibinitperiod}{Mike}{M\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=26c2e30a214100e1224d04b183a1e7da}{Harris}{H\bibinitperiod}{Chris}{C\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=040c37e81c1c52d09c40b01f4474a405}{Stephens}{S\bibinitperiod}{Mike}{M\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{c2d71df4b626b292cccb05dc10223c20}
+      \strng{fullhash}{c2d71df4b626b292cccb05dc10223c20}
+      \field{sortinit}{H}
+      \field{labelyear}{1988}
+      \field{datelabelsource}{}
+      \field{labeltitle}{A Combined Corner and Edge Detector}
+      \field{journaltitle}{Alvey vision conference}
+      \field{title}{A Combined Corner and Edge Detector}
+      \field{year}{1988}
+      \verb{url}
+      \verb http://courses.daiict.ac.in/
+      \endverb
+    \endentry
     \entry{Reference6}{article}{}
       \name{labelname}{2}{}{%
         {{uniquename=0,hash=81c119e7adf31efd54cf22ccc13a68b1}{Klein}{K\bibinitperiod}{G.}{G\bibinitperiod}{}{}{}{}}%
@@ -168,6 +190,25 @@
       \field{volume}{18(4)}
       \field{year}{2011}
       \field{pages}{80\bibrangedash 92}
+    \endentry
+    \entry{Reference9}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=848b5a71fa4fcc26c9cb880cc4396fe3}{Shi}{S\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=271ffcd6427b8b639f6b0caf4c5f59c5}{Tomasi}{T\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=848b5a71fa4fcc26c9cb880cc4396fe3}{Shi}{S\bibinitperiod}{J.}{J\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=271ffcd6427b8b639f6b0caf4c5f59c5}{Tomasi}{T\bibinitperiod}{C.}{C\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{43e860715fb0f11216b74d8acf493cf3}
+      \strng{fullhash}{43e860715fb0f11216b74d8acf493cf3}
+      \field{sortinit}{S}
+      \field{labelyear}{1994}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Good Features to Track}
+      \field{journaltitle}{Computer Vision and Pattern Recognition, IEEE Computer Society Conference on}
+      \field{title}{Good Features to Track}
+      \field{year}{1994}
     \endentry
   \endsortlist
 \endrefsection
