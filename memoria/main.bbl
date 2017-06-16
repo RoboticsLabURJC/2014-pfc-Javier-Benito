@@ -61,6 +61,23 @@
       \field{year}{1986}
       \field{pages}{14\bibrangedash 24}
     \endentry
+    \entry{Reference10}{article}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=80c4098591f2a7ac925134b376368e41}{D.Lowe}{D\bibinitperiod}{}{}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=80c4098591f2a7ac925134b376368e41}{D.Lowe}{D\bibinitperiod}{}{}{}{}{}{}}%
+      }
+      \strng{namehash}{80c4098591f2a7ac925134b376368e41}
+      \strng{fullhash}{80c4098591f2a7ac925134b376368e41}
+      \field{sortinit}{D}
+      \field{labelyear}{2004}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Distinctive Image Features from Scale-Invariant Keypoints}
+      \field{journaltitle}{University of British Columbia}
+      \field{title}{Distinctive Image Features from Scale-Invariant Keypoints}
+      \field{year}{2004}
+    \endentry
     \entry{Reference1}{article}{}
       \name{labelname}{2}{}{%
         {{uniquename=0,hash=670f1f594b20e50f19019880d213f8ea}{Durrant-Whyte}{D\bibinithyphendelim W\bibinitperiod}{H.}{H\bibinitperiod}{}{}{}{}}%
