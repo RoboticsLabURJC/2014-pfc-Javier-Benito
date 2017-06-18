@@ -209,9 +209,8 @@ Para el cálculo de este emparejamiento se usará OpenCV. En primer lugar se ten
 
 Una vez creado el objeto dos métodos importantes son \textit{.match()} y \textit{.knnMatch()}. El primero devuelve el mejor emparejamiento. El segundo devuelve los $k$ mejores emparejamientos, donde $k$ es definido por el usuario.
 
-Por último, para la visualización OpenCV dispone del método \textit{.drawMatches()} que a partir de las dos imágenes y los emparejamientos obtenidos nos ayuda a dibujar los mismos para su visualización. Colocando las dos imágenes a tratar en horizontal y dibujando las líneas con los emparejamientos de una imágen a otra. En el caso de usar y querer visualizar los $k$ mejores emparejamientos existe también el método \textit{.drawMatchesKnn}.
 
-El el siguiente ejemplo se puede observar como calcular los emparejamientos a través de OpenCV
+El el siguiente ejemplo de código se puede observar como calcular los emparejamientos a través de OpenCV:
 
 \begin{lstlisting}[style=CStyle]
 // matching descriptors
@@ -220,8 +219,77 @@ vector<DMatch> matches;
 matcher.match(descriptors1, descriptors2, matches);
 \end{lstlisting}
 
+\textit{matches} por tanto será un array de objetos \textit{DMatch} (objeto de emparejamiento) con los siguientes atributos:
+
+\begin{itemize}
+\item \textit{DMatch.distance} - Parámetro de distancia entre descriptores. Cuanto menor distancia mejor emparejamiento.
+
+\item \textit{DMatch.trainIdx} - Índice del descriptor de la segunda imagen con el resultado.
+
+\item \textit{DMatch.queryIdx} - Índice del descriptor de la primera imagen a buscar.
+
+\item \textit{DMatch.imgIdx} - Índice de la imagen resultado.
+\end{itemize}
+
+En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba casera utilizando el algoritmo de Fuerza Bruta. Como se puede apreciar el tener que emparejar todos los puntos de una imagen al más parececido de la otra proporciona, incluso en una imagen muy parecida, errores que se van a tener que filtrar.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.8]{Figures/sift-detector.png}
+\decoRule
+\caption[sift-detector]{Detección y emparejamiento de puntos de interés con OpenCV usando SIFT para el cálculo de puntos de interés y descriptores y Fuerza Bruta para el cálculo de los emparejamientos.}
+\label{fig:SiftDetector}
+\end{figure}
+
+
+
+Por último, para la visualización OpenCV dispone del método \textit{.drawMatches()} que a partir de las dos imágenes y los emparejamientos obtenidos nos ayuda a dibujar los mismos para su visualización. Colocando las dos imágenes a tratar en horizontal y dibujando las líneas con los emparejamientos de una imágen a otra. En el caso de usar y querer visualizar los $k$ mejores emparejamientos existe también el método \textit{.drawMatchesKnn}.
+
 
 \subsection{FLANN}
+
+
+\subsection{Resolución de errores}
+
+Sobre el tema de filtrado de errores se han usado dos estrategias; se han cogido de todos los emparejamientos un porcentaje relativamente pequeño donde se encuentran los emparejamientos más acertados, tomando como medida de calidad la distancia ofrecida por los diferentes algoritmos y se ha incluido un filtro de sobresaliencia para el algoritmo de Fuerza Bruta.
+
+\begin{itemize}
+\item \underline{Mejores emparejamientos}. De $k$ emparejamientos obtenidos se ha implementado una función que ordena de menor a mayor la distancia de los emparejamientos obtenidos. Después y a través de la interfaz gráfica se podrá elegir el porcentaje de emparejamientos a emplear en la fase, que por defecto es un 20\%, es decir, $(k*0.2)$ puntos emparejados finales. Cuanto menor porcentaje mayor fiabilidad, pero menores resultados a pasar para la siguiente fase.
+
+\item \underline{Filtro de sobresaliencia}. Este filtro surge de la necesidad de corregir un error común que se encontraba en los mejores emparejamientos por distancia. Existen ciertas situaciones en las que hay características de una imagen muy similares a otras de otra imagen y que corresponden a errores en el emparejamiento.
+
+En la Figura~\ref{fig:similarCorrelation} se captura un ejemplo con dos de los mejores puntos medidos por distancia y se verifica que los dos mejores puntos se corresponden con el mismo punto en la imagen a buscar. Este error corresponde a una situación poco casual es origen de muchos errores en la estimación.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/similar-correlation.png}
+\decoRule
+\caption[similar-correlation]{Detección y emparejamiento de los mejores dos puntos.}
+\label{fig:similarCorrelation}
+\end{figure}
+
+Se puede entender en la Figura~\ref{fig:similarCorrelation} que el punto con el resultado final del emparejamiento (imagen derecha) tiene a nivel de descriptores una mayor similitud que los demás, de ahí ese resultado. Se puede decir por tanto, que los dos mejores puntos tienen una correlación muy similar, al igual que tendrán los demás puntos a lo largo del marco de la puerta subrayado en amarillo.
+
+Para ello, se ha empleado el método \textit{.knnMatch()} en el algoritmo de Fuerza Bruta que coge los $k$ mejores puntos. En este caso, se cogen los 2 mejores emparejamientos de todos los puntos y si la diferencia entre estos dos mejores emparejamientos es muy similar $(< 100)$ se desecha. Así pues, este filtro garantiza que el emparejamiento obtenido a través de los dos puntos es muy fuerte y no hay otro descriptor en la otra imagen con características similares.
+
+El código para esta implementación es sencillo:
+
+\begin{lstlisting}[style=CStyle]
+// Filtro de sobresaliencia
+vector<vector<DMatch> > matches_vector;
+matcher.knnMatch(descriptors1, descriptors2, matches_vector, 2);
+for (int i=0; i<matches_vector.size(); i++) {
+	outNumber = matches_vector[i][1].distance - matches_vector[i][0].distance;
+	if (outNumber >= 100) {
+		// Guardamos el emparejamiento
+	}
+}
+\end{lstlisting}
+
+Como diferencia, en esta ocasión se tiene como resultado del método \textit{.knnMatch()} un vector de vectores. Cada vector corresponde a un emparejamiento y por cada uno, otro vector con los $k$ mejores emparejamientos.
+
+\end{itemize}
+
 
 %-----------------------------------
 %	SUBSECTION Cálculo de movimiento
