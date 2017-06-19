@@ -213,10 +213,10 @@ Una vez creado el objeto dos métodos importantes son \textit{.match()} y \texti
 El el siguiente ejemplo de código se puede observar como calcular los emparejamientos a través de OpenCV:
 
 \begin{lstlisting}[style=CStyle]
-// matching descriptors
-BruteForceMatcher<L2<float> > matcher;
-vector<DMatch> matches;
-matcher.match(descriptors1, descriptors2, matches);
+	// matching descriptors
+	BruteForceMatcher<L2<float> > matcher;
+	vector<DMatch> matches;
+	matcher.match(descriptors1, descriptors2, matches);
 \end{lstlisting}
 
 \textit{matches} por tanto será un array de objetos \textit{DMatch} (objeto de emparejamiento) con los siguientes atributos:
@@ -248,13 +248,38 @@ Por último, para la visualización OpenCV dispone del método \textit{.drawMatc
 
 \subsection{FLANN}
 
+FLANN (Fast Library for Approximate Nearest Neighbors) es una librería que contiene una colección de algoritmos optimizados para encontrar emparejamientos.
 
+Esta librería de OpenCV, es una implementación del trabajo de Marius Muja y David G. Lowe \parencite{Reference11}. Está pensada para trabajar con grandes conjuntos de datos y cuando los descriptores son representados por vectores de grandes dimensiones. Por lo que en estos entornos trabajará más rápido que el algoritmo de Fuerza Bruta.
+
+FLANN provee de un sistema para elegir automáticamente el mejor algoritmo basado en la colección de datos. Dispone también de unos parámetros de entrada que permiten al usuario especificar la importancia de minimizar la memoria o el tiempo de compilación en lugar del tiempo de búsqueda.
+
+La implementación en código con OpenCV es sencilla y muy parecida a la anterior:
+
+\begin{lstlisting}[style=CStyle]
+  //Matching descriptor vectors using FLANN matcher
+  FlannBasedMatcher matcher;
+  std::vector< DMatch > matches;
+  matcher.match(descriptors_1, descriptors_2, matches);
+\end{lstlisting}
 \subsection{Resolución de errores}
 
 Sobre el tema de filtrado de errores se han usado dos estrategias; se han cogido de todos los emparejamientos un porcentaje relativamente pequeño donde se encuentran los emparejamientos más acertados, tomando como medida de calidad la distancia ofrecida por los diferentes algoritmos y se ha incluido un filtro de sobresaliencia para el algoritmo de Fuerza Bruta.
 
+
+
 \begin{itemize}
-\item \underline{Mejores emparejamientos}. De $k$ emparejamientos obtenidos se ha implementado una función que ordena de menor a mayor la distancia de los emparejamientos obtenidos. Después y a través de la interfaz gráfica se podrá elegir el porcentaje de emparejamientos a emplear en la fase, que por defecto es un 20\%, es decir, $(k*0.2)$ puntos emparejados finales. Cuanto menor porcentaje mayor fiabilidad, pero menores resultados a pasar para la siguiente fase.
+\item \underline{Mejores emparejamientos}. De $k$ emparejamientos obtenidos se ha implementado una función que ordena de menor a mayor la distancia de los emparejamientos obtenidos. Después y a través de la interfaz gráfica se podrá elegir el porcentaje de emparejamientos a emplear en la fase, que por defecto es un 20\%, es decir, $(k*0.2)$ puntos emparejados finales. Cuanto menor porcentaje mayor fiabilidad, pero menores resultados a pasar en la siguiente fase.
+
+En la Figura~\ref{fig:bestPointsSift} se puede ver el resultado de aplicar este método tras un desplazamiento horizontal. Se comprueba que el número de fallos se reduce considerablemente.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/best_points_sift.png}
+\decoRule
+\caption[bestPointsSift]{Emparejamiento de los mejores X puntos ordenados por distancia.}
+\label{fig:bestPointsSift}
+\end{figure}
 
 \item \underline{Filtro de sobresaliencia}. Este filtro surge de la necesidad de corregir un error común que se encontraba en los mejores emparejamientos por distancia. Existen ciertas situaciones en las que hay características de una imagen muy similares a otras de otra imagen y que corresponden a errores en el emparejamiento.
 
@@ -275,26 +300,48 @@ Para ello, se ha empleado el método \textit{.knnMatch()} en el algoritmo de Fue
 El código para esta implementación es sencillo:
 
 \begin{lstlisting}[style=CStyle]
-// Filtro de sobresaliencia
-vector<vector<DMatch> > matches_vector;
-matcher.knnMatch(descriptors1, descriptors2, matches_vector, 2);
-for (int i=0; i<matches_vector.size(); i++) {
-	outNumber = matches_vector[i][1].distance - matches_vector[i][0].distance;
-	if (outNumber >= 100) {
-		// Guardamos el emparejamiento
+	// Filtro de sobresaliencia
+	vector<vector<DMatch> > matches_vector;
+	matcher.knnMatch(descriptors1, descriptors2, matches_vector, 2);
+	for (int i=0; i<matches_vector.size(); i++) {
+		outNumber = matches_vector[i][1].distance - matches_vector[i][0].distance;
+		if (outNumber >= OUTSTANDING_DISTANCE) {
+			// Guardamos el emparejamiento
+		}
 	}
-}
 \end{lstlisting}
 
-Como diferencia, en esta ocasión se tiene como resultado del método \textit{.knnMatch()} un vector de vectores. Cada vector corresponde a un emparejamiento y por cada uno, otro vector con los $k$ mejores emparejamientos.
+Donde \textit{OUTSTANDING\_DISTANCE} es el umbral mínimo de diferencia de distancias permitido, que por defecto se ha definido en 100.
+
+Como diferencia, en esta ocasión como resultado del método \textit{.knnMatch()} se obtine un vector de vectores. Cada vector corresponde a un emparejamiento y por cada uno, otro vector con los $k$ mejores emparejamientos.
 
 \end{itemize}
 
+%-----------------------------------
+%	SUBSECTION Obtención de puntos 3D
+%-----------------------------------
+\section{Obtención de puntos 3D}
+
+Una vez obtenidos los puntos de interés y los mejores emparejamientos, se necesitará llevar a 3D los puntos calculados para el instante $(t)$\footnote{Como explicaremos más adelante, no se necesitarán calcular los puntos 3D para el instante $(t-1)$ ya que los puntos en ese instante ya se habrán calculado.}, para poder analizar en la siguiente fase el desplazamiento en tres dimensiones.
+
+Esos puntos de interés en dos dimensiones, o mejor llamados; píxeles, se obtienen a partir de la imagen RGB que proviene del sensor, sin embargo, para este cálculo se necesitará además la imagen DEPTH correspondiente. O lo que es lo mismo, El mismo píxel o punto de la imagen a color debe corresponder con su homólogo en la imagen de profundidad. Se puede deducir que ambas imágenes deberán estar perfectamente sincronizadas para asegurarse de que ambas se corresponden al mismo instante de tiempo.
+
+Figura~\ref{fig:diagramPoints3d}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.4]{Figures/diagram-points-3d.png}
+\decoRule
+\caption[diagram-points-3d]{Diagrama de transformación a puntos 3D.}
+\label{fig:diagramPoints3d}
+\end{figure}
 
 %-----------------------------------
 %	SUBSECTION Cálculo de movimiento
 %-----------------------------------
 \section{Cálculo de movimiento}
+
+
 
 \subsection{Matriz RT}
 

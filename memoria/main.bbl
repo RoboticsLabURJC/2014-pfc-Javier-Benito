@@ -167,6 +167,27 @@
       \field{year}{2007}
       \field{pages}{225\bibrangedash 234}
     \endentry
+    \entry{Reference11}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=1c681cacac39026e0f4d9938d5ef34f3}{Muja}{M\bibinitperiod}{Marius}{M\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=5d6b0d3a2772ea096d8c9bd4e5343889}{Lowe.}{L\bibinitperiod}{David\bibnamedelima G.}{D\bibinitperiod\bibinitdelim G\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=1c681cacac39026e0f4d9938d5ef34f3}{Muja}{M\bibinitperiod}{Marius}{M\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=5d6b0d3a2772ea096d8c9bd4e5343889}{Lowe.}{L\bibinitperiod}{David\bibnamedelima G.}{D\bibinitperiod\bibinitdelim G\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{61475cacd5d8fe51e6aa9176be1a9251}
+      \strng{fullhash}{61475cacd5d8fe51e6aa9176be1a9251}
+      \field{sortinit}{M}
+      \field{labelyear}{2009}
+      \field{labelmonth}{1}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Fast Approximate Nearest Neighbors with Automatic Algorithm Configuration}
+      \field{journaltitle}{VISAPP 2009 - Proceedings of the Fourth International Conference on Computer Vision Theory and Applications, Lisboa, Portugal, February 5-8, 2009 - Volume 1}
+      \field{month}{1}
+      \field{title}{Fast Approximate Nearest Neighbors with Automatic Algorithm Configuration}
+      \field{year}{2009}
+    \endentry
     \entry{Reference2}{article}{}
       \name{labelname}{2}{}{%
         {{uniquename=0,hash=526c503cf96f450e6d39ea8a18ba191d}{Noah\bibnamedelima Snavely}{N\bibinitperiod\bibinitdelim S\bibinitperiod}{Steven\bibnamedelimb M.\bibnamedelimi Seitz}{S\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{}{}}%
