@@ -324,9 +324,7 @@ Como diferencia, en esta ocasión como resultado del método \textit{.knnMatch()
 
 Una vez obtenidos los puntos de interés y los mejores emparejamientos, se necesitará llevar a 3D los puntos calculados para el instante $(t)$\footnote{Como explicaremos más adelante, no se necesitarán calcular los puntos 3D para el instante $(t-1)$ ya que los puntos en ese instante ya se habrán calculado.}, para poder analizar en la siguiente fase el desplazamiento en tres dimensiones.
 
-Esos puntos de interés en dos dimensiones, o mejor llamados; píxeles, se obtienen a partir de la imagen RGB que proviene del sensor, sin embargo, para este cálculo se necesitará además la imagen DEPTH correspondiente. O lo que es lo mismo, El mismo píxel o punto de la imagen a color debe corresponder con su homólogo en la imagen de profundidad. Se puede deducir que ambas imágenes deberán estar perfectamente sincronizadas para asegurarse de que ambas se corresponden al mismo instante de tiempo.
-
-Figura~\ref{fig:diagramPoints3d}
+Esos puntos de interés en dos dimensiones, o mejor llamados; píxeles, se obtienen a partir de la imagen RGB que proviene del sensor, sin embargo, para este cálculo se necesitará además la imagen DEPTH correspondiente. O lo que es lo mismo, el mismo píxel o punto de la imagen a color debe corresponder con su homólogo en la imagen de profundidad. Se puede deducir que ambas imágenes deberán estar perfectamente sincronizadas para asegurarse de que ambas se corresponden con el mismo instante de tiempo. En la Figura~\ref{fig:diagramPoints3d} tenemos el diagrama de transformación de los puntos.
 
 \begin{figure}[th]
 \centering
@@ -334,6 +332,34 @@ Figura~\ref{fig:diagramPoints3d}
 \decoRule
 \caption[diagram-points-3d]{Diagrama de transformación a puntos 3D.}
 \label{fig:diagramPoints3d}
+\end{figure}
+
+Para conseguir la información 3D se ha utilizado la librería de Progeo y su modelo de proyección \textit{PinHole}. Una vez obtenidos los puntos 2D más su información de distancia, se busca la recta de retroproyección correspondinete a cada uno de los píxeles de la imágen que se quieran transformar. Después se calcula el punto 3D, que será el que se encuentre a una distancia $d$ de la recta de retroproyección (ej: punto $P$ en la Figura~\ref{fig:camLine}).
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.35]{Figures/cam-line.png}
+\decoRule
+\caption[cam-line]{Cálculo de punto 3D con la información de distancia. $d$}
+\label{fig:camLine}
+\end{figure}
+
+La transformación de un píxel a su homólogo en 3D es compleja. El proceso de recostrucción está basado en un modelo proyectivo desde el centro óptico, por lo tanto, la distancia que se devuelve del sensor es la distancia perpendicular al plano imagen, y no la distancia real, tal y como se puede apreciar en la Figura~\ref{fig:distPoint}. Para ello, si se quiere calcular la posición 3D asociada a un píxel cuya recta de retroproyección es la que une el foco de la cámara y el punto BP (Figura~\ref{fig:calculate3d})
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.4]{Figures/dist-point.png}
+\decoRule
+\caption[dist-point]{Distancia real y la dada por el sensor.}
+\label{fig:distPoint}
+\end{figure}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.35]{Figures/calculate-3d.png}
+\decoRule
+\caption[calculate-3d]{Ejemplo de corrección de distancia.}
+\label{fig:calculate3d}
 \end{figure}
 
 %-----------------------------------
