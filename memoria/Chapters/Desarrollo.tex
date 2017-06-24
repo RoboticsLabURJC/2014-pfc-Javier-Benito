@@ -415,9 +415,84 @@ Por último, aplicando el resultado de $t$ sobre la ecuación~\ref{eqn:param} se
 %-----------------------------------
 \section{Cálculo de movimiento}
 
+Una vez calculados los puntos 3D, el siguiente bloque del componente realizado es la estimación de movimiento. En este caso hay que calcular continuamente el movimiento relativo entre los instantes $(t-1)$ y $(t)$. Esto permite ir siguiendo la trayectoria y la orientación seguida por el sensor a lo largo del tiempo.
 
+El sensor al calcular los puntos 3D a través de \textit{progeo} nos devuelve siempre los puntos en coordenadas \textbf{relativas}, por lo que al mover la cámara si calculamos de nuevo otros puntos estos se encontrarán en el mismo sistema de referencia. Por lo tanto a parte de encontrar los puntos en 3D en relativas, habrá que hacer los cálculos para encontrar esos puntos en coordenadas absolutas.
+
+En el instante inicial se toma como sistema de referencia absoluto el la cámara (matriz unidad). A partir de ahí se emperazará a calcular el sistema de referencia absoluto de los puntos en cada nuevo instante, contando con el desplazamiento.
+
+En coordenadas absolutas se encontrarán en la misma posición los mismos puntos en diferentes instantes de tiempo. Como se puede apreciar en la Figura~\ref{fig:movementRt} el desplazamiento del sensor en coordenadas absolutas muestra:
+
+\begin{itemize}
+\item Puntos absolutos correspondientes únicamente al instante $(t-1)$.
+\item Puntos absolutos correspondientes únicamente al instante $(t)$.
+\item Puntos absolutos correspondientes tanto al intante $(t-1)$ como $(t)$
+\end{itemize}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.4]{Figures/movement-rt.png}
+\decoRule
+\caption[movement-rt]{Cálculo visual de movimiento absoluto.}
+\label{fig:movementRt}
+\end{figure}
+
+Esos puntos comunes son por tanto los utilizados para el cálculo de movimiento. Provenientes del emparejamiento entre píxeles entre imágenes del bloque anterior.
+
+Recapitulando; como entrada en este bloque tendremos:
+
+\begin{enumerate}
+\item \underline{Los puntos relativos} en 3D provenientes de la cámara en el instante $(t)$.
+\item \underline{Los puntos absolutos} correspondientes al instante $(t-1)$ que han sido calculados en el instante anterior.
+\end{enumerate}
+
+La nube de puntos guardada será almacenada en un vector del siguiente tipo:
+
+\begin{lstlisting}[style=CStyle]
+    struct myPoint {
+      int x;
+      int y;
+      jderobot::RGBPoint rgbPoint;
+    };
+    std::vector<myPoint> myPrevPoints;
+\end{lstlisting}
+
+Donde se guardarán los píxeles y su correspondiente punto 3D en coordenadas absolutas, calculado de la iteración anterior. Con esto conseguimos la Matriz RT con desplazamiento absoluto.
 
 \subsection{Matriz RT}
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{Figures/matrixRT.png}
+\decoRule
+\caption[matrix-rt]{Matriz RT. Donde $R$ corresponde a la rotación y $T$ a la traslación.}
+\label{fig:matrixRT}
+\end{figure}
+
+
+
+\subsection{Cálculo de la matriz RT (SVD)}
+
+Para los cálculos de la matriz RT se ha usado la librería \textit{Eigen}
+\begin{equation}
+RT_{cam}^{mundo}\cdot P_{pto(n-1)}^{mundo}=P_{pto(n)}^{cam}
+\end{equation}
+
+Por lo tanto, para calcular la nube de puntos del instante actual y con coordenadas absolutas solo tendremos que multiplicar por la inversa de la matriz calculada:
+
+\begin{equation}
+\left(RT_{cam}^{mundo}\right)^{-1}\cdot P_{pto(n)}^{cam}=P_{pto(n)}^{mundo}
+\end{equation}
+
+Una vez llegados a este punto se guarda el resultado necesario para los cálculos de la siguiente iteración:
+
+\begin{equation}
+P_{pto(n)}^{mundo}\longrightarrow P_{pto(n-1)}^{mundo}
+\end{equation}
+
+\subsection{Optimización}
+
+El cálculo de movimiento ha sido uno de los puntos en los que se ha encontrado más problema ya que el error es acumulativo y una iteración con un error demasiado grande produce que en los siguientes instantes de tiempo el cálculo sea erróneo. Por ello hay que asegurarse que todos los datos que vienen de los anteriores bloques, vengan con el menor error posible.
 
 %-----------------------------------
 %	SECTION Interfaz gráfica
