@@ -340,11 +340,11 @@ Para conseguir la información 3D se ha utilizado la librería de Progeo y su mo
 \centering
 \includegraphics[scale=0.35]{Figures/cam-line.png}
 \decoRule
-\caption[cam-line]{Cálculo de punto 3D con la información de distancia. $d$}
+\caption[cam-line]{Cálculo de punto 3D con la información de distancia $d$.}
 \label{fig:camLine}
 \end{figure}
 
-La transformación de un píxel a su homólogo en 3D es compleja. El proceso de recostrucción está basado en un modelo proyectivo desde el centro óptico, por lo tanto, la distancia que se devuelve del sensor es la distancia perpendicular al plano imagen, y no la distancia real, tal y como se puede apreciar en la Figura~\ref{fig:distPoint}. Para ello, si se quiere calcular la posición 3D asociada a un píxel cuya recta de retroproyección es la que une el foco de la cámara y el punto BP (Figura~\ref{fig:calculate3d})
+La transformación de un píxel a su homólogo en 3D es compleja. El proceso de recostrucción está basado en un modelo proyectivo desde el centro óptico, por lo tanto, la distancia que se devuelve del sensor es la distancia perpendicular al plano imagen, y no la distancia real, tal y como se puede apreciar en la Figura~\ref{fig:distPoint}. Para ello, si se quiere calcular la posición 3D asociada a un píxel cuya recta de retroproyección es la que une el foco de la cámara y un punto BP (Figura~\ref{fig:calculate3d}) el punto que se quiere calcular no será el punto $P$, punto a una distancia $d$ del foco de la cámara y que nos da el sensor, sino el punto $Pr$ que corresponde al punto 3D real.
 
 \begin{figure}[th]
 \centering
@@ -354,13 +354,61 @@ La transformación de un píxel a su homólogo en 3D es compleja. El proceso de 
 \label{fig:distPoint}
 \end{figure}
 
+Para calcular el punto $Pr$, se tiene que encontrar la intersección entre la recta de retroproyección y el plano $D$. Definimos el plano $D$ como el plano con vector normal $\vec{k}$ que pasa por el punto $Q$. El vector $\vec{k}$ se obtiene como vector unitario que une el centro óptico de la cámara con el foco de atención, $foa$ (\textit{focus of attention}). Este vector es un vector perpendicular al plano imagen. El $foa$ es un parámetro conocido que obtenemos en el proceso de calibración de la cámara junto con la orientación y el \textit{roll}\footnote{Movimento del sensor sobre el eje central del sensor, paralelo al $foa$ o foco de atención.} (parámetros extrínsecos). El proceso matemático es el siguiente:
+
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.35]{Figures/calculate-3d.png}
+\includegraphics[scale=0.5]{Figures/calculate-3d.png}
 \decoRule
 \caption[calculate-3d]{Ejemplo de corrección de distancia.}
 \label{fig:calculate3d}
 \end{figure}
+
+Se calcula el vector unitario $\vec{k}$ entre \textit{CAM} y $foa$:
+
+\begin{equation}
+\vec{k}=\frac{\overrightarrow{CAMFOA}}{|CAMFOA|}
+\end{equation}
+
+Una vez obtenido el vector $\vec{k}$ se obtiene el punto $Q$ que se encuentra a una distancia $d$ del sensor, con las ecuaciones paramétricas de la recta:
+
+\begin{equation}
+Q_{x}=CAM_{x}+d\cdot k_{x}
+\end{equation}
+\[ Q_{y}=CAM_{y}+d\cdot k_{y} \]
+\[ Q_{z}=CAM_{z}+d\cdot k_{z} \]
+
+Con esto se tendría el plano que contiene el punto $Pr$ que es el que se quiere calcular. Es decir, el punto sobre la recta que pasa por $BP$ a una distancia $D$ (distancia corregida) del punto \textit{CAM}.
+
+Realizando los mismos cálculos, definimos el vector director de la recta \textit{CAMBP}; $\vec{v}$:
+
+\begin{equation}
+\vec{v}=\frac{\overrightarrow{CAMBP}}{|CAMBP|}
+\end{equation}
+
+Utilizando la ecuación paramétrica de la recta:
+
+\begin{equation}
+Pr_{x}=CAM_{x}+D\cdot v_{x}
+\label{eqn:param}
+\end{equation}
+\[ Pr_{y}=CAM_{y}+D\cdot v_{y} \]
+\[ Pr_{z}=CAM_{z}+D\cdot v_{z} \]
+
+
+Como el punto $Pr$ se encuentra en el plano $D$, se tendrá que calcular la intersección de la recta recién calculada y el plano $D$. Para calcular el plano $D$ se aplica la ecuación del plano con los datos obtenidos; $Q$, $Pr$ y el vector normal al plano $\vec{k}$:
+
+\begin{equation}
+k_{x}(CAM_{x}+t\cdot v_{x}-Q_{x})+k_{y}(CAM_{y}+t\cdot v_{y}-Q_{y})+k_{z}(CAM_{z}+t\cdot v_{z}-Q_{z})=0
+\end{equation}
+
+Despejando $t$:
+
+\begin{equation}
+t=\frac{-k_{x}\cdot CAM_{x}+k_{x}\cdot Q_{x}-k_{y}\cdot CAM_{y}+k_{y}\cdot Q_{y}-k_{z}\cdot CAM_{z}+k_{z}\cdot Q_{z}}{k_{x}\cdot v_{x}+k_{y}\cdot v_{y}+k_{z}\cdot v_{z}}
+\end{equation}
+
+Por último, aplicando el resultado de $t$ sobre la ecuación~\ref{eqn:param} se obtiene el punto real buscado $Pr$.
 
 %-----------------------------------
 %	SUBSECTION Cálculo de movimiento
