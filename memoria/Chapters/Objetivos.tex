@@ -20,12 +20,12 @@ A fin de abordar el objetivo principal de la manera más simple se han propuesto
 Creación de un módulo encargado de recoger de manera dinámica las imágenes RGB y DEPTH del sensor, y actualizarlas en una memoria compartida.
  
 \item \underline{Detección de puntos de interés}.
-Creación de un componente capaz de recoger a través de diferentes técnicas (SIFT, SURF) puntos de interés de una imágen con la opción de añadir un filtro frontera para desechar los puntos cercanos a bordes o zonas con mucha profundidad.
+Creación de un componente capaz de recoger a través de diferentes técnicas puntos de interés de una imágen con la opción de desarrollar algún filtro para añadir robustez a la detección.
 
 \item \underline{Emparejamiento de puntos}.
-Desarrollo de una funcionalidad encargada de relacionar los puntos de interés previamente obtenidos, a través de técnicas como Fuerza bruta o FLANN y la posibilidad de añadir un filtro de sobresaliencia.
+Desarrollo de una funcionalidad encargada de relacionar los puntos de interés previamente obtenidos, a través de técnicas como Fuerza bruta o FLANN.
 
-\item \underline{Estimación de matriz}.
+\item \underline{Estimación del movimiento}.
 Implementación de la matemática necesaria para una vez tenidos los puntos emparejados calcular la matriz de rotación y traslación (RT) que se necesitará para calcular en ese instante el movimiento de la cámara.
 
 \item \underline{Pruebas y experimentos}.

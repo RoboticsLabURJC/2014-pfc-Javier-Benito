@@ -4,11 +4,61 @@
 
 \label{Chapter6} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
+En los capítulos anteriores se ha mostrado una amplia descripción del problema abordado, las soluciones a las que se han llegado y los experimientos que se han desarrollado a fin de validar dicha solución.
+
+En este capítulo se presentarán las conclusiones que se extraen del trabajo realizado y se propondrán una serie de líneas futuras de investigación que pueden continuar a partir de este proyecto fin de carrera.
+
 %-----------------------------------
 %	SECTION Conclusiones
 %-----------------------------------
 \section{Conclusiones}
 
+Después de un desarrollo de cerca de 5 mil líneas de código escritas en C++. Se puede decir que se ha conseguido en mayor o menor medida alcanzar cada uno de los objetivos planteados en el capítulo~\ref{Chapter2}; un sistema capaz de averiguar la posición y orientación de un sensor RGBD que se mueve libremente por el espacio en tiempo real.
+
+A continuación se repasan los diferentes subobjetivos marcados para recapitular y verificar lo realizado:
+
+
+\begin{enumerate}
+\item \underline{Actualización de los datos del sensor}.
+
+Este primer subobjetivo no tenía mayor complicación, se recogen las imágenes RGB y DEPTH del sensor cuando el componente ha terminado sus cálculos para dar comienzo a otra iteración o a otro instante de tiempo en el que se vuelve a hacer todo el proceso de estimación de movimiento.
+ 
+\item \underline{Detección de puntos de interés}.
+
+El componente es capaz de extraer las carácterísticas 2D de dos fotogramas consecutivos pertenecientes a dos instantes de tiempo, con técnicas como SIFT o SURF y filtro frontera.
+
+Además de la extracción 2D se consigue transformar estas características de 2D a 3D, mediante la imagen de profundidad (D) asociada a la imagen RGB.
+
+\item \underline{Emparejamiento de puntos}.
+
+El componente también es capaz de realizar los emparejamientos de los puntos de interés obtenidos del bloque anterior y poder ordenarlos de mayor a menor precisión. Se ha implementado también un filtro de sobresaliencia que define que un emparejamiento sea único y no pueda confundirse con ningún otro.
+
+\item \underline{Estimación de movimiento}.
+
+Se calcula la matriz RT a través de los emparejamientos obtenidos. Y a través de técnicas como el cálculo de error espacial, retroproyección y RANSAC se consigue una redución de ruido importante.
+
+\item \underline{Pruebas y experimentos}.
+
+Los experimientos mostrados en el capítulo~\ref{Chapter5}...
+
+\end{enumerate}
+
+%Se detallan ahora del mismo modo los objetivos marcados en el capítulo~\ref{Chapter2} y se repasan:
+
+%\begin{itemize}
+%
+%\item Desarrollo del proyecto haciendo uso de la plataforma \textbf{JDeRobot 5.4.0}, que ha resultado de mucha utilidad y ha permitido un ahorro significante de tiempo, ya que permite abstraerse de algunas de las funcionalidades de más bajo nivel como puede ser la captura de información del sensor o el protocolo de comunicaciones. Permite llevar un desarrollo modular y el aprovechamiento de componentes ya implementados en la plataforma. Tanto las ventajas como el uso de JDeRobot se tratarán en detalle en el siguiente capítulo  (\ref{Chapter3}).
+%
+%\item Como la mayoría de componentes están en C++, el trabajo también se ha desarrollado utilizando el mismo lenguaje de programación. 
+%~\ref{ch:Chapter3}.
+%
+%\item Funcional bajo sistema operativo linux, en este caso Ubuntu 14.04 LTS.
+%
+%\item Uso exclusivo de un único sensor RGBD.
+%
+%\item Implementación de una interfaz de usuario clara donde se pueda apreciar el proceso de estimación de posición. Incluyendo un entorno visual 3D donde se refleje la posición y movimiento de la cámara en tiempo real.
+%
+%\end{itemize}
 %-----------------------------------
 %	SECTION Trabajos futuros
 %-----------------------------------
