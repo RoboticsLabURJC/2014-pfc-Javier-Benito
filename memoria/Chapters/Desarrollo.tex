@@ -415,35 +415,89 @@ Por último, aplicando el resultado de $t$ sobre la ecuación~\ref{eqn:param} se
 %-----------------------------------
 \section{Cálculo de movimiento}
 
-Una vez calculados los puntos 3D, el siguiente bloque del componente realizado es la estimación de movimiento. En este caso hay que calcular continuamente el movimiento relativo entre los instantes $(t-1)$ y $(t)$. Esto permite ir siguiendo la trayectoria y la orientación seguida por el sensor a lo largo del tiempo.
+Una vez calculados los puntos 3D, el siguiente bloque del componente realizado es la estimación de movimiento. En este caso hay que calcular continuamente el movimiento relativo entre los instantes $(n-1)$ y $(n)$. Esto permite ir siguiendo la trayectoria y la orientación seguida por el sensor a lo largo del tiempo.
 
-El sensor al calcular los puntos 3D a través de \textit{progeo} nos devuelve siempre los puntos en coordenadas \textbf{relativas}, por lo que al mover la cámara si calculamos de nuevo otros puntos estos se encontrarán en el mismo sistema de referencia. Por lo tanto a parte de encontrar los puntos en 3D en relativas, habrá que hacer los cálculos para encontrar esos puntos en coordenadas absolutas.
+\subsection{Matriz RT}
 
-En el instante inicial se toma como sistema de referencia absoluto el la cámara (matriz unidad). A partir de ahí se emperazará a calcular el sistema de referencia absoluto de los puntos en cada nuevo instante, contando con el desplazamiento.
+La trayectoria seguida se definirá por una \textbf{matriz RT} (Rotación + Translación) 4x4 de la manera que muestra la Figura~\ref{fig:matrixRT}.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.5]{Figures/matrixRT.png}
+\decoRule
+\caption[matrix-rt]{Matriz RT. Donde $R$ corresponde a la rotación y $T$ a la traslación.}
+\label{fig:matrixRT}
+\end{figure}
+
+Donde cualquier rotación podrá ser expresada como combinación de tres rotaciones por cada eje:
+
+\begin{equation}
+R_{x}(\theta)=\left[\begin{array}{ccc}
+1 & 0 & 0\\
+0 & cos\theta & -sen\theta\\
+0 & sen\theta & cos\theta
+\end{array}\right]
+\end{equation}
+\begin{equation}
+R_{y}(\theta)=\left[\begin{array}{ccc}
+cos\theta & 0 & sen\theta\\
+0 & 1 & 0\\
+-sen\theta & 0 & cos\theta
+\end{array}\right]
+\end{equation}
+\begin{equation}
+R_{z}(\theta)=\left[\begin{array}{ccc}
+cos\theta & -sen\theta & 0\\
+sen\theta & cos\theta & 0\\
+0 & 0 & 1
+\end{array}\right]
+\end{equation}
+
+Y tres desplazamientos:
+
+\begin{equation}
+\left[\begin{array}{c}
+x'\\
+y'\\
+z'
+\end{array}\right]=R\cdot\left[\begin{array}{c}
+x\\
+y\\
+z
+\end{array}\right]\longrightarrow\, x'=x+t_{x};\,\,\, y'=y+t_{y};\,\,\, z'=z+t_{z}
+\end{equation}
+
+Se puede deducir, por tanto, que la matriz definirá en total seis grados de libertad para el movimiento del sensor.
+
+\subsection{Cálculo RT (SVD)}
+
+Al calcular los puntos 3D a través de \textit{progeo} desde el sensor se tiene siempre los puntos en coordenadas \textbf{relativas}, por lo que al mover la cámara si calculamos de nuevo otros puntos estos se encontrarán en el mismo sistema de referencia. Por lo tanto, a parte de encontrar los puntos en 3D en relativas, habrá que hacer los cálculos para encontrar esos puntos en coordenadas \textbf{absolutas}.
+
+En el instante inicial se toma como sistema de referencia absoluto el la cámara (matriz unidad). A partir de ahí se emperazará a calcular el sistema de referencia absoluto de los nuevos puntos en cada instante.
 
 En coordenadas absolutas se encontrarán en la misma posición los mismos puntos en diferentes instantes de tiempo. Como se puede apreciar en la Figura~\ref{fig:movementRt} el desplazamiento del sensor en coordenadas absolutas muestra:
 
 \begin{itemize}
-\item Puntos absolutos correspondientes únicamente al instante $(t-1)$.
-\item Puntos absolutos correspondientes únicamente al instante $(t)$.
-\item Puntos absolutos correspondientes tanto al intante $(t-1)$ como $(t)$
+\item Puntos absolutos correspondientes únicamente al instante $(n-1)$.
+\item Puntos absolutos correspondientes únicamente al instante $(n)$.
+\item Puntos absolutos correspondientes tanto al intante $(n-1)$ como $(n)$
 \end{itemize}
 
 \begin{figure}[th]
 \centering
 \includegraphics[scale=0.4]{Figures/movement-rt.png}
 \decoRule
-\caption[movement-rt]{Cálculo visual de movimiento absoluto.}
+\caption[movement-rt]{Cálculo visual de movimiento en coordenadas absolutas.}
 \label{fig:movementRt}
 \end{figure}
 
-Esos puntos comunes son por tanto los utilizados para el cálculo de movimiento. Provenientes del emparejamiento entre píxeles entre imágenes del bloque anterior.
+Esos puntos comunes son por tanto los utilizados para el cálculo de movimiento. Provenientes del emparejamiento entre píxeles de las imágenes del bloque anterior.
 
-Recapitulando; como entrada en este bloque tendremos:
+Como entrada en este bloque tendremos:
 
 \begin{enumerate}
-\item \underline{Los puntos relativos} en 3D provenientes de la cámara en el instante $(t)$.
-\item \underline{Los puntos absolutos} correspondientes al instante $(t-1)$ que han sido calculados en el instante anterior.
+\item \underline{Los puntos relativos} provenientes de la cámara en el instante $(t)$.
+\item \underline{Los puntos absolutos} correspondientes al instante $(t-1)$.
 \end{enumerate}
 
 La nube de puntos guardada será almacenada en un vector del siguiente tipo:
@@ -457,28 +511,17 @@ La nube de puntos guardada será almacenada en un vector del siguiente tipo:
     std::vector<myPoint> myPrevPoints;
 \end{lstlisting}
 
-Donde se guardarán los píxeles y su correspondiente punto 3D en coordenadas absolutas, calculado de la iteración anterior. Con esto conseguimos la Matriz RT con desplazamiento absoluto.
+Donde se guardarán los píxeles y su correspondiente punto 3D en coordenadas absolutas, calculado de la iteración anterior. Con esto conseguimos la Matriz RT con un desplazamiento absoluto.
 
-\subsection{Matriz RT}
+Para los cálculos de la matriz RT se ha usado la librería \textit{Eigen} con la descomposición en valores singulares (\textbf{SVD}), ya que permite resolver sistemas sobredimensionados. En concreto se ha usado la clase \textit{JacobiSVD} para la descomposición de una matriz rectangular.
 
-\begin{figure}[th]
-\centering
-\includegraphics[scale=0.5]{Figures/matrixRT.png}
-\decoRule
-\caption[matrix-rt]{Matriz RT. Donde $R$ corresponde a la rotación y $T$ a la traslación.}
-\label{fig:matrixRT}
-\end{figure}
+Partiendo de la nube de puntos en coordenadas absolutas (mundo) del instante $(n-1)$ y la nube de puntos en coordenadas relativas (cam) en el instante $(n)$; se calcula la matriz RT de la camara con respecto al mundo:
 
-
-
-\subsection{Cálculo de la matriz RT (SVD)}
-
-Para los cálculos de la matriz RT se ha usado la librería \textit{Eigen}
 \begin{equation}
 RT_{cam}^{mundo}\cdot P_{pto(n-1)}^{mundo}=P_{pto(n)}^{cam}
 \end{equation}
 
-Por lo tanto, para calcular la nube de puntos del instante actual y con coordenadas absolutas solo tendremos que multiplicar por la inversa de la matriz calculada:
+Del mismo modo, para calcular la nube de puntos del instante actual y con coordenadas absolutas solo se tendrá que multiplicar por la inversa de la matriz calculada:
 
 \begin{equation}
 \left(RT_{cam}^{mundo}\right)^{-1}\cdot P_{pto(n)}^{cam}=P_{pto(n)}^{mundo}
@@ -492,9 +535,94 @@ P_{pto(n)}^{mundo}\longrightarrow P_{pto(n-1)}^{mundo}
 
 \subsection{Optimización}
 
-El cálculo de movimiento ha sido uno de los puntos en los que se ha encontrado más problema ya que el error es acumulativo y una iteración con un error demasiado grande produce que en los siguientes instantes de tiempo el cálculo sea erróneo. Por ello hay que asegurarse que todos los datos que vienen de los anteriores bloques, vengan con el menor error posible.
+El cálculo de movimiento ha sido uno de los puntos en los que se ha encontrado más problema ya que el error es acumulativo y una iteración con un error demasiado grande produce que en los siguientes instantes el cálculo sea erróneo. Por ello, hay que asegurarse de que todos los datos que vienen de los anteriores bloques, vengan con el menor error posible.
+
+Para corregir el error en esta fase se ha optado por añadir dos filtros:
+
+\begin{itemize}
+\item Deshacer el cálculo con demasiado error espacial y de reproyección.
+\item Implementación de \textbf{RANSAC}.
+\end{itemize}
+
+Para el error espacial se ha medido la distancia entre los mismos puntos en el sistema de referencia absoluto para los intantes $(n-1)$ y $(n)$. 
+
+Para el error de reproyección se mide la distancia entre píxeles de los diferentes instantes. Se calcula con \textit{Progeo} la posición del nuevo píxel en el instante anterior para poder calcular la distancia para una misma imágen.
+
+Si la distancia total es muy grande se desecha el cálculo y se comienza con otra instante de tiempo
+
+La implementación con RANSAC se compone de 3 fases:
+
+\begin{enumerate}
+\item De los puntos emparejados se selecciona un porcentaje aleatorio
+\item El cálculo RT se repite tantas veces como se desee
+\item De todas las iteraciones se busca la matriz que tenga menor error espacial o de reproyección.
+\end{enumerate}
+
+Se puede encontrar que hay dos variables a elección del usuario; el porcentaje aleatorio de selección de puntos (por defecto; 80\%) y el número de repeticiones de cálculo de la matriz (por defecto; 10).
+
+Como se puede deducir, este algoritmo es muy robusto frente a valores espurios, ya que si se realiza el cálculo con alguno de estos valores se desechará el resultado.
+
 
 %-----------------------------------
 %	SECTION Interfaz gráfica
 %-----------------------------------
 \section{Interfaz gráfica}
+
+El componente desarrollado dispone de una interfaz gráfica en donde se pueden ver gráficamente los pasos realizados, así como el resultado de toda la lógica del sistema. Ha sido desarrollada con \textit{glade} y la apariencia se puede observar en la Figura~\ref{fig:supergui}.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.48]{Figures/super_gui.png}
+\decoRule
+\caption[supergui]{Captura del mapa de funcionalidades de la herramienta gráfica.}
+\label{fig:supergui}
+\end{figure}
+
+La interfaz gráfica, basada en GTK, permite la realización  del procesado paso a paso o de manera automática: 
+
+\begin{enumerate}
+\item Actualización de imagen. (Figura~\ref{fig:gui1})
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{Figures/gui1.png}
+\decoRule
+\caption[gui1]{Paso 1: Actualización de imagen.}
+\label{fig:gui1}
+\end{figure}
+
+\item Detección de puntos. (Figura~\ref{fig:gui2})
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{Figures/gui2.png}
+\decoRule
+\caption[gui2]{Paso 2: Detección de puntos.}
+\label{fig:gui2}
+\end{figure}
+ 
+\item Cálculo de emparejamientos. (Figura~\ref{fig:gui3})
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{Figures/gui3.png}
+\decoRule
+\caption[gui3]{Paso 3: Cálculo de emparejamientos.}
+\label{fig:gui3}
+\end{figure}
+
+\item Estimación de la matriz. (Figura~\ref{fig:gui4})
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{Figures/gui4.png}
+\decoRule
+\caption[gui4]{Paso 4: Estimación de la matriz.}
+\label{fig:gui4}
+\end{figure}
+
+\end{enumerate}
+
+La herramienta permite, además, la modificación de algunos parámetros de configuración, como pueden ser la elección algortimos o filtros, así como el porcentaje de puntos emparejamientos a calcular.
+
+Por último se ha implementado un visor 3D, donde se representa toda la información tridimensional para el sistema de referencia absoluto.
