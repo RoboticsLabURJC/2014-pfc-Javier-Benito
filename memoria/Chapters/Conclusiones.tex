@@ -63,3 +63,21 @@ Los experimientos mostrados en el capítulo~\ref{Chapter5}...
 %	SECTION Trabajos futuros
 %-----------------------------------
 \section{Trabajos futuros}
+
+Para finalizar, se proponen algunas posibles líneas futuras de gran interés para la ampliación de este trabajo o mejoras que podrían realizarse.
+
+\begin{itemize}
+\item \textbf{Normalización y cierre de bucle.}
+
+Para mejorar la estimación sería interesante, algún mecanismo de normalización de la matriz RT para eliminar el error acumulativo en lo máximo posible. Por ejemplo; si se sabe que los puntos obtenidos son de una pared o un terreno liso, se podría construir un plano y corregir dichos puntos en base a ese plano.
+
+Así como algún mecanismo de cierre de bucle podría ser muy intereante para reajustar los cálculos y reducir en mayor medida ese error. Por ejemplo, cuando se ha pasado por una zona ya conocida y poder comparar el resultado de las dos veces.
+
+\item \textbf{Mejorar tiempo de cómputo.}
+
+Aunque el trabajo ha sido implementado para reducir el tiempo de cómputo y encontrar un equilibrio entre velocidad y robustez, existe un margen de mejora que puede superarse. Por ejemplo, el cálculo de puntos de interés a través de FAST aligeraría el proceso.
+
+\item \textbf{Entornos complejos.}
+
+Estaría bien investigar sobre entornos más complejos con presencia de objetos móviles. La presencia de objetos móviles no ha sido contemplada en la práctica, sin embargo, esta variable condicionará negativamente los resultados obtenidos. Por ello, y por que en el mundo que nos rodea no es estático podría ser interesante investigar esta línea de trabajo. Los espejos o reflejos podrían entrar también en este apartado como fuente de pruebas.
+\end{itemize}

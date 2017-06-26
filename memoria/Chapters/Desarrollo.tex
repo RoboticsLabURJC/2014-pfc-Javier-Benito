@@ -131,11 +131,11 @@ Una vez localizado el punto se podrá llevar un seguimiento de dónde está ese 
 
 \subsubsection{SIFT}
 
-SIFT (Scale-Invariant Feature Transform) soluciona uno de los problemas que nos encontrabamos en los métodos anteriormente mencionados. Los métodos hasta ahora vistos para el cálculo de puntos de interés o esquinas, se suponen invariantes a la rotación, es decir, incluso si la images es rotada es posible encontrar las mismas esquinas. Esto es así porque una esquina sigue siendo una esquina si la imagen a sido rotada. Sin embargo, no contemplan los cambios de escala, un esquina no puede ser una esquina si la imagen ha sido escalada. En la Figura~\ref{fig:sift_scale_invariant} podemos ver un ejemplo de este hecho; una esquina en una pequeña imagen con una ventana no lo es cuando la imagen se amplia y se usa la misma ventana.
+SIFT (Scale-Invariant Feature Transform) soluciona uno de los problemas que se encontraban en los métodos anteriormente mencionados. Los métodos hasta ahora vistos para el cálculo de puntos de interés o esquinas, se suponen invariantes a la rotación, es decir, incluso si la images es rotada es posible encontrar las mismas esquinas. Esto es así porque una esquina sigue siendo una esquina si la imagen a sido rotada. Sin embargo, no contemplan los cambios de escala, un esquina no puede ser una esquina si la imagen ha sido escalada. En la Figura~\ref{fig:sift_scale_invariant} podemos ver un ejemplo de este hecho; una esquina en una pequeña imagen con una ventana no lo es cuando la imagen se amplia y se usa la misma ventana.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.7]{Figures/sift_scale_invariant.jpg}
+\includegraphics[scale=0.8]{Figures/sift_scale_invariant.jpg}
 \decoRule
 \caption[siftScaleInvariant]{Ejemplo de diferentes puntos con escala}
 \label{fig:sift_scale_invariant}
@@ -144,9 +144,9 @@ SIFT (Scale-Invariant Feature Transform) soluciona uno de los problemas que nos 
 SIFT nace para proveer esta carencia de mano de D. Lowe \parencite{Reference10}. Un algoritmo escalarmente invariante que  localiza puntos de interés y calcula descriptores. Hay principalmente 4 etapas básicas en el algoritmo de SIFT:
 
 \begin{enumerate}
-\item \textbf{Extrema detección en espacio-escala}
+\item \underline{Extrema detección en espacio-escala}
 
-Para poder detectar características en diferentes escala es necesario poder variar el tamaño de la ventana a ampliar. Para ello se utiliza un filtro de espacio-escala; un filtro LoG (Laplaciana de una Gaussiana) que con diferentes valores de $\sigma$ es capaz de detectar puntos de interés para diferentes escalas. $\sigma$ actúa como un parámetro de escala, por ejemplo como se puede ver en la FIGURA, para bajos niveles de $\sigma$ la gaussiana devuelve altos valores para las pequeñas esquinas, sin embargo, altos valores de $\sigma$ encajan bien para grandes esquinas.
+Para poder detectar características en diferentes escalas es necesario poder variar el tamaño de la ventana a ampliar. Para ello se utiliza un filtro de espacio-escala; un filtro LoG (Laplaciana de una Gaussiana) que con diferentes valores de $\sigma$ es capaz de detectar puntos de interés para diferentes escalas. $\sigma$ actúa como un parámetro de escala, para bajos niveles de $\sigma$ la gaussiana devuelve altos valores para las pequeñas esquinas, sin embargo, altos valores de $\sigma$ encajan bien para grandes esquinas.
 
 Por lo tanto se busca a lo largo de la imagen y en diferentes escalas para encontrar el punto 
 
@@ -162,7 +162,7 @@ Sin embargo, el filtro LoG es muy costoso por lo que SIFT calcula una aproximaci
 \label{fig:shif_dog}
 \end{figure}
 
-Una vez obtenida la diferencia de gaussianas (DOG) se calcula el local-extrema, por ejemplo, un pixel en una imagen es comparado con sus 8 vecinos y también con los 9 píxeles en la escala anterior y la posterior 
+Una vez obtenida la diferencia de gaussianas (DOG) se calcula el \textit{local-extrema}, por ejemplo, un píxel en una imagen es comparado con sus 8 vecinos y también con los 9 píxeles de la escala anterior y la posterior (Figura~\ref{fig:sift_local_extrema}).
 
 \begin{figure}[ht]
 \centering
@@ -173,22 +173,99 @@ Una vez obtenida la diferencia de gaussianas (DOG) se calcula el local-extrema, 
 \end{figure}
 
 
-\item Localización de puntos de interés
+\item \underline{Localización de puntos de interés}
 
-bla bla balb alba 
+Una vez que los puntos de interés se han localizado, se tienen que refinar a fin de obtener unos resultados más precisos. Por ello, se elimina cualquier punto de interés de bajo contraste, definido por el umbral \textit{contrastThreshold} y los puntos caracterizados como bordes por el umbral \textit{edgeThreshold}.
 
-\item Asignación de orientación
+\item \underline{Asignación de orientación}
 
-\item Descriptor del punto de interés
+En este punto cada característica obtenida de la imagen se le asigna una orientación para mantener el algoritmo invariante ante la rotación. Se crean por tanto pntos característicos con la misma localización y escala pero en diferentes direcciones.
 
-\item Emparejamiento de puntos
+\item \underline{Descriptores}
+
+Aquí el descriptor del punto es creado con una ventana 16X16 alrededor del punto.
+
+\item \underline{Emparejamiento de puntos}
+
+Los puntos de interés son emparejados en base a los vecinos. Se van seleccionando emparejamientos y cuando se encuentra un emparejamiento con menor distancia se selecciona. Los emparejamientos con una distancia mayor de 0.8 se eliminan.
 
 \end{enumerate}
 
+La implementación de SIFT en OpenCV es sencilla, partiendo de dos imagenes en escala de grises tenemos:
 
+\begin{lstlisting}[style=CStyle]
+	SiftDescriptorExtractor extractor;
+ 	SiftFeatureDetector detector;
+ 	std::vector<KeyPoint> keypoints_1, keypoints_2;
 
+	// Keypoints detection
+ 	detector.detect( img_1, keypoints_1 );
+ 	detector.detect( img_2, keypoints_2 );
+  	
+ 	// Descriptors calculation
+ 	extractor.compute(img_1, keypoints_1, descriptors_1);
+ 	extractor.compute(img_2, keypoints_2, >descriptors_2);
+\end{lstlisting}
 
 \subsubsection{SURF}
+
+SURF (Speeded Up Robust Features) podría ser la evolución y versión rápida de SIFT. Desarrollada por Bay, H., Tuytelaars, T. y Van Gool, L. \parencite{Reference12} se introduce un nuevo algoritmo para la detección y cálculo de descriptores.
+
+En vez de utilizar Laplaciana de la gaussiana (LoG) para encontrar el espacio de escala como SIFT. SURF va un poco más lejos y aproxima LoG con filtros de cuadros (\textit{Box Filter}). En la Figura~\ref{fig:surf1} se puede ver un ejemplo de tal aproximación.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.6]{Figures/surf-1.jpg}
+\decoRule
+\caption[Box filter]{Proceso con filtros de cuadros, \textit{Box filter}.}
+\label{fig:surf1}
+\end{figure}
+
+La principal ventaja es que la convolución con cuadros es más fácil de cálcular con la ayuda de imagenes integrales. A parte, puede realizarse en paralelo para diferentes escalas.
+
+Una vez calculado el escalado, se propone el cálculo de la orientación del punto de interés. Para obtener un punto invariante a las rotaciones, iluminación y orientación se utiliza \textit{wavelet de Haar} en la dirección $x$ e $y$ en una región circular de radio \textit{6s}\footnote{La \textit{s} hace referencia a un parámetro en el cómputo de descriptores de SURF que representa una escala que define los límites de las regiones circulares entorno al punto de interés.}. Después de haber evaluado las respuestas se busca la dirección predominante calculando la suma de todos los resultados dentro de una ventana con un ángulo de 60º. La región en la que se haya obtenido un mayor valor determinará la orientación buscada (Figura~\ref{fig:surf2}).
+
+Para el cálculo del descriptor se construye una sección cuadrada en base a la orientación obtenida, alrededor del punto de interés y con un tamaño \textit{20s}x\textit{20s}. Esta región es dividida en sub-regiones de tamaño \textit{4s} x \textit{4s} y para cada una de ellas se calcula la respuesta de \textit{wavelet de Haar} de tamaño \textit{2s} tanto en $x$ como para $y$. Se genera el siguiente vector:
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5]{Figures/surf-2.jpg}
+\decoRule
+\caption[Cálculo de orientación con SURF]{Cálculo de orientación con SURF.}
+\label{fig:surf2}
+\end{figure}
+
+\begin{equation}
+v=\left(\sum d_{x},\sum d_{y},\sum|d_{x}|,\sum|d_{y}|\right)
+\end{equation}
+
+Con el vector representado, para cada carácterística detectada el descriptor con SURF contendrá 64 dimensiones. A menor dimensión, mayor velocidad de cómputo y de emparejamiento, pero se consigue mayor distinción entre características. Para esto SURF tiene una versión extendida con 128 dimensiones.
+
+En resumen, SURF añade un montón de mejoras para incrementar la velocidad en cada paso. Pruebas experimentales han demostrado que puede ser tres veces más rápido de SIFT. Aunque en robustez es comparable con SIFT, SURF se comporta bien en imágenes borrosas y con rotación pero no tanto cuando se cambian los puntos de vista o con una diferente condición de iluminación.
+
+La implementación en código es similar a la de SIFT:
+
+\begin{lstlisting}[style=CStyle]
+	//-- Step 1: Detect the keypoints using SURF Detector
+	int minHessian = 400;
+
+	SurfFeatureDetector detector( minHessian );
+
+	std::vector<KeyPoint> keypoints_1, keypoints_2;
+
+	detector.detect( img_1, keypoints_1 );
+	detector.detect( img_2, keypoints_2 );
+
+	//-- Step 2: Calculate descriptors (feature vectors)
+	SurfDescriptorExtractor extractor;
+
+	Mat descriptors_1, descriptors_2;
+
+	extractor.compute( img_1, keypoints_1, descriptors_1 );
+	extractor.compute( img_2, keypoints_2, descriptors_2 );;
+\end{lstlisting}
+
+
 
 %-----------------------------------
 %	SECTION Emparejamiento (\textit{matching})

@@ -1,30 +1,52 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
 \select@language {spanish}
-\contentsline {chapter}{\numberline {1}Chapter Title Here}{1}{chapter.4}
-\contentsline {section}{\numberline {1.1}Welcome and Thank You}{1}{section.5}
-\contentsline {section}{\numberline {1.2}Learning \textlatin {\LaTeX }{}}{1}{section.6}
-\contentsline {subsection}{\numberline {1.2.1}A (not so short) Introduction to \textlatin {\LaTeX }{}}{1}{subsection.7}
-\contentsline {subsection}{\numberline {1.2.2}A Short Math Guide for \textlatin {\LaTeX }{}}{2}{subsection.8}
-\contentsline {subsection}{\numberline {1.2.3}Common \textlatin {\LaTeX }{} Math Symbols}{2}{subsection.9}
-\contentsline {subsection}{\numberline {1.2.4}\textlatin {\LaTeX }{} on a Mac}{2}{subsection.10}
-\contentsline {section}{\numberline {1.3}Getting Started with this Template}{2}{section.11}
-\contentsline {subsection}{\numberline {1.3.1}About this Template}{3}{subsection.12}
-\contentsline {section}{\numberline {1.4}What this Template Includes}{3}{section.13}
-\contentsline {subsection}{\numberline {1.4.1}Folders}{3}{subsection.14}
-\contentsline {subsection}{\numberline {1.4.2}Files}{4}{subsection.15}
-\contentsline {section}{\numberline {1.5}Filling in Your Information in the \texttt {\bfseries main.tex} File}{5}{section.16}
-\contentsline {section}{\numberline {1.6}The \texttt {main.tex} File Explained}{5}{section.17}
-\contentsline {section}{\numberline {1.7}Thesis Features and Conventions}{6}{section.18}
-\contentsline {subsection}{\numberline {1.7.1}Printing Format}{6}{subsection.19}
-\contentsline {subsection}{\numberline {1.7.2}Using US Letter Paper}{7}{subsection.20}
-\contentsline {subsection}{\numberline {1.7.3}References}{7}{subsection.21}
-\contentsline {subsubsection}{A Note on bibtex}{8}{section*.23}
-\contentsline {subsection}{\numberline {1.7.4}Tables}{8}{subsection.24}
-\contentsline {subsection}{\numberline {1.7.5}Figures}{9}{subsection.26}
-\contentsline {subsection}{\numberline {1.7.6}Typesetting mathematics}{10}{subsection.28}
-\contentsline {section}{\numberline {1.8}Sectioning and Subsectioning}{10}{section.30}
-\contentsline {section}{\numberline {1.9}In Closing}{11}{section.31}
-\contentsline {chapter}{\numberline {A}Frequently Asked Questions}{13}{appendix.32}
-\contentsline {section}{\numberline {A.1}How do I change the colors of links?}{13}{section.33}
-\contentsline {chapter}{Bibliograf\'{\i }a}{15}{appendix*.34}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.4}
+\contentsline {section}{\numberline {1.1}Visi\IeC {\'o}n artificial}{1}{section.5}
+\contentsline {section}{\numberline {1.2}Autolocalizaci\IeC {\'o}n visual}{4}{section.13}
+\contentsline {subsection}{\numberline {1.2.1}Realidad aumentada}{4}{subsection.16}
+\contentsline {section}{\numberline {1.3}T\IeC {\'e}cnicas de autolocalizaci\IeC {\'o}n visual}{5}{section.19}
+\contentsline {subsection}{\numberline {1.3.1}Structure from Motion (SfM)}{5}{subsection.20}
+\contentsline {subsection}{\numberline {1.3.2}Visual SLAM}{6}{subsection.22}
+\contentsline {subsubsection}{Odometr\IeC {\'\i }a visual}{6}{section*.23}
+\contentsline {chapter}{\numberline {2}Objetivos}{9}{chapter.27}
+\contentsline {section}{\numberline {2.1}Descripci\IeC {\'o}n del problema}{9}{section.28}
+\contentsline {section}{\numberline {2.2}Requisitos}{10}{section.34}
+\contentsline {section}{\numberline {2.3}Metodolog\IeC {\'\i }a}{10}{section.35}
+\contentsline {section}{\numberline {2.4}Planificaci\IeC {\'o}n}{12}{section.40}
+\contentsline {chapter}{\numberline {3}Infraestructura}{14}{chapter.48}
+\contentsline {section}{\numberline {3.1}Sensores RGBD}{14}{section.49}
+\contentsline {section}{\numberline {3.2}JDeRobot}{15}{section.54}
+\contentsline {subsection}{\numberline {3.2.1}Biblioteca Progeo}{16}{subsection.57}
+\contentsline {subsection}{\numberline {3.2.2}Biblioteca parallelIce}{17}{subsection.59}
+\contentsline {subsection}{\numberline {3.2.3}Servidor OpenniServer}{17}{subsection.60}
+\contentsline {subsection}{\numberline {3.2.4}Herramienta RGBDViewer}{17}{subsection.61}
+\contentsline {subsection}{\numberline {3.2.5}Pose3D}{18}{subsection.63}
+\contentsline {section}{\numberline {3.3}Biblioteca ICE de comunicaciones}{18}{section.64}
+\contentsline {section}{\numberline {3.4}Biblioteca Point Cloud Library (PCL)}{18}{section.66}
+\contentsline {section}{\numberline {3.5}Biblioteca OpenCV}{18}{section.68}
+\contentsline {section}{\numberline {3.6}Biblioteca Eigen}{19}{section.71}
+\contentsline {section}{\numberline {3.7}Biblioteca de interfaz gr\IeC {\'a}fica GTK+}{20}{section.74}
+\contentsline {subsection}{\numberline {3.7.1}Glade}{20}{subsection.76}
+\contentsline {section}{\numberline {3.8}OpenGL}{21}{section.78}
+\contentsline {chapter}{\numberline {4}Desarrollo}{23}{chapter.82}
+\contentsline {section}{\numberline {4.1}Dise\IeC {\~n}o}{23}{section.83}
+\contentsline {section}{\numberline {4.2}An\IeC {\'a}lisis 2D}{25}{section.86}
+\contentsline {subsection}{\numberline {4.2.1}Detecci\IeC {\'o}n de puntos de inter\IeC {\'e}s}{25}{subsection.87}
+\contentsline {subsection}{\numberline {4.2.2}C\IeC {\'a}lculo de descriptores}{26}{subsection.93}
+\contentsline {subsubsection}{SIFT}{27}{section*.94}
+\contentsline {subsubsection}{SURF}{29}{section*.115}
+\contentsline {section}{\numberline {4.3}Emparejamiento (\textit {matching})}{31}{section.138}
+\contentsline {subsection}{\numberline {4.3.1}Fuerza Bruta}{32}{subsection.139}
+\contentsline {subsection}{\numberline {4.3.2}FLANN}{32}{subsection.146}
+\contentsline {subsection}{\numberline {4.3.3}Resoluci\IeC {\'o}n de errores}{33}{subsection.152}
+\contentsline {section}{\numberline {4.4}Obtenci\IeC {\'o}n de puntos 3D}{35}{section.165}
+\contentsline {section}{\numberline {4.5}C\IeC {\'a}lculo de movimiento}{38}{section.178}
+\contentsline {subsection}{\numberline {4.5.1}Matriz RT}{38}{subsection.179}
+\contentsline {subsection}{\numberline {4.5.2}C\IeC {\'a}lculo RT (SVD)}{39}{subsection.185}
+\contentsline {subsection}{\numberline {4.5.3}Optimizaci\IeC {\'o}n}{41}{subsection.199}
+\contentsline {section}{\numberline {4.6}Interfaz gr\IeC {\'a}fica}{41}{section.203}
+\contentsline {chapter}{\numberline {5}Experimentos}{45}{chapter.213}
+\contentsline {chapter}{\numberline {6}Conclusiones}{46}{chapter.214}
+\contentsline {section}{\numberline {6.1}Conclusiones}{46}{section.215}
+\contentsline {section}{\numberline {6.2}Trabajos futuros}{47}{section.221}

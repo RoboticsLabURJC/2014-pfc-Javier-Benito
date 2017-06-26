@@ -42,6 +42,28 @@
       \field{year}{2007}
       \field{pages}{1052\bibrangedash 1067}
     \endentry
+    \entry{Reference12}{article}{}
+      \name{labelname}{2}{}{%
+        {{uniquename=0,hash=e88c448ee1bf391126ba727577f5f60e}{Bay\bibnamedelima H.}{B\bibinitperiod\bibinitdelim H\bibinitperiod}{Tuytelaars\bibnamedelima T.}{T\bibinitperiod\bibinitdelim T\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=f02b3ec25ff11b631350118fb57561da}{L.}{L\bibinitperiod}{Van\bibnamedelima Gool}{V\bibinitperiod\bibinitdelim G\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{2}{}{%
+        {{uniquename=0,hash=e88c448ee1bf391126ba727577f5f60e}{Bay\bibnamedelima H.}{B\bibinitperiod\bibinitdelim H\bibinitperiod}{Tuytelaars\bibnamedelima T.}{T\bibinitperiod\bibinitdelim T\bibinitperiod}{}{}{}{}}%
+        {{uniquename=0,hash=f02b3ec25ff11b631350118fb57561da}{L.}{L\bibinitperiod}{Van\bibnamedelima Gool}{V\bibinitperiod\bibinitdelim G\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{eeae9e7a0223e4aeddd698ea0ea0cb26}
+      \strng{fullhash}{eeae9e7a0223e4aeddd698ea0ea0cb26}
+      \field{sortinit}{B}
+      \field{labelyear}{2008}
+      \field{labelmonth}{6}
+      \field{datelabelsource}{}
+      \field{labeltitle}{SURF: Speeded Up Robust Features}
+      \field{journaltitle}{Computer Vision and Image Understanding, Volumen 110, Issue 3}
+      \field{month}{6}
+      \field{title}{SURF: Speeded Up Robust Features}
+      \field{year}{2008}
+      \field{pages}{346\bibrangedash 359}
+    \endentry
     \entry{Reference7}{article}{}
       \name{labelname}{1}{}{%
         {{uniquename=0,hash=54db700ce8c5ac044d73b55e2b9d386a}{Boehm}{B\bibinitperiod}{B.}{B\bibinitperiod}{}{}{}{}}%
