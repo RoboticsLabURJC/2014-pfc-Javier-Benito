@@ -7,6 +7,7 @@ namespace real_rt_estimator {
   cv::String detectionFilterMode;
   cv::String matchingMode = "bruteforce";
   cv::String matchingFilterMode;
+  cv::String estimateFilterMode = "ransac";
 
   bool cameraRGBOn = false;
   bool cameraDEPTHOn = false;
@@ -220,17 +221,18 @@ namespace real_rt_estimator {
     if (estimateMatrixOn && correctMatchingCalculation) {
       //////////////////////////
       gettimeofday(&it, NULL);
-      if (this->sm->estimateRT()) {
-        gettimeofday(&ft, NULL);
-        double t = (ft.tv_sec - it.tv_sec)*1000 + (ft.tv_usec - it.tv_usec)/1000.0;
-        estimateRTTime+= t;
-        estimateRTCount++;
-        //////////////////////////
-        estimateMatrixOn = false;
+      if (this->sm->estimateRT(estimateFilterMode)) {
         calculationEstimateRTDone = true;
-        correctMatchingCalculation = false;
-        processDone = true;
       }
+      gettimeofday(&ft, NULL);
+      double t = (ft.tv_sec - it.tv_sec)*1000 + (ft.tv_usec - it.tv_usec)/1000.0;
+      estimateRTTime+= t;
+      estimateRTCount++;
+      //////////////////////////
+      estimateMatrixOn = false;
+      correctMatchingCalculation = false;
+      processDone = true;
+
     }
     ////////////////////////////////////////////////////////////////////////////
   }
@@ -252,7 +254,8 @@ namespace real_rt_estimator {
     calculateMatchingOn = true;
   }
 
-  void Control::estimateMatrix() {
+  void Control::estimateMatrix(cv::String filter) {
+    estimateFilterMode = filter;
     estimateMatrixOn = true;
   }
 

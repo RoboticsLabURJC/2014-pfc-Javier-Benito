@@ -35,7 +35,7 @@ class Control {
     void updateImage();
 		void calculatePoints(cv::String mode, cv::String filter);
 		void calculateMatching(cv::String mode, cv::String filter, int percentagePoints);
-		void estimateMatrix();
+		void estimateMatrix(cv::String mode);
 
 		void automaticModeOn();
 

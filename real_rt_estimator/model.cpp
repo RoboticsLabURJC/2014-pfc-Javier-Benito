@@ -99,7 +99,11 @@ namespace real_rt_estimator {
 	}
 
 	std::vector<jderobot::RGBPoint> Model::get_pc_camera_converted() {
-		return this->pc_camera_converted;
+    std::vector<jderobot::RGBPoint> pc_camera_converted_aux;
+    pthread_mutex_lock(&this->controlCamera);
+    pc_camera_converted_aux = this->pc_camera_converted;
+    pthread_mutex_unlock(&this->controlCamera);
+		return pc_camera_converted_aux;
 	}
 
 	// Gets Images from GUI
@@ -163,9 +167,11 @@ namespace real_rt_estimator {
 	}
 
   int Model::getMatchingPoints() {
-    //pthread_mutex_lock(&this->controlVars);
-    return matchingPoints;
-    //pthread_mutex_unlock(&this->controlVars);
+    int matchingPoints_aux;
+    pthread_mutex_lock(&this->controlVars);
+    matchingPoints_aux = this->matchingPoints;
+    pthread_mutex_unlock(&this->controlVars);
+    return matchingPoints_aux;
   }
   int Model::getTotalPoints() {
     //pthread_mutex_lock(&this->controlVars);
@@ -394,7 +400,12 @@ namespace real_rt_estimator {
 		/*if (p.x == 0) {
 			std::terminate();
 		}*/
-
+		std::cout <<  " ------------------------------------------------- 888888888888888888888888" << std::endl;
+		std::cout <<  "Puntos a 3D: " << x << ", " << y << std::endl;
+		std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+		float px, py;
+		mypro->myproject(p.x, p.y, p.z, &px, &py, 0);
+		std::cout <<  "Punto en foto " << px << ", " << py << std::endl;
 		return p;
 
 	}
@@ -440,12 +451,12 @@ namespace real_rt_estimator {
 	jderobot::RGBPoint Model::findPoint(int x, int y, std::vector<myPoint> points) {
 		for (int i=0; i<points.size(); i++) {
 			if ((x == points[i].x) && (y == points[i].y)) {
-				std::cout <<  "ENCONTRADO ////////////////////////////////////////////////////////////////" << std::endl;
+				//std::cout <<  "ENCONTRADO ////////////////////////////////////////////////////////////////" << std::endl;
 				return points[i].rgbPoint;
 			}
 		}
 		// Not found -> Default (0,0,0)
-		std::cout <<  "NOOOO ENCONTRADO ////////////////////////////////////////////////////////////////" << std::endl;
+		//std::cout <<  "NOOOO ENCONTRADO ////////////////////////////////////////////////////////////////" << std::endl;
 		jderobot::RGBPoint p;
 		p.x=0;
 		p.y=0;
@@ -462,7 +473,9 @@ namespace real_rt_estimator {
 		if (this->_firstIteration) { // Get from image_rgb_aux
 			cv::cvtColor(this->imageRGB_aux, this->imageGray_aux, CV_BGR2GRAY);
 		} else { // Copy from present
-			this->imageGray.copyTo(this->imageGray_aux);
+      if (_finishedOk) {
+			  this->imageGray.copyTo(this->imageGray_aux);
+      }
 		}
 		cv::cvtColor(this->imageRGB, this->imageGray, CV_BGR2GRAY);
 
@@ -481,8 +494,10 @@ namespace real_rt_estimator {
 			extractor.compute(this->imageGray_aux, this->keypoints_n_aux, this->descriptors_n_aux);
 		} else {
 			//this->keypoints_n.copyTo(this->keypoints_n_aux);
-			this->keypoints_n_aux = this->keypoints_n;
-			this->descriptors_n.copyTo(this->descriptors_n_aux);
+      if (_finishedOk) {
+  			this->keypoints_n_aux = this->keypoints_n;
+  			this->descriptors_n.copyTo(this->descriptors_n_aux);
+      }
 		}
 		//ºstd::vector<cv::KeyPoint> kp_aux;
 		//kp_aux.resize(0);
@@ -513,7 +528,9 @@ namespace real_rt_estimator {
 			}
 			this->_firstIteration = false;
 		} else {
-			this->myPrevPoints = this->myNewPoints;
+      if (_finishedOk) {
+		     this->myPrevPoints = this->myNewPoints;
+       }
 		}
 		std::vector<myPoint> points_aux;
 		points_aux.resize(0);
@@ -572,7 +589,7 @@ namespace real_rt_estimator {
 						std::cout <<  "distance" << matches_vector[i][j].distance << std::endl;
 					}*/
 					outNumber = matches_vector[i][1].distance - matches_vector[i][0].distance;
-					if (outNumber >= 100) {
+					if (outNumber >= OUTSTANDING_DISTANCE) {
 						matches.push_back(matches_vector[i][0]);
 					}
 				}
@@ -654,7 +671,7 @@ namespace real_rt_estimator {
 		return true;
 	}
 
-	bool Model::estimateRT() {
+	bool Model::estimateRT(cv::String estimateFilterMode) {
 		//pthread_mutex_lock(&this->controlPcConverted);
 
 
@@ -664,7 +681,10 @@ namespace real_rt_estimator {
 
 		int num_points_for_RT = v_rgbp.size();
 		std::cout << "The points number for RT calculation is: \n" << num_points_for_RT << std::endl;
-
+    if (num_points_for_RT < 5) {
+      _finishedOk = false;
+      return false;
+    };
 
 		/*Eigen::Vector4f points_ref_2;
 		Eigen::Vector4f points_ref_2_ant;
@@ -799,124 +819,134 @@ namespace real_rt_estimator {
 			std::cout << "The estimate RT Matrix 4 is: \n" << "[" << RT_estimate4 << "]" << std::endl;
 
 
-      // RANSAC ///////////////////////////////////////////////////////////////
-      int ransac_points = (int)(v_rgbp.size() * (1-RANSAC_PERC));
-      std::vector<jderobot::RGBPoint> points, points_aux;
       Eigen::Matrix4f RT_estimate_final;
 
-      srand (time(NULL));
-      int best_error = 1000;
+      // Euclidean error
+      float euclidean_error = 0;
 
-      for (int i=0; i<RANSAC_ITER; i++) {
-        points.clear();
-        points_aux.clear();
+      if (estimateFilterMode.compare("ransac") == 0) { // RANSAC
+        // RANSAC ///////////////////////////////////////////////////////////////
+        int ransac_points = (int)(v_rgbp.size() * (1-RANSAC_PERC));
+        std::vector<jderobot::RGBPoint> points, points_aux;
 
-        for (int i=0; i<v_rgbp.size(); i++) {
-          points.push_back(v_rgbp[i]);
-          points_aux.push_back(v_rgbp_aux[i]);
+        srand (time(NULL));
+        int best_error = 1000;
+
+        for (int i=0; i<RANSAC_ITER; i++) {
+          points.clear();
+          points_aux.clear();
+
+          for (int i=0; i<v_rgbp.size(); i++) {
+            points.push_back(v_rgbp[i]);
+            points_aux.push_back(v_rgbp_aux[i]);
+          }
+          for (int i=0; i<ransac_points; i++) {
+            int secret = rand() % points.size();
+            std::cout << "--------> Número aleatorio: " << "[" << secret << "]" << points.size() << std::endl;
+            points.erase(points.begin()+secret);
+            points_aux.erase(points_aux.begin()+secret);
+          }
+          Eigen::MatrixXf matrix_points(points.size(), 4);
+          Eigen::MatrixXf matrix_points_aux(points.size(), 4);
+          for (int i=0; i<points.size(); i++) {
+            matrix_points(i,0) = points[i].x;
+            matrix_points(i,1) = points[i].y;
+            matrix_points(i,2) = points[i].z;
+            matrix_points(i,3) = 1;
+            matrix_points_aux(i,0) = points_aux[i].x;
+            matrix_points_aux(i,1) = points_aux[i].y;
+            matrix_points_aux(i,2) = points_aux[i].z;
+            matrix_points_aux(i,3) = 1;
+          }
+          //Eigen::Matrix4f RT_estimate_ransac = matrix_points_aux.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(matrix_points).transpose();
+
+          Eigen::JacobiSVD<Eigen::MatrixXf> svd(matrix_points_aux, Eigen::ComputeThinU | Eigen::ComputeThinV);
+          Eigen::Matrix4f RT_estimate_ransac = svd.solve(matrix_points).transpose();
+          std::cout << "The estimate RT Matrix in RANSAC: \n" << "[" << RT_estimate_ransac << "]" << std::endl;
+          //std::cout << "The estimate RT Matrix in RANSAC later : \n" << "[" << svd.solve(matrix_points) << "]" << std::endl;
+
+    			Eigen::Vector4f vector_points;
+  			  Eigen::Vector4f vector_points_world;
+
+          for (int i=0; i<points.size(); i++) {
+            vector_points(0) = points[i].x;
+            vector_points(1) = points[i].y;
+            vector_points(2) = points[i].z;
+            vector_points(3) = 1;
+
+            vector_points_world = RT_estimate_ransac.inverse()*vector_points;
+
+            euclidean_error += abs(vector_points_world(0) - points_aux[i].x);
+            euclidean_error += abs(vector_points_world(1) - points_aux[i].y);
+            euclidean_error += abs(vector_points_world(2) - points_aux[i].z);
+          }
+          euclidean_error /= points.size();
+          std::cout << "ERROR ESPACIAL EUCLÍDEO RANSAC: " << euclidean_error << std::endl;
+
+          if (euclidean_error < best_error) {
+            best_error = euclidean_error;
+            RT_estimate_final = RT_estimate_ransac;
+          }
         }
-        for (int i=0; i<ransac_points; i++) {
-          int secret = rand() % points.size();
-          std::cout << "--------> Número aleatorio: " << "[" << secret << "]" << points.size() << std::endl;
-          points.erase(points.begin()+secret);
-          points_aux.erase(points_aux.begin()+secret);
+  			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_estimate_final << "]" << std::endl;
+        std::cout << "ERROR ESPACIAL EUCLÍDEO FINAL RANSAC: " << best_error << std::endl;
+        // RANSAC ///////////////////////////////////////////////////////////////
+      } else {
+        Eigen::Vector4f points_ref_aux;
+        Eigen::Vector4f points_ref_1_world;
+
+        /* Medimos error espacial euclídeo */
+        for (int i=0; i<this->v_rgbp.size(); i++) {
+          points_ref_aux(0) = this->v_rgbp[i].x;
+          points_ref_aux(1) = this->v_rgbp[i].y;
+          points_ref_aux(2) = this->v_rgbp[i].z;
+          points_ref_aux(3) = 1;
+
+          points_ref_1_world = RT_estimate4.inverse()*points_ref_aux;
+
+          euclidean_error += abs(points_ref_1_world(0) - this->v_rgbp_aux[i].x);
+          euclidean_error += abs(points_ref_1_world(1) - this->v_rgbp_aux[i].y);
+          euclidean_error += abs(points_ref_1_world(2) - this->v_rgbp_aux[i].z);
         }
-        Eigen::MatrixXf matrix_points(points.size(), 4);
-        Eigen::MatrixXf matrix_points_aux(points.size(), 4);
-        for (int i=0; i<points.size(); i++) {
-          matrix_points(i,0) = points[i].x;
-          matrix_points(i,1) = points[i].y;
-          matrix_points(i,2) = points[i].z;
-          matrix_points(i,3) = 1;
-          matrix_points_aux(i,0) = points_aux[i].x;
-          matrix_points_aux(i,1) = points_aux[i].y;
-          matrix_points_aux(i,2) = points_aux[i].z;
-          matrix_points_aux(i,3) = 1;
-        }
-        Eigen::Matrix4f RT_estimate_ransac = matrix_points_aux.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(matrix_points).transpose();
-        std::cout << "The estimate RT Matrix in RANSAC: \n" << "[" << RT_estimate_ransac << "]" << std::endl;
-
-        // Euclidean error
-        float euclidean_error = 0;
-
-  			Eigen::Vector4f vector_points;
-			  Eigen::Vector4f vector_points_world;
-
-        for (int i=0; i<points.size(); i++) {
-          vector_points(0) = points[i].x;
-          vector_points(1) = points[i].y;
-          vector_points(2) = points[i].z;
-          vector_points(3) = 1;
-
-          vector_points_world = RT_estimate_ransac.inverse()*vector_points;
-
-          euclidean_error += abs(vector_points_world(0) - points_aux[i].x);
-          euclidean_error += abs(vector_points_world(1) - points_aux[i].y);
-          euclidean_error += abs(vector_points_world(2) - points_aux[i].z);
-        }
-        euclidean_error /= points.size();
-        std::cout << "ERROR ESPACIAL EUCLÍDEO RANSAC: " << euclidean_error << std::endl;
-
-        if (euclidean_error < best_error) {
-          best_error = euclidean_error;
-          RT_estimate_final = RT_estimate_ransac;
-        }
+        euclidean_error /= v_rgbp.size();
+        std::cout << "ERROR ESPACIAL EUCLÍDEO (no ransac): " << euclidean_error << std::endl;
       }
-			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_estimate_final << "]" << std::endl;
-      // RANSAC ///////////////////////////////////////////////////////////////
-
       //Eigen::Matrix4f RT_final = RT_estimate4;
-
-
-			Eigen::Vector4f points_ref_aux;
-			Eigen::Vector4f points_ref_1_world;
-
-      /* Medimos error espacial euclídeo */
-      float error = 0;
-      for (int i=0; i<this->v_rgbp.size(); i++) {
-        points_ref_aux(0) = this->v_rgbp[i].x;
-        points_ref_aux(1) = this->v_rgbp[i].y;
-        points_ref_aux(2) = this->v_rgbp[i].z;
-        points_ref_aux(3) = 1;
-
-        points_ref_1_world = RT_estimate_final.inverse()*points_ref_aux;
-
-        error += abs(points_ref_1_world(0) - this->v_rgbp_aux[i].x);
-        error += abs(points_ref_1_world(1) - this->v_rgbp_aux[i].y);
-        error += abs(points_ref_1_world(2) - this->v_rgbp_aux[i].z);
-      }
-      error /= v_rgbp.size();
-      std::cout << "ERROR ESPACIAL EUCLÍDEO: " << error << std::endl;
-      if (error > 50) {
+      if (euclidean_error > 50) {
         _finishedOk = false;
-        return 1;
+        return false;
       };
 
+
+      Eigen::Vector4f pc_aux;
+      Eigen::Vector4f pc_world;
+      // Nube de puntos con los datos de los puntos de interés ///
 			for (int i=0; i<this->myNewPoints.size(); i++) {
-				points_ref_aux(0) = this->myNewPoints[i].rgbPoint.x;
-				points_ref_aux(1) = this->myNewPoints[i].rgbPoint.y;
-				points_ref_aux(2) = this->myNewPoints[i].rgbPoint.z;
-				points_ref_aux(3) = 1;
+				pc_aux(0) = this->myNewPoints[i].rgbPoint.x;
+				pc_aux(1) = this->myNewPoints[i].rgbPoint.y;
+				pc_aux(2) = this->myNewPoints[i].rgbPoint.z;
+				pc_aux(3) = 1;
 
-				points_ref_1_world = RT_estimate_final.inverse()*points_ref_aux;
+				pc_world = RT_estimate_final.inverse()*pc_aux;
 
-				this->myNewPoints[i].rgbPoint.x = points_ref_1_world(0);
-				this->myNewPoints[i].rgbPoint.y = points_ref_1_world(1);
-				this->myNewPoints[i].rgbPoint.z = points_ref_1_world(2);
+				this->myNewPoints[i].rgbPoint.x = pc_world(0);
+				this->myNewPoints[i].rgbPoint.y = pc_world(1);
+				this->myNewPoints[i].rgbPoint.z = pc_world(2);
 			}
 
+      // Nube de puntos para pintar en el visor gráfico ///
 			this->pc_converted.resize(pc.size());
 			for (int i=0; i<this->pc.size(); i++) {
-				points_ref_aux(0) = this->pc[i].x;
-				points_ref_aux(1) = this->pc[i].y;
-				points_ref_aux(2) = this->pc[i].z;
-				points_ref_aux(3) = 1;
+				pc_aux(0) = this->pc[i].x;
+				pc_aux(1) = this->pc[i].y;
+				pc_aux(2) = this->pc[i].z;
+				pc_aux(3) = 1;
 
-				points_ref_1_world = RT_estimate_final.inverse()*points_ref_aux;
+				pc_world = RT_estimate_final.inverse()*pc_aux;
 
-				this->pc[i].x = points_ref_1_world(0);
-				this->pc[i].y = points_ref_1_world(1);
-				this->pc[i].z = points_ref_1_world(2);
+				this->pc[i].x = pc_world(0);
+				this->pc[i].y = pc_world(1);
+				this->pc[i].z = pc_world(2);
 
 				this->pc_converted[i] = this->pc[i];
 			}
@@ -1061,6 +1091,7 @@ namespace real_rt_estimator {
 		Eigen::Vector4f points_ref_2_aux;
 
 		// Camera camera converted
+    pthread_mutex_lock(&this->controlCamera);
 		this->pc_camera_converted.resize(pc_camera.size());
 		for(int i=0; i<pc_camera.size(); i++) {
 			points_ref_2_aux(0) = this->pc_camera[i].x;
@@ -1074,5 +1105,6 @@ namespace real_rt_estimator {
 			this->pc_camera_converted[i].y = points_ref_1_aux(1);
 			this->pc_camera_converted[i].z = points_ref_1_aux(2);
 		}
+    pthread_mutex_unlock(&this->controlCamera);
 	}
 }

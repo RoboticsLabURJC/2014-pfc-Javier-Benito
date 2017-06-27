@@ -16,8 +16,8 @@ namespace real_rt_estimator {
     borderline_box=0;
     bruteforce_box=1;
     flann_box = 0;
-    correlation_box = 0;
     outstanding_box = 0;
+    ransac_box = 0;
 
     automatic_mode = 0;
 
@@ -60,8 +60,8 @@ namespace real_rt_estimator {
     refXml->get_widget("button_borderline", button_borderline);
     refXml->get_widget("button_bruteforce", button_bruteforce);
     refXml->get_widget("button_flann", button_flann);
-    refXml->get_widget("button_correlation", button_correlation);
     refXml->get_widget("button_outstanding", button_outstanding);
+    refXml->get_widget("button_ransac", button_ransac);
 
     refXml->get_widget("button_automatic", button_automatic);
 
@@ -80,8 +80,8 @@ namespace real_rt_estimator {
     button_borderline->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_borderline_clicked));
     button_bruteforce->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_bruteforce_clicked));
     button_flann->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_flann_clicked));
-    button_correlation->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_correlation_clicked));
     button_outstanding->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_outstanding_clicked));
+    button_ransac->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_ransac_clicked));
 
     button_automatic->signal_clicked().connect(sigc::mem_fun(this,&Gui::button_automatic_clicked));
 
@@ -163,6 +163,7 @@ namespace real_rt_estimator {
         }
       }
       if (this->ctrl->isCalculationEstimateRTDone()) {
+        std::cout << "PONER LINEASSSSSS CLOUS (((((((((((8)))))))))))" << std::endl;
         this->putPointCloud();
         //finish_cycle = true;
       }
@@ -216,63 +217,6 @@ namespace real_rt_estimator {
       this->ctrl->estimatePoints();
     }*/
 
-    void Gui::estimateCurrentRT() {
-      //std::cout << "2" << std::endl;
-      this->ctrl->estimateMatrix();
-
-      //std::cout << "3" << std::endl;
-
-      //std::cout << "4" << std::endl;
-      /*if (this->sm->doSiftAndGetPoints()) {button_correlation_clicked
-        this->processDone = true;
-      }*/
-
-
-
-
-
-
-
-
-      //this->image2 = this->sm->getImageCameraRGBAux();
-      /*
-      struct timeval t_ini, t_fin;
-      long total_ini, total_fin;
-      long diff;
-      gettimeofday(&t_ini, NULL);
-
-      total_ini = t_ini.tv_sec * 1000000 + t_ini.tv_usec;
-
-      if (this->processDone) {
-        this->sm->estimateRT();
-        this->putPointCloud();
-      }
-
-      gettimeofday(&t_fin, NULL);
-      total_fin = t_fin.tv_sec * 1000000 + t_fin.tv_usec;
-
-      diff = (total_fin - total_ini) / 1000;;
-      std::cout <<  "Tiempo procesado-> " << diff << " ms" << std::endl;*/
-
-
-
-      //std::cout << "5" << std::endl;
-      //this->sm->changeImageAux();
-
-      //if (done) {
-      //  this->putPointCloud();
-        //this->putCamera();
-      //}
-
-
-      //std::cout << "6" << std::endl;
-      /*if (this->sm->isEstimated()) {
-        this->image_depth = this->sm->getImageCameraRGBMatches();
-        setCamara(this->image_depth, 3);
-        this->putPointCloud();
-      }*/
-    }
-
     void Gui::moveRT1() {
       this->sm->RotateXAxis();
       this->putPointCloud();
@@ -320,14 +264,12 @@ namespace real_rt_estimator {
   }
 
   void Gui::matchingPoints() {
-    std::cout << "button_matching pressed" << std::endl;
+    //std::cout << "button_matching pressed" << std::endl;
     cv::String detectionMode;
     if (bruteforce_box) {
       detectionMode = "bruteforce";
     } else if (flann_box) {
       detectionMode = "flann";
-    } else if (correlation_box) {
-      detectionMode = "correlation";
     }
 
     // Filters
@@ -341,12 +283,23 @@ namespace real_rt_estimator {
     this->ctrl->calculateMatching(detectionMode, filterMode, percentagePoints);
   }
 
-	void Gui::putPointCloud() {
+  void Gui::estimateCurrentRT() {
+    cv::String filterMode;
+    if (ransac_box) {
+      filterMode = "ransac";
+    } else {
+      filterMode = "none";
+    }
+    this->ctrl->estimateMatrix(filterMode);
+  }
 
+	void Gui::putPointCloud() {
+      std::cout << "Dibujamos la cámara $$$$$$$$$$$$$$$$$$$$$$$$$" << std::endl;
       // Dibujamos la cámara
       this->world->clear_camera_lines();
       std::vector<jderobot::RGBPoint> line = this->sm->get_pc_camera_converted();
       for (int i = 1; i < (int)line.size(); i++){
+        std::cout << "joder!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
         this->world->add_camera_line(
                         line[0].x,
                         line[0].y,
@@ -410,7 +363,7 @@ namespace real_rt_estimator {
 		//}
 	}
 
-	void Gui::putCamera() {
+	void Gui::putCamera() { // BORRAR
 		//this->world->clear_points();
 		//if (this->model->isFinal()) {
 			//std::vector<jderobot::RGBPoint> p = this->sm->get_pc();
@@ -488,17 +441,17 @@ namespace real_rt_estimator {
     else
       flann_box = 1;
   }
-  void Gui::button_correlation_clicked() {
-    if(correlation_box)
-      correlation_box = 0;
-    else
-      correlation_box = 1;
-  }
   void Gui::button_outstanding_clicked() {
     if(outstanding_box)
       outstanding_box = 0;
     else
       outstanding_box = 1;
+  }
+  void Gui::button_ransac_clicked() {
+    if(ransac_box)
+      ransac_box = 0;
+    else
+      ransac_box = 1;
   }
   void Gui::button_automatic_clicked() {
     if(automatic_mode)

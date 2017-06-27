@@ -45,8 +45,10 @@
 //#define IMG_Y 240
 #define N_ESTIMATOR_POINTS 15
 
-#define RANSAC_PERC 0.8
-#define RANSAC_ITER 10
+#define OUTSTANDING_DISTANCE 100
+
+#define RANSAC_PERC 0.8 // percentage points to choose randomly
+#define RANSAC_ITER 10 // number of iterations for ransac
 
 /* Traslation of graphic coordinates to optical coordinates and vice versa */
 /*#define GRAPHIC_TO_OPTICAL_X(x,y) (SIFNTSC_ROWS-1-y)
@@ -69,6 +71,7 @@ namespace real_rt_estimator {
 		pthread_mutex_t controlImgDEPTH;
 		pthread_mutex_t controlImgMatches;
     pthread_mutex_t controlPcConverted;
+    pthread_mutex_t controlCamera;
     pthread_mutex_t controlVars;
 
 		std::vector<jderobot::RGBPoint> get_pc();
@@ -107,7 +110,7 @@ namespace real_rt_estimator {
     bool calculatePoints(cv::String detectionMode, cv::String detectionFilterMode);
     bool calculateMatching(cv::String matchingMode, cv::String matchingFilterMode, int percentagePoints);
 
-		bool estimateRT();
+		bool estimateRT(cv::String estimateFilterMode);
     bool isEstimated();
 
     void RotateXAxis();

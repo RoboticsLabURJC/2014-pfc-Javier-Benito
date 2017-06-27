@@ -88,8 +88,8 @@ namespace real_rt_estimator {
       Gtk::CheckButton * button_borderline;
       Gtk::CheckButton * button_bruteforce;
       Gtk::CheckButton * button_flann;
-      Gtk::CheckButton * button_correlation;
       Gtk::CheckButton * button_outstanding;
+      Gtk::CheckButton * button_ransac;
 
       Gtk::ToggleButton * button_automatic;
 
@@ -126,8 +126,8 @@ namespace real_rt_estimator {
       void button_borderline_clicked();
       void button_bruteforce_clicked();
       void button_flann_clicked();
-      void button_correlation_clicked();
       void button_outstanding_clicked();
+      void button_ransac_clicked();
       void button_automatic_clicked();
 
       // Checkbox control
@@ -136,8 +136,8 @@ namespace real_rt_estimator {
       int borderline_box;
       int bruteforce_box;
       int flann_box;
-      int correlation_box;
       int outstanding_box;
+      int ransac_box;
       int automatic_mode;
 
       bool first_time;

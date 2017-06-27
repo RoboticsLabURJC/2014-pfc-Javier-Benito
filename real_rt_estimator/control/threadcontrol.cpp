@@ -36,9 +36,9 @@ void ThreadControl::start()
 
         /*Sleep Algorithm*/
 
-        usleep(diff * 1000);
+        /*usleep(diff * 1000);
         if (diff < 33)
-            usleep(33 * 1000);
+            usleep(33 * 1000);*/
 
     }
 }
