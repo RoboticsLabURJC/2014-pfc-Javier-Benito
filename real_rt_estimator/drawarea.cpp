@@ -382,7 +382,7 @@ namespace real_rt_estimator {
 			for (std::vector<jderobot::RGBPoint>::iterator it = cloud.begin(); it != cloud.end(); ++it){
 				if (draw_kinect_with_color)
 					glColor3f( it->r, it->g, it->b );
-				glPointSize(3); ///////////////////////////////////////////////////////////
+				glPointSize(2); ///////////////////////////////////////////////////////////
 				glBegin(GL_POINTS);
 					glVertex3f(it->x/scale,it->y/scale,it->z/scale);
 				glEnd();

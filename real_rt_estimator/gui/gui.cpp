@@ -299,7 +299,6 @@ namespace real_rt_estimator {
       this->world->clear_camera_lines();
       std::vector<jderobot::RGBPoint> line = this->sm->get_pc_camera_converted();
       for (int i = 1; i < (int)line.size(); i++){
-        std::cout << "joder!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
         this->world->add_camera_line(
                         line[0].x,
                         line[0].y,

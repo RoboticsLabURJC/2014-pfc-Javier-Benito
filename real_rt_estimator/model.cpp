@@ -681,7 +681,7 @@ namespace real_rt_estimator {
 
 		int num_points_for_RT = v_rgbp.size();
 		std::cout << "The points number for RT calculation is: \n" << num_points_for_RT << std::endl;
-    if (num_points_for_RT < 5) {
+    if (num_points_for_RT < 8) {
       _finishedOk = false;
       return false;
     };
@@ -858,12 +858,12 @@ namespace real_rt_estimator {
             matrix_points_aux(i,2) = points_aux[i].z;
             matrix_points_aux(i,3) = 1;
           }
-          //Eigen::Matrix4f RT_estimate_ransac = matrix_points_aux.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(matrix_points).transpose();
+          Eigen::Matrix4f RT_estimate_ransac2 = matrix_points_aux.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(matrix_points).transpose();
 
           Eigen::JacobiSVD<Eigen::MatrixXf> svd(matrix_points_aux, Eigen::ComputeThinU | Eigen::ComputeThinV);
           Eigen::Matrix4f RT_estimate_ransac = svd.solve(matrix_points).transpose();
           std::cout << "The estimate RT Matrix in RANSAC: \n" << "[" << RT_estimate_ransac << "]" << std::endl;
-          //std::cout << "The estimate RT Matrix in RANSAC later : \n" << "[" << svd.solve(matrix_points) << "]" << std::endl;
+          std::cout << "The estimate RT Matrix in RANSAC later : \n" << "[" << RT_estimate_ransac2 << "]" << std::endl;
 
     			Eigen::Vector4f vector_points;
   			  Eigen::Vector4f vector_points_world;
@@ -912,7 +912,7 @@ namespace real_rt_estimator {
         std::cout << "ERROR ESPACIAL EUCLÍDEO (no ransac): " << euclidean_error << std::endl;
       }
       //Eigen::Matrix4f RT_final = RT_estimate4;
-      if (euclidean_error > 50) {
+      if (euclidean_error > 100) {
         _finishedOk = false;
         return false;
       };
@@ -1087,8 +1087,26 @@ namespace real_rt_estimator {
 
 		//std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_final << "]" << std::endl;
 
-		Eigen::Vector4f points_ref_1_aux;
+    Eigen::Matrix4f R_matrix;
+		R_matrix << RT_estimate(0,0), RT_estimate(0,1), RT_estimate(0,2), 0,
+									 RT_estimate(1,0), RT_estimate(1,1), RT_estimate(1,2), 0,
+									 RT_estimate(2,0), RT_estimate(2,1), RT_estimate(2,2), 0,
+									 0, 0, 0, 1;
+
+    Eigen::Matrix4f T_matrix;
+    T_matrix << 1, 0, 0, RT_estimate(0,3),
+									 0, 1, 0, RT_estimate(1,3),
+									 0, 0, 1, RT_estimate(2,3),
+									 0, 0, 0, 1;
+
+
+
+
+    Eigen::Vector4f points_ref_1_aux;
 		Eigen::Vector4f points_ref_2_aux;
+
+
+
 
 		// Camera camera converted
     pthread_mutex_lock(&this->controlCamera);
@@ -1099,7 +1117,8 @@ namespace real_rt_estimator {
 			points_ref_2_aux(2) = this->pc_camera[i].z;
 			points_ref_2_aux(3) = 1;
 
-			points_ref_1_aux = RT_estimate.inverse()*points_ref_2_aux;
+			points_ref_2_aux = R_matrix.inverse()*points_ref_2_aux;
+      points_ref_1_aux = T_matrix.inverse()*points_ref_2_aux;
 
 			this->pc_camera_converted[i].x = points_ref_1_aux(0);
 			this->pc_camera_converted[i].y = points_ref_1_aux(1);
