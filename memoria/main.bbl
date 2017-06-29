@@ -117,7 +117,7 @@
       \field{datelabelsource}{}
       \field{labeltitle}{Simultaneous localization and mapping: part I}
       \field{abstract}{This paper describes the simultaneous localization and mapping (SLAM) problem and the essential methods for solving the SLAM problem and summarizes key implementations and demonstrations of the method. While there are still many practical issues to overcome, especially in more complex outdoor environments, the general SLAM method is now a well understood and established part of robotics. Another part of the tutorial summarized more recent works in addressing some of the remaining issues in SLAM, including computation, feature representation, and data association.}
-      \field{journaltitle}{IEEE Robotics & Automation Magazine}
+      \field{journaltitle}{IEEE Robotics \& Automation Magazine}
       \field{month}{6}
       \field{title}{Simultaneous localization and mapping: part I}
       \field{volume}{13, issue 2}
@@ -139,11 +139,31 @@
       \field{labelyear}{2012}
       \field{datelabelsource}{}
       \field{labeltitle}{Visual	odometry: Part ii: Matching, robustness, optimization, and applications}
-      \field{journaltitle}{Robotics & Automation Magazine, IEEE}
+      \field{journaltitle}{Robotics \& Automation Magazine, IEEE}
       \field{title}{Visual	odometry: Part ii: Matching, robustness, optimization, and applications}
       \field{volume}{19(2)}
       \field{year}{2012}
       \field{pages}{78\bibrangedash 90}
+    \endentry
+    \entry{ref3}{thesis}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=c5d9fda6f86054c24ac5e59ff05f2c4f}{García}{G\bibinitperiod}{Eduardo\bibnamedelima Perdices}{E\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=c5d9fda6f86054c24ac5e59ff05f2c4f}{García}{G\bibinitperiod}{Eduardo\bibnamedelima Perdices}{E\bibinitperiod\bibinitdelim P\bibinitperiod}{}{}{}{}}%
+      }
+      \list{institution}{1}{%
+        {Universidad Rey Juan Carlos}%
+      }
+      \strng{namehash}{c5d9fda6f86054c24ac5e59ff05f2c4f}
+      \strng{fullhash}{c5d9fda6f86054c24ac5e59ff05f2c4f}
+      \field{sortinit}{G}
+      \field{labelyear}{2010}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Autolocalización visual en la RoboCup con algoritmos basados en muestras}
+      \field{title}{Autolocalización visual en la RoboCup con algoritmos basados en muestras}
+      \field{type}{mathesis}
+      \field{year}{2010}
     \endentry
     \entry{Reference8}{article}{}
       \name{labelname}{2}{}{%
@@ -189,6 +209,26 @@
       \field{year}{2007}
       \field{pages}{225\bibrangedash 234}
     \endentry
+    \entry{ref4}{thesis}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=02664508549b1a28b8974a74ed7241b4}{Lana}{L\bibinitperiod}{Ignacio\bibnamedelimb San\bibnamedelima Román}{I\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim R\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=02664508549b1a28b8974a74ed7241b4}{Lana}{L\bibinitperiod}{Ignacio\bibnamedelimb San\bibnamedelima Román}{I\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim R\bibinitperiod}{}{}{}{}}%
+      }
+      \list{institution}{1}{%
+        {Universidad Rey Juan Carlos}%
+      }
+      \strng{namehash}{02664508549b1a28b8974a74ed7241b4}
+      \strng{fullhash}{02664508549b1a28b8974a74ed7241b4}
+      \field{sortinit}{L}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Odometría visual 3D para autolocalización de una cámara móvil en tiempo real}
+      \field{title}{Odometría visual 3D para autolocalización de una cámara móvil en tiempo real}
+      \field{type}{mathesis}
+      \field{year}{2015}
+    \endentry
     \entry{Reference11}{article}{}
       \name{labelname}{2}{}{%
         {{uniquename=0,hash=1c681cacac39026e0f4d9938d5ef34f3}{Muja}{M\bibinitperiod}{Marius}{M\bibinitperiod}{}{}{}{}}%
@@ -230,6 +270,66 @@
       \field{year}{2006}
       \field{pages}{835\bibrangedash 846}
     \endentry
+    \entry{ref5}{thesis}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=03fa787c5d1153b793a24065f90b36e2}{Organista}{O\bibinitperiod}{Daniel\bibnamedelima Martín}{D\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=03fa787c5d1153b793a24065f90b36e2}{Organista}{O\bibinitperiod}{Daniel\bibnamedelima Martín}{D\bibinitperiod\bibinitdelim M\bibinitperiod}{}{}{}{}}%
+      }
+      \list{institution}{1}{%
+        {Universidad Rey Juan Carlos}%
+      }
+      \strng{namehash}{03fa787c5d1153b793a24065f90b36e2}
+      \strng{fullhash}{03fa787c5d1153b793a24065f90b36e2}
+      \field{sortinit}{O}
+      \field{labelyear}{2014}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Odometría visual con sensores RGBD}
+      \field{title}{Odometría visual con sensores RGBD}
+      \field{type}{mathesis}
+      \field{year}{2014}
+    \endentry
+    \entry{ref2}{thesis}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=1f4976edfd8905a3df751c2856f40b1e}{Pinilla}{P\bibinitperiod}{Alberto\bibnamedelima Lopéz-Cerón}{A\bibinitperiod\bibinitdelim L\bibinithyphendelim C\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=1f4976edfd8905a3df751c2856f40b1e}{Pinilla}{P\bibinitperiod}{Alberto\bibnamedelima Lopéz-Cerón}{A\bibinitperiod\bibinitdelim L\bibinithyphendelim C\bibinitperiod}{}{}{}{}}%
+      }
+      \list{institution}{1}{%
+        {Universidad Rey Juan Carlos}%
+      }
+      \strng{namehash}{1f4976edfd8905a3df751c2856f40b1e}
+      \strng{fullhash}{1f4976edfd8905a3df751c2856f40b1e}
+      \field{sortinit}{P}
+      \field{labelyear}{2015}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Autolocalización visual robusta basada en marcadores}
+      \field{title}{Autolocalización visual robusta basada en marcadores}
+      \field{type}{mathesis}
+      \field{year}{2015}
+    \endentry
+    \entry{ref1}{thesis}{}
+      \name{labelname}{1}{}{%
+        {{uniquename=0,hash=d4803778deaa99b4b95fec9de5c29ee2}{Ramos}{R\bibinitperiod}{Luis\bibnamedelimb Miguel\bibnamedelima López}{L\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim L\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{uniquename=0,hash=d4803778deaa99b4b95fec9de5c29ee2}{Ramos}{R\bibinitperiod}{Luis\bibnamedelimb Miguel\bibnamedelima López}{L\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim L\bibinitperiod}{}{}{}{}}%
+      }
+      \list{institution}{1}{%
+        {Universidad Rey Juan Carlos}%
+      }
+      \strng{namehash}{d4803778deaa99b4b95fec9de5c29ee2}
+      \strng{fullhash}{d4803778deaa99b4b95fec9de5c29ee2}
+      \field{sortinit}{R}
+      \field{labelyear}{2010}
+      \field{datelabelsource}{}
+      \field{labeltitle}{Autolocalización en tiempo real mediante seguimiento visual monocular}
+      \field{title}{Autolocalización en tiempo real mediante seguimiento visual monocular}
+      \field{type}{mathesis}
+      \field{year}{2010}
+    \endentry
     \entry{Reference3}{article}{}
       \name{labelname}{2}{}{%
         {{uniquename=0,hash=dac21ab4ede215439fcc6b051be53a11}{Scaramuzza}{S\bibinitperiod}{Davide}{D\bibinitperiod}{}{}{}{}}%
@@ -245,7 +345,7 @@
       \field{labelyear}{2011}
       \field{datelabelsource}{}
       \field{labeltitle}{Visual	odometry [tutorial]}
-      \field{journaltitle}{Robotics & Automation Magazine, IEEE}
+      \field{journaltitle}{Robotics \& Automation Magazine, IEEE}
       \field{title}{Visual	odometry [tutorial]}
       \field{volume}{18(4)}
       \field{year}{2011}

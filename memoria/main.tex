@@ -43,9 +43,12 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{palatino} % Use the Palatino font by default
 
-\usepackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
+%\usepackage[backend=biber,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
 
+\usepackage[style=authoryear,natbib=true]{biblatex}
+\setlength\bibitemsep{5pt}
 \addbibresource{bibliografia.bib} % The filename of the bibliography
+
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
@@ -209,7 +212,7 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 \printbibliography[heading=bibintoc]
+%\printbibliography
 
 %----------------------------------------------------------------------------------------
-
 \end{document}  

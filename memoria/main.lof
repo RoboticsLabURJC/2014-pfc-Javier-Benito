@@ -5,47 +5,50 @@
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Embellecimiento de fotos (Meitu T8)}}{2}{figure.caption.7}
 \contentsline {figure}{\numberline {1.2}{\ignorespaces Aplicaciones de radiograf\IeC {\'\i }a en medicina}}{2}{figure.caption.9}
 \contentsline {figure}{\numberline {1.3}{\ignorespaces Visi\IeC {\'o}n en la industria}}{3}{figure.caption.11}
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Ojo de halc\IeC {\'o}n}}{3}{figure.caption.12}
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Visi\IeC {\'o}n para la autoconducci\IeC {\'o}n}}{4}{figure.caption.15}
-\contentsline {figure}{\numberline {1.6}{\ignorespaces Ikea con realidad aumentada}}{5}{figure.caption.18}
-\contentsline {figure}{\numberline {1.7}{\ignorespaces PhotoTourism}}{6}{figure.caption.21}
-\contentsline {figure}{\numberline {1.8}{\ignorespaces MonoSLAM}}{7}{figure.caption.25}
-\contentsline {figure}{\numberline {1.9}{\ignorespaces PTAM}}{8}{figure.caption.26}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Ojo de halc\IeC {\'o}n}}{4}{figure.caption.12}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Visi\IeC {\'o}n para la autoconducci\IeC {\'o}n}}{4}{figure.caption.14}
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Ikea con realidad aumentada}}{5}{figure.caption.17}
+\contentsline {figure}{\numberline {1.7}{\ignorespaces PhotoTourism}}{6}{figure.caption.19}
+\contentsline {figure}{\numberline {1.8}{\ignorespaces MonoSLAM}}{7}{figure.caption.22}
+\contentsline {figure}{\numberline {1.9}{\ignorespaces PTAM}}{8}{figure.caption.23}
+\contentsline {figure}{\numberline {1.10}{\ignorespaces Captura de pantalla, PFC de Luis Miguel}}{9}{figure.caption.26}
+\contentsline {figure}{\numberline {1.11}{\ignorespaces Captura de pantalla, TFM de Alberto Lop\IeC {\'e}z-Cer\IeC {\'o}n}}{9}{figure.caption.28}
+\contentsline {figure}{\numberline {1.12}{\ignorespaces Captura de pantalla, PFC de Daniel Mart\IeC {\'\i }n}}{10}{figure.caption.29}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Ciclo de vida en espiral}}{11}{figure.caption.36}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Componenete rectificador}}{12}{figure.caption.43}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Esquema de c\IeC {\'a}lculo de matriz RT}}{13}{figure.caption.45}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Ciclo de vida en espiral}}{13}{figure.caption.39}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Componenete rectificador}}{14}{figure.caption.46}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Esquema de c\IeC {\'a}lculo de matriz RT}}{15}{figure.caption.48}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Sensor Kinect}}{14}{figure.caption.50}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Sensor Xtion}}{15}{figure.caption.52}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo \textit {Pinhole}}}{16}{figure.caption.58}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Captura de RGBDViewer}}{17}{figure.caption.62}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Detecci\IeC {\'o}n y emparejamiento con OpenCV}}{19}{figure.caption.70}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Ejemplo con Eigen}}{20}{figure.caption.73}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Captura visualizador 3D}}{22}{figure.caption.81}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Sensor Kinect}}{16}{figure.caption.53}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Sensor Xtion}}{17}{figure.caption.55}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo \textit {Pinhole}}}{18}{figure.caption.61}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Captura de RGBDViewer}}{19}{figure.caption.65}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Detecci\IeC {\'o}n y emparejamiento con OpenCV}}{21}{figure.caption.73}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Ejemplo con Eigen}}{22}{figure.caption.76}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Captura visualizador 3D}}{24}{figure.caption.84}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Diagram1}}{24}{figure.caption.84}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagram2}}{24}{figure.caption.85}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces FeatureSimple}}{25}{figure.caption.88}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces ShiDetector}}{27}{figure.caption.92}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces siftScaleInvariant}}{27}{figure.caption.95}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces shifDog}}{28}{figure.caption.97}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces siftLocalExtrema}}{29}{figure.caption.98}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Box filter}}{30}{figure.caption.116}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces C\IeC {\'a}lculo de orientaci\IeC {\'o}n con SURF}}{31}{figure.caption.118}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces sift-detector}}{33}{figure.caption.145}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces bestPointsSift}}{34}{figure.caption.153}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces similar-correlation}}{34}{figure.caption.154}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces diagram-points-3d}}{36}{figure.caption.167}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces cam-line}}{36}{figure.caption.168}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces dist-point}}{37}{figure.caption.169}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces calculate-3d}}{38}{figure.caption.171}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces matrix-rt}}{39}{figure.caption.180}
-\contentsline {figure}{\numberline {4.18}{\ignorespaces movement-rt}}{40}{figure.caption.186}
-\contentsline {figure}{\numberline {4.19}{\ignorespaces supergui}}{42}{figure.caption.204}
-\contentsline {figure}{\numberline {4.20}{\ignorespaces gui1}}{43}{figure.caption.206}
-\contentsline {figure}{\numberline {4.21}{\ignorespaces gui2}}{43}{figure.caption.208}
-\contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{44}{figure.caption.210}
-\contentsline {figure}{\numberline {4.23}{\ignorespaces gui4}}{44}{figure.caption.212}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema general del componente RealRTEstimator}}{26}{figure.caption.87}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagrama interno del componente RealRTEstimator}}{26}{figure.caption.88}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Ejemplo de puntos de inter\IeC {\'e}s}}{27}{figure.caption.91}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Ejemplo con \textit {Shi-Tomasi Corner Detector}}}{29}{figure.caption.95}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Ejemplo de sistema escalarmente variante}}{29}{figure.caption.98}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Diferencia de gaussianas en SIFT}}{30}{figure.caption.100}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Ejemplo de local-extrema en SIFT}}{31}{figure.caption.101}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Ejemplo de \textit {Box filter} en SURF}}{32}{figure.caption.119}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces C\IeC {\'a}lculo de orientaci\IeC {\'o}n con SURF}}{33}{figure.caption.121}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Captura real con SIFT}}{35}{figure.caption.148}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Captura de los mejores puntos con SIFT}}{36}{figure.caption.156}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Captura con error de los dos mejores puntos en SIFT}}{36}{figure.caption.157}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Diagrama con la obtenci\IeC {\'o}n de puntos 3D}}{38}{figure.caption.170}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces cam-line}}{38}{figure.caption.171}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces dist-point}}{39}{figure.caption.172}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces calculate-3d}}{40}{figure.caption.174}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces matrix-rt}}{41}{figure.caption.183}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces movement-rt}}{42}{figure.caption.189}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces supergui}}{44}{figure.caption.207}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces gui1}}{45}{figure.caption.209}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces gui2}}{45}{figure.caption.211}
+\contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{46}{figure.caption.213}
+\contentsline {figure}{\numberline {4.23}{\ignorespaces gui4}}{46}{figure.caption.215}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

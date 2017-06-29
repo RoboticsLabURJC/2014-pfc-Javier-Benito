@@ -1966,16 +1966,21 @@
   <bcf:section number="0">
     <bcf:citekey order="1">Reference2</bcf:citekey>
     <bcf:citekey order="2">Reference1</bcf:citekey>
-    <bcf:citekey order="3">Reference3</bcf:citekey>
-    <bcf:citekey order="4">Reference4</bcf:citekey>
-    <bcf:citekey order="5">Reference5</bcf:citekey>
-    <bcf:citekey order="6">Reference6</bcf:citekey>
-    <bcf:citekey order="7">Reference7</bcf:citekey>
-    <bcf:citekey order="8">Reference8</bcf:citekey>
-    <bcf:citekey order="9">Reference9</bcf:citekey>
-    <bcf:citekey order="10">Reference10</bcf:citekey>
-    <bcf:citekey order="11">Reference12</bcf:citekey>
-    <bcf:citekey order="12">Reference11</bcf:citekey>
+    <bcf:citekey order="3">Reference5</bcf:citekey>
+    <bcf:citekey order="4">Reference6</bcf:citekey>
+    <bcf:citekey order="5">Reference3</bcf:citekey>
+    <bcf:citekey order="6">Reference4</bcf:citekey>
+    <bcf:citekey order="7">ref1</bcf:citekey>
+    <bcf:citekey order="8">ref3</bcf:citekey>
+    <bcf:citekey order="9">ref2</bcf:citekey>
+    <bcf:citekey order="10">ref5</bcf:citekey>
+    <bcf:citekey order="11">ref4</bcf:citekey>
+    <bcf:citekey order="12">Reference7</bcf:citekey>
+    <bcf:citekey order="13">Reference8</bcf:citekey>
+    <bcf:citekey order="14">Reference9</bcf:citekey>
+    <bcf:citekey order="15">Reference10</bcf:citekey>
+    <bcf:citekey order="16">Reference12</bcf:citekey>
+    <bcf:citekey order="17">Reference11</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" type="entry" label="nyt">
   <bcf:sorting>

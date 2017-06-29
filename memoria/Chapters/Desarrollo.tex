@@ -22,7 +22,7 @@ En la Figura~\ref{fig:diagram1} se puede apreciar el diagrama global de funciona
 \centering
 \includegraphics[scale=0.4]{Figures/diagram1.png}
 \decoRule
-\caption[Diagram1]{Esquema global de funcionamiento.}
+\caption[Esquema general del componente RealRTEstimator]{Esquema global de funcionamiento.}
 \label{fig:diagram1}
 \end{figure}
 
@@ -34,7 +34,7 @@ Respecto al funcionamiento interno del componente se puede ver a grandes rasgos 
 \centering
 \includegraphics[scale=0.36]{Figures/diagram2.png}
 \decoRule
-\caption[Diagram2]{Diagrama del componente RealRTEstimator.}
+\caption[Diagrama interno del componente RealRTEstimator]{Diagrama interno del componente RealRTEstimator.}
 \label{fig:diagram2}
 \end{figure}
 
@@ -70,7 +70,7 @@ Para entender cuales son estos puntos característicos podemos observar un ejemp
 \centering
 \includegraphics[scale=0.7]{Figures/feature_simple.png}
 \decoRule
-\caption[FeatureSimple]{Ejemplo sencillo de puntos característicos.}
+\caption[Ejemplo de puntos de interés]{Ejemplo sencillo de puntos característicos.}
 \label{fig:feature_simple}
 \end{figure}
 
@@ -115,7 +115,7 @@ Si $R$ es mayor que un determinado umbral, o dicho de otro modo; solo cuando $\l
 \centering
 \includegraphics[scale=0.5]{Figures/shi-detector.jpg}
 \decoRule
-\caption[ShiDetector]{Resultado de encontrar las mejores 25 esquinas de la imagen con \textit{Shi-Tomasi Corner Detector}.}
+\caption[Ejemplo con \textit{Shi-Tomasi Corner Detector}]{Resultado de encontrar las mejores 25 esquinas de la imagen con \textit{Shi-Tomasi Corner Detector}.}
 \label{fig:shi_detector}
 \end{figure}
 
@@ -137,7 +137,7 @@ SIFT (Scale-Invariant Feature Transform) soluciona uno de los problemas que se e
 \centering
 \includegraphics[scale=0.8]{Figures/sift_scale_invariant.jpg}
 \decoRule
-\caption[siftScaleInvariant]{Ejemplo de diferentes puntos con escala}
+\caption[Ejemplo de sistema escalarmente variante]{Ejemplo de diferentes puntos con escala}
 \label{fig:sift_scale_invariant}
 \end{figure}
 
@@ -158,7 +158,7 @@ Sin embargo, el filtro LoG es muy costoso por lo que SIFT calcula una aproximaci
 \centering
 \includegraphics[scale=0.7]{Figures/sift_dog.jpg}
 \decoRule
-\caption[shifDog]{Proceso del cálculo de la diferencia de Gaussianas para diferentes octavas.}
+\caption[Diferencia de gaussianas en SIFT]{Proceso del cálculo de la diferencia de Gaussianas para diferentes octavas.}
 \label{fig:shif_dog}
 \end{figure}
 
@@ -168,7 +168,7 @@ Una vez obtenida la diferencia de gaussianas (DOG) se calcula el \textit{local-e
 \centering
 \includegraphics[scale=0.7]{Figures/sift_local_extrema.jpg}
 \decoRule
-\caption[siftLocalExtrema]{Proceso del cálculo de la diferencia de Gaussianas para diferentes octavas.}
+\caption[Ejemplo de local-extrema en SIFT]{Ejemplo de local-extrema en SIFT.}
 \label{fig:sift_local_extrema}
 \end{figure}
 
@@ -217,7 +217,7 @@ En vez de utilizar Laplaciana de la gaussiana (LoG) para encontrar el espacio de
 \centering
 \includegraphics[scale=0.6]{Figures/surf-1.jpg}
 \decoRule
-\caption[Box filter]{Proceso con filtros de cuadros, \textit{Box filter}.}
+\caption[Ejemplo de \textit{Box filter} en SURF]{Proceso con filtros de cuadros, \textit{Box filter}.}
 \label{fig:surf1}
 \end{figure}
 
@@ -314,7 +314,7 @@ En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba caser
 \centering
 \includegraphics[scale=0.8]{Figures/sift-detector.png}
 \decoRule
-\caption[sift-detector]{Detección y emparejamiento de puntos de interés con OpenCV usando SIFT para el cálculo de puntos de interés y descriptores y Fuerza Bruta para el cálculo de los emparejamientos.}
+\caption[Captura real con SIFT]{Detección y emparejamiento de puntos de interés con OpenCV usando SIFT para el cálculo de puntos de interés y descriptores y Fuerza Bruta para el cálculo de los emparejamientos.}
 \label{fig:SiftDetector}
 \end{figure}
 
@@ -354,7 +354,7 @@ En la Figura~\ref{fig:bestPointsSift} se puede ver el resultado de aplicar este 
 \centering
 \includegraphics[scale=0.6]{Figures/best_points_sift.png}
 \decoRule
-\caption[bestPointsSift]{Emparejamiento de los mejores X puntos ordenados por distancia.}
+\caption[Captura de los mejores puntos con SIFT]{Emparejamiento de los mejores X puntos ordenados por distancia.}
 \label{fig:bestPointsSift}
 \end{figure}
 
@@ -366,7 +366,7 @@ En la Figura~\ref{fig:similarCorrelation} se captura un ejemplo con dos de los m
 \centering
 \includegraphics[scale=0.6]{Figures/similar-correlation.png}
 \decoRule
-\caption[similar-correlation]{Detección y emparejamiento de los mejores dos puntos.}
+\caption[Captura con error de los dos mejores puntos en SIFT]{Detección y emparejamiento de los mejores dos puntos.}
 \label{fig:similarCorrelation}
 \end{figure}
 
@@ -407,7 +407,7 @@ Esos puntos de interés en dos dimensiones, o mejor llamados; píxeles, se obtie
 \centering
 \includegraphics[scale=0.4]{Figures/diagram-points-3d.png}
 \decoRule
-\caption[diagram-points-3d]{Diagrama de transformación a puntos 3D.}
+\caption[Diagrama con la obtención de puntos 3D]{Diagrama de transformación a puntos 3D.}
 \label{fig:diagramPoints3d}
 \end{figure}
 
