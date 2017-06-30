@@ -15,7 +15,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-
+#include <Eigen/Dense>
 #include <cv.h>
 #include <jderobot/pointcloud.h>
 #include <gtkmm.h>
@@ -95,6 +95,24 @@ namespace real_rt_estimator {
 
       Gtk::Label* p_matching;
       Gtk::Label* p_total;
+      Gtk::Label* m00;
+      Gtk::Label* m01;
+      Gtk::Label* m02;
+      Gtk::Label* m03;
+      Gtk::Label* m10;
+      Gtk::Label* m11;
+      Gtk::Label* m12;
+      Gtk::Label* m13;
+      Gtk::Label* m20;
+      Gtk::Label* m21;
+      Gtk::Label* m22;
+      Gtk::Label* m23;
+      Gtk::Label* m30;
+      Gtk::Label* m31;
+      Gtk::Label* m32;
+      Gtk::Label* m33;
+      Gtk::Label* euclidean_err;
+      Gtk::Label* reprojection_err;
 
   		//DrawArea* world1;
   		DrawArea* world;

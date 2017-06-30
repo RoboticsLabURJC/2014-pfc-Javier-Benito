@@ -53,6 +53,24 @@ namespace real_rt_estimator {
 
     refXml->get_widget("p_matching", p_matching);
     refXml->get_widget("p_total", p_total);
+    refXml->get_widget("m00", m00);
+    refXml->get_widget("m01", m01);
+    refXml->get_widget("m02", m02);
+    refXml->get_widget("m03", m03);
+    refXml->get_widget("m10", m10);
+    refXml->get_widget("m11", m11);
+    refXml->get_widget("m12", m12);
+    refXml->get_widget("m13", m13);
+    refXml->get_widget("m20", m20);
+    refXml->get_widget("m21", m21);
+    refXml->get_widget("m22", m22);
+    refXml->get_widget("m23", m23);
+    refXml->get_widget("m30", m30);
+    refXml->get_widget("m31", m31);
+    refXml->get_widget("m32", m32);
+    refXml->get_widget("m33", m33);
+    refXml->get_widget("euclidean_err", euclidean_err);
+    refXml->get_widget("reprojection_err", reprojection_err);
 
     // Checkbuttons
     refXml->get_widget("button_sift", button_sift);
@@ -160,19 +178,80 @@ namespace real_rt_estimator {
           setCamara(this->image_rgb, 2);
           this->image_depth = this->sm->getImageCameraDEPTHMatches();
           setCamara(this->image_depth, 4);
+
+          std::stringstream matchingPoints, totalPoints;
+          matchingPoints << this->sm->getMatchingPoints();
+          p_matching->set_label(matchingPoints.str());
+          totalPoints << this->sm->getTotalPoints();
+          p_total->set_label(totalPoints.str());
         }
       }
       if (this->ctrl->isCalculationEstimateRTDone()) {
         std::cout << "PONER LINEASSSSSS CLOUS (((((((((((8)))))))))))" << std::endl;
         this->putPointCloud();
         //finish_cycle = true;
+
+        Eigen::Matrix4f RT_matrix;
+        std::stringstream m00_aux, m01_aux, m02_aux, m03_aux, m10_aux, m11_aux, m12_aux, m13_aux;
+        std::stringstream m20_aux, m21_aux, m22_aux, m23_aux, m30_aux, m31_aux, m32_aux, m33_aux;
+        RT_matrix = this->sm->getFinalRTMatrix();
+        std::stringstream m00_stream;
+        m00_stream << RT_matrix(0,0);
+        m00->set_label(m00_stream.str());
+        std::stringstream m01_stream;
+        m01_stream << RT_matrix(0,1);
+        m01->set_label(m01_stream.str());
+        std::stringstream m02_stream;
+        m02_stream << RT_matrix(0,2);
+        m02->set_label(m02_stream.str());
+        std::stringstream m03_stream;
+        m03_stream << RT_matrix(0,3);
+        m03->set_label(m03_stream.str());
+
+        std::stringstream m10_stream;
+        m10_stream << RT_matrix(1,0);
+        m10->set_label(m10_stream.str());
+        std::stringstream m11_stream;
+        m11_stream << RT_matrix(1,1);
+        m11->set_label(m11_stream.str());
+        std::stringstream m12_stream;
+        m12_stream << RT_matrix(1,2);
+        m12->set_label(m12_stream.str());
+        std::stringstream m13_stream;
+        m13_stream << RT_matrix(1,3);
+        m13->set_label(m13_stream.str());
+
+        std::stringstream m20_stream;
+        m20_stream << RT_matrix(2,0);
+        m20->set_label(m20_stream.str());
+        std::stringstream m21_stream;
+        m21_stream << RT_matrix(2,1);
+        m21->set_label(m21_stream.str());
+        std::stringstream m22_stream;
+        m22_stream << RT_matrix(2,2);
+        m22->set_label(m22_stream.str());
+        std::stringstream m23_stream;
+        m23_stream << RT_matrix(2,3);
+        m23->set_label(m23_stream.str());
+
+        std::stringstream m30_stream;
+        m30_stream << RT_matrix(3,0);
+        m30->set_label(m30_stream.str());
+        std::stringstream m31_stream;
+        m31_stream << RT_matrix(3,1);
+        m31->set_label(m31_stream.str());
+        std::stringstream m32_stream;
+        m32_stream << RT_matrix(3,2);
+        m32->set_label(m32_stream.str());
+        std::stringstream m33_stream;
+        m33_stream << RT_matrix(3,3);
+        m33->set_label(m33_stream.str());
+
+        std::stringstream euclidean_err_aux;
+        euclidean_err_aux << this->sm->getEuclideanError();
+        euclidean_err->set_label(euclidean_err_aux.str());
       }
 
-      std::stringstream matchingPoints, totalPoints;
-      matchingPoints << this->sm->getMatchingPoints();
-      p_matching->set_label(matchingPoints.str());
-      totalPoints << this->sm->getTotalPoints();
-      p_total->set_label(totalPoints.str());
 
 
       //std::cout << "show image" << std::endl;

@@ -55,24 +55,24 @@ namespace real_rt_estimator {
 		this->p_aux.z=0;
 		this->pc_camera.push_back(this->p_aux);
 		this->p_aux.x=0;
-		this->p_aux.y=1000;
+		this->p_aux.y=500;
 		this->p_aux.z=0;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=-200;
-		this->p_aux.y=500;
-		this->p_aux.z=-200;
+		this->p_aux.x=-100;
+		this->p_aux.y=250;
+		this->p_aux.z=-100;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=-200;
-		this->p_aux.y=500;
-		this->p_aux.z=200;
+		this->p_aux.x=-100;
+		this->p_aux.y=250;
+		this->p_aux.z=100;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=200;
-		this->p_aux.y=500;
-		this->p_aux.z=200;
+		this->p_aux.x=100;
+		this->p_aux.y=250;
+		this->p_aux.z=100;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=200;
-		this->p_aux.y=500;
-		this->p_aux.z=-200;
+		this->p_aux.x=100;
+		this->p_aux.y=250;
+		this->p_aux.z=-100;
 		this->pc_camera.push_back(this->p_aux);
 
  		// TODO: Cambiar ocnstantes de tamaño por el que venga al inicializar el ojeto
@@ -174,9 +174,28 @@ namespace real_rt_estimator {
     return matchingPoints_aux;
   }
   int Model::getTotalPoints() {
-    //pthread_mutex_lock(&this->controlVars);
-    return totalPoints;
+    int totalPoints_aux;
+    pthread_mutex_lock(&this->controlVars);
+    totalPoints_aux = this->totalPoints;
     pthread_mutex_unlock(&this->controlVars);
+    return totalPoints_aux;
+  }
+  Eigen::Matrix4f Model::getFinalRTMatrix() {
+    Eigen::Matrix4f matrix;
+    pthread_mutex_lock(&this->controlRTMatrix);
+    matrix = this->RT_final;
+    pthread_mutex_unlock(&this->controlRTMatrix);
+    return matrix;
+  }
+  int Model::getEuclideanError() {
+    int error;
+    pthread_mutex_lock(&this->controlVars);
+    error = this->euclidean_err;
+    pthread_mutex_unlock(&this->controlVars);
+    return error;
+  }
+  int Model::getReprojectionError() {
+    return 0;
   }
 
 
@@ -916,7 +935,9 @@ namespace real_rt_estimator {
         _finishedOk = false;
         return false;
       };
-
+      pthread_mutex_lock(&this->controlVars);
+      this->euclidean_err = euclidean_error;
+      pthread_mutex_unlock(&this->controlVars);
 
       Eigen::Vector4f pc_aux;
       Eigen::Vector4f pc_world;
@@ -1036,6 +1057,12 @@ namespace real_rt_estimator {
 		// FIXME: LOCK
 		//this->imageRGB.copyTo(this->imageRGB_aux);
 		//this->imageDEPTH.copyTo(this->imageDEPTH_aux);
+
+    // Sabe last RT matrix
+    pthread_mutex_lock(&this->controlRTMatrix);
+    this->RT_final = RT_estimate_final;
+    pthread_mutex_unlock(&this->controlRTMatrix);
+
     _finishedOk = true;
     return true;
 	}

@@ -73,6 +73,7 @@ namespace real_rt_estimator {
     pthread_mutex_t controlPcConverted;
     pthread_mutex_t controlCamera;
     pthread_mutex_t controlVars;
+    pthread_mutex_t controlRTMatrix;
 
 		std::vector<jderobot::RGBPoint> get_pc();
 		std::vector<jderobot::RGBPoint> get_pc_converted();
@@ -92,6 +93,9 @@ namespace real_rt_estimator {
 
     int getMatchingPoints();
     int getTotalPoints();
+    Eigen::Matrix4f getFinalRTMatrix();
+    int getEuclideanError();
+    int getReprojectionError();
 
 		void createImageRGB(cv::Mat data);
 		void createImageRGBAux(cv::Mat data);
@@ -218,6 +222,8 @@ namespace real_rt_estimator {
 
     int matchingPoints;
     int totalPoints;
+    int euclidean_err;
+    int reprojection_err;
 
     bool _finishedOk;
 
