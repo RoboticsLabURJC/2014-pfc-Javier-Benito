@@ -51,4 +51,7 @@
 \contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{46}{figure.caption.213}
 \contentsline {figure}{\numberline {4.23}{\ignorespaces gui4}}{46}{figure.caption.215}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Ruido est\IeC {\'a}tico, con SURF y FLANN}}{48}{figure.caption.228}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y filtros}}{49}{figure.caption.229}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y RANSAC}}{49}{figure.caption.230}
 \addvspace {10\p@ }
