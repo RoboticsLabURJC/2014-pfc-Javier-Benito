@@ -51,7 +51,11 @@
 \contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{46}{figure.caption.213}
 \contentsline {figure}{\numberline {4.23}{\ignorespaces gui4}}{46}{figure.caption.215}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Ruido est\IeC {\'a}tico, con SURF y FLANN}}{48}{figure.caption.228}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y filtros}}{49}{figure.caption.229}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y RANSAC}}{49}{figure.caption.230}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Ejes de coordenadas $x$, $y$ y $z$}}{48}{figure.caption.225}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Punto de partida para las pruebas de traslaci\IeC {\'o}n y rotaci\IeC {\'o}n}}{48}{figure.caption.226}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{49}{figure.caption.227}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{50}{figure.caption.228}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Ruido est\IeC {\'a}tico, con SURF y FLANN}}{51}{figure.caption.232}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y filtros}}{52}{figure.caption.233}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y RANSAC}}{52}{figure.caption.234}
 \addvspace {10\p@ }
