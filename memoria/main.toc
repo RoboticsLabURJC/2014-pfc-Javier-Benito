@@ -60,5 +60,5 @@
 \contentsline {section}{\numberline {5.2}Tiempos de procesado}{51}{section.233}
 \contentsline {chapter}{\numberline {6}Conclusiones}{53}{chapter.234}
 \contentsline {section}{\numberline {6.1}Conclusiones}{53}{section.235}
-\contentsline {section}{\numberline {6.2}Trabajos futuros}{54}{section.241}
-\contentsline {chapter}{Bibliograf\'{\i }a}{55}{chapter*.242}
+\contentsline {section}{\numberline {6.2}Trabajos futuros}{54}{section.240}
+\contentsline {chapter}{Bibliograf\'{\i }a}{55}{chapter*.241}

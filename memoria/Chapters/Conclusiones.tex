@@ -19,29 +19,30 @@ A continuación se repasan los diferentes subobjetivos marcados para recapitular
 
 
 \begin{enumerate}
-\item \underline{Actualización de los datos del sensor}.
-
-Este primer subobjetivo no tenía mayor complicación, se recogen las imágenes RGB y DEPTH del sensor cuando el componente ha terminado sus cálculos para dar comienzo a otra iteración o a otro instante de tiempo en el que se vuelve a hacer todo el proceso de estimación de movimiento.
  
 \item \underline{Detección de puntos de interés}.
 
+En este primer subobjetivo se recogen las imágenes RGB y DEPTH del sensor cuando el componente ha terminado sus cálculos para dar comienzo a otra iteración o a otro instante de tiempo en el que se vuelve a hacer todo el proceso de estimación de movimiento.
+
 El componente es capaz de extraer las carácterísticas 2D de dos fotogramas consecutivos pertenecientes a dos instantes de tiempo, con técnicas como SIFT o SURF y filtro frontera.
 
-Además de la extracción 2D se consigue transformar estas características de 2D a 3D, mediante la imagen de profundidad (D) asociada a la imagen RGB.
+Además de la extracción 2D se consigue transformar estas características de 2D a 3D, mediante la imagen de profundidad (Depth) asociada a la imagen de color (RGB).
 
 \item \underline{Emparejamiento de puntos}.
 
-El componente también es capaz de realizar los emparejamientos de los puntos de interés obtenidos del bloque anterior y poder ordenarlos de mayor a menor precisión. Se ha implementado también un filtro de sobresaliencia que define que un emparejamiento sea único y no pueda confundirse con ningún otro.
+El componente también es capaz de realizar los emparejamientos de los puntos de interés obtenidos del bloque anterior y poder ordenarlos de mayor a menor precisión. Se ha implementado también un filtro de sobresaliencia que verifica que un emparejamiento sea único y no pueda confundirse con ningún otro.
 
 \item \underline{Estimación de movimiento}.
 
-Se calcula la matriz RT a través de los emparejamientos obtenidos. Y a través de técnicas como el cálculo de error espacial, retroproyección y RANSAC se consigue una redución de ruido importante.
+Se calcula la matriz RT a través de los emparejamientos obtenidos. Y a través de técnicas como el cálculo de error espacial, retroproyección y RANSAC se consigue una redución de error importante.
 
 \item \underline{Pruebas y experimentos}.
 
-Los experimientos mostrados en el capítulo~\ref{Chapter5}...
+En los experimientos mostrados en el capítulo~\ref{Chapter5} se puede validar las pruebas realizadas del componente. Se puede apreciar también la implementación de la interfaz gráfica, con la visualización de cada uno de los subobjetivos, a fin de analizar correctamente los resultados obtenidos. Se añade además un visualizador 3D con la posición de la cámara, la estela de movimiento y la nube de puntos.
 
 \end{enumerate}
+
+
 
 %Se detallan ahora del mismo modo los objetivos marcados en el capítulo~\ref{Chapter2} y se repasan:
 
