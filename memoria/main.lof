@@ -56,7 +56,5 @@
 \contentsline {figure}{\numberline {5.5}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{50}{figure.caption.227}
 \contentsline {figure}{\numberline {5.6}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{51}{figure.caption.228}
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{52}{figure.caption.229}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Ruido est\IeC {\'a}tico, con SURF y FLANN}}{53}{figure.caption.232}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y filtros}}{53}{figure.caption.233}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y RANSAC}}{54}{figure.caption.234}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Capturas con ruido est\IeC {\'a}tico}}{54}{figure.caption.232}
 \addvspace {10\p@ }

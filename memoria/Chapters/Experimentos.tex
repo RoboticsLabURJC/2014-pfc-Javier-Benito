@@ -123,31 +123,31 @@ Para los ángulos \textit{yaw} y \textit{roll} se puede observar en la Figura~\r
 
 El error estático muestra el ruido blanco que se esconde detrás de la resolución 3D en tiempo real. Como se va a poder observar en esta sección, el ruido estático es inevitable y no depende del algoritmo a utilizar. Sin embargo, en el siguiente capítulo, en el cual se propone posibles mejoras y líneas futuras, se verán métodos para poder elimnarlo en mayor o menor medida.
 
-En las siguientes Figuras (\ref{fig:static1}, \ref{fig:static2}, \ref{fig:static3}) se puede ver un ejemplo de este error para diferentes configuraciones. Como se puede interpretar es un error que está presente en todos los casos.
+En las siguientes Figura~\ref{fig:static} se puede ver un ejemplo de este error para diferentes configuraciones. Como se puede interpretar es un error que está presente en todos los casos.
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/tests/static-surf-flann_2.png}
+\includegraphics[scale=0.3]{Figures/tests/static.png}
 \decoRule
-\caption[Ruido estático, con SURF y FLANN]{Ruido estático después de 30 y 60 segundos, con SURF y FLANN.}
-\label{fig:static1}
+\caption[Capturas con ruido estático]{En la primera imágen se representa el ruido estático después de 30 y 60 segundos, con SURF y FLANN. La segunda con SIFT, Fuerza Bruta y filtros. La tercera con SIFT, Fuerza Bruta y RANSAC.}
+\label{fig:static}
 \end{figure}
 
-\begin{figure}[th]
-\centering
-\includegraphics[scale=0.3]{Figures/tests/static-filter_2.png}
-\decoRule
-\caption[Ruido estático, con SIFT, Fuerza Bruta y filtros]{Ruido estático después de 30 y 60 segundos, con SIFT, Fuerza Bruta y filtros.}
-\label{fig:static2}
-\end{figure}
-
-\begin{figure}[th]
-\centering
-\includegraphics[scale=0.3]{Figures/tests/static-ransac_2.png}
-\decoRule
-\caption[Ruido estático, con SIFT, Fuerza Bruta y RANSAC]{Ruido estático después de 30 y 60 segundos, con SIFT, Fuerza Bruta y RANSAC.}
-\label{fig:static3}
-\end{figure}
+%\begin{figure}[th]
+%\centering
+%\includegraphics[scale=0.3]{Figures/tests/static-filter_2.png}
+%\decoRule
+%\caption[Ruido estático, con SIFT, Fuerza Bruta y filtros]{Ruido estático después de 30 y 60 segundos, con SIFT, Fuerza Bruta y filtros.}
+%\label{fig:static2}
+%\end{figure}
+%
+%\begin{figure}[th]
+%\centering
+%\includegraphics[scale=0.3]{Figures/tests/static-ransac_2.png}
+%\decoRule
+%\caption[Ruido estático, con SIFT, Fuerza Bruta y RANSAC]{Ruido estático después de 30 y 60 segundos, con SIFT, Fuerza Bruta y RANSAC.}
+%\label{fig:static3}
+%\end{figure}
 
 Las pruebas realizadas han sido capturadas a los 30 y 60 segundos respectivamente y la configuración aplicada se encuentra en la descripción de cada Figura.
 
@@ -177,4 +177,27 @@ Como se puede observar la detección de puntos es la parte que más tiempo requi
 
 En la siguiente tabla podemos ver la variabilidad de tiempo de detección para diferentes números de puntos:
 
-// Poner tabla
+\begin{table}
+\caption{Tiempos medios de detección en relación a los puntos de interés}
+\label{tab:detection-time}
+\centering
+\begin{tabular}{ l | l }
+\toprule
+\textbf{Número de puntos} & \textbf{Tiempo (ms)}\\
+\hline\hline
+100 & 102.27\\
+\hline
+200 & 117.136\\
+\hline
+250 & 126.019\\
+\hline
+300 & 134.506\\
+\hline
+350 & 137.805\\
+\hline
+400 & 144.408\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En esta etapa se ha incluído además el cálculo de 
