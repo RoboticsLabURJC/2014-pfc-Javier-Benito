@@ -508,20 +508,46 @@ namespace real_rt_estimator {
 		} else {
 			return false;
 		}
+
 		if (this->_firstIteration) {
-			detector.detect(this->imageGray_aux, this->keypoints_n_aux);
+			std::vector<cv::KeyPoint> kp_n_aux;
+			detector.detect(this->imageGray_aux, kp_n_aux);
+			if (detectionFilterMode.compare("borderline") == 0) { // Borderline
+				this->keypoints_n_aux.resize(0);
+				for (int i=0; i<kp_n_aux.size(); i++) {
+					if (!isBorderPoint((int)kp_n_aux[i].pt.x,
+														 (int)kp_n_aux[i].pt.y,
+														 &this->imageDEPTH_aux)) {
+						this->keypoints_n_aux.push_back(kp_n_aux[i]);
+					}
+				}
+			} else {
+				this->keypoints_n_aux = kp_n_aux;
+			}
 			extractor.compute(this->imageGray_aux, this->keypoints_n_aux, this->descriptors_n_aux);
 		} else {
-			//this->keypoints_n.copyTo(this->keypoints_n_aux);
       if (_finishedOk) {
   			this->keypoints_n_aux = this->keypoints_n;
   			this->descriptors_n.copyTo(this->descriptors_n_aux);
       }
 		}
-		//ºstd::vector<cv::KeyPoint> kp_aux;
-		//kp_aux.resize(0);
-		detector.detect(this->imageGray, this->keypoints_n);
-		//this->keypoints_n = kp_aux;
+
+		std::vector<cv::KeyPoint> kp_n;
+		detector.detect(this->imageGray, kp_n);
+
+		if (detectionFilterMode.compare("borderline") == 0) { // Borderline
+			this->keypoints_n.resize(0);
+			for (int i=0; i<kp_n.size(); i++) {
+				if (!isBorderPoint((int)kp_n[i].pt.x,
+													 (int)kp_n[i].pt.y,
+													 &this->imageDEPTH)) {
+					this->keypoints_n.push_back(kp_n[i]);
+				}
+			}
+		} else {
+			this->keypoints_n = kp_n;
+		}
+
 		extractor.compute(this->imageGray, this->keypoints_n, this->descriptors_n);
 
 
@@ -535,8 +561,8 @@ namespace real_rt_estimator {
 		if (this->_firstIteration) {
 			this->myPrevPoints.resize(0);
 			for (int i=0; i<this->keypoints_n_aux.size(); i++) {
-				int x = this->keypoints_n_aux[i].pt.x; // TODO: Round???
-				int y = this->keypoints_n_aux[i].pt.y;
+				int x = (int)this->keypoints_n_aux[i].pt.x;
+				int y = (int)this->keypoints_n_aux[i].pt.y;
 				Model::myPoint point_aux;
 				point_aux.x = x;
 				point_aux.y = y;
@@ -554,8 +580,8 @@ namespace real_rt_estimator {
 		std::vector<myPoint> points_aux;
 		points_aux.resize(0);
 		for (int i=0; i<this->keypoints_n.size(); i++) {
-			int x = this->keypoints_n[i].pt.x; // TODO: Round???
-			int y = this->keypoints_n[i].pt.y;
+			int x = (int)this->keypoints_n[i].pt.x;
+			int y = (int)this->keypoints_n[i].pt.y;
 			Model::myPoint point_aux;
 			point_aux.x = x;
 			point_aux.y = y;
@@ -630,9 +656,9 @@ namespace real_rt_estimator {
 		//} else if (matchingMode.compare("correlation") == 0) { // manual correlation matcher
 		}
 
-		if (matches.size() < 10) {
-			return false;
-		}
+		// if (matches.size() < 10) {
+		// 	return false;
+		// }
 
 		//Sort match vector, best first
 		std::sort(matches.begin(), matches.end(), sortByDistance);
@@ -653,10 +679,10 @@ namespace real_rt_estimator {
 		std::cout <<  "matchingPoints_best-> " << matchingPoints_all << "/" << matchingPoints_best << std::endl;
 		for (int i=0; i<matchingPoints_best; i++) {
 
-			x_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.x);//+0.5f);
-			y_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.y);//+0.5f);
-			x_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.x);//+0.5f);
-			y_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.y);//+0.5f);
+			x_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.x);//+0.49f);
+			y_1 = (int)(this->keypoints_n[matches[i].queryIdx].pt.y);//+0.49f);
+			x_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.x);//+0.49f);
+			y_2 = (int)(this->keypoints_n_aux[matches[i].trainIdx].pt.y);//+0.49f);
 
 			//std::cout <<  "Entramos funcion" << std::endl;
 			//std::cout <<  x_1 << ", " << y_1 << ", " << x_2 << ", " << y_2 << std::endl;
@@ -708,7 +734,7 @@ namespace real_rt_estimator {
 		/*Eigen::Vector4f points_ref_2;
 		Eigen::Vector4f points_ref_2_ant;
 		Eigen::MatrixXf points_ref_2_world(num_points_for_RT, 4);*/
-		//std::cout << "The FINAL RT Matrix is: \n" << "[" << this->RT_final << "]" << std::endl;
+		std::cout << "WEBOO: \n" << "[" << estimateFilterMode << "]" << std::endl;
 
     // Eigen::MatrixXf points_ref_11(num_points_for_RT, 4);
     // Eigen::MatrixXf points_ref_21(num_points_for_RT, 4);

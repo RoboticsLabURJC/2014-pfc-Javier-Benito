@@ -380,7 +380,6 @@ namespace real_rt_estimator {
   }
 
 	void Gui::putPointCloud() {
-      std::cout << "Dibujamos la cámara $$$$$$$$$$$$$$$$$$$$$$$$$" << std::endl;
       // Dibujamos la cámara
       this->world->clear_camera_lines();
       std::vector<jderobot::RGBPoint> line = this->sm->get_pc_camera_converted();
@@ -543,7 +542,44 @@ namespace real_rt_estimator {
       //this->ctrl->automaticModeOff();
       automatic_mode = 0;
     else {
-      this->ctrl->automaticModeOn();
+      cv::String detectionModeAux;
+      if (sift_box) {
+        detectionModeAux = "sift";
+      } else if (surf_box) {
+        detectionModeAux = "surf";
+      }
+
+      // Filters
+      cv::String detectionFilterModeAux;
+      if (borderline_box) {
+        detectionFilterModeAux = "borderline";
+      }
+
+      cv::String matchingModeAux;
+      if (bruteforce_box) {
+        matchingModeAux = "bruteforce";
+      } else if (flann_box) {
+        matchingModeAux = "flann";
+      }
+
+      // Filters
+      cv::String matchingFilterModeAux;
+      if (outstanding_box) {
+        matchingFilterModeAux = "outstanding";
+      }
+
+      int percentagePointsAux = percentage_points->get_value();
+
+      cv::String estimateFilterModeAux;
+      if (ransac_box) {
+        estimateFilterModeAux = "ransac";
+      } else {
+        estimateFilterModeAux = "none";
+      }
+
+      this->ctrl->automaticModeOn(detectionModeAux, detectionFilterModeAux,
+                                  matchingModeAux, matchingFilterModeAux,
+                                  percentagePointsAux, estimateFilterModeAux);
       automatic_mode = 1;
     }
   }

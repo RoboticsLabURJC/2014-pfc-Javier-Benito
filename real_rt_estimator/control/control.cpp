@@ -259,7 +259,15 @@ namespace real_rt_estimator {
     estimateMatrixOn = true;
   }
 
-  void Control::automaticModeOn() {
+  void Control::automaticModeOn(cv::String detectionModeAux, cv::String detectionFilterModeAux,
+                                cv::String matchingModeAux, cv::String matchingFilterModeAux, int percentagePointsAux,
+                                cv::String estimateFilterModeAux) {
+    detectionMode = detectionModeAux;
+    detectionFilterMode = detectionFilterModeAux;
+    matchingMode = matchingModeAux;
+    matchingFilterMode = matchingFilterModeAux;
+    percentagePoints = percentagePointsAux;
+    estimateFilterMode = estimateFilterModeAux;
     automaticMode = true;
   }
 
