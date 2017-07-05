@@ -158,6 +158,13 @@ namespace real_rt_estimator {
                 this->estimateCurrentRT();
                 finish_cycle = false;
               }*/
+        if (this->ctrl->isCalculationMatchingDone()) {
+          std::stringstream matchingPoints, totalPoints;
+          matchingPoints << this->sm->getMatchingPoints();
+          p_matching->set_label(matchingPoints.str());
+          totalPoints << this->sm->getTotalPoints();
+          p_total->set_label(totalPoints.str());
+        }
       } else {
         //this->ctrl->automaticModeOn();
         if (this->ctrl->isCalculationPointsDone()) {
@@ -186,8 +193,8 @@ namespace real_rt_estimator {
           p_total->set_label(totalPoints.str());
         }
       }
+
       if (this->ctrl->isCalculationEstimateRTDone()) {
-        std::cout << "PONER LINEASSSSSS CLOUS (((((((((((8)))))))))))" << std::endl;
         this->putPointCloud();
         //finish_cycle = true;
 

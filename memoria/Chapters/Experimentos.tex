@@ -85,12 +85,36 @@ Como vimos en el capítulo \ref{Chapter3} la información de profundidad del sen
 
 \subsubsection{Validación de la Rotación}
 
+Se validará ahora la rotación de sensor de los ángulos \textit{pitch}, \textit{yaw} y \textit{roll}. En la Figura~\ref{fig:p-y-r} se tiene un ejemplo gráfico de cuales son estos movimientos y a qué rotación de ejes pertenecen.
+
 \begin{figure}[th]
 \centering
 \includegraphics[scale=0.9]{Figures/pitch_yaw_roll.png}
 \decoRule
 \caption[Explicación gráfica del movimiento \textit{pitch}, \textit{yaw} y \textit{roll}]{Dibujo con los movimientos \textit{pitch}, \textit{yaw} y \textit{roll}.}
-\label{fig:static3}
+\label{fig:p-y-r}
+\end{figure}
+
+En la Figura~\ref{fig:pitch} se efectúa una prueba con el ángulo \textit{pitch} y se comprueba como el sistema detecta una rotación total de $90º$. Se visualiza el estado de la cámara al orientar hacia arriba el sensor y posteriormente orientándolo a nivel del suelo. 
+
+En cuanto a la traslación se observa, sin contar con el ruido, que el eje de la cámara se mantiene fijo en el origen como es de esperar.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{Figures/tests/pitch.png}
+\decoRule
+\caption[Prueba con desplazamiento del ángulo \textit{pitch}]{Prueba con desplazamiento del ángulo \textit{pitch}.}
+\label{fig:pitch}
+\end{figure}
+
+Para los ángulos \textit{yaw} y \textit{roll} se puede observar en la Figura~\ref{fig:yaw-roll} las pruebas realizadas. En la primera captura se observa una rotación de $45º$ sobre el eje \textit{yaw} y en la segunda sobre el eje \textit{roll}. En ambos casos el movimiento es el correcto.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.3]{Figures/tests/yaw-roll.png}
+\decoRule
+\caption[Pruebas con desplazamiento en los angulos \textit{yaw} y \textit{roll}]{Pruebas con desplazamiento en los angulos \textit{yaw} y \textit{roll}.}
+\label{fig:yaw-roll}
 \end{figure}
 
 \subsubsection{Validación de trayectorias complejas}
@@ -133,4 +157,24 @@ Si analizamos las matrices RT obtenidas se puede observar que el eje en que más
 %-----------------------------------
 %	SECTION Tiempos de procesado
 %-----------------------------------
+\newpage
 \section{Tiempos de procesado}
+En esta sección se verán los tiempos de procesado del componente realizado en este proyecto. Como el componente realiza distintas tareas hasta completar una iteración completa, se ha desarrollado una funcionalidad que mide el tiempo medio por cada una de ellas cuando se termina la ejecución del componente.
+
+Se irá analizando el tiempo medio para diferentes configuraciones en un intervalo de 10 segundos. Para un uso por defecto de la aplicación, se tiene:
+
+\begin{lstlisting}[style=CStyle]
+Average times:
+- Update images: 0.678057 ms
+- Points detection: 134.506 ms
+- Points matching: 14.0233 ms
+- Estimate matrix: 2.5231 ms
+-----------------------------
+- TOTAL: 151.731 ms
+\end{lstlisting}
+
+Como se puede observar la detección de puntos es la parte que más tiempo requiere, por el contrario, la estimación de la matriz RT es la que menos. Esta prueba se ha realizado con una media de unos 300 puntos de interés por iteración. Como es lógico el tiempo de detección variará con respecto al número de puntos de interés o carácterísticas extraídas. Estos puntos de interés según las pruebas no solo están condicionadas a la imágen que se está analizando, si no que la intensidad de luz desempeña un papel muy importante en la extracción de más o menos características.
+
+En la siguiente tabla podemos ver la variabilidad de tiempo de detección para diferentes números de puntos:
+
+// Poner tabla

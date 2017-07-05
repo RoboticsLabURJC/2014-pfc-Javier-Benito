@@ -38,12 +38,12 @@
 \contentsline {figure}{\numberline {4.11}{\ignorespaces Captura de los mejores puntos con SIFT}}{35}{figure.caption.153}
 \contentsline {figure}{\numberline {4.12}{\ignorespaces Captura con error de los dos mejores puntos en SIFT}}{35}{figure.caption.154}
 \contentsline {figure}{\numberline {4.13}{\ignorespaces Diagrama con la obtenci\IeC {\'o}n de puntos 3D}}{37}{figure.caption.167}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces cam-line}}{37}{figure.caption.168}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces dist-point}}{38}{figure.caption.169}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces calculate-3d}}{39}{figure.caption.171}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces matrix-rt}}{40}{figure.caption.180}
-\contentsline {figure}{\numberline {4.18}{\ignorespaces movement-rt}}{41}{figure.caption.186}
-\contentsline {figure}{\numberline {4.19}{\ignorespaces supergui}}{43}{figure.caption.204}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces C\IeC {\'a}lculo de punto 3D con la informaci\IeC {\'o}n de distancia $d$}}{37}{figure.caption.168}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Distancia real y la dada por el sensor}}{38}{figure.caption.169}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Ejemplo de correcci\IeC {\'o}n de distancia}}{39}{figure.caption.171}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Matriz RT}}{40}{figure.caption.180}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces C\IeC {\'a}lculo visual de movimiento en coordenadas absolutas}}{41}{figure.caption.186}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Captura del mapa de funcionalidades de la herramienta gr\IeC {\'a}fica}}{43}{figure.caption.204}
 \contentsline {figure}{\numberline {4.20}{\ignorespaces gui1}}{44}{figure.caption.206}
 \contentsline {figure}{\numberline {4.21}{\ignorespaces gui2}}{44}{figure.caption.208}
 \contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{45}{figure.caption.210}
@@ -54,7 +54,9 @@
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{48}{figure.caption.224}
 \contentsline {figure}{\numberline {5.4}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{49}{figure.caption.225}
 \contentsline {figure}{\numberline {5.5}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{50}{figure.caption.227}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Ruido est\IeC {\'a}tico, con SURF y FLANN}}{50}{figure.caption.230}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y filtros}}{51}{figure.caption.231}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y RANSAC}}{52}{figure.caption.232}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{51}{figure.caption.228}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{52}{figure.caption.229}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Ruido est\IeC {\'a}tico, con SURF y FLANN}}{53}{figure.caption.232}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y filtros}}{53}{figure.caption.233}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Ruido est\IeC {\'a}tico, con SIFT, Fuerza Bruta y RANSAC}}{54}{figure.caption.234}
 \addvspace {10\p@ }

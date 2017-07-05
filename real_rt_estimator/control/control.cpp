@@ -7,7 +7,7 @@ namespace real_rt_estimator {
   cv::String detectionFilterMode;
   cv::String matchingMode = "bruteforce";
   cv::String matchingFilterMode;
-  cv::String estimateFilterMode = "ransac";
+  cv::String estimateFilterMode;
 
   bool cameraRGBOn = false;
   bool cameraDEPTHOn = false;

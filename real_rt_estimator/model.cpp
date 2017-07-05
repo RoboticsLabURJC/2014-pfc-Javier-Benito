@@ -55,24 +55,24 @@ namespace real_rt_estimator {
 		this->p_aux.z=0;
 		this->pc_camera.push_back(this->p_aux);
 		this->p_aux.x=0;
-		this->p_aux.y=500;
+		this->p_aux.y=700;
 		this->p_aux.z=0;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=-100;
-		this->p_aux.y=250;
-		this->p_aux.z=-100;
+		this->p_aux.x=-150;
+		this->p_aux.y=350;
+		this->p_aux.z=-150;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=-100;
-		this->p_aux.y=250;
-		this->p_aux.z=100;
+		this->p_aux.x=-150;
+		this->p_aux.y=350;
+		this->p_aux.z=150;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=100;
-		this->p_aux.y=250;
-		this->p_aux.z=100;
+		this->p_aux.x=150;
+		this->p_aux.y=350;
+		this->p_aux.z=150;
 		this->pc_camera.push_back(this->p_aux);
-		this->p_aux.x=100;
-		this->p_aux.y=250;
-		this->p_aux.z=-100;
+		this->p_aux.x=150;
+		this->p_aux.y=350;
+		this->p_aux.z=-150;
 		this->pc_camera.push_back(this->p_aux);
 
  		// TODO: Cambiar ocnstantes de tamaño por el que venga al inicializar el ojeto
@@ -419,12 +419,12 @@ namespace real_rt_estimator {
 		/*if (p.x == 0) {
 			std::terminate();
 		}*/
-		std::cout <<  " ------------------------------------------------- 888888888888888888888888" << std::endl;
-		std::cout <<  "Puntos a 3D: " << x << ", " << y << std::endl;
-		std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
-		float px, py;
-		mypro->myproject(p.x, p.y, p.z, &px, &py, 0);
-		std::cout <<  "Punto en foto " << px << ", " << py << std::endl;
+		//std::cout <<  " ------------------------------------------------- 888888888888888888888888" << std::endl;
+		//std::cout <<  "Puntos a 3D: " << x << ", " << y << std::endl;
+		//std::cout <<  "punto en todas las dimensiones! " << p.x << ", " << p.y << ", " << p.z << std::endl;
+		//float px, py;
+		//mypro->myproject(p.x, p.y, p.z, &px, &py, 0);
+		//std::cout <<  "Punto en foto " << px << ", " << py << std::endl;
 		return p;
 
 	}
@@ -668,9 +668,9 @@ namespace real_rt_estimator {
 
 			//if (!isBorderPoint(x_1, y_1, &this->imageDEPTH) && !isBorderPoint(x_2, y_2, &this->imageDEPTH_aux)) {
 			if (p1.z > 0 && p2.z > 0) {
-				std::cout <<  "Points: x_1: " <<  x_1 << ", y_1: " << y_1 << ", x_2: " << x_2 << ", y_2: " << y_2 << std::endl;
-				std::cout <<  "P_1: (" << p1.x << ", " << p1.y << ", " <<  p1.z << ")" << std::endl;
-				std::cout <<  "P_2: (" << p2.x << ", " << p2.y << ", " <<  p2.z << ")" << std::endl;
+				//std::cout <<  "Points: x_1: " <<  x_1 << ", y_1: " << y_1 << ", x_2: " << x_2 << ", y_2: " << y_2 << std::endl;
+				//std::cout <<  "P_1: (" << p1.x << ", " << p1.y << ", " <<  p1.z << ")" << std::endl;
+				//std::cout <<  "P_2: (" << p2.x << ", " << p2.y << ", " <<  p2.z << ")" << std::endl;
 				this->v_rgbp.push_back(p1);
 				this->v_rgbp_aux.push_back(p2);
 			}
@@ -710,132 +710,147 @@ namespace real_rt_estimator {
 		Eigen::MatrixXf points_ref_2_world(num_points_for_RT, 4);*/
 		//std::cout << "The FINAL RT Matrix is: \n" << "[" << this->RT_final << "]" << std::endl;
 
+    // Eigen::MatrixXf points_ref_11(num_points_for_RT, 4);
+    // Eigen::MatrixXf points_ref_21(num_points_for_RT, 4);
+    // for (int i=0; i<(num_points_for_RT); i++) {
+    //   std::cout << (i+1) << " ";
+    //   points_ref_11(i,0) = v_rgbp[i].x;
+    //   points_ref_11(i,1) = v_rgbp[i].y;
+    //   points_ref_11(i,2) = v_rgbp[i].z;
+    //   points_ref_11(i,3) = 1;
+    //   points_ref_21(i,0) = v_rgbp_aux[i].x;
+    //   points_ref_21(i,1) = v_rgbp_aux[i].y;
+    //   points_ref_21(i,2) = v_rgbp_aux[i].z;
+    //   points_ref_21(i,3) = 1;
+    // }
+    // std::cout << "." << std::endl;
+    // Eigen::Matrix4f RT_estimate111 = points_ref_21.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_11).transpose();
+    // std::cout << "The estimate RT Matrix 11 is: \n" << "[" << RT_estimate111 << "]" << std::endl;
 
-
-		int part = (int)(num_points_for_RT/4);
-		std::cout << "-------------------------------------dd---: \n" << part << std::endl;
-
-		Eigen::MatrixXf points_ref_1((num_points_for_RT-part), 4);
-		Eigen::MatrixXf points_ref_2((num_points_for_RT-part), 4);
-
-		std::cout << "-------------------------------------dd---: \n" << (num_points_for_RT-part) << std::endl;
-		int count = 0;
-		std::cout << "Points: ";
-		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
-			if ((i+1) > part) {
-				std::cout << (i+1) << " ";
-				points_ref_1(count,0) = v_rgbp[i].x;
-				points_ref_1(count,1) = v_rgbp[i].y;
-				points_ref_1(count,2) = v_rgbp[i].z;
-				points_ref_1(count,3) = 1;
-				points_ref_2(count,0) = v_rgbp_aux[i].x;
-				points_ref_2(count,1) = v_rgbp_aux[i].y;
-				points_ref_2(count,2) = v_rgbp_aux[i].z;
-				points_ref_2(count,3) = 1;
-				count++;
-				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
-				points_ref_2_world(i,0) = points_ref_2_ant(0);
-				points_ref_2_world(i,1) = points_ref_2_ant(1);
-				points_ref_2_world(i,2) = points_ref_2_ant(2);
-				points_ref_2_world(i,3) = 1;
-				std::cout << "v_rgbp_aux[i]" << std::endl;*/
-				//std::cout << "--------zz------" << std::endl;
-				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
-				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
-			}
-		}
-		std::cout << "." << std::endl;
-		Eigen::Matrix4f RT_estimate1 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
-		std::cout << "The estimate RT Matrix 1 is: \n" << "[" << RT_estimate1 << "]" << std::endl;
-		count = 0;
-		std::cout << "Points: ";
-		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
-			if (((i+1) > (part*2)) || ((i+1) <= part)) {
-				std::cout << (i+1) << " ";
-				points_ref_1(count,0) = v_rgbp[i].x;
-				points_ref_1(count,1) = v_rgbp[i].y;
-				points_ref_1(count,2) = v_rgbp[i].z;
-				points_ref_1(count,3) = 1;
-				points_ref_2(count,0) = v_rgbp_aux[i].x;
-				points_ref_2(count,1) = v_rgbp_aux[i].y;
-				points_ref_2(count,2) = v_rgbp_aux[i].z;
-				points_ref_2(count,3) = 1;				count++;
-				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
-				points_ref_2_world(i,0) = points_ref_2_ant(0);
-				points_ref_2_world(i,1) = points_ref_2_ant(1);
-				points_ref_2_world(i,2) = points_ref_2_ant(2);
-				points_ref_2_world(i,3) = 1;
-				std::cout << "v_rgbp_aux[i]" << std::endl;*/
-				//std::cout << "--------zz------" << std::endl;
-				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
-				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
-			}
-		}
-		std::cout << "." << std::endl;
-		Eigen::Matrix4f RT_estimate2 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
-		std::cout << "The estimate RT Matrix 2 is: \n" << "[" << RT_estimate2 << "]" << std::endl;
-		count = 0;
-		std::cout << "Points: ";
-		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
-			if (((i+1) > (part*3)) || ((i+1) <= (part*2))) {
-				std::cout << (i+1) << " ";
-				points_ref_1(count,0) = v_rgbp[i].x;
-				points_ref_1(count,1) = v_rgbp[i].y;
-				points_ref_1(count,2) = v_rgbp[i].z;
-				points_ref_1(count,3) = 1;
-				points_ref_2(count,0) = v_rgbp_aux[i].x;
-				points_ref_2(count,1) = v_rgbp_aux[i].y;
-				points_ref_2(count,2) = v_rgbp_aux[i].z;
-				points_ref_2(count,3) = 1;				count++;
-				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
-				points_ref_2_world(i,0) = points_ref_2_ant(0);
-				points_ref_2_world(i,1) = points_ref_2_ant(1);
-				points_ref_2_world(i,2) = points_ref_2_ant(2);
-				points_ref_2_world(i,3) = 1;
-				std::cout << "v_rgbp_aux[i]" << std::endl;*/
-				//std::cout << "--------zz------" << std::endl;
-				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
-				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
-			}
-		}
-		std::cout << "." << std::endl;
-		Eigen::Matrix4f RT_estimate3 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
-		std::cout << "The estimate RT Matrix 3 is: \n" << "[" << RT_estimate3 << "]" << std::endl;
-		count = 0;
-		std::cout << "Points: ";
-		for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
-			if ((i+1) <= (part*3)) {
-				std::cout << (i+1) << " ";
-				points_ref_1(count,0) = v_rgbp[i].x;
-				points_ref_1(count,1) = v_rgbp[i].y;
-				points_ref_1(count,2) = v_rgbp[i].z;
-				points_ref_1(count,3) = 1;
-				points_ref_2(count,0) = v_rgbp_aux[i].x;
-				points_ref_2(count,1) = v_rgbp_aux[i].y;
-				points_ref_2(count,2) = v_rgbp_aux[i].z;
-				points_ref_2(count,3) = 1;				count++;
-				/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
-				points_ref_2_world(i,0) = points_ref_2_ant(0);
-				points_ref_2_world(i,1) = points_ref_2_ant(1);
-				points_ref_2_world(i,2) = points_ref_2_ant(2);
-				points_ref_2_world(i,3) = 1;
-				std::cout << "v_rgbp_aux[i]" << std::endl;*/
-				//std::cout << "--------zz------" << std::endl;
-				//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
-				//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
-			}
-		}
-		std::cout << "." << std::endl;
-
-			//std::cout << "buuu: \n" << points_ref_1 << " --------- " << points_ref_2 << std::endl;
-
-			//JacobiSVD<MatrixXf> svd(points_ref_1, Eigen::ComputeThinU | Eigen::ComputeThinV);
-			//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
-
-
-			Eigen::Matrix4f RT_estimate4 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
-
-			std::cout << "The estimate RT Matrix 4 is: \n" << "[" << RT_estimate4 << "]" << std::endl;
+		// int part = (int)(num_points_for_RT/4);
+		// std::cout << "-------------------------------------dd---: \n" << part << std::endl;
+		//
+		// Eigen::MatrixXf points_ref_1((num_points_for_RT-part-(num_points_for_RT%4)), 4);
+		// Eigen::MatrixXf points_ref_2((num_points_for_RT-part-(num_points_for_RT%4)), 4);
+		//
+		// std::cout << "-------------------------------------dd---: \n" << (num_points_for_RT-part) << std::endl;
+		// int count = 0;
+		// std::cout << "Points: ";
+		// for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+		// 	if ((i+1) > part) {
+		// 		std::cout << (i+1) << " ";
+		// 		points_ref_1(count,0) = v_rgbp[i].x;
+		// 		points_ref_1(count,1) = v_rgbp[i].y;
+		// 		points_ref_1(count,2) = v_rgbp[i].z;
+		// 		points_ref_1(count,3) = 1;
+		// 		points_ref_2(count,0) = v_rgbp_aux[i].x;
+		// 		points_ref_2(count,1) = v_rgbp_aux[i].y;
+		// 		points_ref_2(count,2) = v_rgbp_aux[i].z;
+		// 		points_ref_2(count,3) = 1;
+		// 		count++;
+		// 		/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+		// 		points_ref_2_world(i,0) = points_ref_2_ant(0);
+		// 		points_ref_2_world(i,1) = points_ref_2_ant(1);
+		// 		points_ref_2_world(i,2) = points_ref_2_ant(2);
+		// 		points_ref_2_world(i,3) = 1;
+		// 		std::cout << "v_rgbp_aux[i]" << std::endl;*/
+		// 		//std::cout << "--------zz------" << std::endl;
+		// 		//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+		// 		//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+		// 	}
+		// }
+		// std::cout << "." << std::endl;
+		// Eigen::Matrix4f RT_estimate1 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+		// std::cout << "The estimate RT Matrix 1 is: \n" << "[" << RT_estimate1 << "]" << std::endl;
+		// count = 0;
+		// std::cout << "Points: ";
+		// for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+		// 	if (((i+1) > (part*2)) || ((i+1) <= part)) {
+		// 		std::cout << (i+1) << " ";
+		// 		points_ref_1(count,0) = v_rgbp[i].x;
+		// 		points_ref_1(count,1) = v_rgbp[i].y;
+		// 		points_ref_1(count,2) = v_rgbp[i].z;
+		// 		points_ref_1(count,3) = 1;
+		// 		points_ref_2(count,0) = v_rgbp_aux[i].x;
+		// 		points_ref_2(count,1) = v_rgbp_aux[i].y;
+		// 		points_ref_2(count,2) = v_rgbp_aux[i].z;
+		// 		points_ref_2(count,3) = 1;				count++;
+		// 		/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+		// 		points_ref_2_world(i,0) = points_ref_2_ant(0);
+		// 		points_ref_2_world(i,1) = points_ref_2_ant(1);
+		// 		points_ref_2_world(i,2) = points_ref_2_ant(2);
+		// 		points_ref_2_world(i,3) = 1;
+		// 		std::cout << "v_rgbp_aux[i]" << std::endl;*/
+		// 		//std::cout << "--------zz------" << std::endl;
+		// 		//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+		// 		//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+		// 	}
+		// }
+		// std::cout << "." << std::endl;
+		// Eigen::Matrix4f RT_estimate2 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+		// std::cout << "The estimate RT Matrix 2 is: \n" << "[" << RT_estimate2 << "]" << std::endl;
+		// count = 0;
+		// std::cout << "Points: ";
+		// for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+		// 	if (((i+1) > (part*3)) || ((i+1) <= (part*2))) {
+		// 		std::cout << (i+1) << " ";
+		// 		points_ref_1(count,0) = v_rgbp[i].x;
+		// 		points_ref_1(count,1) = v_rgbp[i].y;
+		// 		points_ref_1(count,2) = v_rgbp[i].z;
+		// 		points_ref_1(count,3) = 1;
+		// 		points_ref_2(count,0) = v_rgbp_aux[i].x;
+		// 		points_ref_2(count,1) = v_rgbp_aux[i].y;
+		// 		points_ref_2(count,2) = v_rgbp_aux[i].z;
+		// 		points_ref_2(count,3) = 1;				count++;
+		// 		/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+		// 		points_ref_2_world(i,0) = points_ref_2_ant(0);
+		// 		points_ref_2_world(i,1) = points_ref_2_ant(1);
+		// 		points_ref_2_world(i,2) = points_ref_2_ant(2);
+		// 		points_ref_2_world(i,3) = 1;
+		// 		std::cout << "v_rgbp_aux[i]" << std::endl;*/
+		// 		//std::cout << "--------zz------" << std::endl;
+		// 		//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+		// 		//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+		// 	}
+		// }
+		// std::cout << "." << std::endl;
+		// Eigen::Matrix4f RT_estimate3 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+		// std::cout << "The estimate RT Matrix 3 is: \n" << "[" << RT_estimate3 << "]" << std::endl;
+		// count = 0;
+		// std::cout << "Points: ";
+		// for (int i=0; i<(num_points_for_RT-(num_points_for_RT%4)); i++) {
+		// 	if ((i+1) <= (part*3)) {
+		// 		std::cout << (i+1) << " ";
+		// 		points_ref_1(count,0) = v_rgbp[i].x;
+		// 		points_ref_1(count,1) = v_rgbp[i].y;
+		// 		points_ref_1(count,2) = v_rgbp[i].z;
+		// 		points_ref_1(count,3) = 1;
+		// 		points_ref_2(count,0) = v_rgbp_aux[i].x;
+		// 		points_ref_2(count,1) = v_rgbp_aux[i].y;
+		// 		points_ref_2(count,2) = v_rgbp_aux[i].z;
+		// 		points_ref_2(count,3) = 1;				count++;
+		// 		/*points_ref_2_ant = this->RT_final.inverse()*points_ref_2;
+		// 		points_ref_2_world(i,0) = points_ref_2_ant(0);
+		// 		points_ref_2_world(i,1) = points_ref_2_ant(1);
+		// 		points_ref_2_world(i,2) = points_ref_2_ant(2);
+		// 		points_ref_2_world(i,3) = 1;
+		// 		std::cout << "v_rgbp_aux[i]" << std::endl;*/
+		// 		//std::cout << "--------zz------" << std::endl;
+		// 		//std::cout << v_rgbp[i].x << ", " << v_rgbp[i].y << ", " << v_rgbp[i].z << std::endl;
+		// 		//std::cout << v_rgbp_aux[i].x << ", " << v_rgbp_aux[i].y << ", " << v_rgbp_aux[i].z << std::endl;
+		// 	}
+		// }
+		// std::cout << "." << std::endl;
+		//
+		// 	//std::cout << "buuu: \n" << points_ref_1 << " --------- " << points_ref_2 << std::endl;
+		//
+		// 	//JacobiSVD<MatrixXf> svd(points_ref_1, Eigen::ComputeThinU | Eigen::ComputeThinV);
+		// 	//std::cout << "The estimate RT Matrix is: \n" << svd.solve(points_ref_2) << std::endl;
+		//
+		//
+		// 	Eigen::Matrix4f RT_estimate4 = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+		//
+		// 	std::cout << "The estimate RT Matrix 4 is: \n" << "[" << RT_estimate4 << "]" << std::endl;
 
 
       Eigen::Matrix4f RT_estimate_final;
@@ -852,19 +867,27 @@ namespace real_rt_estimator {
         int best_error = 1000;
 
         for (int i=0; i<RANSAC_ITER; i++) {
-          points.clear();
-          points_aux.clear();
+          points.resize(0);
+          points_aux.resize(0);
 
           for (int i=0; i<v_rgbp.size(); i++) {
             points.push_back(v_rgbp[i]);
             points_aux.push_back(v_rgbp_aux[i]);
           }
+        	//std::cout << "Tpoints: " << "[" << points[2].x << "]" << points.size() << std::endl;
+          //std::cout << "Tv_rgbp: " << "[" << v_rgbp[2].x << "]" << v_rgbp.size() << std::endl;
+          /*for (int i=0; i<points.size(); i++) {
+            std::cout << "puntos de antes: " << i << " . " << points[i].x << ", " << points[i].y << ", " << points[i].z << std::endl;
+          }*/
           for (int i=0; i<ransac_points; i++) {
             int secret = rand() % points.size();
-            std::cout << "--------> Número aleatorio: " << "[" << secret << "]" << points.size() << std::endl;
+            //std::cout << "--------> Número aleatorio: " << "[" << secret << "]" << points.size() << std::endl;
             points.erase(points.begin()+secret);
             points_aux.erase(points_aux.begin()+secret);
           }
+          /*for (int i=0; i<points.size(); i++) {
+            std::cout << "puntos de despues: " << i << " . " << points[i].x << ", " << points[i].y << ", " << points[i].z << std::endl;
+          }*/
           Eigen::MatrixXf matrix_points(points.size(), 4);
           Eigen::MatrixXf matrix_points_aux(points.size(), 4);
           for (int i=0; i<points.size(); i++) {
@@ -877,12 +900,12 @@ namespace real_rt_estimator {
             matrix_points_aux(i,2) = points_aux[i].z;
             matrix_points_aux(i,3) = 1;
           }
-          Eigen::Matrix4f RT_estimate_ransac2 = matrix_points_aux.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(matrix_points).transpose();
+          Eigen::Matrix4f RT_estimate_ransac = matrix_points_aux.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(matrix_points).transpose();
 
-          Eigen::JacobiSVD<Eigen::MatrixXf> svd(matrix_points_aux, Eigen::ComputeThinU | Eigen::ComputeThinV);
-          Eigen::Matrix4f RT_estimate_ransac = svd.solve(matrix_points).transpose();
+          //Eigen::JacobiSVD<Eigen::MatrixXf> svd(matrix_points_aux, Eigen::ComputeThinU | Eigen::ComputeThinV);
+          //Eigen::Matrix4f RT_estimate_ransac = svd.solve(matrix_points).transpose();
           std::cout << "The estimate RT Matrix in RANSAC: \n" << "[" << RT_estimate_ransac << "]" << std::endl;
-          std::cout << "The estimate RT Matrix in RANSAC later : \n" << "[" << RT_estimate_ransac2 << "]" << std::endl;
+          //std::cout << "The estimate RT Matrix in RANSAC later : \n" << "[" << RT_estimate_ransac2 << "]" << std::endl;
 
     			Eigen::Vector4f vector_points;
   			  Eigen::Vector4f vector_points_world;
@@ -910,7 +933,28 @@ namespace real_rt_estimator {
   			std::cout << "The FINAL RT Matrix is: \n" << "[" << RT_estimate_final << "]" << std::endl;
         std::cout << "ERROR ESPACIAL EUCLÍDEO FINAL RANSAC: " << best_error << std::endl;
         // RANSAC ///////////////////////////////////////////////////////////////
+
+
+
+
       } else {
+				Eigen::MatrixXf points_ref_1(num_points_for_RT, 4);
+				Eigen::MatrixXf points_ref_2(num_points_for_RT, 4);
+				for (int i=0; i<(num_points_for_RT); i++) {
+					std::cout << (i+1) << " ";
+					points_ref_1(i,0) = v_rgbp[i].x;
+					points_ref_1(i,1) = v_rgbp[i].y;
+					points_ref_1(i,2) = v_rgbp[i].z;
+					points_ref_1(i,3) = 1;
+					points_ref_2(i,0) = v_rgbp_aux[i].x;
+					points_ref_2(i,1) = v_rgbp_aux[i].y;
+					points_ref_2(i,2) = v_rgbp_aux[i].z;
+					points_ref_2(i,3) = 1;
+				}
+				std::cout << "." << std::endl;
+				RT_estimate_final = points_ref_2.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV).solve(points_ref_1).transpose();
+				std::cout << "The estimate RT Matrix 11 is: \n" << "[" << RT_estimate_final << "]" << std::endl;
+
         Eigen::Vector4f points_ref_aux;
         Eigen::Vector4f points_ref_1_world;
 
@@ -921,7 +965,7 @@ namespace real_rt_estimator {
           points_ref_aux(2) = this->v_rgbp[i].z;
           points_ref_aux(3) = 1;
 
-          points_ref_1_world = RT_estimate4.inverse()*points_ref_aux;
+          points_ref_1_world = RT_estimate_final.inverse()*points_ref_aux;
 
           euclidean_error += abs(points_ref_1_world(0) - this->v_rgbp_aux[i].x);
           euclidean_error += abs(points_ref_1_world(1) - this->v_rgbp_aux[i].y);
@@ -931,7 +975,7 @@ namespace real_rt_estimator {
         std::cout << "ERROR ESPACIAL EUCLÍDEO (no ransac): " << euclidean_error << std::endl;
       }
       //Eigen::Matrix4f RT_final = RT_estimate4;
-      if (euclidean_error > 100) {
+      if (euclidean_error > 50) {
         _finishedOk = false;
         return false;
       };
