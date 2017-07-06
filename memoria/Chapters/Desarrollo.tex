@@ -540,20 +540,20 @@ z
 \end{array}\right]\longrightarrow\, x'=x+t_{x};\,\,\, y'=y+t_{y};\,\,\, z'=z+t_{z}
 \end{equation}
 
-Se puede deducir, por tanto, que la matriz definirá en total seis grados de libertad para el movimiento del sensor.
+Se puede deducir, por tanto, que la matriz define en total seis grados de libertad para caracterizar completamente el movimiento tridimensional.
 
-\subsection{Cálculo RT (SVD)}
+\subsection{Cálculo RT mediante SVD}
 
-Al calcular los puntos 3D a través de \textit{progeo} desde el sensor se tiene siempre los puntos en coordenadas \textbf{relativas}, por lo que al mover la cámara si calculamos de nuevo otros puntos estos se encontrarán en el mismo sistema de referencia. Por lo tanto, a parte de encontrar los puntos en 3D en relativas, habrá que hacer los cálculos para encontrar esos puntos en coordenadas \textbf{absolutas}.
+Al calcular los puntos 3D a través de \textit{progeo} desde el sensor se tienen siempre los puntos en coordenadas \textbf{relativas}, por lo que al mover la cámara si calculamos de nuevo otros puntos estos se encontrarán en el mismo sistema de referencia. Por lo tanto, a parte de encontrar los puntos en 3D en relativas, habrá que hacer los cálculos para encontrar esos puntos en coordenadas \textbf{absolutas}.
 
-En el instante inicial se toma como sistema de referencia absoluto el la cámara (matriz unidad). A partir de ahí se emperazará a calcular el sistema de referencia absoluto de los nuevos puntos en cada instante.
+Como sistema de referencia absoluto se toma el de la primera posición de la cámara. Así las coordenadas absolutas iniciales vienen dadas por la matriz unidad. A partir de ahí se empieza a calcular con respecto a ese sistema de referencia absoluto de los nuevos puntos en cada instante y de la cámara.
 
-En coordenadas absolutas se encontrarán en la misma posición los mismos puntos en diferentes instantes de tiempo. Como se puede apreciar en la Figura~\ref{fig:movementRt} el desplazamiento del sensor en coordenadas absolutas muestra:
+Los mismos puntos, se encontrarán en la misma posición en coordenadas absolutas en diferentes instantes de tiempo. Como se puede apreciar en la Figura~\ref{fig:movementRt} el desplazamiento del sensor en coordenadas absolutas muestra:
 
 \begin{itemize}
 \item Puntos absolutos correspondientes únicamente al instante $(n-1)$.
 \item Puntos absolutos correspondientes únicamente al instante $(n)$.
-\item Puntos absolutos correspondientes tanto al intante $(n-1)$ como $(n)$
+\item Cámaras en absolutas correspondientes tanto al intante $(n-1)$ como $(n)$.
 \end{itemize}
 
 \begin{figure}[th]
@@ -564,9 +564,9 @@ En coordenadas absolutas se encontrarán en la misma posición los mismos puntos
 \label{fig:movementRt}
 \end{figure}
 
-Esos puntos comunes son por tanto los utilizados para el cálculo de movimiento. Provenientes del emparejamiento entre píxeles de las imágenes del bloque anterior.
+Esos puntos comunes son los utilizados para el cálculo de movimiento de la cámara y son los provenientes del emparejamiento entre píxeles de las imágenes.
 
-Como entrada en este bloque tendremos:
+Como entrada en este bloque de cálculo RT tendremos:
 
 \begin{enumerate}
 \item \underline{Los puntos relativos} provenientes de la cámara en el instante $(t)$.
@@ -584,38 +584,92 @@ La nube de puntos guardada será almacenada en un vector del siguiente tipo:
     std::vector<myPoint> myPrevPoints;
 \end{lstlisting}
 
-Donde se guardarán los píxeles y su correspondiente punto 3D en coordenadas absolutas, calculado de la iteración anterior. Con esto conseguimos la Matriz RT con un desplazamiento absoluto.
+donde se guardarán los píxeles y su correspondiente punto 3D en coordenadas absolutas, calculado de la iteración anterior. Con esto conseguimos la Matriz RT con un desplazamiento absoluto.
 
 Para los cálculos de la matriz RT se ha usado la librería \textit{Eigen} con la descomposición en valores singulares (\textbf{SVD}), ya que permite resolver sistemas sobredimensionados. En concreto se ha usado la clase \textit{JacobiSVD} para la descomposición de una matriz rectangular.
 
-Partiendo de la nube de puntos en coordenadas absolutas (mundo) del instante $(n-1)$ y la nube de puntos en coordenadas relativas (cam) en el instante $(n)$; se calcula la matriz RT de la camara con respecto al mundo:
+Partiendo de la nube de puntos en coordenadas absolutas (mundo) del instante $(n-1)$ y la nube de puntos en coordenadas relativas (cam) en el instante $(n)$; se calcula la matriz RT de la cámara con respecto al mundo que mejor hace encajar la nube relativa en el instante $(n)$ con respecto a la absoluta en el instante $(n-1)$, tal y como expresa la siguiente ecuación:
+
+%Para expresar un punto $P$ que viene dado en el sistema de referencia de la cámara (relativas) a sus coordenadas absolutas solo hay que multiplicar por la RT de la cámara en el mundo absoluto, tal y como expresa la siguiente ecuación:
 
 \begin{equation}
 RT_{cam}^{mundo}\cdot P_{pto(n-1)}^{mundo}=P_{pto(n)}^{cam}
 \end{equation}
 
-Del mismo modo, para calcular la nube de puntos del instante actual y con coordenadas absolutas solo se tendrá que multiplicar por la inversa de la matriz calculada:
+Una vez calculada la matriz RT de la cámara con respecto al mundo, para expresar un punto $P$ que viene dado en el sistema de referencia de la cámara (relativas) a sus coordenadas absolutas solo hay que multiplicar por la matriz obtenida, que contiene la RT de la cámara en el mundo absoluto, tal y como expresa la siguiente ecuación:
 
 \begin{equation}
 \left(RT_{cam}^{mundo}\right)^{-1}\cdot P_{pto(n)}^{cam}=P_{pto(n)}^{mundo}
 \end{equation}
 
-Una vez llegados a este punto se guarda el resultado necesario para los cálculos de la siguiente iteración:
+En este caso para calcular la nube de puntos del instante actual y con coordenadas absolutas solo se tiene que multiplicar por la inversa de la matriz calculada.
+
+Una vez llegados a este punto se guarda el resultado correspondiente para los cálculos de la siguiente iteración:
 
 \begin{equation}
 P_{pto(n)}^{mundo}\longrightarrow P_{pto(n-1)}^{mundo}
 \end{equation}
 
-\subsection{Optimización}
+donde la nube de puntos absolutas, recién calculada, en $(n)$, pasa a ser la nube de puntos absolutas en $(n-1)$.
+\subsection{Optimización mediante RANSAC}
 
-El cálculo de movimiento ha sido uno de los puntos en los que se ha encontrado más problema ya que el error es acumulativo y una iteración con un error demasiado grande produce que en los siguientes instantes el cálculo sea erróneo. Por ello, hay que asegurarse de que todos los datos que vienen de los anteriores bloques, vengan con el menor error posible.
+El cálculo de movimiento ha sido uno de los puntos en los que se ha encontrado más problema ya que el error es acumulativo y una iteración con un error demasiado grande produce que en los siguientes instantes el cálculo de la posición absoluta de la cámara sea erróneo y arrastre indefinidamente ese error. Por ello, hay que asegurarse de que todos los datos que vienen de los anteriores bloques, vengan con el menor error posible.
 
 Para corregir el error en esta fase se ha optado por añadir dos filtros:
 
 \begin{itemize}
 \item Deshacer el cálculo con demasiado error espacial y de reproyección.
-\item Implementación de \textbf{RANSAC}.
+\item Implementación de \textbf{RANSAC} para eliminar fallos espúrios.
 \end{itemize}
+
+El método de RANSAC (\textit{Random Sample and Consensus}) nos ayuda con el ruido y los datos atípicos. Clasifica los datos en dos subconjuntos: uno de ellos son los datos que satisfacen un patrón o un modelo que consideramos bueno y otro subconjunto que corresponde con los datos malos o atípicos.
+
+Esta discriminación permitirá en gran medida conseguir una solución que se adapte al conjunto de datos que nos interesa conseguir.
+
+Los distintos parámetros de los que consta el algoritmo que se ha implementado son:
+
+\begin{itemize}
+\item Parámetros a elección del usuario, que en código están definidos como:
+
+\begin{enumerate}
+\item \textit{RANSAC\_PERC}: Es el porcentaje de emparejamientos que se esperan que sean buenos.
+\item \textit{RANSAC\_ITER}: Corresponde al número de iteraciones que ejecuta el algoritmo.
+\end{enumerate}
+\item Parámetros propios del algoritmo:
+
+\begin{enumerate}
+\item $N$: Número total de emparejamientos 3D.
+\item \textit{good\_sub}: Subconjunto de datos buenos.
+\item \textit{bad\_sub}: Subconjunto de datos malos o atípicos.
+\end{enumerate}
+\end{itemize}
+
+Para lograr esto el algoritmo de RANSAC implementado hace lo siguiente:
+
+\begin{enumerate}
+\item Del número total de emparejamientos ($N$) se selecciona un porcentaje aleatorio (\textit{RANSAC\_PERC}). Este parámetro definido por el usuario determina el porcentaje de puntos en los que se supone que siempre va a haber un subconjunto bueno de datos. Cuanto más porcentaje más puntos para poder hacer la estimación de movimiento 3D, pero más posibilidad también de tener valores erróneos. Por lo tanto,  habrá que escoger dependiendo del número medio de emparejamientos, así como su porcentaje de error para cada iteración, 
+
+\item Con los $N$ emparejamientos seleccionados, se realiza la estimación de la matriz de movimiento 3D mediante SVD.
+
+\item A partir de la matriz RT obtenida del paso anterior se coge la nube de puntos proveniente de la cámara y le aplicamos la RT para transformarlas a coordenadas absolutas. Para cada punto 3D transformado se calcula la distancia o el error que existe entre ese punto y el mismo en el instante anterior y se van sumando. El resultado de la suma de error o distancia total se queda guardado.
+
+\item Se repiten los pasos 1, 2 y 3 tantas veces como esté definido en \textit{RANSAC\_ITER}. Este parámetro cuanto mayor sea, mayor probabilidades de encontrar un subconjunto mejor, por contra, el número de iteraciones compromete el tiempo de cómputo.
+
+Para cada iteración completa, se comprueba la distancia total obtenida en el paso 3. Si es menor se guarda, si no se desecha.
+ 
+\item De todas las iteraciones se selecciona la que ha tenido una menor distancia o error y se guarda la matriz RT utilizada.
+
+\item Se emplea la matriz RT del paso 4 para calcular la nube de puntos final.
+
+\end{enumerate}
+
+
+
+\begin{itemize}
+\item
+\item
+\end{itemize}
+
 
 Para el error espacial se ha medido la distancia entre los mismos puntos en el sistema de referencia absoluto para los intantes $(n-1)$ y $(n)$. 
 
@@ -623,13 +677,7 @@ Para el error de reproyección se mide la distancia entre píxeles de los difere
 
 Si la distancia total es muy grande se desecha el cálculo y se comienza con otra instante de tiempo
 
-La implementación con RANSAC se compone de 3 fases:
 
-\begin{enumerate}
-\item De los puntos emparejados se selecciona un porcentaje aleatorio
-\item El cálculo RT se repite tantas veces como se desee
-\item De todas las iteraciones se busca la matriz que tenga menor error espacial o de reproyección.
-\end{enumerate}
 
 Se puede encontrar que hay dos variables a elección del usuario; el porcentaje aleatorio de selección de puntos (por defecto; 80\%) y el número de repeticiones de cálculo de la matriz (por defecto; 10).
 

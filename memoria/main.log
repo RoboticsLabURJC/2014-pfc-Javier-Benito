@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  6 JUL 2017 19:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  6 JUL 2017 22:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -3366,111 +3366,142 @@ File: Figures/movement-rt.png Graphic file (type png)
 <use Figures/movement-rt.png>
 Package pdftex.def Info: Figures/movement-rt.png used on input line 561.
 (pdftex.def)             Requested size: 286.32178pt x 206.48204pt.
-LaTeX Info: Redefining \sptext on input line 588.
-LaTeX Info: Redefining \. on input line 588.
-LaTeX Info: Redefining \% on input line 588.
+LaTeX Info: Redefining \sptext on input line 587.
+LaTeX Info: Redefining \. on input line 587.
+LaTeX Info: Redefining \% on input line 587.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 588.
+(babel)             in language  on input line 587.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 588.
+(babel)             in language  on input line 587.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 588.
+(babel)             in language  on input line 587.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 588.
+(babel)             in language  on input line 587.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 588.
+(babel)             in language  on input line 587.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 588.
+(babel)             in language  on input line 587.
  [40]
+LaTeX Info: Redefining \sptext on input line 611.
+LaTeX Info: Redefining \. on input line 611.
+LaTeX Info: Redefining \% on input line 611.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 609.
+(babel)             in language  on input line 611.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 609.
+(babel)             in language  on input line 611.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 609.
+(babel)             in language  on input line 611.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 609.
+(babel)             in language  on input line 611.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 609.
+(babel)             in language  on input line 611.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 609.
-LaTeX Info: Redefining \sptext on input line 612.
-LaTeX Info: Redefining \. on input line 612.
-LaTeX Info: Redefining \% on input line 612.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 612.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 612.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 612.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 612.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 612.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 612.
+(babel)             in language  on input line 611.
  [41 <./Figures/movement-rt.png>]
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 642.
+(babel)             in language  on input line 614.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 642.
+(babel)             in language  on input line 614.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 642.
+(babel)             in language  on input line 614.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 642.
+(babel)             in language  on input line 614.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 642.
+(babel)             in language  on input line 614.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 642.
+(babel)             in language  on input line 614.
+LaTeX Info: Redefining \sptext on input line 654.
+LaTeX Info: Redefining \. on input line 654.
+LaTeX Info: Redefining \% on input line 654.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 654.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 654.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 654.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 654.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 654.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 654.
+ [42]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 690.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 690.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 690.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 690.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 690.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 690.
 
-<Figures/super_gui.png, id=913, 834.11626pt x 482.80376pt>
+<Figures/super_gui.png, id=923, 834.11626pt x 482.80376pt>
 File: Figures/super_gui.png Graphic file (type png)
 
 <use Figures/super_gui.png>
-Package pdftex.def Info: Figures/super_gui.png used on input line 648.
+Package pdftex.def Info: Figures/super_gui.png used on input line 696.
 (pdftex.def)             Requested size: 400.37126pt x 231.74316pt.
- <Figures/gui1.png, id=915, 1397.22pt x 861.2175pt>
+ <Figures/gui1.png, id=925, 1397.22pt x 861.2175pt>
 File: Figures/gui1.png Graphic file (type png)
 
 <use Figures/gui1.png>
-Package pdftex.def Info: Figures/gui1.png used on input line 661.
+Package pdftex.def Info: Figures/gui1.png used on input line 709.
 (pdftex.def)             Requested size: 419.16924pt x 258.36723pt.
 
-Overfull \hbox (15.14015pt too wide) in paragraph at lines 661--663
+Overfull \hbox (15.14015pt too wide) in paragraph at lines 709--711
  [][] 
  []
 
-<Figures/gui2.png, id=917, 1397.22pt x 861.2175pt>
+<Figures/gui2.png, id=927, 1397.22pt x 861.2175pt>
 File: Figures/gui2.png Graphic file (type png)
  <use Figures/gui2.png>
-Package pdftex.def Info: Figures/gui2.png used on input line 671.
+Package pdftex.def Info: Figures/gui2.png used on input line 719.
 (pdftex.def)             Requested size: 419.16924pt x 258.36723pt.
 
-Overfull \hbox (15.14015pt too wide) in paragraph at lines 671--673
+Overfull \hbox (15.14015pt too wide) in paragraph at lines 719--721
  [][] 
  []
 
-<Figures/gui3.png, id=919, 1397.22pt x 861.2175pt>
+<Figures/gui3.png, id=929, 1397.22pt x 861.2175pt>
 File: Figures/gui3.png Graphic file (type png)
  <use Figures/gui3.png>
-Package pdftex.def Info: Figures/gui3.png used on input line 681.
+Package pdftex.def Info: Figures/gui3.png used on input line 729.
 (pdftex.def)             Requested size: 419.16924pt x 258.36723pt.
 
-Overfull \hbox (15.14015pt too wide) in paragraph at lines 681--683
+Overfull \hbox (15.14015pt too wide) in paragraph at lines 729--731
  [][] 
  []
 
-<Figures/gui4.png, id=921, 1397.22pt x 861.2175pt>
+<Figures/gui4.png, id=931, 1397.22pt x 861.2175pt>
 File: Figures/gui4.png Graphic file (type png)
  <use Figures/gui4.png>
-Package pdftex.def Info: Figures/gui4.png used on input line 691.
+Package pdftex.def Info: Figures/gui4.png used on input line 739.
 (pdftex.def)             Requested size: 419.16924pt x 258.36723pt.
 
-Overfull \hbox (15.14015pt too wide) in paragraph at lines 691--693
+Overfull \hbox (15.14015pt too wide) in paragraph at lines 739--741
  [][] 
  []
 
-)
+LaTeX Info: Redefining \sptext on input line 743.
+LaTeX Info: Redefining \. on input line 743.
+LaTeX Info: Redefining \% on input line 743.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 743.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 743.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 743.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 743.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 743.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 743.
+[43])
 LaTeX Info: Redefining \sptext on input line 201.
 LaTeX Info: Redefining \. on input line 201.
 LaTeX Info: Redefining \% on input line 201.
@@ -3486,7 +3517,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 201.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 201.
- [42]
+ [44 <./Figures/super_gui.png>]
 LaTeX Info: Redefining \sptext on input line 201.
 LaTeX Info: Redefining \. on input line 201.
 LaTeX Info: Redefining \% on input line 201.
@@ -3502,7 +3533,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 201.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 201.
- [43 <./Figures/super_gui.png> <./Figures/gui1.png>]
+ [45 <./Figures/gui1.png> <./Figures/gui2.png>]
 LaTeX Info: Redefining \sptext on input line 201.
 LaTeX Info: Redefining \. on input line 201.
 LaTeX Info: Redefining \% on input line 201.
@@ -3518,23 +3549,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 201.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 201.
- [44 <./Figures/gui2.png> <./Figures/gui3.png>]
-LaTeX Info: Redefining \sptext on input line 201.
-LaTeX Info: Redefining \. on input line 201.
-LaTeX Info: Redefining \% on input line 201.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 201.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 201.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 201.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 201.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 201.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 201.
- [45 <./Figures/gui4.png>]
+ [46 <./Figures/gui3.png> <./Figures/gui4.png>]
 \openout2 = `Chapters/Experimentos.aux'.
 
 
@@ -3576,7 +3591,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 18.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 18.
-<Figures/tests/sift-surf.png, id=949, 643.40375pt x 266.9975pt>
+<Figures/tests/sift-surf.png, id=962, 643.40375pt x 266.9975pt>
 File: Figures/tests/sift-surf.png Graphic file (type png)
 
 <use Figures/tests/sift-surf.png>
@@ -3595,7 +3610,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 32.
 
-<Figures/tests/borderfilter.png, id=951, 550.62857pt x 229.71536pt>
+<Figures/tests/borderfilter.png, id=964, 550.62857pt x 229.71536pt>
 File: Figures/tests/borderfilter.png Graphic file (type png)
 
 <use Figures/tests/borderfilter.png>
@@ -3627,7 +3642,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 47.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 47.
-[46
+[47
 
 
 
@@ -3644,7 +3659,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 48.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 48.
- <Figures/tests/matching-error.png, id=960, 643.40375pt x 239.89626pt>
+ <Figures/tests/matching-error.png, id=972, 643.40375pt x 239.89626pt>
 File: Figures/tests/matching-error.png Graphic file (type png)
 
 <use Figures/tests/matching-error.png>
@@ -3666,7 +3681,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 64.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 64.
- [47 <./Figures/tests/sift-surf.png> <./Figures/tests/borderfilter.png>]
+ [48 <./Figures/tests/sift-surf.png> <./Figures/tests/borderfilter.png>]
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 64.
 Package babel Info: Redefining spanish shorthand >>
@@ -3680,7 +3695,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 64.
 
-<Figures/tests/matching-rt.png, id=968, 642.4pt x 487.8225pt>
+<Figures/tests/matching-rt.png, id=980, 642.4pt x 487.8225pt>
 File: Figures/tests/matching-rt.png Graphic file (type png)
 
 <use Figures/tests/matching-rt.png>
@@ -3711,13 +3726,13 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 84.
 
-<Figures/xyz.png, id=970, 511.55824pt x 517.22647pt>
+<Figures/xyz.png, id=982, 511.55824pt x 517.22647pt>
 File: Figures/xyz.png Graphic file (type png)
  <use Figures/xyz.png>
 Package pdftex.def Info: Figures/xyz.png used on input line 90.
 (pdftex.def)             Requested size: 153.46866pt x 155.16913pt.
 
-<Figures/tests/init.png, id=972, 1144.275pt x 710.655pt>
+<Figures/tests/init.png, id=984, 1144.275pt x 710.655pt>
 File: Figures/tests/init.png Graphic file (type png)
 
 <use Figures/tests/init.png>
@@ -3738,15 +3753,15 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 107.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 107.
- [48 <./Figures/tests/matching-error.png>]
-<Figures/tests/axis-y.png, id=979, 1144.275pt x 1415.2875pt>
+ [49 <./Figures/tests/matching-error.png>]
+<Figures/tests/axis-y.png, id=991, 1144.275pt x 1415.2875pt>
 File: Figures/tests/axis-y.png Graphic file (type png)
 
 <use Figures/tests/axis-y.png>
 Package pdftex.def Info: Figures/tests/axis-y.png used on input line 110.
 (pdftex.def)             Requested size: 343.28514pt x 424.58952pt.
 
-<Figures/tests/axis-x-z.png, id=981, 1122.1925pt x 1386.17876pt>
+<Figures/tests/axis-x-z.png, id=993, 1122.1925pt x 1386.17876pt>
 File: Figures/tests/axis-x-z.png Graphic file (type png)
 
 <use Figures/tests/axis-x-z.png>
@@ -3767,7 +3782,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 132.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 132.
- [49 <./Figures/tests/matching-rt.png>]
+ [50 <./Figures/tests/matching-rt.png>]
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 132.
 Package babel Info: Redefining spanish shorthand >>
@@ -3781,7 +3796,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 132.
 
-<Figures/pitch_yaw_roll.png, id=989, 229.0959pt x 173.448pt>
+<Figures/pitch_yaw_roll.png, id=1002, 229.0959pt x 173.448pt>
 File: Figures/pitch_yaw_roll.png Graphic file (type png)
 
 <use Figures/pitch_yaw_roll.png>
@@ -3792,7 +3807,7 @@ Package pdftex.def Info: Figures/pitch_yaw_roll.png used on input line 138.
 LaTeX Warning: Command \textordmasculine invalid in math mode on input line 144
 .
 
-<Figures/tests/pitch.png, id=991, 1143.27126pt x 1410.26875pt>
+<Figures/tests/pitch.png, id=1004, 1143.27126pt x 1410.26875pt>
 File: Figures/tests/pitch.png Graphic file (type png)
 
 <use Figures/tests/pitch.png>
@@ -3818,8 +3833,8 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 157.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 157.
-[50 <./Figures/xyz.png> <./Figures/tests/init.png>]
-<Figures/tests/yaw-roll.png, id=999, 1143.27126pt x 1416.29124pt>
+[51 <./Figures/xyz.png> <./Figures/tests/init.png>]
+<Figures/tests/yaw-roll.png, id=1011, 1143.27126pt x 1416.29124pt>
 File: Figures/tests/yaw-roll.png Graphic file (type png)
 
 <use Figures/tests/yaw-roll.png>
@@ -3864,8 +3879,8 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 173.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 173.
- [51 <./Figures/tests/axis-y.png>]
-<Figures/tests/static.png, id=1006, 1213.96393pt x 2115.61821pt>
+ [52 <./Figures/tests/axis-y.png>]
+<Figures/tests/static.png, id=1018, 1213.96393pt x 2115.61821pt>
 File: Figures/tests/static.png Graphic file (type png)
 
 <use Figures/tests/static.png>
@@ -3890,7 +3905,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 206.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 206.
-[52 <./Figures/tests/axis-x-z.png>]
+[53 <./Figures/tests/axis-x-z.png>]
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 207.
 Package babel Info: Redefining spanish shorthand >>
@@ -3918,7 +3933,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 291.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 291.
- [53 <./Figures/pitch_yaw_roll.png>])
+ [54 <./Figures/pitch_yaw_roll.png>])
 LaTeX Info: Redefining \sptext on input line 202.
 LaTeX Info: Redefining \. on input line 202.
 LaTeX Info: Redefining \% on input line 202.
@@ -3935,7 +3950,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 202.
 
-[54 <./Figures/tests/pitch.png>]
+[55 <./Figures/tests/pitch.png>]
 LaTeX Info: Redefining \sptext on input line 202.
 LaTeX Info: Redefining \. on input line 202.
 LaTeX Info: Redefining \% on input line 202.
@@ -3951,7 +3966,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 202.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 202.
- [55]
+ [56]
 LaTeX Info: Redefining \sptext on input line 202.
 LaTeX Info: Redefining \. on input line 202.
 LaTeX Info: Redefining \% on input line 202.
@@ -3967,7 +3982,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 202.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 202.
- [56 <./Figures/tests/yaw-roll.png>]
+ [57 <./Figures/tests/yaw-roll.png>]
 LaTeX Info: Redefining \sptext on input line 202.
 LaTeX Info: Redefining \. on input line 202.
 LaTeX Info: Redefining \% on input line 202.
@@ -3984,7 +3999,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 202.
 
-[57 <./Figures/tests/static.png>]
+[58 <./Figures/tests/static.png>]
 \openout2 = `Chapters/Conclusiones.aux'.
 
  (./Chapters/Conclusiones.tex
@@ -4026,7 +4041,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 38.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 38.
-[58
+[59
 
 
 
@@ -4059,7 +4074,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 203.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 203.
- [59]
+ [60]
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 214.
 Package babel Info: Redefining spanish shorthand >>
@@ -4094,7 +4109,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 214.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 214.
-[60
+[61
 
 
 ]
@@ -4114,7 +4129,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 218.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 218.
- [61]
+ [62]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 218.
  (./main.aux
 LaTeX Info: Redefining \sptext on input line 26.
@@ -4125,15 +4140,9 @@ LaTeX Info: Redefining \% on input line 26.
 (./Chapters/Experimentos.aux) (./Chapters/Conclusiones.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 218.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 218.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: BA76F358B9128A32151548B70CE27961;9907.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 50CB068E43C4F599ED25859B5694608C;9711
-(rerunfilecheck)             After:  316B84B5135D028A4DA5AFA504753E2F;9789.
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -4142,13 +4151,13 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32277 strings out of 493304
- 641760 string characters out of 6139871
+ 32286 strings out of 493304
+ 641831 string characters out of 6139871
  1013367 words of memory out of 5000000
  34923 multiletter control sequences out of 15000+600000
  41132 words of font info for 78 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 56i,21n,83p,10402b,1848s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 57i,21n,83p,10402b,1848s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -4164,10 +4173,10 @@ exmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/u
 plri8a.pfb>
-Output written on main.pdf (66 pages, 21798204 bytes).
+Output written on main.pdf (67 pages, 21800676 bytes).
 PDF statistics:
- 1195 PDF objects out of 1200 (max. 8388607)
- 1023 compressed objects within 11 object streams
- 340 named destinations out of 1000 (max. 500000)
+ 1210 PDF objects out of 1440 (max. 8388607)
+ 1037 compressed objects within 11 object streams
+ 349 named destinations out of 1000 (max. 500000)
  764 words of extra memory for PDF output out of 10000 (max. 10000000)
 
