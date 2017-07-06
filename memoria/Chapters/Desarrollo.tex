@@ -644,18 +644,18 @@ Los distintos parámetros de los que consta el algoritmo que se ha implementado 
 \end{enumerate}
 \end{itemize}
 
-Para lograr esto el algoritmo de RANSAC implementado hace lo siguiente:
+Para lograr esto, el algoritmo de RANSAC implementado hace lo siguiente:
 
 \begin{enumerate}
-\item Del número total de emparejamientos ($N$) se selecciona un porcentaje aleatorio (\textit{RANSAC\_PERC}). Este parámetro definido por el usuario determina el porcentaje de puntos en los que se supone que siempre va a haber un subconjunto bueno de datos. Cuanto más porcentaje más puntos para poder hacer la estimación de movimiento 3D, pero más posibilidad también de tener valores erróneos. Por lo tanto,  habrá que escoger dependiendo del número medio de emparejamientos, así como su porcentaje de error para cada iteración, 
+\item Del número total de emparejamientos ($N$) se selecciona un porcentaje aleatorio (\textit{RANSAC\_PERC}). Este parámetro definido por el usuario determina el porcentaje de puntos en los que se supone que siempre va a haber un subconjunto bueno de datos. Cuanto más porcentaje más puntos para poder hacer la estimación de movimiento 3D, pero más posibilidad también de tener valores erróneos. Por lo tanto,  habrá que escoger dependiendo del número medio de emparejamientos, así como su porcentaje de error para cada iteración.
 
 \item Con los $N$ emparejamientos seleccionados, se realiza la estimación de la matriz de movimiento 3D mediante SVD.
 
-\item A partir de la matriz RT obtenida del paso anterior se coge la nube de puntos proveniente de la cámara y le aplicamos la RT para transformarlas a coordenadas absolutas. Para cada punto 3D transformado se calcula la distancia o el error que existe entre ese punto y el mismo en el instante anterior y se van sumando. El resultado de la suma de error o distancia total se queda guardado.
+\item A partir de la matriz RT obtenida del paso anterior se coge la nube de puntos proveniente de la cámara y le aplicamos la RT para transformarlas a coordenadas absolutas. Para cada punto 3D transformado se calcula la distancia o el error que existe entre ese punto y el mismo en el instante anterior y se van sumando. El resultado de la suma de error o distancia total se mantiene guardado.
 
 \item Se repiten los pasos 1, 2 y 3 tantas veces como esté definido en \textit{RANSAC\_ITER}. Este parámetro cuanto mayor sea, mayor probabilidades de encontrar un subconjunto mejor, por contra, el número de iteraciones compromete el tiempo de cómputo.
 
-Para cada iteración completa, se comprueba la distancia total obtenida en el paso 3. Si es menor se guarda, si no se desecha.
+Para cada iteración completa, se comprueba la distancia total obtenida en el paso 3. Si es menor se guarda, si no, se desecha.
  
 \item De todas las iteraciones se selecciona la que ha tenido una menor distancia o error y se guarda la matriz RT utilizada.
 
@@ -663,33 +663,18 @@ Para cada iteración completa, se comprueba la distancia total obtenida en el pa
 
 \end{enumerate}
 
+Para el \textbf{error espacial} se ha medido la distancia entre los mismos puntos en el sistema de referencia absoluto para los instantes $(n-1)$ y $(n)$. 
 
+Para el \textbf{error de reproyección} se mide la distancia entre píxeles de los diferentes instantes. Se calcula con \textit{Progeo} la posición del nuevo píxel en el instante anterior para poder calcular la distancia para una misma imagen.
 
-\begin{itemize}
-\item
-\item
-\end{itemize}
-
-
-Para el error espacial se ha medido la distancia entre los mismos puntos en el sistema de referencia absoluto para los intantes $(n-1)$ y $(n)$. 
-
-Para el error de reproyección se mide la distancia entre píxeles de los diferentes instantes. Se calcula con \textit{Progeo} la posición del nuevo píxel en el instante anterior para poder calcular la distancia para una misma imágen.
-
-Si la distancia total es muy grande se desecha el cálculo y se comienza con otra instante de tiempo
-
-
-
-Se puede encontrar que hay dos variables a elección del usuario; el porcentaje aleatorio de selección de puntos (por defecto; 80\%) y el número de repeticiones de cálculo de la matriz (por defecto; 10).
-
-Como se puede deducir, este algoritmo es muy robusto frente a valores espurios, ya que si se realiza el cálculo con alguno de estos valores se desechará el resultado.
-
+Este algoritmo es muy robusto frente a valores espurios, ya que si se realiza el cálculo con alguno de estos valores o puntos ruidosos se desechará el resultado cogiendo como matriz RT la de otra iteración de RANSAC.
 
 %-----------------------------------
 %	SECTION Interfaz gráfica
 %-----------------------------------
 \section{Interfaz gráfica}
 
-El componente desarrollado dispone de una interfaz gráfica en donde se pueden ver gráficamente los pasos realizados, así como el resultado de toda la lógica del sistema. Ha sido desarrollada con \textit{glade} y la apariencia se puede observar en la Figura~\ref{fig:supergui}.
+El componente desarrollado dispone de una interfaz gráfica en donde se pueden ver gráficamente los pasos realizados individualmente, así como el resultado final de toda la lógica del sistema. Ha sido desarrollada con \textit{glade} y la apariencia se puede observar en la Figura~\ref{fig:supergui}.
 
 \begin{figure}[th]
 \centering
@@ -699,7 +684,7 @@ El componente desarrollado dispone de una interfaz gráfica en donde se pueden v
 \label{fig:supergui}
 \end{figure}
 
-La interfaz gráfica, basada en GTK, permite la realización  del procesado paso a paso o de manera automática: 
+La interfaz gráfica, basada en GTK, permite la realización  del procesado paso a paso, (muy útil para depurar) o de manera automática (funcionamiento continuo). La ventana del componente teine cuatro zonas diferenciadas: 
 
 \begin{enumerate}
 \item Actualización de imagen. (Figura~\ref{fig:gui1})
@@ -744,12 +729,11 @@ La interfaz gráfica, basada en GTK, permite la realización  del procesado paso
 
 \end{enumerate}
 
-La herramienta permite, además, la modificación de algunos parámetros de configuración, como pueden ser la elección algortimos o filtros, así como el porcentaje de puntos emparejamientos a calcular.
+La herramienta permite, además, la modificación de algunos parámetros de configuración sobre la marcha, como pueden ser la elección algoritmos o filtros para el bloque de detección o el bloque de emparejamiento, así como el porcentaje de puntos emparejamientos a calcular.
 
 Por último se ha implementado un visor 3D, donde se representa toda la información tridimensional para el sistema de referencia absoluto.
 
-
-
+En las siguientes Figuras(\ref{fig:gui1}, \ref{fig:gui2}, \ref{fig:gui3}, \ref{fig:gui4}) se observa las capturas de cada uno de los pasos en la estimación de movimiento 3D. El botón [1] actualiza la imágen, el botón [2] detecta los puntos de interés con las opciones seleccionadas, el botón [3] los emparejamientos, un \textit{slider} para elegir el número de emparejamientos y por último el botón [4] para estimar la matriz, donde se puede observar en vivo la matriz RT estimada.
 
 %-----------------------------------
 %	SECTION Ajuste de parámetros
