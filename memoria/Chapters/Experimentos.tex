@@ -17,15 +17,61 @@ Se propone en esta sección validar el componente en las diferentes fases que lo
 
 \subsection{Detección de puntos de interés}
 
+Para la detección de puntos de interés resulta de una tarea sencilla si nos ayudamos de OpenCV. En esta sección veremos algunos ejemplos de sobre las diferencias entre técnicas empleadas, y el filtro frontera.
 
+En la Figura~\ref{fig:sift-surf} se puede ver la extracción de puntos de interés tanto con SIFT como con SURF, aparentemente no hay grandes diferencias. Como se vió en el capítulo~\ref{Chapter4} el cálculo de puntos de interés es muy similar y la diferencia fundamental radicaba en el tiempo de cómputo.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/tests/sift-surf.png}
+\decoRule
+\caption[Extracción de carácterísticas con SURF y con SIFT]{Extracción de carácterísticas con SURF (a), y con SIFT (b).}
+\label{fig:sift-surf}
+\end{figure}
+
+\subsubsection{Filtro de puntos frontera}
+
+En la Figura~\ref{fig:borderfilter} tenemos el resultado de aplicar el filtro frontera sobre una misma imágen, como se puede observar al añadir el filtro frontera se eliminan algunos de los puntos más críticos de la imágen, como son los puntos a lo largo del marco de la puerta o del mástil de la guitarra.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.7]{Figures/tests/borderfilter.png}
+\decoRule
+\caption[Captura de la extracción de puntos de interés con filtro frontera]{Captura de la extracción de puntos de interés con filtro frontera (a), y sin filtro (b).}
+\label{fig:borderfilter}
+\end{figure}
 
 \subsection{Cálculo de emparejamientos}
 
+Para el cálculo de los emparejamientos se someterá el componente a cambios de traslación y rotación para comprobar la veracidad de los puntos emparejados. Se partirá, como se explicó en el anterior capítulo (\ref{Chapter4}), de los $20\%$ mejores emparejamientos medidos por distancia, ya que en condiciones normales se tienen unos $300$ y el $20\% (60)$ es un número razonable de puntos y se asegura consistencia.
 
-\subsubsection{Posición estática}
-\subsubsection{Traslación}
-\subsubsection{Rotación}
+\subsubsection{Filtro de sobresaliencia}
 
+En la Figura~\ref{fig:error-matching} se puede observar como en condiciones normales se ha producido un error en el emparejamiento de dos puntos de interés. Como vimos en el capítulo~\ref{Chapter4} es debido a que los descriptores de esos puntos son los más similares y muy parecidos a todos los que, en este caso, forman el marco de la puerta.
+
+%y es debido a que los descriptores de esos dos puntos son los más similares. Al estar en una zona muy parecida se puede entender que la correlación es muy similar en todos los puntos correspondientes, en este caso, al marco de la puerta. 
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/tests/matching-error.png}
+\decoRule
+\caption[Captura con un error de emparejamiento sin filtro de sobresaliencia]{Captura de un emparejamiento erróneo en condiciones normales.}
+\label{fig:error-matching}
+\end{figure}
+
+Este caso se ha buscado agrede para imponer el \textbf{filtro de sobresaliencia}, en todas las pruebas de ahora en adelante, para añadir robustez a los experimentos y evitar estos casos de malos emparejamientos.
+
+\subsubsection{Traslación y Rotación}
+
+En la Figura~\ref{fig:matching-rt} se puede observar el resultado de aplicar los emparejamientos bajo circunstancias de traslación y rotación. Como se puede ver en los emparejamientos obtenidos, el resultado es el esperado y no hay error.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.6]{Figures/tests/matching-rt.png}
+\decoRule
+\caption[Captura con los emparejamientos con imágenes sometidas a una rotación y a una traslación]{Captura de los emparejamientos con imágenes sometidas a una traslación y a una rotación, respectivamente.}
+\label{fig:matching-rt}
+\end{figure}
 
 \subsection{Resolución 3D}
 
@@ -81,7 +127,7 @@ En la Figura~\ref{fig:axis-xz} se puede ver el efecto de la traslación en los e
 
 Los resultados son aceptables en la estimación, no se consigue un cierre de trayectoria perfecto pero se acerca. Pensando que se ha aplicado una traslación de más de 1 metro el error final obtenido se puede medir en centímetros, acentuándose más para el eje $y$ correspondiente al perpendicular al plano imagen y el que se obtiene de la imagen de profundidad.
 
-Como vimos en el capítulo \ref{Chapter3} la información de profundidad del sensor no es perfecta y tiene un pequeño margen de error. A parte de tener un rango de distancias óptimo establecido por el fabricante (\textit{0.8 to 3.5 m}), fuera de este rango la imagen de profundidad empieza a empeorar drásticamente y por consiguiente la estimación de movimiento.
+Como vimos en el capítulo~\ref{Chapter3} la información de profundidad del sensor no es perfecta y tiene un pequeño margen de error. A parte de tener un rango de distancias óptimo establecido por el fabricante (\textit{0.8 to 3.5 m}), fuera de este rango la imagen de profundidad empieza a empeorar drásticamente y por consiguiente la estimación de movimiento.
 
 \subsubsection{Validación de la Rotación}
 
@@ -121,7 +167,7 @@ Para los ángulos \textit{yaw} y \textit{roll} se puede observar en la Figura~\r
 
 \subsection{Error estático}
 
-El error estático muestra el ruido blanco que se esconde detrás de la resolución 3D en tiempo real. Como se va a poder observar en esta sección, el ruido estático es inevitable y no depende del algoritmo a utilizar. Sin embargo, en el siguiente capítulo, en el cual se propone posibles mejoras y líneas futuras, se verán métodos para poder elimnarlo en mayor o menor medida.
+El error estático muestra el ruido blanco que se esconde detrás de la resolución 3D en tiempo real. Como se va a poder observar en esta sección, el ruido estático es inevitable y no depende del algoritmo a utilizar. Sin embargo, en el siguiente capítulo, en el cual se propone posibles mejoras y líneas futuras, se verán métodos para poder eliminarlo en mayor o menor medida.
 
 En las siguientes Figura~\ref{fig:static} se puede ver un ejemplo de este error para diferentes configuraciones. Como se puede interpretar es un error que está presente en todos los casos.
 
@@ -149,7 +195,7 @@ En las siguientes Figura~\ref{fig:static} se puede ver un ejemplo de este error 
 %\label{fig:static3}
 %\end{figure}
 
-Las pruebas realizadas han sido capturadas a los 30 y 60 segundos respectivamente y la configuración aplicada se encuentra en la descripción de cada Figura.
+Las pruebas realizadas han sido capturadas a los 30 y 60 segundos respectivamente y la configuración aplicada se encuentra en la descripción de la Figura.
 
 Si analizamos las matrices RT obtenidas se puede observar que el eje en que más avanza el ruido es el eje $y$, al igual que pasaba en las pruebas de la sección anterior.
 
@@ -159,9 +205,9 @@ Si analizamos las matrices RT obtenidas se puede observar que el eje en que más
 %-----------------------------------
 \newpage
 \section{Tiempos de procesado}
-En esta sección se verán los tiempos de procesado del componente realizado en este proyecto. Como el componente realiza distintas tareas hasta completar una iteración completa, se ha desarrollado una funcionalidad que mide el tiempo medio por cada una de ellas cuando se termina la ejecución del componente.
+En esta sección se verán los tiempos de procesado del componente realizado en este proyecto. Como el componente realiza distintas tareas hasta completar una iteración, se ha desarrollado una funcionalidad que mide el tiempo medio por cada una de ellas cuando se termina la ejecución del componente.
 
-Se irá analizando el tiempo medio para diferentes configuraciones en un intervalo de 10 segundos. Para un uso por defecto de la aplicación, se tiene:
+Se irá analizando el tiempo medio para diferentes configuraciones en un intervalo de timepo de 10 segundos. Para un uso por defecto de la aplicación, se tiene:
 
 \begin{lstlisting}[style=CStyle]
 Average times:
@@ -173,9 +219,9 @@ Average times:
 - TOTAL: 151.731 ms
 \end{lstlisting}
 
-Como se puede observar la detección de puntos es la parte que más tiempo requiere, por el contrario, la estimación de la matriz RT es la que menos. Esta prueba se ha realizado con una media de unos 300 puntos de interés por iteración. Como es lógico el tiempo de detección variará con respecto al número de puntos de interés o carácterísticas extraídas. Estos puntos de interés según las pruebas no solo están condicionadas a la imágen que se está analizando, si no que la intensidad de luz desempeña un papel muy importante en la extracción de más o menos características.
+Como se puede observar la detección de puntos es la parte que más tiempo requiere, por el contrario, la estimación de la matriz RT es la que menos. Esta prueba se ha realizado con una media de unos 300 puntos de interés por iteración. Como es lógico el tiempo de detección variará con respecto al número de puntos de interés o carácterísticas extraídas. Estos puntos de interés según las pruebas no solo están condicionadas a la imágen que se está analizando, si no que la intensidad de luz desempeña un papel muy importante en la detección de más o menos características.
 
-En la siguiente tabla podemos ver la variabilidad de tiempo de detección para diferentes números de puntos:
+En el cuadro~\ref{tab:detection-time} podemos ver la variabilidad de tiempo de detección para diferentes números de puntos:
 
 \begin{table}
 \caption{Tiempos medios de detección en relación a los puntos de interés}
@@ -200,4 +246,46 @@ En la siguiente tabla podemos ver la variabilidad de tiempo de detección para d
 \end{tabular}
 \end{table}
 
-En esta etapa se ha incluído además el cálculo de 
+%En esta etapa se ha incluído además el cálculo de puntos de interés 2D a nube de puntos 3D ya que es necesaria para la siguiente etapa.
+
+La diferencia entre los distintos algoritmos y filtros no se nota en exceso en cuanto a tiempos, sin embargo, utilizar SURF con respecto a SIFT se ha notado una reducción hasta de 10ms.
+
+Por último, para el cálculo de la matriz de movimiento se realiza la descomposición en valores singulares (SVD). En este caso el coste computacional depende del número de puntos. La descomposición en valores singulares en relación a los emparejamientos se encuentra en el cuadro~\ref{tab:svd-time}.
+
+\begin{table}
+\caption{Tiempos medios de cálculo de SVD en relación a los emparejamientos}
+\label{tab:svd-time}
+\centering
+\begin{tabular}{ l | l }
+\toprule
+\textbf{Número de emparejamientos} & \textbf{Tiempo (ms)}\\
+\hline\hline
+50 & 1.44\\
+\hline
+100 & 1.64\\
+\hline
+200 & 1.96\\
+\hline
+400 & 2.17\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Como es de esperar el tiempo de cómputo de la optimización RANSAC no dependerá tanto del número de emparejamientos, sino que dependerá del número de iteraciones del algoritmo. En el cuadro~\ref{tab:ransac-time} se puede ver el tiempo por número de iteraciones del algoritmo para un total de unos 100 emparejamientos por iteración.
+
+\begin{table}
+\caption{Tiempos medios de cálculo con RANSAC en relación a las iteraciones para una media de 100 emparejamientos por iteración}
+\label{tab:ransac-time}
+\centering
+\begin{tabular}{ l | l }
+\toprule
+\textbf{Número de iteraciones} & \textbf{Tiempo (ms)}\\
+\hline\hline
+10 & 7.11\\
+\hline
+20 & 16.45\\
+\hline
+50 & 40.01\\
+\bottomrule
+\end{tabular}
+\end{table}

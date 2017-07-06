@@ -49,12 +49,16 @@
 \contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{45}{figure.caption.210}
 \contentsline {figure}{\numberline {4.23}{\ignorespaces gui4}}{45}{figure.caption.212}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Ejes de coordenadas $x$, $y$ y $z$}}{47}{figure.caption.222}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Punto de partida para las pruebas de traslaci\IeC {\'o}n y rotaci\IeC {\'o}n}}{47}{figure.caption.223}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{48}{figure.caption.224}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{49}{figure.caption.225}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{50}{figure.caption.227}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{51}{figure.caption.228}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{52}{figure.caption.229}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Capturas con ruido est\IeC {\'a}tico}}{54}{figure.caption.232}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Extracci\IeC {\'o}n de car\IeC {\'a}cter\IeC {\'\i }sticas con SURF y con SIFT}}{47}{figure.caption.216}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Captura de la extracci\IeC {\'o}n de puntos de inter\IeC {\'e}s con filtro frontera}}{47}{figure.caption.218}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Captura con un error de emparejamiento sin filtro de sobresaliencia}}{48}{figure.caption.221}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Captura con los emparejamientos con im\IeC {\'a}genes sometidas a una rotaci\IeC {\'o}n y a una traslaci\IeC {\'o}n}}{49}{figure.caption.223}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Ejes de coordenadas $x$, $y$ y $z$}}{50}{figure.caption.226}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Punto de partida para las pruebas de traslaci\IeC {\'o}n y rotaci\IeC {\'o}n}}{50}{figure.caption.227}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{51}{figure.caption.228}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{52}{figure.caption.229}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{53}{figure.caption.231}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{54}{figure.caption.232}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{56}{figure.caption.233}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Capturas con ruido est\IeC {\'a}tico}}{57}{figure.caption.236}
 \addvspace {10\p@ }
