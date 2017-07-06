@@ -28,25 +28,25 @@
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema general del componente RealRTEstimator}}{25}{figure.caption.84}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Diagrama interno del componente RealRTEstimator}}{25}{figure.caption.85}
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Ejemplo de puntos de inter\IeC {\'e}s}}{26}{figure.caption.88}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Ejemplo con \textit {Shi-Tomasi Corner Detector}}}{28}{figure.caption.92}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Ejemplo con \textit {Shi-Tomasi Corner Detector}}}{27}{figure.caption.92}
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Ejemplo de sistema escalarmente variante}}{28}{figure.caption.95}
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Diferencia de gaussianas en SIFT}}{29}{figure.caption.97}
 \contentsline {figure}{\numberline {4.7}{\ignorespaces Ejemplo de local-extrema en SIFT}}{30}{figure.caption.98}
 \contentsline {figure}{\numberline {4.8}{\ignorespaces Ejemplo de \textit {Box filter} en SURF}}{31}{figure.caption.116}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces C\IeC {\'a}lculo de orientaci\IeC {\'o}n con SURF}}{32}{figure.caption.118}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces C\IeC {\'a}lculo de orientaci\IeC {\'o}n con SURF}}{31}{figure.caption.118}
 \contentsline {figure}{\numberline {4.10}{\ignorespaces Captura real con SIFT}}{34}{figure.caption.145}
 \contentsline {figure}{\numberline {4.11}{\ignorespaces Captura de los mejores puntos con SIFT}}{35}{figure.caption.153}
 \contentsline {figure}{\numberline {4.12}{\ignorespaces Captura con error de los dos mejores puntos en SIFT}}{35}{figure.caption.154}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Diagrama con la obtenci\IeC {\'o}n de puntos 3D}}{37}{figure.caption.167}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Diagrama con la obtenci\IeC {\'o}n de puntos 3D}}{36}{figure.caption.167}
 \contentsline {figure}{\numberline {4.14}{\ignorespaces C\IeC {\'a}lculo de punto 3D con la informaci\IeC {\'o}n de distancia $d$}}{37}{figure.caption.168}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Distancia real y la dada por el sensor}}{38}{figure.caption.169}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Ejemplo de correcci\IeC {\'o}n de distancia}}{39}{figure.caption.171}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Matriz RT}}{40}{figure.caption.180}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Distancia real y la dada por el sensor}}{37}{figure.caption.169}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Ejemplo de correcci\IeC {\'o}n de distancia}}{38}{figure.caption.171}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Matriz RT}}{39}{figure.caption.180}
 \contentsline {figure}{\numberline {4.18}{\ignorespaces C\IeC {\'a}lculo visual de movimiento en coordenadas absolutas}}{41}{figure.caption.186}
 \contentsline {figure}{\numberline {4.19}{\ignorespaces Captura del mapa de funcionalidades de la herramienta gr\IeC {\'a}fica}}{43}{figure.caption.204}
-\contentsline {figure}{\numberline {4.20}{\ignorespaces gui1}}{44}{figure.caption.206}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces gui1}}{43}{figure.caption.206}
 \contentsline {figure}{\numberline {4.21}{\ignorespaces gui2}}{44}{figure.caption.208}
-\contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{45}{figure.caption.210}
+\contentsline {figure}{\numberline {4.22}{\ignorespaces gui3}}{44}{figure.caption.210}
 \contentsline {figure}{\numberline {4.23}{\ignorespaces gui4}}{45}{figure.caption.212}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {5.1}{\ignorespaces Extracci\IeC {\'o}n de car\IeC {\'a}cter\IeC {\'\i }sticas con SURF y con SIFT}}{47}{figure.caption.216}

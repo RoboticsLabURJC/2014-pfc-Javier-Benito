@@ -4,7 +4,7 @@
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-Una vez presentado el contexto, los objetivos, así como las herramientas empleadas y los fundamentos teóricos, en este capítulo se detallará la solución software final desarrollada. Primero se presenta el diseño global utilizado y después se analizará en detalle el componente en cuestión realizado con una visión profunda del desarrollo por bloques y su funcionamiento.
+Una vez presentado el contexto, los objetivos, así como las herramientas empleadas y los fundamentos teóricos, en este capítulo se detalla la solución software desarrollada. Primero se presenta el diseño global y después se analiza en detalle el componente realizado con una visión profunda del desarrollo por bloques y su funcionamiento.
 
 
 %-----------------------------------
@@ -12,9 +12,9 @@ Una vez presentado el contexto, los objetivos, así como las herramientas emplea
 %-----------------------------------
 \section{Diseño}
 
-El trabajo se basa principalmente en dos componentes; un componente de JDeRobot (\textbf{OpenniServer}) que funciona como driver del sensor y proporciona las imágenes obtenidas por éste y el componente realizado (\textbf{RealRTEstimator}) que se encargará, una vez recogidas las imágenes, de toda la lógica restante.
+El sistema se basa principalmente en dos componentes; uno existente en JdeRobot (\textbf{OpenniServer}) que funciona como driver del sensor y proporciona las imágenes obtenidas por éste y el componente realizado en este proyecto (\textbf{RealRTEstimator}) que se encarga, una vez recogidas las imágenes, de toda la lógica restante.
 
-El objetivo del componente, como ya se ha comentado, consiste en analizar en tiempo real la posición y movimiento del sensor, por lo que el componente deberá dar una estimación en todo momento.
+El objetivo del componente, como ya se ha comentado, consiste en estimar en tiempo real la posición y movimiento incremental y el 3D del sensor, por lo que deberá entregar una estimación en todo momento.
 
 En la Figura~\ref{fig:diagram1} se puede apreciar el diagrama global de funcionamiento del componente desarrollado y su conexión con otros componentes para los diferentes datos de entrada.
 
@@ -22,13 +22,13 @@ En la Figura~\ref{fig:diagram1} se puede apreciar el diagrama global de funciona
 \centering
 \includegraphics[scale=0.4]{Figures/diagram1.png}
 \decoRule
-\caption[Esquema general del componente RealRTEstimator]{Esquema global de funcionamiento.}
+\caption[Esquema general del componente RealRTEstimator]{Esquema global de funcionamiento, entradas y salidas.}
 \label{fig:diagram1}
 \end{figure}
 
-OpenniServer se encarga de preparar y enviar las imágenes del sensor. El componente recoge las imágenes a través de ICE y éste es el encargado de procesarlas. También recibe los datos de los parámetros intrínsecos de la cámara así como algunos parámetros de configuración, como pueden ser la activación/desactivación de la interfaz de usuario o algunos parámetros configurables de algunos de los algoritmos internos. A su salida entrega una matriz RT que describe la posición y orientación absolutas en ese preciso instante de tiempo. 
+OpenniServer se encarga de preparar y enviar las imágenes del sensor. El componente RealRTEstimator recoge las imágenes a través de ICE y es el encargado de procesarlas. También recibe los datos de los parámetros intrínsecos de la cámara así como algunos parámetros de configuración, como pueden ser la activación/desactivación de la interfaz de usuario o algunos parámetros configurables de los algoritmos internos. A su salida entrega una matriz RT que describe la posición y orientación 3D absolutas en ese preciso instante de tiempo. 
 
-Respecto al funcionamiento interno del componente se puede ver a grandes rasgos el diagrama en la Figura~\ref{fig:diagram2}. Se observa el diseño implementado así como sus bloques funcionales:
+Respecto al funcionamiento interno del RealRTEstimator se puede ver a grandes rasgos el diagrama de bloques en la Figura~\ref{fig:diagram2}. Se observa el diseño implementado así como sus bloques funcionales:
 
 \begin{figure}[!ht]
 \centering
@@ -43,7 +43,7 @@ Respecto al funcionamiento interno del componente se puede ver a grandes rasgos 
 
 \item Emparejamientos de puntos de interés en t con respecto a los puntos extraídos en el instante anterior (t-1).
 
-\item Transformación de puntos (píxeles) en 2D más imagen de profundidad a nube de puntos en 3D.
+\item Transformación de puntos (píxeles) en 2D usando la imagen de profundidad a nube de puntos en 3D.
 
 \item Cálculo de movimiento. Es decir, estimación de la matriz de rotación y translación (Matriz RT).
 
@@ -58,13 +58,13 @@ En las siguientes secciones desglosaremos el funcionamiento de estos diferentes 
 %-----------------------------------
 \section{Análisis 2D}
 
-El primer bloque del componente RealRTEstimator es el de análisis 2D. A partir de dos imágenes; la imagen de color y la de profundidad, se procede a la extracción de puntos de interés.
+El primer bloque del componente RealRTEstimator es el de análisis 2D. A partir de dos imágenes, imagen de color y la de profundidad, se procede a la extracción de puntos de interés.
 
 \subsection{Detección de puntos de interés}
 
 El término puntos de interés o detección de características (\textit{Feature Detection} en inglés) hace referencia a la tarea de localizar en una imágen puntos relevantes o carácterísticos. Estos puntos suelen ser comunes y son fáciles de seguir de fotograma en fotograma.
 
-Para entender cuales son estos puntos característicos podemos observar un ejemplo sencillo en la Figura~\ref{fig:feature_simple}. El cuadrado azul se encuentra en una área plana, y es difícil de seguir o encontrar. En cualquier lugar por donde se desplace parecerá que es el mismo. Para el cuadrado negro, que es un borde, igual para el desplazamiento lateral, sin embargo, para el desplazamiento vertical el punto ya cambia. Por último está el cuadrado rojo, que es una esquina. Para cualquier desplazamiento de esta figura, el punto ya es diferente, lo que significa que ese punto en la figura es único y por lo tanto vamos a poder identificarlo o seguirlo en diferentes imágenes. Así pues, las esquinas suelen ser candidatos idóneos para la detección puntos de carácterísticas en una imagen (en algunos casos las manchas también pueden ser consideradas buenas zonas).
+Para entender cuáles son estos puntos característicos podemos observar un ejemplo sencillo en la Figura~\ref{fig:feature_simple}. El cuadrado azul se encuentra en una área plana, y es difícil de seguir o encontrar. En cualquier lugar por donde se desplace parecerá que es el mismo. Para el cuadrado negro, que es un borde, igual para el desplazamiento lateral; sin embargo, para el desplazamiento vertical el punto ya cambia. Por último, está el cuadrado rojo, que es una esquina. Para cualquier desplazamiento de esta figura, el punto ya es diferente, lo que significa que ese punto en la figura es único y por lo tanto vamos a poder identificarlo o seguirlo en diferentes imágenes. Así pues, las esquinas suelen ser candidatos idóneos para la detección puntos de carácterísticas en una imagen (en algunos casos las manchas también pueden ser consideradas buenas zonas).
 
 \begin{figure}[!ht]
 \centering
@@ -74,7 +74,7 @@ Para entender cuales son estos puntos característicos podemos observar un ejemp
 \label{fig:feature_simple}
 \end{figure}
 
-Una vez entendido el concepto, el siguiente paso consiste, en averiguar cómo encontrar estos puntos de interés en una imagen real. Por ejemplo, una manera sencilla de hacerlo es buscar las regiones en las imágenes que contienen una gran variabilidad cuando son desplazadas (una pequeña distancia) hacia todas las direcciones de los alrededores.
+Una vez entendido el concepto, el siguiente paso consiste en averiguar cómo encontrar estos puntos de interés en una imagen real. Por ejemplo, una manera sencilla de hacerlo es buscar las regiones en las imágenes que contienen una gran variabilidad cuando son desplazadas (una pequeña distancia) hacia todas las direcciones de los alrededores.
 
 Existen multitud de implementaciones para calcular estas carácterísticas en las imágenes. Uno de los primeros intentos en encontrar estas esquinas fue hecho por Chris Harris y Mike Stephens \parencite{Reference8}. El método, llamado \textit{Harris Corner Detector} transforma la simple idea a una fórmula matemática (\ref{eqn:Harris}) que básicamente encuentra la diferencia en intensidad por un desplazamiento (u,v) en todas las direcciones.
 
@@ -83,9 +83,9 @@ E(u,v)\,=\,\sum_{x,y}w(x,y)\,\,[I(x\,+\, u,\, y\,+\, v)-I(x,y)]^{2}
 \label{eqn:Harris}
 \end{equation}
 
-Donde \textit{w(x,y)} es una ventana rectangular o gaussiana e I(x,y) corresponde a la intensidad. Aplicando algunos cálculos matemáticos que no vamos a entrar en detalle podemos llegar a la ecuación (\ref{eqn:Harris}) básica que determina si una ventana contiene una esquina o no.
+Donde \textit{w(x,y)} es una ventana rectangular o gaussiana e I(x,y) corresponde a la intensidad. Aplicando algunos cálculos matemáticos se llega a la ecuación (\ref{eqn:Harris}) básica que determina si una ventana contiene una esquina o no. OpenCV tiene la función \textbf{cv2.cornerHarris()} para este propósito.
 
-\[ R=det(m)-k(trace(M))^{2} \]
+%\[ R=det(m)-k(trace(M))^{2} \]
 \begin{equation}
 R=\lambda_{1}\lambda_{2}-k(\lambda_{1}+\lambda_{2})^{2}
 \label{eqn:Harris2}
@@ -109,7 +109,7 @@ R=min(\lambda_{1},\lambda_{2})
 \label{eqn:Shi}
 \end{equation}
 
-Si $R$ es mayor que un determinado umbral, o dicho de otro modo; solo cuando $\lambda_{1}$ o $\lambda_{2}$ se encuentran por encima de un valor mínimo $\lambda_{min}$, se considera que cierta región es esquina. En la Figura~\ref{fig:shi_detector} se puede observar el resultado de aplicar dicho algoritmo en una imagen.
+Si $R$ es mayor que un determinado umbral, o dicho de otro modo, solo cuando $\lambda_{1}$ o $\lambda_{2}$ se encuentran por encima de un valor mínimo $\lambda_{min}$, se considera que cierta región es esquina. En la Figura~\ref{fig:shi_detector} se puede observar el resultado de aplicar dicho algoritmo en una imagen. La función en OpenCV de este detector es \textbf{cv2.goodFeaturesToTrack()}.
 
 \begin{figure}[ht]
 \centering
@@ -119,7 +119,7 @@ Si $R$ es mayor que un determinado umbral, o dicho de otro modo; solo cuando $\l
 \label{fig:shi_detector}
 \end{figure}
 
-Existen varias implementataciones para el cálculo de carácterísticas de una imagen. A parte de las mencionadas, OpenCV proporciona entre otras \textbf{SIFT} y \textbf{SURF} que son las que hemos usado para el trabajo ya que permiten además de la detección de puntos de interés, el cálculo de descriptores.
+Existen varias implementataciones para el cálculo de carácterísticas de una imagen. A parte de las mencionadas, OpenCV proporciona entre otras \textbf{SIFT} y \textbf{SURF} que son las que hemos usado para el trabajo ya que permiten además de la detección de puntos de interés, el cálculo de descriptores. Se detallarán más adelante.
 
 \subsection{Cálculo de descriptores}
 
@@ -127,11 +127,11 @@ Una vez que se conoce el punto de interés, necesitamos asignarle una huella, al
 
 Consiste en definir la región alrededor del punto de interés para poder buscar el punto con la misma región en otra imagen. Es decir, se guarda una descripción de la región del punto dado y se busca el mismo (o el que más se parezca) a otro punto perteneciente a otra imagen.
 
-Una vez localizado el punto se podrá llevar un seguimiento de dónde está ese punto en otra imagen. No en todos los casos, se va a encontrar un descriptor perfecto para un cierto punto, por lo que al estudiar los emparejamientos se evaluará cuanto se parecen los despriptores entre sí. Esto lo veremos con detalle en la siguiente sección.
+Una vez localizado el punto se podrá llevar un seguimiento de dónde está ese punto en otra imagen. No en todos los casos se va a encontrar un descriptor perfecto para un cierto punto, por lo que al estudiar los emparejamientos se evaluará cuánto se parecen los despriptores entre sí.
 
-\subsubsection{SIFT}
+\subsubsection{Descriptores SIFT}
 
-SIFT (Scale-Invariant Feature Transform) soluciona uno de los problemas que se encontraban en los métodos anteriormente mencionados. Los métodos hasta ahora vistos para el cálculo de puntos de interés o esquinas, se suponen invariantes a la rotación, es decir, incluso si la images es rotada es posible encontrar las mismas esquinas. Esto es así porque una esquina sigue siendo una esquina si la imagen a sido rotada. Sin embargo, no contemplan los cambios de escala, un esquina no puede ser una esquina si la imagen ha sido escalada. En la Figura~\ref{fig:sift_scale_invariant} podemos ver un ejemplo de este hecho; una esquina en una pequeña imagen con una ventana no lo es cuando la imagen se amplia y se usa la misma ventana.
+SIFT (Scale-Invariant Feature Transform) soluciona uno de los problemas que se encontraban en los métodos anteriormente mencionados. Los métodos hasta ahora vistos para el cálculo de puntos de interés o esquinas se suponen invariantes a la rotación, es decir, incluso si la imagen es rotada es posible encontrar las mismas esquinas. Esto es así porque una esquina sigue siendo una esquina si la imagen a sido rotada. Sin embargo, no contemplan los cambios de escala, un esquina puede no ser una esquina si la imagen ha sido escalada. En la Figura~\ref{fig:sift_scale_invariant} podemos ver un ejemplo de este hecho; una esquina en una pequeña imagen con una ventana no lo es cuando la imagen se amplia y se usa la misma ventana.
 
 \begin{figure}[ht]
 \centering
@@ -141,18 +141,16 @@ SIFT (Scale-Invariant Feature Transform) soluciona uno de los problemas que se e
 \label{fig:sift_scale_invariant}
 \end{figure}
 
-SIFT nace para proveer esta carencia de mano de D. Lowe \parencite{Reference10}. Un algoritmo escalarmente invariante que  localiza puntos de interés y calcula descriptores. Hay principalmente 4 etapas básicas en el algoritmo de SIFT:
+SIFT nace para resolver esta carencia de mano de D. Lowe \parencite{Reference10}. Un algoritmo invariante que localiza puntos de interés y calcula descriptores. Hay principalmente 4 etapas básicas en el algoritmo de SIFT:
 
 \begin{enumerate}
 \item \underline{Extrema detección en espacio-escala}
 
-Para poder detectar características en diferentes escalas es necesario poder variar el tamaño de la ventana a ampliar. Para ello se utiliza un filtro de espacio-escala; un filtro LoG (Laplaciana de una Gaussiana) que con diferentes valores de $\sigma$ es capaz de detectar puntos de interés para diferentes escalas. $\sigma$ actúa como un parámetro de escala, para bajos niveles de $\sigma$ la gaussiana devuelve altos valores para las pequeñas esquinas, sin embargo, altos valores de $\sigma$ encajan bien para grandes esquinas.
+Para poder detectar características en diferentes escalas es necesario variar el tamaño de la ventana a ampliar. Para ello se utiliza un filtro de espacio-escala; un filtro LoG (Laplaciana de una Gaussiana) que con diferentes valores de $\sigma$ es capaz de detectar puntos de interés para diferentes escalas. $\sigma$ actúa como un parámetro de escala, para bajos niveles de $\sigma$ la gaussiana devuelve altos valores para las pequeñas esquinas, sin embargo, altos valores de $\sigma$ encajan bien para grandes esquinas.
 
-Por lo tanto se busca a lo largo de la imagen y en diferentes escalas para encontrar el punto 
+Por lo tanto se busca a lo largo de la imagen y en diferentes escalas para encontrar el punto. Así pues a lo largo de la imagen y en diferentes escalas tenemos una lista de $(x,y,\sigma)$ valores, donde $(x,y)$ representa el espacio y $\sigma$ la escala.
 
-Así pues a lo largo de la imagen y en diferentes escalas tenemos una lista de $(x,y,\sigma)$ valores, donde $(x,y)$ representa el espacio y $\sigma$ la escala.
-
-Sin embargo, el filtro LoG es muy costoso por lo que SIFT calcula una aproximación; la diferencia de gausianas con diferente $\sigma$ y el proceso se repetirá para diferentes octavas ($k\sigma$) como se puede apreciar en la Figura~\ref{fig:shif_dog}.
+Sin embargo, el filtro LoG es muy costoso temporalmente por lo que SIFT calcula una aproximación; la diferencia de gausianas con diferente $\sigma$ y el proceso se repetirá para diferentes octavas ($k\sigma$) como se puede apreciar en la Figura~\ref{fig:shif_dog}.
 
 \begin{figure}[ht]
 \centering
@@ -175,11 +173,11 @@ Una vez obtenida la diferencia de gaussianas (DOG) se calcula el \textit{local-e
 
 \item \underline{Localización de puntos de interés}
 
-Una vez que los puntos de interés se han localizado, se tienen que refinar a fin de obtener unos resultados más precisos. Por ello, se elimina cualquier punto de interés de bajo contraste, definido por el umbral \textit{contrastThreshold} y los puntos caracterizados como bordes por el umbral \textit{edgeThreshold}.
+Una vez que los puntos de interés se han localizado, se tienen que refinar a fin de obtener unos resultados más precisos. Por ello se elimina cualquier punto de interés de bajo contraste, definido por el umbral \textit{contrastThreshold} y los puntos caracterizados como bordes por el umbral \textit{edgeThreshold}.
 
 \item \underline{Asignación de orientación}
 
-En este punto cada característica obtenida de la imagen se le asigna una orientación para mantener el algoritmo invariante ante la rotación. Se crean por tanto pntos característicos con la misma localización y escala pero en diferentes direcciones.
+En este punto cada característica obtenida de la imagen se le asigna una orientación principal para mantener el algoritmo invariante ante la rotación. Se crean puntos característicos con la misma localización y escala pero en diferentes direcciones.
 
 \item \underline{Descriptores}
 
@@ -191,7 +189,7 @@ Los puntos de interés son emparejados en base a los vecinos. Se van seleccionan
 
 \end{enumerate}
 
-La implementación de SIFT en OpenCV es sencilla, partiendo de dos imagenes en escala de grises tenemos:
+La implementación de SIFT en OpenCV es sencilla, partiendo de dos imágenes en escala de grises tenemos:
 
 \begin{lstlisting}[style=CStyle]
 	SiftDescriptorExtractor extractor;
@@ -207,11 +205,11 @@ La implementación de SIFT en OpenCV es sencilla, partiendo de dos imagenes en e
  	extractor.compute(img_2, keypoints_2, >descriptors_2);
 \end{lstlisting}
 
-\subsubsection{SURF}
+\subsubsection{Descriptores SURF}
 
 SURF (Speeded Up Robust Features) podría ser la evolución y versión rápida de SIFT. Desarrollada por Bay, H., Tuytelaars, T. y Van Gool, L. \parencite{Reference12} se introduce un nuevo algoritmo para la detección y cálculo de descriptores.
 
-En vez de utilizar Laplaciana de la gaussiana (LoG) para encontrar el espacio de escala como SIFT. SURF va un poco más lejos y aproxima LoG con filtros de cuadros (\textit{Box Filter}). En la Figura~\ref{fig:surf1} se puede ver un ejemplo de tal aproximación.
+En vez de utilizar Laplaciana de la gaussiana (LoG) para encontrar el espacio de escala como SIFT, SURF va un poco más lejos y aproxima LoG con filtros de cuadros (\textit{Box Filter}). En la Figura~\ref{fig:surf1} se puede ver un ejemplo de tal aproximación.
 
 \begin{figure}[ht]
 \centering
@@ -221,9 +219,9 @@ En vez de utilizar Laplaciana de la gaussiana (LoG) para encontrar el espacio de
 \label{fig:surf1}
 \end{figure}
 
-La principal ventaja es que la convolución con cuadros es más fácil de cálcular con la ayuda de imagenes integrales. A parte, puede realizarse en paralelo para diferentes escalas.
+La principal ventaja es que la convolución con cuadros es más fácil de cálcular con la ayuda de imágenes integrales. A parte, puede realizarse en paralelo para diferentes escalas.
 
-Una vez calculado el escalado, se propone el cálculo de la orientación del punto de interés. Para obtener un punto invariante a las rotaciones, iluminación y orientación se utiliza \textit{wavelet de Haar} en la dirección $x$ e $y$ en una región circular de radio \textit{6s}\footnote{La \textit{s} hace referencia a un parámetro en el cómputo de descriptores de SURF que representa una escala que define los límites de las regiones circulares entorno al punto de interés.}. Después de haber evaluado las respuestas se busca la dirección predominante calculando la suma de todos los resultados dentro de una ventana con un ángulo de 60º. La región en la que se haya obtenido un mayor valor determinará la orientación buscada (Figura~\ref{fig:surf2}).
+Una vez calculado el escalado, se propone el cálculo de la orientación principal del punto de interés. Para obtener un punto invariante a las rotaciones, iluminación y orientación se utiliza \textit{wavelet de Haar} en la dirección $x$ e $y$ en una región circular de radio \textit{6s}\footnote{La \textit{s} hace referencia a un parámetro en el cómputo de descriptores de SURF que representa una escala que define los límites de las regiones circulares entorno al punto de interés.}. Después de haber evaluado las respuestas se busca la dirección predominante calculando la suma de todos los resultados dentro de una ventana con un ángulo de 60º. La región en la que se haya obtenido un mayor valor determinará la orientación buscada (Figura~\ref{fig:surf2}).
 
 Para el cálculo del descriptor se construye una sección cuadrada en base a la orientación obtenida, alrededor del punto de interés y con un tamaño \textit{20s}x\textit{20s}. Esta región es dividida en sub-regiones de tamaño \textit{4s} x \textit{4s} y para cada una de ellas se calcula la respuesta de \textit{wavelet de Haar} de tamaño \textit{2s} tanto en $x$ como para $y$. Se genera el siguiente vector:
 
@@ -239,9 +237,9 @@ Para el cálculo del descriptor se construye una sección cuadrada en base a la 
 v=\left(\sum d_{x},\sum d_{y},\sum|d_{x}|,\sum|d_{y}|\right)
 \end{equation}
 
-Con el vector representado, para cada carácterística detectada el descriptor con SURF contendrá 64 dimensiones. A menor dimensión, mayor velocidad de cómputo y de emparejamiento, pero se consigue mayor distinción entre características. Para esto SURF tiene una versión extendida con 128 dimensiones.
+Con el vector representado, para cada carácterística detectada el descriptor con SURF contendrá 64 dimensiones. A menor dimensión, mayor velocidad de cómputo y de emparejamiento, pero se consigue menor distinción entre características. Para esto SURF tiene una versión extendida con 128 dimensiones.
 
-En resumen, SURF añade un montón de mejoras para incrementar la velocidad en cada paso. Pruebas experimentales han demostrado que puede ser tres veces más rápido de SIFT. Aunque en robustez es comparable con SIFT, SURF se comporta bien en imágenes borrosas y con rotación pero no tanto cuando se cambian los puntos de vista o con una diferente condición de iluminación.
+En resumen, SURF añade muchas mejoras para incrementar la velocidad en cada paso. Pruebas experimentales han demostrado que puede ser tres veces más rápido que SIFT. Aunque en robustez es comparable con SIFT, SURF se comporta bien en imágenes borrosas y con rotación pero no tanto cuando se cambian los puntos de vista o con una diferente condición de iluminación.
 
 La implementación en código es similar a la de SIFT:
 
@@ -270,24 +268,24 @@ La implementación en código es similar a la de SIFT:
 %-----------------------------------
 %	SECTION Emparejamiento (\textit{matching})
 %-----------------------------------
-\section{Emparejamiento (\textit{matching})}
+\section{Emparejamiento}
 
-En esta sección abordaremos las distintas estrategias que se han implementado en el componente para el emparejamiento de puntos de interés. Los emparejamientos se harán por cada imagen/fotograma que llegue de la cámara después de la extración de puntos de interés.
+En esta sección abordaremos las distintas estrategias que se han implementado en el componente para el emparejamiento (\textit{matching}) de puntos de interés. Los emparejamientos se harán por cada fotograma que llegue de la cámara después de la extración de puntos de interés.
 
-El componente está recibiendo continuamente imágenes del sensor, por lo que el cálculo, al igual que la extración, se hará en cada iteración. Consiguiendo así una relación entre dos fotogramas consecutivos para analizar y posteriormente cálcular el desplazamiento sucedido. Estos emparejamientos nos darán margen para desechar algunos peores emparejamientos y filtrar por los mejores utilizando diferentes técnicas. Así pues, se intentará coger los mejores emparejamientos entre una imagen en $(t)$ y otra en $(t+1)$.
+El componente RealRTEstimator está recibiendo continuamente imágenes del sensor, por lo que el cálculo, al igual que la extración, se hará en cada iteración. Consiguiendo así una relación entre dos fotogramas consecutivos para analizar y posteriormente cálcular el desplazamiento sucedido. Estos emparejamientos nos darán margen para desechar los peores y filtrar por mejores utilizando diferentes técnicas. Así pues, se intentará coger los mejores emparejamientos entre una imagen en $(t)$ y otra en $(t+1)$.
 
-Se presentarán dos soluciones para este problema; una primera solución que calcula el emparejamiento de puntos mediante un mecanismo de \textbf{Fuerza Bruta} y en segundo lugar el uso de la librería \textbf{FLANN}, ambas proporcionadas por OpenCV.
+Se presentan dos soluciones para este problema; una primera solución que calcula el emparejamiento de puntos mediante un mecanismo de \textbf{Fuerza Bruta} y en segundo lugar el uso de la librería \textbf{FLANN}, ambas proporcionadas por OpenCV.
 
-\subsection{Fuerza Bruta}
+\subsection{Emparejamiento por Fuerza Bruta}
 
-El mecanismo de Fuerza Bruta es simple. Se coge el descriptor de una de las carácterísticas del primer fotograma (imagen en $(t)$) y se comprueba el parecido con todos los puntos de carácterísticas del segundo fotograma (imagen en $(t+1)$). Estos emparejamientos se evalúan a través de un parámetro de distancia. De todas las características, el descriptor que más se parezca al primero o el emparejamiento que tenga la menor distancia es el devuelto.
+El mecanismo de Fuerza Bruta es simple: Se coge el descriptor de una de las carácterísticas del primer fotograma (imagen en $(t)$) y se comprueba el parecido con todos los puntos de carácterísticas del segundo fotograma (imagen en $(t+1)$). Estos emparejamientos se evalúan a través de un parámetro de distancia. De todas las características, el descriptor que más se parezca al primero o el emparejamiento que tenga la menor distancia es el devuelto.
 
-Para el cálculo de este emparejamiento se usará OpenCV. En primer lugar se tendrá que crear un objeto del tipo \textit{BruteForceMatcher} y pasarle como parámetro el tipo de medida para calcular la distancia, ya que depende del tipo de descriptor a utilizar.
+Para el cálculo de este emparejamiento se usa OpenCV. En primer lugar se tiene que crear un objeto del tipo \textit{BruteForceMatcher} y pasarle como parámetro el tipo de medida para calcular la distancia, ya que depende del tipo de descriptor a utilizar.
 
-Una vez creado el objeto dos métodos importantes son \textit{.match()} y \textit{.knnMatch()}. El primero devuelve el mejor emparejamiento. El segundo devuelve los $k$ mejores emparejamientos, donde $k$ es definido por el usuario.
+Una vez creado el objeto, dos métodos importantes son \textit{.match()} y \textit{.knnMatch()}. El primero devuelve el mejor emparejamiento. El segundo devuelve los $k$ mejores emparejamientos, donde $k$ es definido por el usuario.
 
 
-El el siguiente ejemplo de código se puede observar como calcular los emparejamientos a través de OpenCV:
+El siguiente ejemplo de código se puede observar cómo calcular los emparejamientos a través de OpenCV:
 
 \begin{lstlisting}[style=CStyle]
 	// matching descriptors
@@ -308,7 +306,7 @@ El el siguiente ejemplo de código se puede observar como calcular los emparejam
 \item \textit{DMatch.imgIdx} - Índice de la imagen resultado.
 \end{itemize}
 
-En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba casera utilizando el algoritmo de Fuerza Bruta. Como se puede apreciar el tener que emparejar todos los puntos de una imagen al más parececido de la otra proporciona, incluso en una imagen muy parecida, errores que se van a tener que filtrar.
+En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba casera utilizando el algoritmo de Fuerza Bruta. Como se puede apreciar, el tener que emparejar todos los puntos de una imagen al más parececido de la otra proporciona, incluso en una imagen muy parecida, errores que se van a tener que filtrar.
 
 \begin{figure}[th]
 \centering
@@ -320,14 +318,12 @@ En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba caser
 
 
 
-Por último, para la visualización OpenCV dispone del método \textit{.drawMatches()} que a partir de las dos imágenes y los emparejamientos obtenidos nos ayuda a dibujar los mismos para su visualización. Colocando las dos imágenes a tratar en horizontal y dibujando las líneas con los emparejamientos de una imágen a otra. En el caso de usar y querer visualizar los $k$ mejores emparejamientos existe también el método \textit{.drawMatchesKnn}.
+Por último, para la visualización OpenCV dispone del método \textit{.drawMatches()} que a partir de las dos imágenes y los emparejamientos obtenidos ayuda a dibujar los mismos para su visualización. Coloca las dos imágenes a tratar en horizontal y dibuja las líneas con los emparejamientos de una imágen a otra. En el caso de usar y querer visualizar los $k$ mejores emparejamientos existe también el método \textit{.drawMatchesKnn}.
 
 
-\subsection{FLANN}
+\subsection{Emparejamiento por FLANN}
 
-FLANN (Fast Library for Approximate Nearest Neighbors) es una librería que contiene una colección de algoritmos optimizados para encontrar emparejamientos.
-
-Esta librería de OpenCV, es una implementación del trabajo de Marius Muja y David G. Lowe \parencite{Reference11}. Está pensada para trabajar con grandes conjuntos de datos y cuando los descriptores son representados por vectores de grandes dimensiones. Por lo que en estos entornos trabajará más rápido que el algoritmo de Fuerza Bruta.
+FLANN (\textit{Fast Library for Approximate Nearest Neighbors}) es una librería que contiene una colección de algoritmos optimizados para encontrar emparejamientos. Esta librería de OpenCV, es una implementación del trabajo de Marius Muja y David G. Lowe \parencite{Reference11}. Está pensada para trabajar con grandes conjuntos de datos y cuando los descriptores son representados por vectores de grandes dimensiones. Por lo que en estos entornos trabajará más rápido que el algoritmo de Fuerza Bruta.
 
 FLANN provee de un sistema para elegir automáticamente el mejor algoritmo basado en la colección de datos. Dispone también de unos parámetros de entrada que permiten al usuario especificar la importancia de minimizar la memoria o el tiempo de compilación en lugar del tiempo de búsqueda.
 
@@ -339,9 +335,9 @@ La implementación en código con OpenCV es sencilla y muy parecida a la anterio
   std::vector< DMatch > matches;
   matcher.match(descriptors_1, descriptors_2, matches);
 \end{lstlisting}
-\subsection{Resolución de errores}
+\subsection{Resolución de errores de emparejamiento}
 
-Sobre el tema de filtrado de errores se han usado dos estrategias; se han cogido de todos los emparejamientos un porcentaje relativamente pequeño donde se encuentran los emparejamientos más acertados, tomando como medida de calidad la distancia ofrecida por los diferentes algoritmos y se ha incluido un filtro de sobresaliencia para el algoritmo de Fuerza Bruta.
+Sobre el filtrado de errores se han usado dos estrategias. Se han cogido de todos los emparejamientos un porcentaje relativamente pequeño donde se encuentran los emparejamientos más acertados, tomando como medida de calidad la distancia ofrecida por los diferentes algoritmos y se ha incluido un filtro de sobresaliencia para el algoritmo de Fuerza Bruta.
 
 
 
@@ -360,7 +356,7 @@ En la Figura~\ref{fig:bestPointsSift} se puede ver el resultado de aplicar este 
 
 \item \underline{Filtro de sobresaliencia}. Este filtro surge de la necesidad de corregir un error común que se encontraba en los mejores emparejamientos por distancia. Existen ciertas situaciones en las que hay características de una imagen muy similares a otras de otra imagen y que corresponden a errores en el emparejamiento.
 
-En la Figura~\ref{fig:similarCorrelation} se captura un ejemplo con dos de los mejores puntos medidos por distancia y se verifica que los dos mejores puntos se corresponden con el mismo punto en la imagen a buscar. Este error corresponde a una situación poco casual es origen de muchos errores en la estimación.
+En la Figura~\ref{fig:similarCorrelation} se captura un ejemplo con dos de los mejores puntos medidos por distancia y se verifica que los dos mejores puntos se corresponden con el mismo punto en la imagen a buscar. Este error corresponde a una situación poco casual y es origen de muchos errores en la estimación.
 
 \begin{figure}[th]
 \centering
@@ -370,9 +366,9 @@ En la Figura~\ref{fig:similarCorrelation} se captura un ejemplo con dos de los m
 \label{fig:similarCorrelation}
 \end{figure}
 
-Se puede entender en la Figura~\ref{fig:similarCorrelation} que el punto con el resultado final del emparejamiento (imagen derecha) tiene a nivel de descriptores una mayor similitud que los demás, de ahí ese resultado. Se puede decir por tanto, que los dos mejores puntos tienen una correlación muy similar, al igual que tendrán los demás puntos a lo largo del marco de la puerta subrayado en amarillo.
+Se puede entender en la Figura~\ref{fig:similarCorrelation} que el punto con el resultado final del emparejamiento (imagen derecha) tiene a nivel de descriptores una mayor similitud que los demás, de ahí ese resultado. Pero los dos mejores puntos tienen una correlación muy similar, al igual que tendrán los demás puntos a lo largo del marco de la puerta subrayado en amarillo.
 
-Para ello, se ha empleado el método \textit{.knnMatch()} en el algoritmo de Fuerza Bruta que coge los $k$ mejores puntos. En este caso, se cogen los 2 mejores emparejamientos de todos los puntos y si la diferencia entre estos dos mejores emparejamientos es muy similar $(< 100)$ se desecha. Así pues, este filtro garantiza que el emparejamiento obtenido a través de los dos puntos es muy fuerte y no hay otro descriptor en la otra imagen con características similares.
+Para ello, se ha empleado el método \textit{.knnMatch()} en el algoritmo de Fuerza Bruta que coge los $k$ mejores puntos. En este caso, se cogen los 2 mejores emparejamientos de todos los puntos y si la diferencia entre estos dos mejores emparejamientos es muy paqueña $(< 100)$ se desecha. Así pues, este filtro garantiza que el emparejamiento obtenido a través de los dos puntos es muy fuerte y no hay otro descriptor en la otra imagen con características similares.
 
 El código para esta implementación es sencillo:
 
@@ -390,7 +386,7 @@ El código para esta implementación es sencillo:
 
 Donde \textit{OUTSTANDING\_DISTANCE} es el umbral mínimo de diferencia de distancias permitido, que por defecto se ha definido en 100.
 
-Como diferencia, en esta ocasión como resultado del método \textit{.knnMatch()} se obtine un vector de vectores. Cada vector corresponde a un emparejamiento y por cada uno, otro vector con los $k$ mejores emparejamientos.
+Como diferencia, en esta ocasión como resultado del método \textit{.knnMatch()} se obtiene un vector de vectores. Cada vector corresponde a un posible emparejamiento y por cada uno, otro vector con los $k$ mejores emparejamientos.
 
 \end{itemize}
 
@@ -399,9 +395,9 @@ Como diferencia, en esta ocasión como resultado del método \textit{.knnMatch()
 %-----------------------------------
 \section{Obtención de puntos 3D}
 
-Una vez obtenidos los puntos de interés y los mejores emparejamientos, se necesitará llevar a 3D los puntos calculados para el instante $(t)$\footnote{Como explicaremos más adelante, no se necesitarán calcular los puntos 3D para el instante $(t-1)$ ya que los puntos en ese instante ya se habrán calculado.}, para poder analizar en la siguiente fase el desplazamiento en tres dimensiones.
+Una vez obtenidos los puntos de interés y los mejores emparejamientos, se necesita llevar a 3D los puntos calculados para el instante $(t)$\footnote{Como explicaremos más adelante, no se necesitarán calcular los puntos 3D para el instante $(t-1)$ ya que los puntos en ese instante ya se habrán calculado.}, para analizar en la siguiente fase el desplazamiento en tres dimensiones.
 
-Esos puntos de interés en dos dimensiones, o mejor llamados; píxeles, se obtienen a partir de la imagen RGB que proviene del sensor, sin embargo, para este cálculo se necesitará además la imagen DEPTH correspondiente. O lo que es lo mismo, el mismo píxel o punto de la imagen a color debe corresponder con su homólogo en la imagen de profundidad. Se puede deducir que ambas imágenes deberán estar perfectamente sincronizadas para asegurarse de que ambas se corresponden con el mismo instante de tiempo. En la Figura~\ref{fig:diagramPoints3d} tenemos el diagrama de transformación de los puntos.
+Esos puntos de interés en dos dimensiones, o mejor llamados, píxeles, se obtienen a partir de la imagen RGB que proviene del sensor. Sin embargo, para este cálculo de puntos 3D se necesitará además la imagen DEPTH correspondiente. O lo que es lo mismo, el mismo píxel o punto de la imagen a color debe relacionarse con su homólogo en la imagen de profundidad. Se puede deducir que ambas imágenes deberán estar perfectamente sincronizadas para asegurar que ambas se corresponden con el mismo instante de tiempo. En la Figura~\ref{fig:diagramPoints3d} tenemos el diagrama de transformación de los puntos.
 
 \begin{figure}[th]
 \centering
@@ -411,7 +407,7 @@ Esos puntos de interés en dos dimensiones, o mejor llamados; píxeles, se obtie
 \label{fig:diagramPoints3d}
 \end{figure}
 
-Para conseguir la información 3D se ha utilizado la librería de Progeo y su modelo de proyección \textit{PinHole}. Una vez obtenidos los puntos 2D más su información de distancia, se busca la recta de retroproyección correspondinete a cada uno de los píxeles de la imágen que se quieran transformar. Después se calcula el punto 3D, que será el que se encuentre a una distancia $d$ de la recta de retroproyección (ej: punto $P$ en la Figura~\ref{fig:camLine}).
+Para conseguir la información 3D se ha utilizado la librería de Progeo, disponible en JdeRobot, y su modelo de proyección \textit{PinHole}. Una vez obtenidos los puntos 2D más su información de distancia, se busca la recta de retroproyección correspondiente a cada uno de los píxeles de la imagen que se quieran transformar. Después se calcula el punto 3D, que será el que se encuentre a una distancia $d$ de la recta de retroproyección (ej: punto $P$ en la Figura~\ref{fig:camLine}).
 
 \begin{figure}[th]
 \centering
@@ -421,7 +417,7 @@ Para conseguir la información 3D se ha utilizado la librería de Progeo y su mo
 \label{fig:camLine}
 \end{figure}
 
-La transformación de un píxel a su homólogo en 3D es compleja. El proceso de recostrucción está basado en un modelo proyectivo desde el centro óptico, por lo tanto, la distancia que se devuelve del sensor es la distancia perpendicular al plano imagen, y no la distancia real, tal y como se puede apreciar en la Figura~\ref{fig:distPoint}. Para ello, si se quiere calcular la posición 3D asociada a un píxel cuya recta de retroproyección es la que une el foco de la cámara y un punto BP (Figura~\ref{fig:calculate3d}) el punto que se quiere calcular no será el punto $P$, punto a una distancia $d$ del foco de la cámara y que nos da el sensor, sino el punto $Pr$ que corresponde al punto 3D real.
+La transformación de un píxel a su homólogo en 3D es compleja. El proceso de recostrucción está basado en un modelo proyectivo desde el centro óptico. La distancia que devuelve el sensor, sin embargo, es la distancia perpendicular al plano imagen, y no la distancia real, tal y como se puede apreciar en la Figura~\ref{fig:distPoint}. Para ello, si se quiere calcular la posición 3D asociada a un píxel cuya recta de retroproyección es la que une el foco de la cámara y un punto BP (Figura~\ref{fig:calculate3d}) el punto que se quiere calcular no será el punto $P$, punto a una distancia $d$ del foco de la cámara y que nos da el sensor, sino el punto $Pr$ que corresponde al punto 3D real.
 
 \begin{figure}[th]
 \centering
@@ -490,9 +486,9 @@ Por último, aplicando el resultado de $t$ sobre la ecuación~\ref{eqn:param} se
 %-----------------------------------
 %	SUBSECTION Cálculo de movimiento
 %-----------------------------------
-\section{Cálculo de movimiento}
+\section{Cálculo de movimiento tridimensional}
 
-Una vez calculados los puntos 3D, el siguiente bloque del componente realizado es la estimación de movimiento. En este caso hay que calcular continuamente el movimiento relativo entre los instantes $(n-1)$ y $(n)$. Esto permite ir siguiendo la trayectoria y la orientación seguida por el sensor a lo largo del tiempo.
+Una vez calculados los puntos 3D, el siguiente bloque del componente realizado, RealRTEstimator, es la estimación de movimiento. En este caso hay que calcular continuamente el movimiento relativo entre los instantes $(n-1)$ y $(n)$. Esto permite ir siguiendo la trayectoria y la orientación seguida por el sensor a lo largo del tiempo.
 
 \subsection{Matriz RT}
 
@@ -506,7 +502,7 @@ La trayectoria seguida se definirá por una \textbf{matriz RT} (Rotación + Tran
 \label{fig:matrixRT}
 \end{figure}
 
-Donde cualquier rotación podrá ser expresada como combinación de tres rotaciones por cada eje:
+Donde cualquier rotación puede ser expresada como combinación ordenada de tres rotaciones por cada eje:
 
 \begin{equation}
 R_{x}(\theta)=\left[\begin{array}{ccc}

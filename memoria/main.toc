@@ -32,18 +32,18 @@
 \contentsline {section}{\numberline {4.1}Dise\IeC {\~n}o}{24}{section.83}
 \contentsline {section}{\numberline {4.2}An\IeC {\'a}lisis 2D}{26}{section.86}
 \contentsline {subsection}{\numberline {4.2.1}Detecci\IeC {\'o}n de puntos de inter\IeC {\'e}s}{26}{subsection.87}
-\contentsline {subsection}{\numberline {4.2.2}C\IeC {\'a}lculo de descriptores}{27}{subsection.93}
-\contentsline {subsubsection}{SIFT}{28}{section*.94}
-\contentsline {subsubsection}{SURF}{30}{section*.115}
-\contentsline {section}{\numberline {4.3}Emparejamiento (\textit {matching})}{32}{section.138}
-\contentsline {subsection}{\numberline {4.3.1}Fuerza Bruta}{33}{subsection.139}
-\contentsline {subsection}{\numberline {4.3.2}FLANN}{33}{subsection.146}
-\contentsline {subsection}{\numberline {4.3.3}Resoluci\IeC {\'o}n de errores}{34}{subsection.152}
+\contentsline {subsection}{\numberline {4.2.2}C\IeC {\'a}lculo de descriptores}{28}{subsection.93}
+\contentsline {subsubsection}{Descriptores SIFT}{28}{section*.94}
+\contentsline {subsubsection}{Descriptores SURF}{30}{section*.115}
+\contentsline {section}{\numberline {4.3}Emparejamiento}{32}{section.138}
+\contentsline {subsection}{\numberline {4.3.1}Emparejamiento por Fuerza Bruta}{32}{subsection.139}
+\contentsline {subsection}{\numberline {4.3.2}Emparejamiento por FLANN}{33}{subsection.146}
+\contentsline {subsection}{\numberline {4.3.3}Resoluci\IeC {\'o}n de errores de emparejamiento}{34}{subsection.152}
 \contentsline {section}{\numberline {4.4}Obtenci\IeC {\'o}n de puntos 3D}{36}{section.165}
-\contentsline {section}{\numberline {4.5}C\IeC {\'a}lculo de movimiento}{39}{section.178}
+\contentsline {section}{\numberline {4.5}C\IeC {\'a}lculo de movimiento tridimensional}{39}{section.178}
 \contentsline {subsection}{\numberline {4.5.1}Matriz RT}{39}{subsection.179}
 \contentsline {subsection}{\numberline {4.5.2}C\IeC {\'a}lculo RT (SVD)}{40}{subsection.185}
-\contentsline {subsection}{\numberline {4.5.3}Optimizaci\IeC {\'o}n}{42}{subsection.199}
+\contentsline {subsection}{\numberline {4.5.3}Optimizaci\IeC {\'o}n}{41}{subsection.199}
 \contentsline {section}{\numberline {4.6}Interfaz gr\IeC {\'a}fica}{42}{section.203}
 \contentsline {chapter}{\numberline {5}Experimentos}{46}{chapter.213}
 \contentsline {section}{\numberline {5.1}Validaci\IeC {\'o}n experimental}{46}{section.214}
