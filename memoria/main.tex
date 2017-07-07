@@ -100,19 +100,19 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Thesis Title} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Dr. James \textsc{Smith}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+\thesistitle{Odometría visual con sensor RGBD en JdeRobot} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\supervisor{José María Cañas Plaza} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
-\degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
-\author{John \textsc{Smith}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
+\degree{Proyecto Fin de Carrera} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
+\author{Javier Benito Díaz} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
-\subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
+\subject{Visión artificial} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 \keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
-\university{\href{http://www.university.com}{University Name}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
-\department{\href{http://department.university.com}{Department or School Name}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
-\group{\href{http://researchgroup.university.com}{Research Group Name}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
-\faculty{\href{http://faculty.university.com}{Faculty Name}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
+\university{\href{http://www.urjc.es}{Universidad Rey Juan Carlos}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
+\department{\href{https://gsyc.urjc.es/}{Departamento del GSyC}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+\group{\href{https://gsyc.urjc.es/robotica}{Grupo de robótica}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
+\faculty{\href{https://www.urjc.es/universidad/facultades/escuela-tecnica-superior-de-ingenieria-de-las-telecomunicaciones/content/89-etsit-escuela-tecnica-superior-de-ingenieria-de-telecomunicacion/}{Escuela Técnica Superior de Ingeniería de Telecomunicación}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \AtBeginDocument{
 \hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
@@ -130,7 +130,46 @@ headsepline, % Uncomment to get a line under the header
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
+\thispagestyle{empty}
 
+\vspace{2cm}
+
+\begin{figure}[htb]
+\centerline{\resizebox{.50\textwidth}{!}{\includegraphics{Figures/logo_urjc.png}}}
+\end{figure}
+
+\begin{center}
+{\large{\facname}}
+
+\vspace{10mm}
+
+{\Large {\bf Ingeniería de Telecomunicación - Ingeniería Técnica en Informática de Sistemas}}
+\vspace{5mm}
+
+\vspace{1.0cm}
+
+{\large {\bf \degreename}} 
+
+\vspace{3cm}
+
+{\Huge \ttitle}
+
+\end{center}
+
+\vspace{7cm}
+\makebox[10cm][r]{
+\begin{tabular}{ll}
+{\bf Autor}: & \authorname \\
+{\bf Tutor}:& \supname \\
+\end{tabular} 
+}
+
+\vspace{5mm}
+\begin{center}
+{\normalsize Curso académico 2016/2017}
+\end{center}
+
+\newpage
 
 %----------------------------------------------------------------------------------------
 %	DECLARATION PAGE
@@ -142,13 +181,20 @@ headsepline, % Uncomment to get a line under the header
 %	QUOTATION PAGE
 %----------------------------------------------------------------------------------------
 
+\vspace*{0.2\textheight}
 
+\noindent\enquote{\itshape Agradecimientos... }\bigbreak
+
+%\hfill Javier
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
 
-
+\begin{abstract}
+\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+\end{abstract}
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS

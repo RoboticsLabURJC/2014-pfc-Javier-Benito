@@ -1,64 +1,65 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
 \select@language {spanish}
-\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.4}
-\contentsline {section}{\numberline {1.1}Visi\IeC {\'o}n artificial}{1}{section.5}
-\contentsline {section}{\numberline {1.2}Autolocalizaci\IeC {\'o}n visual}{4}{section.15}
-\contentsline {subsection}{\numberline {1.2.1}Structure from Motion (SfM)}{5}{subsection.18}
-\contentsline {subsection}{\numberline {1.2.2}Visual SLAM}{6}{subsection.20}
-\contentsline {subsection}{\numberline {1.2.3}Odometr\IeC {\'\i }a visual}{7}{subsection.24}
-\contentsline {section}{\numberline {1.3}Autolocalizaci\IeC {\'o}n visual en el laboratorio de rob\IeC {\'o}tica URJC}{8}{section.25}
-\contentsline {chapter}{\numberline {2}Objetivos}{11}{chapter.30}
-\contentsline {section}{\numberline {2.1}Descripci\IeC {\'o}n del problema}{11}{section.31}
-\contentsline {section}{\numberline {2.2}Requisitos}{12}{section.36}
-\contentsline {section}{\numberline {2.3}Metodolog\IeC {\'\i }a}{12}{section.37}
-\contentsline {section}{\numberline {2.4}Planificaci\IeC {\'o}n del trabajo}{13}{section.42}
-\contentsline {chapter}{\numberline {3}Infraestructura}{15}{chapter.48}
-\contentsline {section}{\numberline {3.1}Sensores RGBD}{15}{section.49}
-\contentsline {section}{\numberline {3.2}JDeRobot}{16}{section.54}
-\contentsline {subsection}{\numberline {3.2.1}Biblioteca Progeo}{17}{subsection.57}
-\contentsline {subsection}{\numberline {3.2.2}Biblioteca parallelIce}{18}{subsection.59}
-\contentsline {subsection}{\numberline {3.2.3}Servidor OpenniServer}{18}{subsection.60}
-\contentsline {subsection}{\numberline {3.2.4}Herramienta RGBDViewer}{18}{subsection.61}
-\contentsline {subsection}{\numberline {3.2.5}Pose3D}{19}{subsection.63}
-\contentsline {section}{\numberline {3.3}Biblioteca ICE de comunicaciones}{19}{section.64}
-\contentsline {section}{\numberline {3.4}Biblioteca Point Cloud Library (PCL)}{19}{section.66}
-\contentsline {section}{\numberline {3.5}Biblioteca OpenCV}{19}{section.68}
-\contentsline {section}{\numberline {3.6}Biblioteca Eigen}{20}{section.71}
-\contentsline {section}{\numberline {3.7}Biblioteca de interfaz gr\IeC {\'a}fica GTK+}{21}{section.74}
-\contentsline {subsection}{\numberline {3.7.1}Glade}{21}{subsection.76}
-\contentsline {section}{\numberline {3.8}OpenGL}{22}{section.78}
-\contentsline {chapter}{\numberline {4}Desarrollo}{24}{chapter.82}
-\contentsline {section}{\numberline {4.1}Dise\IeC {\~n}o}{24}{section.83}
-\contentsline {section}{\numberline {4.2}An\IeC {\'a}lisis 2D}{26}{section.86}
-\contentsline {subsection}{\numberline {4.2.1}Detecci\IeC {\'o}n de puntos de inter\IeC {\'e}s}{26}{subsection.87}
-\contentsline {subsection}{\numberline {4.2.2}C\IeC {\'a}lculo de descriptores}{28}{subsection.93}
-\contentsline {subsubsection}{Descriptores SIFT}{28}{section*.94}
-\contentsline {subsubsection}{Descriptores SURF}{30}{section*.115}
-\contentsline {section}{\numberline {4.3}Emparejamiento}{32}{section.138}
-\contentsline {subsection}{\numberline {4.3.1}Emparejamiento por Fuerza Bruta}{32}{subsection.139}
-\contentsline {subsection}{\numberline {4.3.2}Emparejamiento por FLANN}{33}{subsection.146}
-\contentsline {subsection}{\numberline {4.3.3}Resoluci\IeC {\'o}n de errores de emparejamiento}{34}{subsection.152}
-\contentsline {section}{\numberline {4.4}Obtenci\IeC {\'o}n de puntos 3D}{36}{section.165}
-\contentsline {section}{\numberline {4.5}C\IeC {\'a}lculo de movimiento tridimensional}{39}{section.178}
-\contentsline {subsection}{\numberline {4.5.1}Matriz RT}{39}{subsection.179}
-\contentsline {subsection}{\numberline {4.5.2}C\IeC {\'a}lculo RT mediante SVD}{40}{subsection.185}
-\contentsline {subsection}{\numberline {4.5.3}Optimizaci\IeC {\'o}n mediante RANSAC}{42}{subsection.199}
-\contentsline {section}{\numberline {4.6}Interfaz gr\IeC {\'a}fica}{43}{section.211}
-\contentsline {chapter}{\numberline {5}Experimentos}{47}{chapter.221}
-\contentsline {section}{\numberline {5.1}Validaci\IeC {\'o}n experimental}{47}{section.222}
-\contentsline {subsection}{\numberline {5.1.1}Detecci\IeC {\'o}n de puntos de inter\IeC {\'e}s}{47}{subsection.223}
-\contentsline {subsubsection}{Filtro de puntos frontera}{47}{section*.225}
-\contentsline {subsection}{\numberline {5.1.2}C\IeC {\'a}lculo de emparejamientos}{48}{subsection.227}
-\contentsline {subsubsection}{Filtro de sobresaliencia}{48}{section*.228}
-\contentsline {subsubsection}{Traslaci\IeC {\'o}n y Rotaci\IeC {\'o}n}{49}{section*.230}
-\contentsline {subsection}{\numberline {5.1.3}Resoluci\IeC {\'o}n 3D}{49}{subsection.232}
-\contentsline {subsubsection}{Validaci\IeC {\'o}n de la traslaci\IeC {\'o}n}{49}{section*.233}
-\contentsline {subsubsection}{Validaci\IeC {\'o}n de la Rotaci\IeC {\'o}n}{51}{section*.238}
-\contentsline {subsubsection}{Validaci\IeC {\'o}n de trayectorias complejas}{52}{section*.242}
-\contentsline {subsection}{\numberline {5.1.4}Error est\IeC {\'a}tico}{52}{subsection.243}
-\contentsline {section}{\numberline {5.2}Tiempos de procesado}{54}{section.245}
-\contentsline {chapter}{\numberline {6}Conclusiones}{59}{chapter.257}
-\contentsline {section}{\numberline {6.1}Conclusiones}{59}{section.258}
-\contentsline {section}{\numberline {6.2}Trabajos futuros}{60}{section.263}
-\contentsline {chapter}{Bibliograf\'{\i }a}{61}{chapter*.264}
+\contentsline {chapter}{Resumen}{\es@scroman {iii}}{section*.2}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.6}
+\contentsline {section}{\numberline {1.1}Visi\IeC {\'o}n artificial}{1}{section.7}
+\contentsline {section}{\numberline {1.2}Autolocalizaci\IeC {\'o}n visual}{4}{section.17}
+\contentsline {subsection}{\numberline {1.2.1}Structure from Motion (SfM)}{5}{subsection.20}
+\contentsline {subsection}{\numberline {1.2.2}Visual SLAM}{6}{subsection.22}
+\contentsline {subsection}{\numberline {1.2.3}Odometr\IeC {\'\i }a visual}{7}{subsection.26}
+\contentsline {section}{\numberline {1.3}Autolocalizaci\IeC {\'o}n visual en el laboratorio de rob\IeC {\'o}tica URJC}{8}{section.27}
+\contentsline {chapter}{\numberline {2}Objetivos}{11}{chapter.32}
+\contentsline {section}{\numberline {2.1}Descripci\IeC {\'o}n del problema}{11}{section.33}
+\contentsline {section}{\numberline {2.2}Requisitos}{12}{section.38}
+\contentsline {section}{\numberline {2.3}Metodolog\IeC {\'\i }a}{12}{section.39}
+\contentsline {section}{\numberline {2.4}Planificaci\IeC {\'o}n del trabajo}{13}{section.44}
+\contentsline {chapter}{\numberline {3}Infraestructura}{15}{chapter.50}
+\contentsline {section}{\numberline {3.1}Sensores RGBD}{15}{section.51}
+\contentsline {section}{\numberline {3.2}JDeRobot}{16}{section.56}
+\contentsline {subsection}{\numberline {3.2.1}Biblioteca Progeo}{17}{subsection.59}
+\contentsline {subsection}{\numberline {3.2.2}Biblioteca parallelIce}{18}{subsection.61}
+\contentsline {subsection}{\numberline {3.2.3}Servidor OpenniServer}{18}{subsection.62}
+\contentsline {subsection}{\numberline {3.2.4}Herramienta RGBDViewer}{18}{subsection.63}
+\contentsline {subsection}{\numberline {3.2.5}Pose3D}{19}{subsection.65}
+\contentsline {section}{\numberline {3.3}Biblioteca ICE de comunicaciones}{19}{section.66}
+\contentsline {section}{\numberline {3.4}Biblioteca Point Cloud Library (PCL)}{19}{section.68}
+\contentsline {section}{\numberline {3.5}Biblioteca OpenCV}{19}{section.70}
+\contentsline {section}{\numberline {3.6}Biblioteca Eigen}{20}{section.73}
+\contentsline {section}{\numberline {3.7}Biblioteca de interfaz gr\IeC {\'a}fica GTK+}{21}{section.76}
+\contentsline {subsection}{\numberline {3.7.1}Glade}{21}{subsection.78}
+\contentsline {section}{\numberline {3.8}OpenGL}{22}{section.80}
+\contentsline {chapter}{\numberline {4}Desarrollo}{24}{chapter.84}
+\contentsline {section}{\numberline {4.1}Dise\IeC {\~n}o}{24}{section.85}
+\contentsline {section}{\numberline {4.2}An\IeC {\'a}lisis 2D}{26}{section.88}
+\contentsline {subsection}{\numberline {4.2.1}Detecci\IeC {\'o}n de puntos de inter\IeC {\'e}s}{26}{subsection.89}
+\contentsline {subsection}{\numberline {4.2.2}C\IeC {\'a}lculo de descriptores}{28}{subsection.95}
+\contentsline {subsubsection}{Descriptores SIFT}{28}{section*.96}
+\contentsline {subsubsection}{Descriptores SURF}{30}{section*.117}
+\contentsline {section}{\numberline {4.3}Emparejamiento}{32}{section.140}
+\contentsline {subsection}{\numberline {4.3.1}Emparejamiento por Fuerza Bruta}{32}{subsection.141}
+\contentsline {subsection}{\numberline {4.3.2}Emparejamiento por FLANN}{33}{subsection.148}
+\contentsline {subsection}{\numberline {4.3.3}Resoluci\IeC {\'o}n de errores de emparejamiento}{34}{subsection.154}
+\contentsline {section}{\numberline {4.4}Obtenci\IeC {\'o}n de puntos 3D}{36}{section.167}
+\contentsline {section}{\numberline {4.5}C\IeC {\'a}lculo de movimiento tridimensional}{39}{section.180}
+\contentsline {subsection}{\numberline {4.5.1}Matriz RT}{39}{subsection.181}
+\contentsline {subsection}{\numberline {4.5.2}C\IeC {\'a}lculo RT mediante SVD}{40}{subsection.187}
+\contentsline {subsection}{\numberline {4.5.3}Optimizaci\IeC {\'o}n mediante RANSAC}{42}{subsection.201}
+\contentsline {section}{\numberline {4.6}Interfaz gr\IeC {\'a}fica}{43}{section.213}
+\contentsline {chapter}{\numberline {5}Experimentos}{47}{chapter.223}
+\contentsline {section}{\numberline {5.1}Validaci\IeC {\'o}n experimental}{47}{section.224}
+\contentsline {subsection}{\numberline {5.1.1}Detecci\IeC {\'o}n de puntos de inter\IeC {\'e}s}{47}{subsection.225}
+\contentsline {subsubsection}{Filtro de puntos frontera}{47}{section*.227}
+\contentsline {subsection}{\numberline {5.1.2}C\IeC {\'a}lculo de emparejamientos}{48}{subsection.229}
+\contentsline {subsubsection}{Filtro de sobresaliencia}{48}{section*.230}
+\contentsline {subsubsection}{Traslaci\IeC {\'o}n y Rotaci\IeC {\'o}n}{49}{section*.232}
+\contentsline {subsection}{\numberline {5.1.3}Resoluci\IeC {\'o}n 3D}{49}{subsection.234}
+\contentsline {subsubsection}{Validaci\IeC {\'o}n de la traslaci\IeC {\'o}n}{49}{section*.235}
+\contentsline {subsubsection}{Validaci\IeC {\'o}n de la Rotaci\IeC {\'o}n}{51}{section*.240}
+\contentsline {subsubsection}{Validaci\IeC {\'o}n de trayectorias complejas}{52}{section*.244}
+\contentsline {subsection}{\numberline {5.1.4}Error est\IeC {\'a}tico}{52}{subsection.245}
+\contentsline {section}{\numberline {5.2}Tiempos de procesado}{54}{section.247}
+\contentsline {chapter}{\numberline {6}Conclusiones}{59}{chapter.259}
+\contentsline {section}{\numberline {6.1}Conclusiones}{59}{section.260}
+\contentsline {section}{\numberline {6.2}Trabajos futuros}{60}{section.265}
+\contentsline {chapter}{Bibliograf\'{\i }a}{61}{chapter*.266}
