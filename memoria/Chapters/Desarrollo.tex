@@ -483,6 +483,16 @@ t=\frac{-k_{x}\cdot CAM_{x}+k_{x}\cdot Q_{x}-k_{y}\cdot CAM_{y}+k_{y}\cdot Q_{y}
 
 Por último, aplicando el resultado de $t$ sobre la ecuación~\ref{eqn:param} se obtiene el punto real buscado $Pr$.
 
+En la Figura~\ref{fig:pointcloud-plane} se puede ver un ejemplo de una nube de puntos mal calculada, con la distancia dada por el sensor y bien calculada obteniendo la distancia real de los puntos 3D.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.36]{Figures/plano-distancia.png}
+\decoRule
+\caption[Ejemplo de una nube de puntos mal y bien calculada] {Ejemplo de una nube de puntos mal (a) y bien calculada (b).}
+\label{fig:pointcloud-plane}
+\end{figure}
+
 %-----------------------------------
 %	SUBSECTION Cálculo de movimiento
 %-----------------------------------
@@ -678,7 +688,7 @@ El componente desarrollado dispone de una interfaz gráfica en donde se pueden v
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.48]{Figures/super_gui.png}
+\includegraphics[scale=0.4]{Figures/super_gui.png}
 \decoRule
 \caption[Captura del mapa de funcionalidades de la herramienta gráfica]{Captura del mapa de funcionalidades de la herramienta gráfica.}
 \label{fig:supergui}
@@ -691,9 +701,9 @@ La interfaz gráfica, basada en GTK, permite la realización  del procesado paso
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/gui1.png}
+\includegraphics[scale=0.29]{Figures/gui1.png}
 \decoRule
-\caption[gui1]{Paso 1: Actualización de imagen.}
+\caption[GUI: Actualización de imagen]{Paso 1: Actualización de imagen.}
 \label{fig:gui1}
 \end{figure}
 
@@ -701,9 +711,9 @@ La interfaz gráfica, basada en GTK, permite la realización  del procesado paso
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/gui2.png}
+\includegraphics[scale=0.29]{Figures/gui2.png}
 \decoRule
-\caption[gui2]{Paso 2: Detección de puntos.}
+\caption[GUI: Detección de puntos]{Paso 2: Detección de puntos.}
 \label{fig:gui2}
 \end{figure}
  
@@ -711,9 +721,9 @@ La interfaz gráfica, basada en GTK, permite la realización  del procesado paso
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/gui3.png}
+\includegraphics[scale=0.29]{Figures/gui3.png}
 \decoRule
-\caption[gui3]{Paso 3: Cálculo de emparejamientos.}
+\caption[GUI: Cálculo de emparejamientos]{Paso 3: Cálculo de emparejamientos.}
 \label{fig:gui3}
 \end{figure}
 
@@ -721,9 +731,9 @@ La interfaz gráfica, basada en GTK, permite la realización  del procesado paso
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/gui4.png}
+\includegraphics[scale=0.29]{Figures/gui4.png}
 \decoRule
-\caption[gui4]{Paso 4: Estimación de la matriz.}
+\caption[GUI: Estimación de la matriz RT]{Paso 4: Estimación de la matriz RT.}
 \label{fig:gui4}
 \end{figure}
 
@@ -733,7 +743,7 @@ La herramienta permite, además, la modificación de algunos parámetros de conf
 
 Por último se ha implementado un visor 3D, donde se representa toda la información tridimensional para el sistema de referencia absoluto.
 
-En las siguientes Figuras(\ref{fig:gui1}, \ref{fig:gui2}, \ref{fig:gui3}, \ref{fig:gui4}) se observa las capturas de cada uno de los pasos en la estimación de movimiento 3D. El botón [1] actualiza la imágen, el botón [2] detecta los puntos de interés con las opciones seleccionadas, el botón [3] los emparejamientos, un \textit{slider} para elegir el número de emparejamientos y por último el botón [4] para estimar la matriz, donde se puede observar en vivo la matriz RT estimada.
+En las siguientes Figuras (\ref{fig:gui1}, \ref{fig:gui2}, \ref{fig:gui3}, \ref{fig:gui4}) se observan las capturas de cada uno de los pasos en la estimación de movimiento 3D. El botón [1] actualiza la imágen. A la izquierda aparecerá la imágen en el instante $[n]$ y a la derecha la imagen del instante $[n-1]$. El botón [2] detecta los puntos de interés con las opciones seleccionadas y actualiza las imágenes del GUI con los puntos de interés extraídos. El botón [3] muestra los emparejamientos obtenidos sobre las imágenes y con un \textit{slider} se puede elegir el porcentaje de puntos emparejados. Por último, el botón [4] estima la matriz RT, donde se puede observar en vivo la matriz RT estimada y el resultado de la estimación en el visor 3D con la posición de la cámara y la nube de puntos.
 
 %-----------------------------------
 %	SECTION Ajuste de parámetros
