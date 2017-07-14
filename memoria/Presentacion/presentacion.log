@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  14 JUL 2017 16:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  14 JUL 2017 20:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -889,21 +889,26 @@ Package babel Info: Redefining spanish shorthand "?
 ]
 
 LaTeX Font Warning: Font shape `OT1/cmss/bx/sl' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 47.
+(Font)              using `OT1/cmss/bx/n' instead on input line 46.
 
 <img/camera-opengl.png, id=26, 582.46179pt x 406.94893pt>
 File: img/camera-opengl.png Graphic file (type png)
 
 <use img/camera-opengl.png>
-Package pdftex.def Info: img/camera-opengl.png used on input line 51.
+Package pdftex.def Info: img/camera-opengl.png used on input line 50.
 (pdftex.def)             Requested size: 170.71652pt x 119.27269pt.
 
-Overfull \hbox (39.10641pt too wide) in paragraph at lines 48--61
+Underfull \hbox (badness 3386) in paragraph at lines 57--58
+[]\OT1/cmss/m/n/10 Informaci^^Son ^^Suni-ca-men-te vi-
+ []
+
+
+Overfull \hbox (10.65367pt too wide) in paragraph at lines 47--61
 $[]$  $[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--61
+Underfull \hbox (badness 10000) in paragraph at lines 47--61
 
  []
 
@@ -945,73 +950,252 @@ Package babel Info: Redefining spanish shorthand "?
 
 [2
 
- <./img/camera-opengl.png>] <img/face.png, id=32, 904.23535pt x 295.1025pt>
-File: img/face.png Graphic file (type png)
-
-<use img/face.png>
-Package pdftex.def Info: img/face.png used on input line 77.
-(pdftex.def)             Requested size: 170.71652pt x 55.71432pt.
-
-Overfull \hbox (10.65367pt too wide) in paragraph at lines 68--82
-$[]$  $[]$
+ <./img/camera-opengl.png>]
+Underfull \hbox (badness 7963) in paragraph at lines 71--72
+[]\OT1/cmss/m/n/10 Medicina, OCR, De-por-tes,
  []
 
+<img/face.png, id=32, 904.23535pt x 264.12964pt>
+File: img/face.png Graphic file (type png)
+ <use img/face.png>
+Package pdftex.def Info: img/face.png used on input line 78.
+(pdftex.def)             Requested size: 170.71652pt x 49.86674pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--82
+<img/ikea.jpg, id=33, 469.755pt x 264.23718pt>
+File: img/ikea.jpg Graphic file (type jpg)
+ <use img/ikea.jpg>
+Package pdftex.def Info: img/ikea.jpg used on input line 79.
+(pdftex.def)             Requested size: 85.35826pt x 48.0122pt.
 
+Overfull \hbox (28.45274pt too wide) in paragraph at lines 78--80
+ [] 
  []
 
 File: template/gsyc2.jpg Graphic file (type jpg)
 <use template/gsyc2.jpg>
-Package pdftex.def Info: template/gsyc2.jpg used on input line 82.
+Package pdftex.def Info: template/gsyc2.jpg used on input line 84.
 (pdftex.def)             Requested size: 37.90598pt x 19.91684pt.
 File: template/peloto.png Graphic file (type png)
  <use template/peloto.png>
-Package pdftex.def Info: template/peloto.png used on input line 82.
+Package pdftex.def Info: template/peloto.png used on input line 84.
 (pdftex.def)             Requested size: 14.90169pt x 19.91684pt.
 
 Overfull \vbox (5.83842pt too high) has occurred while \output is active []
 
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 82.
+(babel)             in language  on input line 84.
 
 [3
 
- <./img/face.png>]
+ <./img/face.png> <./img/ikea.jpg>]
+File: img/camera-opengl.png Graphic file (type png)
+ <use img/camera-opengl.png>
+Package pdftex.def Info: img/camera-opengl.png used on input line 94.
+(pdftex.def)             Requested size: 170.71652pt x 119.27269pt.
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 103
+.
+LaTeX Font Info:    No file OMScmss.fd. on input line 103.
+
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbullet' on input line 103.
+
+
+Overfull \hbox (10.65367pt too wide) in paragraph at lines 91--108
+$[]$  $[]$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--108
+
+ []
+
+File: template/gsyc2.jpg Graphic file (type jpg)
+<use template/gsyc2.jpg>
+Package pdftex.def Info: template/gsyc2.jpg used on input line 108.
+(pdftex.def)             Requested size: 37.90598pt x 19.91684pt.
+File: template/peloto.png Graphic file (type png)
+ <use template/peloto.png>
+Package pdftex.def Info: template/peloto.png used on input line 108.
+(pdftex.def)             Requested size: 14.90169pt x 19.91684pt.
+
+Overfull \vbox (5.83842pt too high) has occurred while \output is active []
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 108.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 108.
+
+[4
+
+] <img/ptam.png, id=44, 834.11626pt x 615.29875pt>
+File: img/ptam.png Graphic file (type png)
+ <use img/ptam.png>
+Package pdftex.def Info: img/ptam.png used on input line 121.
+(pdftex.def)             Requested size: 142.26378pt x 104.9374pt.
+
+
+LaTeX Warning: Slide 5 overfull by 13.20221pt on input line 123.
+
+
+Overfull \vbox (5.24461pt too high) has occurred while \output is active []
+
+File: template/gsyc2.jpg Graphic file (type jpg)
+
+<use template/gsyc2.jpg>
+Package pdftex.def Info: template/gsyc2.jpg used on input line 123.
+(pdftex.def)             Requested size: 37.90598pt x 19.91684pt.
+File: template/peloto.png Graphic file (type png)
+ <use template/peloto.png>
+Package pdftex.def Info: template/peloto.png used on input line 123.
+(pdftex.def)             Requested size: 14.90169pt x 19.91684pt.
+
+Overfull \vbox (5.83842pt too high) has occurred while \output is active []
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 123.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 123.
+
+[5
+
+ <./img/ptam.png>] <img/ros_kinect.jpg, id=49, 433.62pt x 204.5241pt>
+File: img/ros_kinect.jpg Graphic file (type jpg)
+
+<use img/ros_kinect.jpg>
+Package pdftex.def Info: img/ros_kinect.jpg used on input line 133.
+(pdftex.def)             Requested size: 142.26378pt x 67.09993pt.
+
+<img/xtion-pro-live.jpg, id=50, 430.17857pt x 203.04428pt>
+File: img/xtion-pro-live.jpg Graphic file (type jpg)
+
+<use img/xtion-pro-live.jpg>
+Package pdftex.def Info: img/xtion-pro-live.jpg used on input line 134.
+(pdftex.def)             Requested size: 142.26378pt x 67.14732pt.
+
+Overfull \hbox (28.45276pt too wide) in paragraph at lines 133--135
+ [] 
+ []
+
+
+Overfull \hbox (28.45276pt too wide) in paragraph at lines 133--135
+ [] 
+ []
+
+File: template/gsyc2.jpg Graphic file (type jpg)
+<use template/gsyc2.jpg>
+Package pdftex.def Info: template/gsyc2.jpg used on input line 154.
+(pdftex.def)             Requested size: 37.90598pt x 19.91684pt.
+File: template/peloto.png Graphic file (type png)
+ <use template/peloto.png>
+Package pdftex.def Info: template/peloto.png used on input line 154.
+(pdftex.def)             Requested size: 14.90169pt x 19.91684pt.
+
+Overfull \vbox (5.83842pt too high) has occurred while \output is active []
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 154.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 154.
+
+[6
+
+ <./img/ros_kinect.jpg> <./img/xtion-pro-live.jpg>]
 
 *******************************************************
 ***** !! PRINT THIS DOCUMENT IN LANDSCAPE MODE !! *****
 *******************************************************
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 87.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 156.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 156.
 (./presentacion.aux
 LaTeX Info: Redefining \. on input line 23.
 LaTeX Info: Redefining \% on input line 23.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 87.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 156.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 156.
 Package rerunfilecheck Info: File `presentacion.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1020,13 +1204,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 11230 strings out of 493304
- 163098 string characters out of 6139871
- 281701 words of memory out of 5000000
- 14512 multiletter control sequences out of 15000+600000
+ 11261 strings out of 493304
+ 163575 string characters out of 6139871
+ 282702 words of memory out of 5000000
+ 14534 multiletter control sequences out of 15000+600000
  7587 words of font info for 27 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 43i,10n,51p,407b,610s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,10n,51p,407b,660s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxsl10.pfb></usr/share/tex
@@ -1034,11 +1218,12 @@ live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsl8.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy5.pfb>
-Output written on presentacion.pdf (4 pages, 639550 bytes).
+e1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy5.pfb>
+Output written on presentacion.pdf (7 pages, 1292464 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
- 5 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 90 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
+ 8 named destinations out of 1000 (max. 500000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
