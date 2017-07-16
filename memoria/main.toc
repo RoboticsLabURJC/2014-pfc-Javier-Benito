@@ -48,17 +48,17 @@
 \contentsline {chapter}{\numberline {5}Experimentos}{48}{chapter.224}
 \contentsline {section}{\numberline {5.1}Validaci\IeC {\'o}n experimental}{48}{section.225}
 \contentsline {subsection}{\numberline {5.1.1}Detecci\IeC {\'o}n de puntos de inter\IeC {\'e}s}{48}{subsection.226}
-\contentsline {subsubsection}{Filtro de puntos frontera}{48}{section*.228}
+\contentsline {subsubsection}{Efecto del filtro de puntos frontera}{48}{section*.228}
 \contentsline {subsection}{\numberline {5.1.2}C\IeC {\'a}lculo de emparejamientos}{49}{subsection.230}
-\contentsline {subsubsection}{Filtro de sobresaliencia}{49}{section*.231}
-\contentsline {subsubsection}{Traslaci\IeC {\'o}n y Rotaci\IeC {\'o}n}{50}{section*.233}
+\contentsline {subsubsection}{Necesidad del filtro de sobresaliencia}{49}{section*.231}
+\contentsline {subsubsection}{Funcionamiento en Traslaci\IeC {\'o}n y Rotaci\IeC {\'o}n}{50}{section*.233}
 \contentsline {subsection}{\numberline {5.1.3}Resoluci\IeC {\'o}n 3D}{50}{subsection.235}
 \contentsline {subsubsection}{Validaci\IeC {\'o}n de la traslaci\IeC {\'o}n}{50}{section*.236}
 \contentsline {subsubsection}{Validaci\IeC {\'o}n de la Rotaci\IeC {\'o}n}{52}{section*.241}
-\contentsline {subsubsection}{Validaci\IeC {\'o}n de trayectorias complejas}{53}{section*.245}
-\contentsline {subsection}{\numberline {5.1.4}Error est\IeC {\'a}tico}{53}{subsection.246}
-\contentsline {section}{\numberline {5.2}Tiempos de procesado}{55}{section.248}
-\contentsline {chapter}{\numberline {6}Conclusiones}{60}{chapter.260}
-\contentsline {section}{\numberline {6.1}Conclusiones}{60}{section.261}
-\contentsline {section}{\numberline {6.2}Trabajos futuros}{61}{section.266}
-\contentsline {chapter}{Bibliograf\'{\i }a}{62}{chapter*.267}
+\contentsline {subsubsection}{Validaci\IeC {\'o}n de trayectorias combinadas}{52}{section*.245}
+\contentsline {subsection}{\numberline {5.1.4}Acumulaci\IeC {\'o}n de error en est\IeC {\'a}tico}{53}{subsection.248}
+\contentsline {section}{\numberline {5.2}Tiempos de c\IeC {\'o}mputo del procesamiento}{54}{section.250}
+\contentsline {chapter}{\numberline {6}Conclusiones}{63}{chapter.262}
+\contentsline {section}{\numberline {6.1}Conclusiones}{63}{section.263}
+\contentsline {section}{\numberline {6.2}Trabajos futuros}{64}{section.268}
+\contentsline {chapter}{Bibliograf\'{\i }a}{65}{chapter*.269}

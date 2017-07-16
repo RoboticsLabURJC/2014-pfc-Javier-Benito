@@ -55,11 +55,13 @@
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Captura con un error de emparejamiento sin filtro de sobresaliencia}}{50}{figure.caption.232}
 \contentsline {figure}{\numberline {5.4}{\ignorespaces Captura con los emparejamientos con im\IeC {\'a}genes sometidas a una rotaci\IeC {\'o}n y a una traslaci\IeC {\'o}n}}{51}{figure.caption.234}
 \contentsline {figure}{\numberline {5.5}{\ignorespaces Ejes de coordenadas $x$, $y$ y $z$}}{52}{figure.caption.237}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Punto de partida para las pruebas de traslaci\IeC {\'o}n y rotaci\IeC {\'o}n}}{52}{figure.caption.238}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{53}{figure.caption.239}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{54}{figure.caption.240}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{55}{figure.caption.242}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{56}{figure.caption.243}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{58}{figure.caption.244}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Capturas con ruido est\IeC {\'a}tico}}{59}{figure.caption.247}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Punto de partida para las pruebas de traslaci\IeC {\'o}n y rotaci\IeC {\'o}n}}{53}{figure.caption.238}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{56}{figure.caption.239}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{57}{figure.caption.240}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{58}{figure.caption.242}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{59}{figure.caption.243}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{60}{figure.caption.244}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Experimento con el c\IeC {\'a}lculo de una trayectoria en forma de c\IeC {\'\i }rculo}}{61}{figure.caption.246}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Experimento con desplazamiento vertical hacia el eje $z$ y despu\IeC {\'e}s una rotaci\IeC {\'o}n del \IeC {\'a}ngulo \textit {roll}}}{61}{figure.caption.247}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Capturas con ruido est\IeC {\'a}tico}}{62}{figure.caption.249}
 \addvspace {10\p@ }

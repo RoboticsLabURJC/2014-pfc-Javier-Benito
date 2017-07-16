@@ -11,15 +11,15 @@ En este capítulo se detallarán las pruebas realizadas, con el objetivo de vali
 %-----------------------------------
 \section{Validación experimental}
 
-El entorno de pruebas utilizado ha sido siempre un entorno real, trabajando con los datos en vivo proporcionados por OpenniServer que extrae la información directamente del sensor.
+El entorno de pruebas utilizado ha sido siempre un entorno real, trabajando con los datos en vivo proporcionados por OpenniServer que extrae la información directamente del sensor RGBD.
 
 Se propone en esta sección validar el componente en las diferentes fases que lo componen: detección de puntos de interés, cálculo de emparejamientos y estimación de movimiento.
 
 \subsection{Detección de puntos de interés}
 
-Para la detección de puntos de interés resulta de una tarea sencilla si nos ayudamos de OpenCV. En esta sección veremos algunos ejemplos de sobre las diferencias entre técnicas empleadas, y el filtro frontera.
+La detección de puntos de interés resulta una tarea sencilla si nos ayudamos de OpenCV. En esta sección veremos algunos ejemplos de sobre las diferencias entre técnicas empleadas, y el filtro frontera.
 
-En la Figura~\ref{fig:sift-surf} se puede ver la extracción de puntos de interés tanto con SIFT como con SURF, aparentemente no hay grandes diferencias. Como se vió en el capítulo~\ref{Chapter4} el cálculo de puntos de interés es muy similar y la diferencia fundamental radicaba en el tiempo de cómputo.
+En la Figura~\ref{fig:sift-surf} se puede ver la extracción de puntos de interés tanto con SIFT como con SURF, aparentemente no hay grandes diferencias. Como se vió en el capítulo~\ref{Chapter4} el cálculo de puntos de interés es muy similar y la diferencia fundamental radica en el tiempo de cómputo.
 
 \begin{figure}[th]
 \centering
@@ -29,9 +29,9 @@ En la Figura~\ref{fig:sift-surf} se puede ver la extracción de puntos de inter�
 \label{fig:sift-surf}
 \end{figure}
 
-\subsubsection{Filtro de puntos frontera}
+\subsubsection{Efecto del filtro de puntos frontera}
 
-En la Figura~\ref{fig:borderfilter} tenemos el resultado de aplicar el filtro frontera sobre una misma imágen, como se puede observar al añadir el filtro frontera se eliminan algunos de los puntos más críticos de la imágen, como son los puntos a lo largo del marco de la puerta o del mástil de la guitarra.
+En la Figura~\ref{fig:borderfilter} tenemos el resultado de aplicar el filtro frontera sobre una misma imagen. Como se puede observar, al añadir el filtro frontera se eliminan algunos de los puntos más controvertidos de la imágen, como son los puntos a lo largo del marco de la puerta o del mástil de la guitarra.
 
 \begin{figure}[th]
 \centering
@@ -43,11 +43,11 @@ En la Figura~\ref{fig:borderfilter} tenemos el resultado de aplicar el filtro fr
 
 \subsection{Cálculo de emparejamientos}
 
-Para el cálculo de los emparejamientos se someterá el componente a cambios de traslación y rotación para comprobar la veracidad de los puntos emparejados. Se partirá, como se explicó en el anterior capítulo (\ref{Chapter4}), de los $20\%$ mejores emparejamientos medidos por distancia, ya que en condiciones normales se tienen unos $300$ y el $20\% (60)$ es un número razonable de puntos y se asegura consistencia.
+Para probar el cálculo de los emparejamientos se somete el componente a cambios de traslación y rotación para comprobar la veracidad de los puntos emparejados. Se parte, como se explicó en el anterior capítulo (\ref{Chapter4}), de los $20\%$ mejores emparejamientos medidos por distancia, ya que en condiciones normales se tienen unos $300$ y el $20\% (60)$ es un número razonable de puntos y se asegura consistencia.
 
-\subsubsection{Filtro de sobresaliencia}
+\subsubsection{Necesidad del filtro de sobresaliencia}
 
-En la Figura~\ref{fig:error-matching} se puede observar como en condiciones normales se ha producido un error en el emparejamiento de dos puntos de interés. Como vimos en el capítulo~\ref{Chapter4} es debido a que los descriptores de esos puntos son los más similares y muy parecidos a todos los que, en este caso, forman el marco de la puerta.
+En la Figura~\ref{fig:error-matching} se puede observar cómo en condiciones normales se ha producido un error en el emparejamiento de dos puntos de interés. Como vimos en el capítulo~\ref{Chapter4}, es debido a que los descriptores de esos puntos son los más similares y muy parecidos a todos los que, en este caso, forman el marco de la puerta.
 
 %y es debido a que los descriptores de esos dos puntos son los más similares. Al estar en una zona muy parecida se puede entender que la correlación es muy similar en todos los puntos correspondientes, en este caso, al marco de la puerta. 
 
@@ -59,9 +59,9 @@ En la Figura~\ref{fig:error-matching} se puede observar como en condiciones norm
 \label{fig:error-matching}
 \end{figure}
 
-Este caso se ha buscado agrede para imponer el \textbf{filtro de sobresaliencia}, en todas las pruebas de ahora en adelante, para añadir robustez a los experimentos y evitar estos casos de malos emparejamientos.
+Este caso se ha buscado a propósito para justificar la necesidad del \textbf{filtro de sobresaliencia}. En todas las pruebas de ahora en adelante se ha incluido para añadir robustez a los experimentos y evitar estos casos de malos emparejamientos que estropean si no el cálculo tridimensional.
 
-\subsubsection{Traslación y Rotación}
+\subsubsection{Funcionamiento en Traslación y Rotación}
 
 En la Figura~\ref{fig:matching-rt} se puede observar el resultado de aplicar los emparejamientos bajo circunstancias de traslación y rotación. Como se puede ver en los emparejamientos obtenidos, el resultado es el esperado y no hay error.
 
@@ -77,13 +77,13 @@ En la Figura~\ref{fig:matching-rt} se puede observar el resultado de aplicar los
 
 La resolución 3D o estimación de movimiento compone el último paso que completa una iteración del sistema, por lo que en esta etapa podremos ver el resultado final del movimiento entre varios fotogramas consecutivos.
 
-Las pruebas mostrados a continuación son realizadas con un funcionamiento normal del componente y en un tiempo determinado. El objetivo de estos experimentos es comprobar el comportamiento del sistema para los diferentes tipos de traslaciones ($x$, $y$, y $z$) y rotaciones (\textit{pitch}, \textit{yaw}, \textit{roll}).
+Las pruebas mostradas a continuación son realizadas con un funcionamiento normal del componente y en un tiempo determinado. El objetivo de estos experimentos es comprobar el comportamiento del sistema para los diferentes tipos de traslaciones ($x$, $y$, y $z$) y rotaciones (\textit{pitch}, \textit{yaw}, \textit{roll}).
 
-Para estas pruebas y las siguientes se hará uso del componente con el comportamiento automático activado, repitiendo así de manera autónoma cada ciclo de estimación 3D. También se ha optado, para añadir robustez, el filtro de sobresaliencia y RANSAC.
+Para estas pruebas y las siguientes se hará uso del componente con el comportamiento automático activado, repitiendo así de manera automática cada ciclo de estimación 3D. También se han incorporado en ellas, para añadir robustez, el filtro de sobresaliencia y RANSAC.
 
 \subsubsection{Validación de la traslación}
 
-En la siguiente subsección se harán pruebas para comprobar como se comporta el sistema ante la traslación. Se moverá la cámara a lo largo de los tres ejes ($x$, $y$ y $z$) (Figura~\ref{fig:xyz}).
+En esta subsección se describen pruebas para comprobar cómo se comporta el sistema ante la traslación. Se movió la cámara a lo largo de los tres ejes ($x$, $y$ y $z$) (Figura~\ref{fig:xyz}).
 
 \begin{figure}[th]
 \centering
@@ -93,11 +93,11 @@ En la siguiente subsección se harán pruebas para comprobar como se comporta el
 \label{fig:xyz}
 \end{figure}
 
-Para estas pruebas se va a utilizar el mismo entorno de trabajo por lo que el punto de partida será el que se muestra en la Figura~\ref{fig:init}.
+Para estas pruebas se utiliza el mismo entorno de trabajo por lo que el punto de partida es el que se muestra en la Figura~\ref{fig:init}.
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/tests/init.png}
+\includegraphics[scale=0.35]{Figures/tests/init.png}
 \decoRule
 \caption[Punto de partida para las pruebas de traslación y rotación]{Punto de partida para las pruebas realizadas.}
 \label{fig:init}
@@ -107,31 +107,31 @@ En la Figura~\ref{fig:axis-y} se muestra la estimación de movimiento sobre el e
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/tests/axis-y.png}
+\includegraphics[scale=0.35]{Figures/tests/axis-y.png}
 \decoRule
 \caption[Prueba con desplazamiento en el eje $y$]{Prueba con desplazamiento en el eje $y$.}
 \label{fig:axis-y}
 \end{figure}
 
-Se puede observar, después de aproximadamente 100 iteraciones, como ha afectado el error a la estimación al volver el sensor al origen.
+Se puede observar, después de aproximadamente 100 iteraciones, cómo ha afectado el error a la estimación al volver el sensor al origen.
 
-En la Figura~\ref{fig:axis-xz} se puede ver el efecto de la traslación en los ejes $x$ y $z$ respectivamente. Se ve como el error en estos ejes es menor, percibiendo oscilaciones en su mayor parte únicamente en el eje $y$. La validación del eje $x$ se ha realizado sobre una mesa recorriendo 1 metro, por lo que no se obtiene desplazamiento en $z$. En cuanto a las pruebas del eje $z$ se aprecia un balanceo en $x$ debido al movimiento vertical de la mano ya que no ha seguido una trayectoria recta.
+En la Figura~\ref{fig:axis-xz} se puede ver el efecto de la traslación en los ejes $x$ y $z$ respectivamente. Se ve cómo el error en estos ejes es menor, percibiendo oscilaciones en su mayor parte únicamente en el eje $y$. La validación del eje $x$ se ha realizado sobre una mesa recorriendo 1 metro, por lo que no se obtiene desplazamiento en $z$. En cuanto a las pruebas del eje $z$ se aprecia un balanceo en $x$ debido al movimiento vertical de la mano ya que no ha seguido una trayectoria recta.
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/tests/axis-x-z.png}
+\includegraphics[scale=0.35]{Figures/tests/axis-x-z.png}
 \decoRule
 \caption[Prueba con desplazamiento en los ejes $x$ y $z$]{Prueba con desplazamiento en los ejes $x$ y $z$.}
 \label{fig:axis-xz}
 \end{figure}
 
-Los resultados son aceptables en la estimación, no se consigue un cierre de trayectoria perfecto pero se acerca. Pensando que se ha aplicado una traslación de más de 1 metro el error final obtenido se puede medir en centímetros, acentuándose más para el eje $y$ correspondiente al perpendicular al plano imagen y el que se obtiene de la imagen de profundidad.
+Los resultados son aceptables en la estimación 3D. No se consigue un cierre de trayectoria perfecto pero se acerca bastante a ello. Pensando que se ha aplicado una traslación de más de 1 metro el error final obtenido se puede medir en centímetros, acentuándose más para el eje $y$ correspondiente al perpendicular al plano imagen y el que se obtiene de la imagen de profundidad.
 
-Como vimos en el capítulo~\ref{Chapter3} la información de profundidad del sensor no es perfecta y tiene un pequeño margen de error. A parte de tener un rango de distancias óptimo establecido por el fabricante (\textit{0.8 to 3.5 m}), fuera de este rango la imagen de profundidad empieza a empeorar drásticamente y por consiguiente la estimación de movimiento.
+Como vimos en el capítulo~\ref{Chapter3} la información de profundidad del sensor no es perfecta y tiene un pequeño margen de error. Aparte de tener un rango de distancias óptimo establecido por el fabricante (\textit{0.8 to 3.5 m}), fuera de este rango la imagen de profundidad empieza a empeorar drásticamente y por consiguiente la estimación de movimiento se deteriora.
 
 \subsubsection{Validación de la Rotación}
 
-Se validará ahora la rotación de sensor de los ángulos \textit{pitch}, \textit{yaw} y \textit{roll}. En la Figura~\ref{fig:p-y-r} se tiene un ejemplo gráfico de cuales son estos movimientos y a qué rotación de ejes pertenecen.
+Se valida ahora la rotación de sensor de los ángulos \textit{pitch}, \textit{yaw} y \textit{roll}. En la Figura~\ref{fig:p-y-r} se tiene un ejemplo gráfico de cuales son estos movimientos y a qué rotación de ejes pertenecen.
 
 \begin{figure}[th]
 \centering
@@ -141,39 +141,62 @@ Se validará ahora la rotación de sensor de los ángulos \textit{pitch}, \texti
 \label{fig:p-y-r}
 \end{figure}
 
-En la Figura~\ref{fig:pitch} se efectúa una prueba con el ángulo \textit{pitch} y se comprueba como el sistema detecta una rotación total de $90º$. Se visualiza el estado de la cámara al orientar hacia arriba el sensor y posteriormente orientándolo a nivel del suelo. 
+En la Figura~\ref{fig:pitch} se efectúa una prueba con el ángulo \textit{pitch} y se comprueba cómo el sistema detecta una rotación total de $90º$. Se visualiza el estado de la cámara al orientar hacia arriba el sensor y posteriormente orientarlo paralelo al suelo. 
 
-En cuanto a la traslación se observa, sin contar con el ruido, que el eje de la cámara se mantiene fijo en el origen como es de esperar.
+En cuanto a la traslación se observa, sin contar con el ruido, que el eje de la cámara se mantiene fijo en el origen, como era de esperar.
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/tests/pitch.png}
+\includegraphics[scale=0.35]{Figures/tests/pitch.png}
 \decoRule
 \caption[Prueba con desplazamiento del ángulo \textit{pitch}]{Prueba con desplazamiento del ángulo \textit{pitch}.}
 \label{fig:pitch}
 \end{figure}
 
-Para los ángulos \textit{yaw} y \textit{roll} se puede observar en la Figura~\ref{fig:yaw-roll} las pruebas realizadas. En la primera captura se observa una rotación de $45º$ sobre el eje \textit{yaw} y en la segunda sobre el eje \textit{roll}. En ambos casos el movimiento es el correcto.
+Para los ángulos \textit{yaw} y \textit{roll} se pueden observar en la Figura~\ref{fig:yaw-roll} las pruebas realizadas. En la primera captura se observa una rotación de $45º$ sobre el eje \textit{yaw} y en la segunda sobre el eje \textit{roll}. En ambos casos el movimiento estimado es el correcto.
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/tests/yaw-roll.png}
+\includegraphics[scale=0.35]{Figures/tests/yaw-roll.png}
 \decoRule
 \caption[Pruebas con desplazamiento en los angulos \textit{yaw} y \textit{roll}]{Pruebas con desplazamiento en los angulos \textit{yaw} y \textit{roll}.}
 \label{fig:yaw-roll}
 \end{figure}
 
-\subsubsection{Validación de trayectorias complejas}
+\subsubsection{Validación de trayectorias combinadas}
 
-\subsection{Error estático}
-
-El error estático muestra el ruido blanco que se esconde detrás de la resolución 3D en tiempo real. Como se va a poder observar en esta sección, el ruido estático es inevitable y no depende del algoritmo a utilizar. Sin embargo, en el siguiente capítulo, en el cual se propone posibles mejoras y líneas futuras, se verán métodos para poder eliminarlo en mayor o menor medida.
-
-En las siguientes Figura~\ref{fig:static} se puede ver un ejemplo de este error para diferentes configuraciones. Como se puede interpretar es un error que está presente en todos los casos.
+En esta subsección se muestra el funcionamiento del componente desarrollado ante trayectorias combinadas. El primer experimento consiste en la realización de un círculo a mano con el sensor RGBD. El resultado del experimento, en diferentes etapas, se puede observar en la Figura~\ref{fig:ex-1}. Se aprecia como a pesar del movimiento irregular del brazo y el error acumulativo, el resultado obtenido se parece a un círculo.
 
 \begin{figure}[th]
 \centering
-\includegraphics[scale=0.3]{Figures/tests/static.png}
+\includegraphics[scale=0.2]{Figures/tests/ex-1.png}
+\decoRule
+\caption[Experimento con el cálculo de una trayectoria en forma de círculo]{Experimento con el cálculo de una trayectoria en forma de círculo.}
+\label{fig:ex1}
+\end{figure}
+ 
+En el siguiente experimento se compone de un desplazamiento vertical hacia el eje $z$ y después una rotación del ángulo \textit{roll}. El resultado se visualiza en la Figura~\ref{fig:ex-2}.
+ 
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.2]{Figures/tests/ex-2.png}
+\decoRule
+\caption[Experimento con desplazamiento vertical hacia el eje $z$ y después una rotación del ángulo \textit{roll}]{Experimento con desplazamiento vertical hacia el eje $z$ y después una rotación del ángulo \textit{roll}.}
+\label{fig:ex2}
+\end{figure}
+
+
+\subsection{Acumulación de error en estático}
+
+El error estático muestra el ruido que se esconde detrás de la resolución 3D en tiempo real. Como se va a poder observar en esta sección, el ruido acumulado en estático es recurrente, está presente en todas las configuraciones del algoritmo y refleja su naturaleza incremental, acumulativa. Sin embargo, en el capítulo de conclusiones (\ref{Chapter6}), en el cual se proponen posibles mejoras y líneas futuras, se sugerirán métodos para poder eliminarlo en mayor o menor medida.
+
+Se han relizado varios experimentos con la cámara quieta, con distintas configuraciones del algoritmo. En cada iteración se incurre en algún ligero error que se va acumulando y hace que pasados 30 o 60 segundos la posición estimada de la cámara sea distinta de la posición real, que no se ha movido nada.
+
+En las siguiente Figura (\ref{fig:static}) se puede ver un ejemplo de este error para diferentes configuraciones. Como se puede apreciar, es un error que está presente en todos los casos.
+
+\begin{figure}[th]
+\centering
+\includegraphics[scale=0.30]{Figures/tests/static.png}
 \decoRule
 \caption[Capturas con ruido estático]{En la primera imágen se representa el ruido estático después de 30 y 60 segundos, con SURF y FLANN. La segunda con SIFT, Fuerza Bruta y filtros. La tercera con SIFT, Fuerza Bruta y RANSAC.}
 \label{fig:static}
@@ -195,19 +218,21 @@ En las siguientes Figura~\ref{fig:static} se puede ver un ejemplo de este error 
 %\label{fig:static3}
 %\end{figure}
 
-Las pruebas realizadas han sido capturadas a los 30 y 60 segundos respectivamente y la configuración aplicada se encuentra en la descripción de la Figura.
+Las pruebas realizadas han sido capturadas a los 30 y 60 segundos respectivamente y la configuración aplicada se encuentra en la descripción de la Figura~\ref{fig:static}.
 
-Si analizamos las matrices RT obtenidas se puede observar que el eje en que más avanza el ruido es el eje $y$, al igual que pasaba en las pruebas de la sección anterior.
+Si analizamos las matrices RT obtenidas se puede observar que el eje en que más avanza el ruido es el eje $y$, el perpendicular al plano imagen, lo que es coherente con las pruebas de la sección anterior. Es precisamente en ese eje donde el algoritmo realizado se comporta peor, donde incurre en más error.
+
+La conclusión a la que se quiere llegar con las pruebas realizadas es que el error perjudica más al sistema cuanto mayor es la duración de la estimación, ya que se trata de un error acumulativo.
 
 
 %-----------------------------------
 %	SECTION Tiempos de procesado
 %-----------------------------------
 \newpage
-\section{Tiempos de procesado}
-En esta sección se verán los tiempos de procesado del componente realizado en este proyecto. Como el componente realiza distintas tareas hasta completar una iteración, se ha desarrollado una funcionalidad que mide el tiempo medio por cada una de ellas cuando se termina la ejecución del componente.
+\section{Tiempos de cómputo del procesamiento}
+En esta sección se ven los tiempos de cómputo del componente realizado en este proyecto. Como el componente realiza distintas tareas hasta completar una iteración, se ha desarrollado una funcionalidad que mide el tiempo medio por cada una de ellas cuando se termina la ejecución del componente.
 
-Se irá analizando el tiempo medio para diferentes configuraciones en un intervalo de timepo de 10 segundos. Para un uso por defecto de la aplicación, se tiene:
+Se ha analizado el tiempo medio para diferentes configuraciones en un intervalo de tiempo de 10 segundos. Para un uso por defecto de la aplicación, se tienen estos costes computacionales:
 
 \begin{lstlisting}[style=CStyle]
 Average times:
@@ -219,11 +244,11 @@ Average times:
 - TOTAL: 151.731 ms
 \end{lstlisting}
 
-Como se puede observar la detección de puntos es la parte que más tiempo requiere, por el contrario, la estimación de la matriz RT es la que menos. Esta prueba se ha realizado con una media de unos 300 puntos de interés por iteración. Como es lógico el tiempo de detección variará con respecto al número de puntos de interés o carácterísticas extraídas. Estos puntos de interés según las pruebas no solo están condicionadas a la imágen que se está analizando, si no que la intensidad de luz desempeña un papel muy importante en la detección de más o menos características.
+Como se puede observar, la detección de puntos es la parte que más tiempo requiere. Por el contrario, la estimación de la matriz RT es la que menos. Esta prueba se ha realizado con una media de unos 300 puntos de interés por iteración. Como es lógico el tiempo de detección variará con respecto al número de puntos de interés o carácterísticas extraídas. Estos puntos de interés según las pruebas no solo están condicionados a la imágen que se está analizando, si no que la intensidad de luz desempeña un papel muy importante en la detección de más o menos características.
 
-En el cuadro~\ref{tab:detection-time} podemos ver la variabilidad de tiempo de detección para diferentes números de puntos:
+En el cuadro~\ref{tab:detection-time} podemos ver la variabilidad de tiempo de detección para diferentes números de puntos.
 
-\begin{table}
+\begin{table}[h]
 \caption{Tiempos medios de detección en relación a los puntos de interés}
 \label{tab:detection-time}
 \centering
@@ -248,9 +273,9 @@ En el cuadro~\ref{tab:detection-time} podemos ver la variabilidad de tiempo de d
 
 %En esta etapa se ha incluído además el cálculo de puntos de interés 2D a nube de puntos 3D ya que es necesaria para la siguiente etapa.
 
-La diferencia entre los distintos algoritmos y filtros no se nota en exceso en cuanto a tiempos, sin embargo, utilizar SURF con respecto a SIFT se ha notado una reducción hasta de 10ms.
+La diferencia entre los distintos algoritmos y filtros no se nota en exceso en cuanto a tiempos, sin embargo, al utilizar SURF con respecto a SIFT se ha notado una reducción hasta de 10ms.
 
-Por último, para el cálculo de la matriz de movimiento se realiza la descomposición en valores singulares (SVD). En este caso el coste computacional depende del número de puntos. La descomposición en valores singulares en relación a los emparejamientos se encuentra en el cuadro~\ref{tab:svd-time}.
+Por último, para el cálculo de la matriz de movimiento se realiza la descomposición en valores singulares (SVD). En este caso, el coste computacional depende directamente del número de puntos. La descomposición en valores singulares en relación a los emparejamientos se encuentra en el cuadro~\ref{tab:svd-time}.
 
 \begin{table}
 \caption{Tiempos medios de cálculo de SVD en relación a los emparejamientos}
@@ -271,7 +296,7 @@ Por último, para el cálculo de la matriz de movimiento se realiza la descompos
 \end{tabular}
 \end{table}
 
-Como es de esperar el tiempo de cómputo de la optimización RANSAC no dependerá tanto del número de emparejamientos, sino que dependerá del número de iteraciones del algoritmo. En el cuadro~\ref{tab:ransac-time} se puede ver el tiempo por número de iteraciones del algoritmo para un total de unos 100 emparejamientos por iteración.
+Como es de esperar, el tiempo de cómputo de la optimización RANSAC no dependerá tanto del número de emparejamientos, sino que dependerá del número de iteraciones del algoritmo. En el cuadro~\ref{tab:ransac-time} se puede ver el tiempo por número de iteraciones del algoritmo para un total de unos 100 emparejamientos por iteración.
 
 \begin{table}
 \caption{Tiempos medios de cálculo con RANSAC en relación a las iteraciones para una media de 100 emparejamientos por iteración}
