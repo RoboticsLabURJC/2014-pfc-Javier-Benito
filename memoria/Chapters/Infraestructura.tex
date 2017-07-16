@@ -16,7 +16,7 @@ En este capítulo se detallarán las herramientas base empleadas en la realizaci
 %-----------------------------------
 \section{Sensores RGBD}
 
-Los sensores RGBD son capaces de captar a parte de las componentes roja, verde y azul de la luz, información de profundidad (o "D"\ depth en inglés). Es decir, por cada píxel asocia la información de color con su correspondiente componente de profundidad. Esta tecnología fue desarrollada por la empresa israelí \textbf{PrimeSense}. El sensor Kinect dispone también de un micrófono multiarray con el cual puede predecir de dónde proviene el sonido.
+Los sensores RGBD son capaces de captar a parte de las componentes roja, verde y azul de la luz, información de profundidad (o "D"\ \textit{Depth} en inglés). Es decir, por cada píxel asocia la información de color con su correspondiente componente de profundidad. Esta tecnología fue desarrollada por la empresa israelí \textbf{PrimeSense}. El sensor Kinect dispone también de un micrófono multiarray con el cual puede predecir de dónde proviene el sonido.
 
 En el 2010 Microsoft sacó al mercado el sensor Kinect (Figura~\ref{fig:Kinect}) para la consola de juegos Xbox 360 y Xbox One. Pronto se convirtió en uno de los dispositivos electrónicos más vendidos en todo el mundo después de su lanzamiento.
 
@@ -28,7 +28,7 @@ En el 2010 Microsoft sacó al mercado el sensor Kinect (Figura~\ref{fig:Kinect})
 \label{fig:Kinect}
 \end{figure}
 
-Este sensor salió al mercado a un precio mucho más reducido que algunos que existían antes que él por lo que el interés por este tipo de sensores se disparó y comenzaron a aparecen en diferentes áreas de la tecnología, como interfaces naturales de usuario (en inglés natural user interface, NUI), reconstrucción y realidad virtual o cartografía 3D.
+Este sensor salió al mercado a un precio mucho más reducido que algunos que existían antes que él por lo que el interés por este tipo de sensores se disparó y comenzaron a aparecen en diferentes áreas de la tecnología, como interfaces naturales de usuario (en inglés, \textit{Natural User Interface} o NUI), reconstrucción y realidad virtual o cartografía 3D.
 
 El sensor utilizado en este trabajo es el \textbf{Asus Xtion PRO LIVE} que dispone de la misma tecnología comercializado por Asus, que proporciona profundidad, color y audio (utilizando un micrófono multiarray como el sensor Kinect). \footnote{https://www.asus.com/3D-Sensor/Xtion\_PRO\_LIVE/}
 
@@ -37,11 +37,12 @@ El sensor utilizado en este trabajo es el \textbf{Asus Xtion PRO LIVE} que dispo
 \includegraphics[scale=0.85]{Figures/xtion-pro-live.jpg}
 \decoRule
 \caption[Sensor Xtion]{Asus Xtion PRO LIVE}
-\label{fig:Kinect}
+\label{fig:Xtion}
 \end{figure}
 
+Las especificaciones técnicas de este sensor se encuentran recogidas en la tabla ~\ref{tab:xtion}.
 
-\begin{table}
+\begin{table}[h]
 \caption{Especificaciones técnicas del Asus Xtion PRO LIVE}
 \label{tab:xtion}
 \centering
@@ -59,7 +60,6 @@ Resolución: & SXGA (1280*1024) \\
 \end{tabular}
 \end{table}
 
-Las especificaciones técnicas de este sensor se encuentran recogidas en la tabla ~\ref{tab:xtion}
 %----------------------------------------------------------------------------------------
 %	SECTION Software
 %----------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ Las especificaciones técnicas de este sensor se encuentran recogidas en la tabl
 %-----------------------------------
 \section{JDeRobot}\label{jderobot}
 
-JDeRobot es un proyecto desarrollado por el grupo de robótica de la Universidad Rey Juan Carlos \footnote{http://jderobot.org}. Consiste en una plataforma de desarrollo de aplicaciones robóticas y de visión artificial. Está en su mayoría escrito en C++, donde disponen de una colección de componentes capaces de comunicarse a través de ICE middleware \footnote{https://zeroc.com/products/ice}, los componentes pueden ejecutarse en diferentes ordenadores y pueden ser programados en diferentes lenguajes.
+JDeRobot es un proyecto desarrollado por el grupo de robótica de la Universidad Rey Juan Carlos\footnote{http://jderobot.org}. Consiste en una plataforma de desarrollo de aplicaciones robóticas y de visión artificial. Está en su mayoría escrito en C++, donde disponen de una colección de componentes capaces de comunicarse a través de ICE middleware \footnote{https://zeroc.com/products/ice}, los componentes pueden ejecutarse en diferentes ordenadores y pueden ser programados en diferentes lenguajes.
 
 JdeRobot incluye numerosas herramientas, drivers, interfaces, librerías y tipos. Es \textit{software} libre con licencia GPL y LGPL. También utiliza \textit{software} de terceros como Gazebo, ROS, OpenGL, GTK y Eigen entre otros.
 
@@ -97,7 +97,7 @@ Las funciones que proporciona esta biblioteca son las siguientes:
 \begin{itemize}
 \item \textbf{Project}: Esta función permite proyectar un punto 3D del mundo al correspondiente pixel en 2D de la imagen de la cámara. 
 
-\item \textbf{Backproject}: Esta función es capaz de a partir de las coordenadas de un píxel en 2D, obtener la línea de proyección que conecta la cámara y el foco con el rayo 3D que proyecta dicho píxel en el plano imagen. Con esto y conociendo la distancia real del punto 3D a calcular, se calcula las coordenas reales del punto 3D.
+\item \textbf{Backproject}: Esta función es capaz de a partir de las coordenadas de un píxel en 2D, obtener la línea de proyección que conecta la cámara y el foco con el rayo 3D que proyecta dicho píxel en el plano imagen. Con esto y conociendo la distancia real del punto 3D a calcular, se obtienen las coordenas reales del punto 3D.
 
 \item \textbf{DisplayLine}: Esta función permite conocer si una línea definida por dos puntos en 2D es visible dentro del plano imagen. 
 
@@ -115,7 +115,7 @@ OpenniServer es un driver que se comporta como un servidor y es capaz de proporc
 
 \subsection{Herramienta RGBDViewer}
 
-Es una herramienta que permite enseñar la información proveniente de los sensores RGBD con openniServer como forma de visualización de los datos; imágenes RGB, DEPTH o nubes de puntos.
+Es una herramienta que permite enseñar la información proveniente de los sensores RGBD con openniServer como forma de visualización de los datos; imágenes RGB, \textit{Depth} o nubes de puntos.
 
 El funcionamiento corresponde a un hilo de ejecución llamado Control que se encarga de recolectar las imágenes provenientes del driver, una clase Shared para guardar y recoger los datos, y por último una clase Gui que se encargará de coger los datos (imágenes y nubes de puntos) guardados en Shared y mostrarlas.
 
@@ -151,7 +151,7 @@ Es una interfaz que define una posición en tres dimensiones (x, y, z, h) y una 
 %-----------------------------------
 \section{Biblioteca ICE de comunicaciones}
 
-ICE (Internet Communications Engine) es un RPC framework desarrollado por ZeroC con soporte en C++, C\#, Java, JavaScript y Python entre otros. Se encuentra bajo doble licencia GNU GPL y código cerrado. Actúa como plataforma de comunicaciones y funciona bajo TCP/IP. \footnote{https://zeroc.com/products/ice}
+ICE (\textit{Internet Communications Engine}) es un RPC \textit{framework} desarrollado por ZeroC con soporte en C++, C\#, Java, JavaScript y Python entre otros. Se encuentra bajo doble licencia GNU GPL y código cerrado. Actúa como plataforma de comunicaciones y funciona bajo TCP/IP. \footnote{https://zeroc.com/products/ice}
 
 En JdeRobot la podemos encontrar como librería y es utilizada como protocolo de comunicaciones entre los diferentes componentes de JdeRobot. En nuestro trabajo se ha usado la versión 3.5.1 y nos ha servido para establecer la comunicación entre el componente y el driver del sensor, recogiendo las imágenes de éste.
 
@@ -181,7 +181,7 @@ En su página web disponen de mucha información y ejemplos prácticos que ayuda
 %-----------------------------------
 \section{Biblioteca OpenCV}
 
-OpenCV (Open Source Computer Vision Library) es una librería de código abierto que fue desarrollada para proporcionar una infraestructura común en aplicaciones de visión artificial y facilitar la inteligencia máquina, con mecanismos de aprendizaje y de interpretación de datos. Con licencia BSD da facilidades para su uso y su modificación bajo fines comerciales. \footnote{http://opencv.org/}
+OpenCV (\textit{Open Source Computer Vision Library}) es una librería de código abierto que fue desarrollada para proporcionar una infraestructura común en aplicaciones de visión artificial y facilitar la inteligencia máquina, con mecanismos de aprendizaje y de interpretación de datos. Con licencia BSD da facilidades para su uso y su modificación bajo fines comerciales. \footnote{http://opencv.org/}
 
 La librería contiene más de 2500 algoritmos. Estos algoritmos pueden ser usados para detectar y reconocer rostros, identificar objetos, clasificar acciones humanas determinadas en vídeos, seguimiento del movimiento de cámaras, seguimiento de objetos, extraer modelos de objetos 3D, producir nubes de puntos a partir de cámaras, encontrar imágenes similares de un conjunto, juntar trozos de imágenes para producir una imagen final con más resolución, etc... OpenCV tiene más de 47 miles de usuarios en la comunidad, excediendo los 14 millones de descargas, la librería es usada ampliamente en empresas, grupos de investigación y organismos gubernamentales.
 
@@ -217,9 +217,9 @@ Eigen es \textit{software} libre y desde la versión 3.1.1 tiene licencia MPL2 (
 %	SUBSECTION GTK
 %-----------------------------------
 \section{Biblioteca de interfaz gráfica GTK+}
-GTK+, o the GIMP Toolkit es una herramienta multiplataforma de creación de interfaces gráficas. Es multiplataforma y está escrito en C, pero a sido diseñado para tener soporte para un gran rango de lenguajes, tales como Perl y Python. GTK++ tiene una gran colección de \textit{widgets} y interfaces para usar en la aplicación, tales como ventanas, botones, selectores, cajas de texto, etc.
+GTK+, o \textit{the GIMP Toolkit} es una herramienta multiplataforma de creación de interfaces gráficas. Es multiplataforma y está escrita en C, pero ha sido diseñado para tener soporte para un gran rango de lenguajes, tales como Perl y Python. GTK++ tiene una gran colección de \textit{widgets} y interfaces para usar en la aplicación, tales como ventanas, botones, selectores, cajas de texto, etc.
 
-La versión utilizada ha sido la 3.10.8. Es \textit{software} libre y parte del proyecto GNU. Con licencia LGPL, permite que sea utilizado por todos los desarrolladores, incluyendo aquellos que están desarrollando un  \textit{software} privativo. GTK+ ha sido utilizado en muchos proyectos y en grandes plataformas. \footnote{https://www.gtk.org/}
+La versión utilizada ha sido la 3.10.8. Es \textit{software} libre y parte del proyecto GNU. Con licencia LGPL, permite que sea utilizado por todos los desarrolladores, incluyendo aquellos que están desarrollando un  \textit{software} privativo. GTK+ ha sido utilizado en muchos proyectos y en grandes plataformas.\footnote{https://www.gtk.org/}
 
 \subsection{Glade}
 Glade es una \textit{RAD tool} (Rapid Application Development Tool) que permite desarrollar de manera fácil y rápida interfaces de usuario en GTK+ para el entorno de escritorio GNOME. La interfaz gráfica diseñada en Glade es guardada en un XML que usando los objetos GTK+ de \textbf{GtkBuilder} pueden ser cargados y utilizados por aplicaciones de forma dinámica como se ha hecho en este trabajo. \footnote{https://glade.gnome.org/}
@@ -229,9 +229,9 @@ Glade es una \textit{RAD tool} (Rapid Application Development Tool) que permite 
 \section{OpenGL}
 OpenGL es el principal entorno para el desarrollo de aplicaciones gráficas 2D y 3D interactivas. Desde 1992, OpenGL se ha convertido en la interfaz de aplicaciones gráficas más utilizada y soportada en la industria 2D y 3D, con miles de aplicaciones diponibles en diferentes plataformas. OpenGL ayuda al desarrollo de aplicaciones al incorporar un amplio conjunto de renderizado, mapeo de texturas, efectos especiales y otras potentes funciones de visualización. Se puede usar OpenGL en la mayoría de entornos de escritorio y diferentes plataformas. Es muy utilizada y conocida en la industria de los videojuegos.
 
-Algunas de las ventajas de las que presume OpenGL son; que es un estándar de la industria, con soporte, multiplataforma y el único libre. Es estable, dispone de compatibilidad hacia atrás, escalable, fácil de usar y bien documentado. \footnote{https://www.opengl.org/}
+Algunas de las ventajas de las que presume OpenGL son: que es un estándar de la industria, con soporte, multiplataforma y el único libre. Es estable, dispone de compatibilidad hacia atrás, escalable, fácil de usar y bien documentado.\footnote{https://www.opengl.org/}
 
-Se ha usado la librería \textbf{Mesa 3D Graphics} en linux que es una implementación de la especificación de OpenGL con código abierto \footnote{https://www.mesa3d.org/}.
+Se ha usado la librería \textbf{Mesa 3D Graphics} en linux que es una implementación de la especificación de OpenGL con código abierto.\footnote{https://www.mesa3d.org/}
 
 OpenGL en este trabajo se ha usado para visualizar la posición de la cámara, su estela y la colección de nubes de puntos obtenida y procesada de las imágenes RGB y de profundidad. En la Figura~\ref{fig:OpenGL} se puede apreciar una captura de pantalla con la posición de la cámara dibujada en el espacio tridimensional con el visualizador utilizado con OpenGL.
 
