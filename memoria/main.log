@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  11 JUL 2017 18:28
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2017.3.24)  16 JUL 2017 10:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -4179,6 +4179,12 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 66.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 66.
+
+Overfull \hbox (4.44514pt too wide) in paragraph at lines 79--80
+[]\T1/ppl/m/n/10.95 Aunque el tra-ba-jo ha si-do im-ple-men-ta-do bus-can-do re
+-du-cir el tiem-po de cómpu-
+ []
+
 )
 LaTeX Info: Redefining \sptext on input line 220.
 LaTeX Info: Redefining \. on input line 220.
@@ -4297,7 +4303,7 @@ ve/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist
 /urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatin
 o/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pf
 b>
-Output written on main.pdf (72 pages, 21986521 bytes).
+Output written on main.pdf (72 pages, 21986438 bytes).
 PDF statistics:
  1252 PDF objects out of 1440 (max. 8388607)
  1068 compressed objects within 11 object streams

@@ -4,16 +4,16 @@
 
 \label{Chapter6} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-En los capítulos anteriores se ha mostrado una amplia descripción del problema abordado, las soluciones a las que se han llegado y los experimientos que se han desarrollado a fin de validar dicha solución.
+En los capítulos anteriores se ha mostrado una amplia descripción del problema abordado, las soluciones que se han desarrollado y los experimentos que se han llevado a cabo a fin de validar dicha solución.
 
-En este capítulo se presentarán las conclusiones que se extraen del trabajo realizado y se propondrán una serie de líneas futuras de investigación que pueden continuar a partir de este proyecto fin de carrera.
+En este capítulo se presentarán las principales conclusiones que se extraen del trabajo realizado y se propondrán una serie de líneas futuras de investigación que pueden continuar a partir de este proyecto fin de carrera.
 
 %-----------------------------------
 %	SECTION Conclusiones
 %-----------------------------------
 \section{Conclusiones}
 
-Después de un desarrollo de cerca de 5 mil líneas de código escritas en C++. Se puede decir que se ha conseguido en mayor o menor medida alcanzar cada uno de los objetivos planteados en el capítulo~\ref{Chapter2}; un sistema capaz de averiguar la posición y orientación de un sensor RGBD que se mueve libremente por el espacio en tiempo real.
+Después de un desarrollo de cerca de 5000 líneas de código, escritas en C++, se puede decir que se ha conseguido alcanzar el objetivo global planteado en el capítulo~\ref{Chapter2}; un sistema capaz de averiguar la posición y orientación de un sensor RGBD que se mueve libremente por el espacio en tiempo real.
 
 A continuación se repasan los diferentes subobjetivos marcados para recapitular y verificar lo realizado:
 
@@ -22,23 +22,23 @@ A continuación se repasan los diferentes subobjetivos marcados para recapitular
  
 \item \underline{Detección de puntos de interés}.
 
-En este primer subobjetivo se recogen las imágenes RGB y DEPTH del sensor cuando el componente ha terminado sus cálculos para dar comienzo a otra iteración o a otro instante de tiempo en el que se vuelve a hacer todo el proceso de estimación de movimiento.
+En este primer subobjetivo se recogen las imágenes RGB y DEPTH del sensor para dar comienzo a otra iteración o a otro instante de tiempo en el que se vuelve a hacer todo el proceso de estimación de movimiento.
 
 El componente es capaz de extraer las carácterísticas 2D de dos fotogramas consecutivos pertenecientes a dos instantes de tiempo, con técnicas como SIFT o SURF y filtro frontera.
 
-Además de la extracción 2D se consigue transformar estas características de 2D a 3D, mediante la imagen de profundidad (Depth) asociada a la imagen de color (RGB).
+Además de la extracción 2D, se consigue transformar estas características de 2D a 3D mediante la imagen de profundidad (Depth) asociada a la imagen de color (RGB).
 
 \item \underline{Emparejamiento de puntos}.
 
-El componente también es capaz de realizar los emparejamientos de los puntos de interés obtenidos del bloque anterior y poder ordenarlos de mayor a menor precisión. Se ha implementado también un filtro de sobresaliencia que verifica que un emparejamiento sea único y no pueda confundirse con ningún otro.
+El componente también es capaz de realizar los emparejamientos de los puntos de interés obtenidos del bloque anterior y de ordenarlos de mayor a menor precisión. Se ha implementado también un filtro de sobresaliencia que verifica que un emparejamiento sea único y no pueda confundirse con ningún otro.
 
 \item \underline{Estimación de movimiento}.
 
-Se calcula la matriz RT a través de los emparejamientos obtenidos. Y a través de técnicas como el cálculo de error espacial, retroproyección y RANSAC se consigue una redución de error importante.
+Se calcula la matriz RT a través de los emparejamientos obtenidos utilizando SVD. Y a través de técnicas como el cálculo de error espacial, retroproyección y RANSAC se consigue una reducción importante de error.
 
 \item \underline{Pruebas y experimentos}.
 
-En los experimientos mostrados en el capítulo~\ref{Chapter5} se puede validar las pruebas realizadas del componente. Se puede apreciar también la implementación de la interfaz gráfica, con la visualización de cada uno de los subobjetivos, a fin de analizar correctamente los resultados obtenidos. Se añade además un visualizador 3D con la posición de la cámara, la estela de movimiento y la nube de puntos.
+Los experimentos mostrados en el capítulo~\ref{Chapter5} validan experimentalmente el correcto comportamiento del componente. Se puede apreciar también la implementación de la interfaz gráfica, con la visualización de cada uno de los subobjetivos, a fin de analizar correctamente los resultados obtenidos. Especialmente útil ha sido el visualizador 3D con la posición de la cámara, la estela de movimiento y la nube de puntos.
 
 \end{enumerate}
 
@@ -65,20 +65,20 @@ En los experimientos mostrados en el capítulo~\ref{Chapter5} se puede validar l
 %-----------------------------------
 \section{Trabajos futuros}
 
-Para finalizar, se proponen algunas posibles líneas futuras de gran interés para la ampliación de este trabajo o mejoras que podrían realizarse.
+Para finalizar, se proponen algunas posibles líneas futuras de interés para la ampliación de este trabajo y mejoras que podrían realizarse.
 
 \begin{itemize}
 \item \textbf{Normalización y cierre de bucle.}
 
-Para mejorar la estimación sería interesante, algún mecanismo de normalización de la matriz RT para eliminar el error acumulativo en lo máximo posible. Por ejemplo; si se sabe que los puntos obtenidos son de una pared o un terreno liso, se podría construir un plano y corregir dichos puntos en base a ese plano.
+Para mejorar la estimación sería interesante algún mecanismo de normalización de la matriz RT para eliminar el error acumulativo en lo máximo posible. Por ejemplo; si se sabe que los puntos obtenidos son de una pared o un terreno liso, se podría construir un plano y corregir dichos puntos en base a ese plano.
 
-Así como algún mecanismo de cierre de bucle podría ser muy intereante para reajustar los cálculos y reducir en mayor medida ese error. Por ejemplo, cuando se ha pasado por una zona ya conocida y poder comparar el resultado de las dos veces.
+También algún mecanismo de cierre de bucle podría ser intereante para reajustar los cálculos y reducir en mayor medida ese error acumulativo. Por ejemplo, cuando se ha pasado por una zona ya conocida, poder comparar el resultado de la estimación 3D las dos veces.
 
 \item \textbf{Mejorar tiempo de cómputo.}
 
-Aunque el trabajo ha sido implementado para reducir el tiempo de cómputo y encontrar un equilibrio entre velocidad y robustez, existe un margen de mejora que puede superarse. Por ejemplo, el cálculo de puntos de interés a través de FAST aligeraría el proceso.
+Aunque el trabajo ha sido implementado buscando reducir el tiempo de cómputo y encontrar un equilibrio entre velocidad y robustez, existe margen de mejora que puede superarse. Por ejemplo, el cálculo de puntos de interés a través de FAST aligeraría el proceso.
 
 \item \textbf{Entornos complejos.}
 
-Estaría bien investigar sobre entornos más complejos con presencia de objetos móviles. La presencia de objetos móviles no ha sido contemplada en la práctica, sin embargo, esta variable condicionará negativamente los resultados obtenidos. Por ello, y por que en el mundo que nos rodea no es estático podría ser interesante investigar esta línea de trabajo. Los espejos o reflejos podrían entrar también en este apartado como fuente de pruebas.
+Estaría bien investigar sobre entornos más complejos con presencia de objetos móviles. La presencia de objetos móviles no ha sido contemplada en este trabajo, sin embargo, esta variable condiciona negativamente los resultados obtenidos. Por ello, y porque el mundo que nos rodea no es estático podría ser interesante investigar esta línea. Los espejos o reflejos podrían entrar también en este apartado como fuente de pruebas.
 \end{itemize}
