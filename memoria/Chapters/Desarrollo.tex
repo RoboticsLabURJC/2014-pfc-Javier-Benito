@@ -4,7 +4,7 @@
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-Una vez presentado el contexto, los objetivos, así como las herramientas empleadas y los fundamentos teóricos, en este capítulo se detalla la solución software desarrollada. Primero se presenta el diseño global y después se analiza en detalle el componente realizado con una visión profunda del desarrollo por bloques y su funcionamiento.
+Una vez presentado el contexto, los objetivos, así como las herramientas empleadas, en este capítulo se detalla la solución software desarrollada. Primero se presenta el diseño global y después se analiza en detalle el componente realizado con una visión profunda del desarrollo por bloques y su funcionamiento.
 
 
 %-----------------------------------
@@ -14,7 +14,7 @@ Una vez presentado el contexto, los objetivos, así como las herramientas emplea
 
 El sistema se basa principalmente en dos componentes; uno existente en JdeRobot (\textbf{OpenniServer}) que funciona como driver del sensor y proporciona las imágenes obtenidas por éste y el componente realizado en este proyecto (\textbf{RealRTEstimator}) que se encarga, una vez recogidas las imágenes, de toda la lógica restante.
 
-El objetivo del componente, como ya se ha comentado, consiste en estimar en tiempo real la posición y movimiento incremental y el 3D del sensor, por lo que deberá entregar una estimación en todo momento.
+El objetivo del componente, consiste en estimar en tiempo real la posición y movimiento incremental y en 3D del sensor, por lo que deberá entregar una estimación en todo momento.
 
 En la Figura~\ref{fig:diagram1} se puede apreciar el diagrama global de funcionamiento del componente desarrollado y su conexión con otros componentes para los diferentes datos de entrada.
 
@@ -39,7 +39,7 @@ Respecto al funcionamiento interno del RealRTEstimator se puede ver a grandes ra
 \end{figure}
 
 \begin{itemize}
-\item Extración de puntos de interés (análisis 2D) del fotograma actual.
+\item Extracción de puntos de interés (análisis 2D) del fotograma actual.
 
 \item Emparejamientos de puntos de interés en t con respecto a los puntos extraídos en el instante anterior (t-1).
 
@@ -58,11 +58,11 @@ En las siguientes secciones desglosaremos el funcionamiento de estos diferentes 
 %-----------------------------------
 \section{Análisis 2D}
 
-El primer bloque del componente RealRTEstimator es el de análisis 2D. A partir de dos imágenes, imagen de color y la de profundidad, se procede a la extracción de puntos de interés.
+El primer bloque del componente RealRTEstimator es el de análisis 2D. A partir de dos imágenes, la imagen de color y la de profundidad, se procede a la extracción de puntos de interés.
 
 \subsection{Detección de puntos de interés}
 
-El término puntos de interés o detección de características (\textit{Feature Detection} en inglés) hace referencia a la tarea de localizar en una imágen puntos relevantes o carácterísticos. Estos puntos suelen ser comunes y son fáciles de seguir de fotograma en fotograma.
+El término puntos de interés o detección de características (\textit{Feature Detection} en inglés) hace referencia a la tarea de localizar en una imagen puntos relevantes o carácterísticos. Estos puntos suelen ser comunes y son fáciles de seguir de fotograma en fotograma.
 
 Para entender cuáles son estos puntos característicos podemos observar un ejemplo sencillo en la Figura~\ref{fig:feature_simple}. El cuadrado azul se encuentra en una área plana, y es difícil de seguir o encontrar. En cualquier lugar por donde se desplace parecerá que es el mismo. Para el cuadrado negro, que es un borde, igual para el desplazamiento lateral; sin embargo, para el desplazamiento vertical el punto ya cambia. Por último, está el cuadrado rojo, que es una esquina. Para cualquier desplazamiento de esta figura, el punto ya es diferente, lo que significa que ese punto en la figura es único y por lo tanto vamos a poder identificarlo o seguirlo en diferentes imágenes. Así pues, las esquinas suelen ser candidatos idóneos para la detección puntos de carácterísticas en una imagen (en algunos casos las manchas también pueden ser consideradas buenas zonas).
 
@@ -76,14 +76,14 @@ Para entender cuáles son estos puntos característicos podemos observar un ejem
 
 Una vez entendido el concepto, el siguiente paso consiste en averiguar cómo encontrar estos puntos de interés en una imagen real. Por ejemplo, una manera sencilla de hacerlo es buscar las regiones en las imágenes que contienen una gran variabilidad cuando son desplazadas (una pequeña distancia) hacia todas las direcciones de los alrededores.
 
-Existen multitud de implementaciones para calcular estas carácterísticas en las imágenes. Uno de los primeros intentos en encontrar estas esquinas fue hecho por Chris Harris y Mike Stephens \parencite{Reference8}. El método, llamado \textit{Harris Corner Detector} transforma la simple idea a una fórmula matemática (\ref{eqn:Harris}) que básicamente encuentra la diferencia en intensidad por un desplazamiento (u,v) en todas las direcciones.
+Existen multitud de implementaciones para calcular estas características en las imágenes. Uno de los primeros intentos en encontrar estas esquinas fue hecho por Chris Harris y Mike Stephens \parencite{Reference8}. El método, llamado \textit{Harris Corner Detector} transforma la simple idea a una fórmula matemática (\ref{eqn:Harris}) que básicamente encuentra la diferencia en intensidad por un desplazamiento (u,v) en todas las direcciones.
 
 \begin{equation}
 E(u,v)\,=\,\sum_{x,y}w(x,y)\,\,[I(x\,+\, u,\, y\,+\, v)-I(x,y)]^{2}
 \label{eqn:Harris}
 \end{equation}
 
-Donde \textit{w(x,y)} es una ventana rectangular o gaussiana e I(x,y) corresponde a la intensidad. Aplicando algunos cálculos matemáticos se llega a la ecuación (\ref{eqn:Harris}) básica que determina si una ventana contiene una esquina o no. OpenCV tiene la función \textbf{cv2.cornerHarris()} para este propósito.
+Donde \textit{w(x,y)} es una ventana rectangular o gaussiana e I(x,y) corresponde a la intensidad. Aplicando algunos cálculos matemáticos se llega a la ecuación básica (\ref{eqn:Harris}) que determina si una ventana contiene una esquina o no. OpenCV tiene la función \textbf{cv2.cornerHarris()} para este propósito.
 
 %\[ R=det(m)-k(trace(M))^{2} \]
 \begin{equation}
@@ -119,15 +119,15 @@ Si $R$ es mayor que un determinado umbral, o dicho de otro modo, solo cuando $\l
 \label{fig:shi_detector}
 \end{figure}
 
-Existen varias implementataciones para el cálculo de carácterísticas de una imagen. A parte de las mencionadas, OpenCV proporciona entre otras \textbf{SIFT} y \textbf{SURF} que son las que hemos usado para el trabajo ya que permiten además de la detección de puntos de interés, el cálculo de descriptores. Se detallarán más adelante.
+Existen varias implementaciones para el cálculo de características de una imagen. A parte de las mencionadas, OpenCV proporciona entre otras \textbf{SIFT} y \textbf{SURF} que son las que hemos usado para el trabajo, ya que permiten además de la detección de puntos de interés, el cálculo de descriptores. Se detallarán más adelante.
 
 \subsection{Cálculo de descriptores}
 
 Una vez que se conoce el punto de interés, necesitamos asignarle una huella, algo carácterístico que nos permita encontrar el mismo en otra imagen. Para ello, se procede al cálculo de descriptores (\textit{Feature Description} en inglés).
 
-Consiste en definir la región alrededor del punto de interés para poder buscar el punto con la misma región en otra imagen. Es decir, se guarda una descripción de la región del punto dado y se busca el mismo (o el que más se parezca) a otro punto perteneciente a otra imagen.
+Consiste en definir la región alrededor del punto de interés para poder buscar el punto con la misma región en otra imagen. Es decir, se guarda una descripción de la región del punto dado y se busca el mismo (o el que más se parezca) en otra imagen.
 
-Una vez localizado el punto se podrá llevar un seguimiento de dónde está ese punto en otra imagen. No en todos los casos se va a encontrar un descriptor perfecto para un cierto punto, por lo que al estudiar los emparejamientos se evaluará cuánto se parecen los despriptores entre sí.
+Una vez localizado el punto se podrá llevar un seguimiento de dónde está ese punto en otra imagen. No en todos los casos se va a encontrar un descriptor perfecto para un cierto punto, por lo que al estudiar los emparejamientos se evaluará cuánto se parecen los descriptores entre sí.
 
 \subsubsection{Descriptores SIFT}
 
@@ -146,9 +146,9 @@ SIFT nace para resolver esta carencia de mano de D. Lowe \parencite{Reference10}
 \begin{enumerate}
 \item \underline{Extrema detección en espacio-escala}
 
-Para poder detectar características en diferentes escalas es necesario variar el tamaño de la ventana a ampliar. Para ello se utiliza un filtro de espacio-escala; un filtro LoG (Laplaciana de una Gaussiana) que con diferentes valores de $\sigma$ es capaz de detectar puntos de interés para diferentes escalas. $\sigma$ actúa como un parámetro de escala, para bajos niveles de $\sigma$ la gaussiana devuelve altos valores para las pequeñas esquinas, sin embargo, altos valores de $\sigma$ encajan bien para grandes esquinas.
+Para poder detectar características en diferentes escalas es necesario variar el tamaño de la ventana a ampliar. Para ello se utiliza un filtro de espacio-escala; un filtro LoG (Laplaciana de una Gaussiana) que con diferentes valores de $\sigma$ es capaz de detectar puntos de interés para diferentes escalas. $\sigma$ actúa como un parámetro de escala. Para bajos niveles de $\sigma$ la gaussiana devuelve altos valores para las pequeñas esquinas, sin embargo, altos valores de $\sigma$ encajan bien para grandes esquinas.
 
-Por lo tanto se busca a lo largo de la imagen y en diferentes escalas para encontrar el punto. Así pues a lo largo de la imagen y en diferentes escalas tenemos una lista de $(x,y,\sigma)$ valores, donde $(x,y)$ representa el espacio y $\sigma$ la escala.
+Por lo tanto se busca a lo largo de la imagen y en diferentes escalas para encontrar el punto. Así pues, a lo largo de la imagen y en diferentes escalas tenemos una lista de $(x,y,\sigma)$ valores, donde $(x,y)$ representa el espacio y $\sigma$ la escala.
 
 Sin embargo, el filtro LoG es muy costoso temporalmente por lo que SIFT calcula una aproximación; la diferencia de gausianas con diferente $\sigma$ y el proceso se repetirá para diferentes octavas ($k\sigma$) como se puede apreciar en la Figura~\ref{fig:shif_dog}.
 
@@ -219,7 +219,7 @@ En vez de utilizar Laplaciana de la gaussiana (LoG) para encontrar el espacio de
 \label{fig:surf1}
 \end{figure}
 
-La principal ventaja es que la convolución con cuadros es más fácil de cálcular con la ayuda de imágenes integrales. A parte, puede realizarse en paralelo para diferentes escalas.
+La principal ventaja es que la convolución con cuadros es más fácil de calcular con la ayuda de imágenes integrales. Aparte, puede realizarse en paralelo para diferentes escalas.
 
 Una vez calculado el escalado, se propone el cálculo de la orientación principal del punto de interés. Para obtener un punto invariante a las rotaciones, iluminación y orientación se utiliza \textit{wavelet de Haar} en la dirección $x$ e $y$ en una región circular de radio \textit{6s}\footnote{La \textit{s} hace referencia a un parámetro en el cómputo de descriptores de SURF que representa una escala que define los límites de las regiones circulares entorno al punto de interés.}. Después de haber evaluado las respuestas se busca la dirección predominante calculando la suma de todos los resultados dentro de una ventana con un ángulo de 60º. La región en la que se haya obtenido un mayor valor determinará la orientación buscada (Figura~\ref{fig:surf2}).
 
@@ -237,7 +237,7 @@ Para el cálculo del descriptor se construye una sección cuadrada en base a la 
 v=\left(\sum d_{x},\sum d_{y},\sum|d_{x}|,\sum|d_{y}|\right)
 \end{equation}
 
-Con el vector representado, para cada carácterística detectada el descriptor con SURF contendrá 64 dimensiones. A menor dimensión, mayor velocidad de cómputo y de emparejamiento, pero se consigue menor distinción entre características. Para esto SURF tiene una versión extendida con 128 dimensiones.
+Con el vector representado, para cada característica detectada el descriptor con SURF contendrá 64 dimensiones. A menor dimensión, mayor velocidad de cómputo y de emparejamiento, pero se consigue menor distinción entre características. Para esto SURF tiene una versión extendida con 128 dimensiones.
 
 En resumen, SURF añade muchas mejoras para incrementar la velocidad en cada paso. Pruebas experimentales han demostrado que puede ser tres veces más rápido que SIFT. Aunque en robustez es comparable con SIFT, SURF se comporta bien en imágenes borrosas y con rotación pero no tanto cuando se cambian los puntos de vista o con una diferente condición de iluminación.
 
@@ -270,22 +270,22 @@ La implementación en código es similar a la de SIFT:
 %-----------------------------------
 \section{Emparejamiento}
 
-En esta sección abordaremos las distintas estrategias que se han implementado en el componente para el emparejamiento (\textit{matching}) de puntos de interés. Los emparejamientos se harán por cada fotograma que llegue de la cámara después de la extración de puntos de interés.
+En esta sección abordaremos las distintas estrategias que se han implementado en el componente para el emparejamiento (\textit{matching}) de puntos de interés. Los emparejamientos se harán por cada fotograma que llegue de la cámara después de la extracción de puntos de interés.
 
-El componente RealRTEstimator está recibiendo continuamente imágenes del sensor, por lo que el cálculo, al igual que la extración, se hará en cada iteración. Consiguiendo así una relación entre dos fotogramas consecutivos para analizar y posteriormente cálcular el desplazamiento sucedido. Estos emparejamientos nos darán margen para desechar los peores y filtrar por mejores utilizando diferentes técnicas. Así pues, se intentará coger los mejores emparejamientos entre una imagen en $(t)$ y otra en $(t+1)$.
+El componente RealRTEstimator está recibiendo continuamente imágenes del sensor por lo que el cálculo, al igual que la extracción, se hará en cada iteración. Consiguiendo así una relación entre dos fotogramas consecutivos para analizar y posteriormente calcular el desplazamiento sucedido. Estos emparejamientos nos darán margen para desechar los peores y filtrar por mejores utilizando diferentes técnicas. Así pues, se intentará coger los mejores emparejamientos entre una imagen en $(t)$ y otra en $(t+1)$.
 
 Se presentan dos soluciones para este problema; una primera solución que calcula el emparejamiento de puntos mediante un mecanismo de \textbf{Fuerza Bruta} y en segundo lugar el uso de la librería \textbf{FLANN}, ambas proporcionadas por OpenCV.
 
 \subsection{Emparejamiento por Fuerza Bruta}
 
-El mecanismo de Fuerza Bruta es simple: Se coge el descriptor de una de las carácterísticas del primer fotograma (imagen en $(t)$) y se comprueba el parecido con todos los puntos de carácterísticas del segundo fotograma (imagen en $(t+1)$). Estos emparejamientos se evalúan a través de un parámetro de distancia. De todas las características, el descriptor que más se parezca al primero o el emparejamiento que tenga la menor distancia es el devuelto.
+El mecanismo de Fuerza Bruta es simple: Se coge el descriptor de una de las características del primer fotograma (imagen en $(t)$) y se comprueba el parecido con todos los puntos de características del segundo fotograma (imagen en $(t+1)$). Estos emparejamientos se evalúan a través de un parámetro de distancia. De todas las características, el descriptor que más se parezca al primero o el emparejamiento que tenga la menor distancia es el devuelto.
 
 Para el cálculo de este emparejamiento se usa OpenCV. En primer lugar se tiene que crear un objeto del tipo \textit{BruteForceMatcher} y pasarle como parámetro el tipo de medida para calcular la distancia, ya que depende del tipo de descriptor a utilizar.
 
 Una vez creado el objeto, dos métodos importantes son \textit{.match()} y \textit{.knnMatch()}. El primero devuelve el mejor emparejamiento. El segundo devuelve los $k$ mejores emparejamientos, donde $k$ es definido por el usuario.
 
 
-El siguiente ejemplo de código se puede observar cómo calcular los emparejamientos a través de OpenCV:
+En el siguiente ejemplo de código se puede observar cómo calcular los emparejamientos a través de OpenCV:
 
 \begin{lstlisting}[style=CStyle]
 	// matching descriptors
@@ -306,7 +306,7 @@ El siguiente ejemplo de código se puede observar cómo calcular los emparejamie
 \item \textit{DMatch.imgIdx} - Índice de la imagen resultado.
 \end{itemize}
 
-En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba casera utilizando el algoritmo de Fuerza Bruta. Como se puede apreciar, el tener que emparejar todos los puntos de una imagen al más parececido de la otra proporciona, incluso en una imagen muy parecida, errores que se van a tener que filtrar.
+En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba casera utilizando el algoritmo de Fuerza Bruta. Como se puede apreciar, el tener que emparejar todos los puntos de una imagen al más parecido de la otra proporciona, incluso en una imagen muy parecida, errores que se van a tener que filtrar.
 
 \begin{figure}[th]
 \centering
@@ -318,7 +318,7 @@ En Figura~\ref{fig:SiftDetector} podemos ver un ejemplo real de una prueba caser
 
 
 
-Por último, para la visualización OpenCV dispone del método \textit{.drawMatches()} que a partir de las dos imágenes y los emparejamientos obtenidos ayuda a dibujar los mismos para su visualización. Coloca las dos imágenes a tratar en horizontal y dibuja las líneas con los emparejamientos de una imágen a otra. En el caso de usar y querer visualizar los $k$ mejores emparejamientos existe también el método \textit{.drawMatchesKnn}.
+Por último, para la visualización OpenCV dispone del método \textit{.drawMatches()} que a partir de las dos imágenes y los emparejamientos obtenidos ayuda a dibujar los mismos para su visualización. Coloca las dos imágenes a tratar en horizontal y dibuja las líneas con los emparejamientos de una imagen a otra. En el caso de usar y querer visualizar los $k$ mejores emparejamientos existe también el método \textit{.drawMatchesKnn}.
 
 
 \subsection{Emparejamiento por FLANN}
@@ -337,7 +337,7 @@ La implementación en código con OpenCV es sencilla y muy parecida a la anterio
 \end{lstlisting}
 \subsection{Resolución de errores de emparejamiento}
 
-Sobre el filtrado de errores se han usado dos estrategias. Se han cogido de todos los emparejamientos un porcentaje relativamente pequeño donde se encuentran los emparejamientos más acertados, tomando como medida de calidad la distancia ofrecida por los diferentes algoritmos y se ha incluido un filtro de sobresaliencia para el algoritmo de Fuerza Bruta.
+Para el filtrado de errores se han usado dos estrategias. Se han cogido de todos los emparejamientos un porcentaje relativamente pequeño donde se encuentran los emparejamientos más acertados, tomando como medida de calidad la distancia ofrecida por los diferentes algoritmos y se ha incluido un filtro de sobresaliencia para el algoritmo de Fuerza Bruta.
 
 
 
@@ -354,7 +354,7 @@ En la Figura~\ref{fig:bestPointsSift} se puede ver el resultado de aplicar este 
 \label{fig:bestPointsSift}
 \end{figure}
 
-\item \underline{Filtro de sobresaliencia}. Este filtro surge de la necesidad de corregir un error común que se encontraba en los mejores emparejamientos por distancia. Existen ciertas situaciones en las que hay características de una imagen muy similares a otras de otra imagen y que corresponden a errores en el emparejamiento.
+\item \underline{Filtro de sobresaliencia}. Este filtro surge de la necesidad de corregir un error común que se encontraba en los mejores emparejamientos por distancia. Existen ciertas situaciones en las que hay características de una imagen muy similares a varias de otra imagen y que corresponden a errores en el emparejamiento.
 
 En la Figura~\ref{fig:similarCorrelation} se captura un ejemplo con dos de los mejores puntos medidos por distancia y se verifica que los dos mejores puntos se corresponden con el mismo punto en la imagen a buscar. Este error corresponde a una situación poco casual y es origen de muchos errores en la estimación.
 
@@ -368,7 +368,7 @@ En la Figura~\ref{fig:similarCorrelation} se captura un ejemplo con dos de los m
 
 Se puede entender en la Figura~\ref{fig:similarCorrelation} que el punto con el resultado final del emparejamiento (imagen derecha) tiene a nivel de descriptores una mayor similitud que los demás, de ahí ese resultado. Pero los dos mejores puntos tienen una correlación muy similar, al igual que tendrán los demás puntos a lo largo del marco de la puerta subrayado en amarillo.
 
-Para ello, se ha empleado el método \textit{.knnMatch()} en el algoritmo de Fuerza Bruta que coge los $k$ mejores puntos. En este caso, se cogen los 2 mejores emparejamientos de todos los puntos y si la diferencia entre estos dos mejores emparejamientos es muy paqueña $(< 100)$ se desecha. Así pues, este filtro garantiza que el emparejamiento obtenido a través de los dos puntos es muy fuerte y no hay otro descriptor en la otra imagen con características similares.
+Para ello, se ha empleado el método \textit{.knnMatch()} en el algoritmo de Fuerza Bruta que coge los $k$ mejores puntos. En este caso, se cogen los 2 mejores emparejamientos de todos los puntos y si la diferencia entre estos dos mejores emparejamientos es muy pequeña $(< 100)$ se desecha. Así pues, este filtro garantiza que el emparejamiento obtenido a través de los dos puntos es muy fuerte y no hay otro descriptor en la otra imagen con características similares.
 
 El código para esta implementación es sencillo:
 
@@ -417,7 +417,7 @@ Para conseguir la información 3D se ha utilizado la librería de Progeo, dispon
 \label{fig:camLine}
 \end{figure}
 
-La transformación de un píxel a su homólogo en 3D es compleja. El proceso de recostrucción está basado en un modelo proyectivo desde el centro óptico. La distancia que devuelve el sensor, sin embargo, es la distancia perpendicular al plano imagen, y no la distancia real, tal y como se puede apreciar en la Figura~\ref{fig:distPoint}. Para ello, si se quiere calcular la posición 3D asociada a un píxel cuya recta de retroproyección es la que une el foco de la cámara y un punto BP (Figura~\ref{fig:calculate3d}) el punto que se quiere calcular no será el punto $P$, punto a una distancia $d$ del foco de la cámara y que nos da el sensor, sino el punto $Pr$ que corresponde al punto 3D real.
+La transformación de un píxel a su homólogo en 3D es compleja. El proceso de reconstrucción está basado en un modelo proyectivo desde el centro óptico. La distancia que devuelve el sensor, sin embargo, es la distancia perpendicular al plano imagen, y no la distancia real, tal y como se puede apreciar en la Figura~\ref{fig:distPoint}. Para ello, si se quiere calcular la posición 3D asociada a un píxel cuya recta de retroproyección es la que une el foco de la cámara y un punto BP (Figura~\ref{fig:calculate3d}) el punto que se quiere calcular no será el punto $P$, punto a una distancia $d$ del foco de la cámara y que nos da el sensor, sino el punto $Pr$ que corresponde al punto 3D real.
 
 \begin{figure}[th]
 \centering
@@ -427,7 +427,7 @@ La transformación de un píxel a su homólogo en 3D es compleja. El proceso de 
 \label{fig:distPoint}
 \end{figure}
 
-Para calcular el punto $Pr$, se tiene que encontrar la intersección entre la recta de retroproyección y el plano $D$. Definimos el plano $D$ como el plano con vector normal $\vec{k}$ que pasa por el punto $Q$. El vector $\vec{k}$ se obtiene como vector unitario que une el centro óptico de la cámara con el foco de atención, $foa$ (\textit{focus of attention}). Este vector es un vector perpendicular al plano imagen. El $foa$ es un parámetro conocido que obtenemos en el proceso de calibración de la cámara junto con la orientación y el \textit{roll}\footnote{Movimento del sensor sobre el eje central del sensor, paralelo al $foa$ o foco de atención.} (parámetros extrínsecos). El proceso matemático es el siguiente:
+Para calcular el punto $Pr$ se tiene que encontrar la intersección entre la recta de retroproyección y el plano $D$. Definimos el plano $D$ como el plano con vector normal $\vec{k}$ que pasa por el punto $Q$. El vector $\vec{k}$ se obtiene como vector unitario que une el centro óptico de la cámara con el foco de atención, $foa$ (\textit{focus of attention}). Este vector es un vector perpendicular al plano imagen. El $foa$ es un parámetro conocido que obtenemos en el proceso de calibración de la cámara y marca su orientación 3D junto con el \textit{roll}\footnote{Movimiento del sensor sobre el eje central del sensor, paralelo al $foa$ o foco de atención.} (parámetros extrínsecos). El proceso matemático es el siguiente:
 
 \begin{figure}[th]
 \centering
@@ -498,11 +498,11 @@ En la Figura~\ref{fig:pointcloud-plane} se puede ver un ejemplo de una nube de p
 %-----------------------------------
 \section{Cálculo de movimiento tridimensional}
 
-Una vez calculados los puntos 3D, el siguiente bloque del componente realizado, RealRTEstimator, es la estimación de movimiento. En este caso hay que calcular continuamente el movimiento relativo entre los instantes $(n-1)$ y $(n)$. Esto permite ir siguiendo la trayectoria y la orientación seguida por el sensor a lo largo del tiempo.
+Una vez calculados los puntos 3D, el siguiente bloque del componente realizado, RealRTEstimator, es la estimación de movimiento. En este caso hay que calcular continuamente el movimiento relativo entre los instantes $(t-1)$ y $(t)$. Esto permite ir siguiendo la trayectoria y la orientación seguida por el sensor a lo largo del tiempo.
 
 \subsection{Matriz RT}
 
-La trayectoria seguida se definirá por una \textbf{matriz RT} (Rotación + Translación) 4x4 de la manera que muestra la Figura~\ref{fig:matrixRT}.
+La trayectoria seguida se definirá por una \textbf{matriz RT} (Rotación + Traslación) 4x4 de la manera que muestra la Figura~\ref{fig:matrixRT}.
 
 \begin{figure}[th]
 \centering
@@ -554,16 +554,16 @@ Se puede deducir, por tanto, que la matriz define en total seis grados de libert
 
 \subsection{Cálculo RT mediante SVD}
 
-Al calcular los puntos 3D a través de \textit{progeo} desde el sensor se tienen siempre los puntos en coordenadas \textbf{relativas}, por lo que al mover la cámara si calculamos de nuevo otros puntos estos se encontrarán en el mismo sistema de referencia. Por lo tanto, a parte de encontrar los puntos en 3D en relativas, habrá que hacer los cálculos para encontrar esos puntos en coordenadas \textbf{absolutas}.
+Al calcular los puntos 3D a través de Progeo desde el sensor se tienen siempre los puntos en coordenadas \textbf{relativas}, por lo que al mover la cámara si calculamos de nuevo otros puntos estos se encontrarán en el mismo sistema de referencia. Por lo tanto, a parte de encontrar los puntos en 3D en relativas, habrá que hacer los cálculos para encontrar esos puntos en coordenadas \textbf{absolutas}.
 
-Como sistema de referencia absoluto se toma el de la primera posición de la cámara. Así las coordenadas absolutas iniciales vienen dadas por la matriz unidad. A partir de ahí se empieza a calcular con respecto a ese sistema de referencia absoluto de los nuevos puntos en cada instante y de la cámara.
+Como sistema de referencia absoluto se toma el de la primera posición de la cámara. Así las coordenadas absolutas iniciales vienen dadas por la matriz unidad. A partir de ahí se empieza a calcular con respecto a ese sistema de referencia absoluto la posición de los nuevos puntos en cada instante y de la cámara.
 
-Los mismos puntos, se encontrarán en la misma posición en coordenadas absolutas en diferentes instantes de tiempo. Como se puede apreciar en la Figura~\ref{fig:movementRt} el desplazamiento del sensor en coordenadas absolutas muestra:
+Los mismos puntos se encontrarán en la misma posición en coordenadas absolutas en diferentes instantes de tiempo. Como se puede apreciar en la Figura~\ref{fig:movementRt} el desplazamiento del sensor en coordenadas absolutas muestra:
 
 \begin{itemize}
-\item Puntos absolutos correspondientes únicamente al instante $(n-1)$.
-\item Puntos absolutos correspondientes únicamente al instante $(n)$.
-\item Cámaras en absolutas correspondientes tanto al intante $(n-1)$ como $(n)$.
+\item Puntos absolutos correspondientes únicamente al instante $(t-1)$.
+\item Puntos absolutos correspondientes únicamente al instante $(t)$.
+\item Cámaras en absolutas correspondientes tanto al intante $(t-1)$ como $(t)$.
 \end{itemize}
 
 \begin{figure}[th]
@@ -598,18 +598,18 @@ donde se guardarán los píxeles y su correspondiente punto 3D en coordenadas ab
 
 Para los cálculos de la matriz RT se ha usado la librería \textit{Eigen} con la descomposición en valores singulares (\textbf{SVD}), ya que permite resolver sistemas sobredimensionados. En concreto se ha usado la clase \textit{JacobiSVD} para la descomposición de una matriz rectangular.
 
-Partiendo de la nube de puntos en coordenadas absolutas (mundo) del instante $(n-1)$ y la nube de puntos en coordenadas relativas (cam) en el instante $(n)$; se calcula la matriz RT de la cámara con respecto al mundo que mejor hace encajar la nube relativa en el instante $(n)$ con respecto a la absoluta en el instante $(n-1)$, tal y como expresa la siguiente ecuación:
+Partiendo de la nube de puntos en coordenadas absolutas (mundo) del instante $(t-1)$ y la nube de puntos en coordenadas relativas (cam) en el instante $(t)$; se calcula la matriz RT de la cámara con respecto al mundo que mejor hace encajar la nube relativa en el instante $(t)$ con respecto a la absoluta en el instante $(t-1)$, tal y como expresa la siguiente ecuación:
 
 %Para expresar un punto $P$ que viene dado en el sistema de referencia de la cámara (relativas) a sus coordenadas absolutas solo hay que multiplicar por la RT de la cámara en el mundo absoluto, tal y como expresa la siguiente ecuación:
 
 \begin{equation}
-RT_{cam}^{mundo}\cdot P_{pto(n-1)}^{mundo}=P_{pto(n)}^{cam}
+RT_{cam}^{mundo}\cdot P_{pto(t-1)}^{mundo}=P_{pto(t)}^{cam}
 \end{equation}
 
 Una vez calculada la matriz RT de la cámara con respecto al mundo, para expresar un punto $P$ que viene dado en el sistema de referencia de la cámara (relativas) a sus coordenadas absolutas solo hay que multiplicar por la matriz obtenida, que contiene la RT de la cámara en el mundo absoluto, tal y como expresa la siguiente ecuación:
 
 \begin{equation}
-\left(RT_{cam}^{mundo}\right)^{-1}\cdot P_{pto(n)}^{cam}=P_{pto(n)}^{mundo}
+\left(RT_{cam}^{mundo}\right)^{-1}\cdot P_{pto(t)}^{cam}=P_{pto(t)}^{mundo}
 \end{equation}
 
 En este caso para calcular la nube de puntos del instante actual y con coordenadas absolutas solo se tiene que multiplicar por la inversa de la matriz calculada.
@@ -617,19 +617,19 @@ En este caso para calcular la nube de puntos del instante actual y con coordenad
 Una vez llegados a este punto se guarda el resultado correspondiente para los cálculos de la siguiente iteración:
 
 \begin{equation}
-P_{pto(n)}^{mundo}\longrightarrow P_{pto(n-1)}^{mundo}
+P_{pto(t)}^{mundo}\longrightarrow P_{pto(t-1)}^{mundo}
 \end{equation}
 
-donde la nube de puntos absolutas, recién calculada, en $(n)$, pasa a ser la nube de puntos absolutas en $(n-1)$.
+donde la nube de puntos absolutas, recién calculada, en $(t)$, pasa a ser la nube de puntos absolutas en $(t-1)$.
 \subsection{Optimización mediante RANSAC}
 
-El cálculo de movimiento ha sido uno de los puntos en los que se ha encontrado más problema ya que el error es acumulativo y una iteración con un error demasiado grande produce que en los siguientes instantes el cálculo de la posición absoluta de la cámara sea erróneo y arrastre indefinidamente ese error. Por ello, hay que asegurarse de que todos los datos que vienen de los anteriores bloques, vengan con el menor error posible.
+El cálculo de movimiento ha sido uno de los puntos en los que se ha encontrado más problemas ya que el error es acumulativo y una iteración con un error demasiado grande produce que en los siguientes instantes el cálculo de la posición absoluta de la cámara sea erróneo y arrastre indefinidamente ese error. Por ello, hay que asegurarse de que todos los datos que vienen de los anteriores bloques vengan con el menor error posible.
 
 Para corregir el error en esta fase se ha optado por añadir dos filtros:
 
 \begin{itemize}
-\item Deshacer el cálculo con demasiado error espacial y de reproyección.
-\item Implementación de \textbf{RANSAC} para eliminar fallos espúrios.
+\item Desechar el cálculo con demasiado error espacial y de reproyección.
+\item Implementación de \textbf{RANSAC} para eliminar fallos espurios.
 \end{itemize}
 
 El método de RANSAC (\textit{Random Sample and Consensus}) nos ayuda con el ruido y los datos atípicos. Clasifica los datos en dos subconjuntos: uno de ellos son los datos que satisfacen un patrón o un modelo que consideramos bueno y otro subconjunto que corresponde con los datos malos o atípicos.
@@ -657,13 +657,13 @@ Los distintos parámetros de los que consta el algoritmo que se ha implementado 
 Para lograr esto, el algoritmo de RANSAC implementado hace lo siguiente:
 
 \begin{enumerate}
-\item Del número total de emparejamientos ($N$) se selecciona un porcentaje aleatorio (\textit{RANSAC\_PERC}). Este parámetro definido por el usuario determina el porcentaje de puntos en los que se supone que siempre va a haber un subconjunto bueno de datos. Cuanto más porcentaje más puntos para poder hacer la estimación de movimiento 3D, pero más posibilidad también de tener valores erróneos. Por lo tanto,  habrá que escoger dependiendo del número medio de emparejamientos, así como su porcentaje de error para cada iteración.
+\item Del número total de emparejamientos ($N$) se selecciona un porcentaje aleatorio (\textit{RANSAC\_PERC}). Este parámetro definido por el usuario determina el porcentaje de puntos en los que se supone que siempre va a haber un subconjunto bueno de datos. Cuanto más porcentaje más puntos para hacer la estimación de movimiento 3D, pero más posibilidad también de tener valores erróneos. Por lo tanto,  habrá que escoger del número de emparejamientos, así como su porcentaje de error para cada iteración.
 
-\item Con los $N$ emparejamientos seleccionados, se realiza la estimación de la matriz de movimiento 3D mediante SVD.
+\item Con los $N$ emparejamientos seleccionados se realiza la estimación de la matriz de movimiento 3D mediante SVD.
 
 \item A partir de la matriz RT obtenida del paso anterior se coge la nube de puntos proveniente de la cámara y le aplicamos la RT para transformarlas a coordenadas absolutas. Para cada punto 3D transformado se calcula la distancia o el error que existe entre ese punto y el mismo en el instante anterior y se van sumando. El resultado de la suma de error o distancia total se mantiene guardado.
 
-\item Se repiten los pasos 1, 2 y 3 tantas veces como esté definido en \textit{RANSAC\_ITER}. Este parámetro cuanto mayor sea, mayor probabilidades de encontrar un subconjunto mejor, por contra, el número de iteraciones compromete el tiempo de cómputo.
+\item Se repiten los pasos 1, 2 y 3 tantas veces como esté definido en \textit{RANSAC\_ITER}. Este parámetro cuanto mayor sea, mayor probabilidades de encontrar un subconjunto mejor. Por contra, el número de iteraciones compromete el tiempo de cómputo.
 
 Para cada iteración completa, se comprueba la distancia total obtenida en el paso 3. Si es menor se guarda, si no, se desecha.
  
@@ -673,9 +673,9 @@ Para cada iteración completa, se comprueba la distancia total obtenida en el pa
 
 \end{enumerate}
 
-Para el \textbf{error espacial} se ha medido la distancia entre los mismos puntos en el sistema de referencia absoluto para los instantes $(n-1)$ y $(n)$. 
+Para el \textbf{error espacial} se ha medido la distancia entre los mismos puntos en el sistema de referencia absoluto para los instantes $(t-1)$ y $(t)$. 
 
-Para el \textbf{error de reproyección} se mide la distancia entre píxeles de los diferentes instantes. Se calcula con \textit{Progeo} la posición del nuevo píxel en el instante anterior para poder calcular la distancia para una misma imagen.
+Para el \textbf{error de reproyección} se mide la distancia entre píxeles de los diferentes instantes. Se calcula con \textit{Progeo} la posición del nuevo píxel en el instante anterior para calcular la distancia para una misma imagen.
 
 Este algoritmo es muy robusto frente a valores espurios, ya que si se realiza el cálculo con alguno de estos valores o puntos ruidosos se desechará el resultado cogiendo como matriz RT la de otra iteración de RANSAC.
 
@@ -694,7 +694,7 @@ El componente desarrollado dispone de una interfaz gráfica en donde se pueden v
 \label{fig:supergui}
 \end{figure}
 
-La interfaz gráfica, basada en GTK, permite la realización  del procesado paso a paso, (muy útil para depurar) o de manera automática (funcionamiento continuo). La ventana del componente teine cuatro zonas diferenciadas: 
+La interfaz gráfica, basada en GTK, permite la realización  del procesado paso a paso, (muy útil para depurar) o de manera automática (funcionamiento continuo). La ventana del componente tiene cuatro zonas diferenciadas: 
 
 \begin{enumerate}
 \item Actualización de imagen. (Figura~\ref{fig:gui1})
@@ -741,9 +741,9 @@ La interfaz gráfica, basada en GTK, permite la realización  del procesado paso
 
 La herramienta permite, además, la modificación de algunos parámetros de configuración sobre la marcha, como pueden ser la elección algoritmos o filtros para el bloque de detección o el bloque de emparejamiento, así como el porcentaje de puntos emparejamientos a calcular.
 
-Por último se ha implementado un visor 3D, donde se representa toda la información tridimensional para el sistema de referencia absoluto.
+Por último, se ha implementado un visor 3D, donde se representa toda la información tridimensional para el sistema de referencia absoluto.
 
-En las siguientes Figuras (\ref{fig:gui1}, \ref{fig:gui2}, \ref{fig:gui3}, \ref{fig:gui4}) se observan las capturas de cada uno de los pasos en la estimación de movimiento 3D. El botón [1] actualiza la imágen. A la izquierda aparecerá la imágen en el instante $[n]$ y a la derecha la imagen del instante $[n-1]$. El botón [2] detecta los puntos de interés con las opciones seleccionadas y actualiza las imágenes del GUI con los puntos de interés extraídos. El botón [3] muestra los emparejamientos obtenidos sobre las imágenes y con un \textit{slider} se puede elegir el porcentaje de puntos emparejados. Por último, el botón [4] estima la matriz RT, donde se puede observar en vivo la matriz RT estimada y el resultado de la estimación en el visor 3D con la posición de la cámara y la nube de puntos.
+En las siguientes Figuras (\ref{fig:gui1}, \ref{fig:gui2}, \ref{fig:gui3}, \ref{fig:gui4}) se observan las capturas de cada uno de los pasos en la estimación de movimiento 3D. El botón [1] actualiza la imagen. A la izquierda aparecerá la imagen en el instante $(t)$ y a la derecha la imagen del instante $(t-1)$. El botón [2] detecta los puntos de interés con las opciones seleccionadas y actualiza las imágenes del GUI con los puntos de interés extraídos. El botón [3] muestra los emparejamientos obtenidos sobre las imágenes y con un \textit{slider} se puede elegir el porcentaje de puntos emparejados. Por último, el botón [4] estima la matriz RT, donde se puede observar en vivo la matriz RT estimada y el resultado de la estimación en el visor 3D con la posición de la cámara y la nube de puntos.
 
 %-----------------------------------
 %	SECTION Ajuste de parámetros

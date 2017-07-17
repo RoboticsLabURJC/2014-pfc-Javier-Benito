@@ -13,7 +13,7 @@ En este capítulo se presentarán las principales conclusiones que se extraen de
 %-----------------------------------
 \section{Conclusiones}
 
-Después de un desarrollo de cerca de 5000 líneas de código, escritas en C++, se puede decir que se ha conseguido alcanzar el objetivo global planteado en el capítulo~\ref{Chapter2}; un sistema capaz de averiguar la posición y orientación de un sensor RGBD que se mueve libremente por el espacio en tiempo real.
+Después de un desarrollo de cerca de 5000 líneas de código, escritas en C++, se puede decir que se ha conseguido alcanzar el objetivo global planteado en el capítulo~\ref{Chapter2}; un sistema capaz de averiguar la posición y orientación 3D de un sensor RGBD que se mueve libremente por el espacio en tiempo real.
 
 A continuación se repasan los diferentes subobjetivos marcados para recapitular y verificar lo realizado:
 
@@ -70,9 +70,9 @@ Para finalizar, se proponen algunas posibles líneas futuras de interés para la
 \begin{itemize}
 \item \textbf{Normalización y cierre de bucle.}
 
-Para mejorar la estimación sería interesante algún mecanismo de normalización de la matriz RT para eliminar el error acumulativo en lo máximo posible. Por ejemplo; si se sabe que los puntos obtenidos son de una pared o un terreno liso, se podría construir un plano y corregir dichos puntos en base a ese plano.
+Para mejorar la estimación sería interesante algún mecanismo de normalización de la matriz RT para eliminar el error acumulativo lo máximo posible. Por ejemplo; si se sabe que los puntos obtenidos son de una pared o un terreno liso, se podría construir un plano y corregir dichos puntos en base a ese plano.
 
-También algún mecanismo de cierre de bucle podría ser intereante para reajustar los cálculos y reducir en mayor medida ese error acumulativo. Por ejemplo, cuando se ha pasado por una zona ya conocida, poder comparar el resultado de la estimación 3D las dos veces.
+También algún mecanismo de cierre de bucle podría ser interesante para reajustar los cálculos y reducir en mayor medida ese error acumulativo. Por ejemplo, cuando se ha pasado por una zona ya conocida, poder comparar el resultado de la estimación 3D las dos veces.
 
 \item \textbf{Mejorar tiempo de cómputo.}
 
@@ -80,5 +80,5 @@ Aunque el trabajo ha sido implementado buscando reducir el tiempo de cómputo y 
 
 \item \textbf{Entornos complejos.}
 
-Estaría bien investigar sobre entornos más complejos con presencia de objetos móviles. La presencia de objetos móviles no ha sido contemplada en este trabajo, sin embargo, esta variable condiciona negativamente los resultados obtenidos. Por ello, y porque el mundo que nos rodea no es estático podría ser interesante investigar esta línea. Los espejos o reflejos podrían entrar también en este apartado como fuente de pruebas.
+Estaría bien investigar sobre entornos más complejos con presencia de objetos móviles. La presencia de objetos móviles no ha sido contemplada en este trabajo, sin embargo, esta variable condiciona negativamente los resultados obtenidos. Por ello, y porque el mundo que nos rodea no es estático, podría ser interesante investigar esta línea. Los espejos o reflejos podrían entrar también en este apartado como fuente de pruebas.
 \end{itemize}

@@ -4,7 +4,7 @@
 
 \label{Chapter1} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-En este primer capítulo se propone dar una visión general del contexto en que se encuadra el proyecto fin de carrera, que es: la visión artificial. Dentro de ésta se abordará el problema al que vamos a hacer frente: La autolocalización visual, o dicho de otro modo, la estimación de la posición y orientación de un sensor con seis grados de libertad (SLAM).
+En este primer capítulo se propone dar una visión general del contexto en que se encuadra el proyecto fin de carrera, que es la visión artificial. Dentro de ésta se abordará el problema al que vamos a hacer frente: La autolocalización visual, o dicho de otro modo, la estimación de la posición y orientación 3D de un sensor con seis grados de libertad (SLAM).
 
 %-----------------------------------
 %	SECTION Visión artificial
@@ -13,7 +13,7 @@ En este primer capítulo se propone dar una visión general del contexto en que 
 
 El ser humano no es consciente del proceso neuronal que tiene lugar en nuestro cerebro con el simple hecho de andar o coger un objeto. Se podría decir que tenemos un super ordenador conectado a los órganos sensoriales capaces de recoger muchísima información y procesarla en un tiempo récord.
 
-Desde la antiguedad ya se estuvo pensando en reproducir las habilidades humanas en algún tipo de máquina, la noción de concebir la mente humana como algún tipo de mecanismo no es reciente es referida en célebres filósofos, sin embargo, no es hasta 1950 y con la noción de la computación cuando se introduce la IA (Inteligencia Artificial) por el científico Alan Turing en su artículo \textit{Maquinaria Computacional e Inteligencia} y donde se empieza a coger interés por este campo que será el precursor de una gran cantidad de desarrollos e innovaciones.
+Desde la antiguedad ya se estuvo pensando en reproducir las habilidades humanas en algún tipo de máquina, la noción de concebir la mente humana como algún tipo de mecanismo no es reciente y es referida en célebres filósofos, sin embargo, no es hasta 1950 y con la noción de la computación cuando se introduce la IA (Inteligencia Artificial) por el científico Alan Turing en su artículo \textit{Maquinaria Computacional e Inteligencia} y donde se empieza a coger interés por este campo que será el precursor de una gran cantidad de desarrollos e innovaciones.
 
 Dentro del campo de la inteligencia artificial se puede definir \textbf{visión artificial} como la disciplina científica que incluye métodos para adquirir, procesar y analizar imágenes con el fin de producir información que pueda ser tratada por una máquina ofreciendo soluciones a problemas del mundo real.
 
@@ -22,7 +22,7 @@ Una manera simple de comprender este sistema es basarnos en nuestra propia exper
 Cada vez son más los dispositivos electrónicos que llevan incorporada al menos una cámara; \textit{smartphones}, ordenadores portátiles, \textit{tablets}, consolas de videojuegos... Debido a la gran cantidad de información que se puede extraer de las imágenes, el bajo coste, el reducido tamaño de las cámaras y el aumento de capacidad de cómputo de los dispositivos, es un área que ha suscitado el interés por los investigadores, ha crecido enormemente en los últimos años y está cogiendo cada vez más fuerza.
 
 % Dispositivos electrónicos
-Podemos ver cada vez más como los dispositivos electrónicos disponen de alguna nueva funcionalidad relacionada con el procesamiento de imágenes (Figura~\ref{fig:Face}), como puede ser el reconocimiento facial que incorporan algunos smartphones o tablets para desbloquear el dispositivo o procesado automático de fotos realizadas por la cámara como la que incluye el terminal chino \textbf{Meitu T8} que incorpora un software llamado \textit{AI Beautification} para embellecer las imágenes. \footnote{https://www.cnet.com/products/meitu-t8/preview/}
+Podemos ver cada vez más cómo los dispositivos electrónicos disponen de alguna nueva funcionalidad relacionada con el procesamiento de imágenes (Figura~\ref{fig:Face}), como puede ser el reconocimiento facial que incorporan algunos smartphones o tablets para desbloquear el dispositivo o el procesado automático de fotos realizadas por la cámara como la que incluye el terminal chino \textbf{Meitu T8} que incorpora un software llamado \textit{AI Beautification} para embellecer las imágenes. \footnote{https://www.cnet.com/products/meitu-t8/preview/}
 
 \begin{figure}[th]
 \centering
@@ -32,10 +32,10 @@ Podemos ver cada vez más como los dispositivos electrónicos disponen de alguna
 \label{fig:Face}
 \end{figure}
 
-Sin ir más lejos, la reciente aplicación que ha desatado revuelo en las diferentes redes sociales; FaceApp\footnote{https://www.faceapp.com/}. La aplicación disponible tanto para Android e iOS es capaz de añadir sonrisas a las fotos, cambiar de edad o transformar el género de la persona que ha sido fotografiada.
+Sin ir más lejos, la reciente aplicación que ha desatado revuelo en las diferentes redes sociales; FaceApp\footnote{https://www.faceapp.com/}. La aplicación, disponible para Android e iOS, es capaz de añadir sonrisas a las fotos, cambiar de edad o transformar el género de la persona que ha sido fotografiada.
 
 % Medicina
-El procesado de imágenes puede llegar a resultar muy útil en otros ámbitos como el de la medicina. Un ejemplo es la radiografía de la Figura~\ref{fig:Medicine} que partiendo de una imágen de muy baja calidad se  pretende  extraer  información  sobre  las  manchas
+El procesado de imágenes puede llegar a resultar muy útil en otros ámbitos como el de la medicina. Un ejemplo es la radiografía de la Figura~\ref{fig:Medicine} que partiendo de una imágen de muy baja calidad pretende  extraer  información  sobre  las  manchas
 blancas que aparecen en la misma.
 
 \begin{figure}[th]
@@ -47,9 +47,9 @@ blancas que aparecen en la misma.
 \end{figure}
 
 % Industria
-Son numerosas las aplicaciones de visión industrial relacionadas con el entorno de la alimentación. Permiten automatizar el control de calidad para tomar la decisión si un determinado producto cumple el estándar de calidad o no. Un ejemplo es el sistema \textbf{EggInspector}\footnote{http://www.moba.net/page/es/Grading/Moba-Grader-Options/Detection-Systems/Egg-inspector} por la empresa Moba que se utiliza para clasificar huevos de gallina de forma automática. El sistema está compuesto por 6 cámaras suspendidas por encima de la cinta transportadora que con unos complejos algoritmos no solo pueden comprobar si los huevos están rotos o sucios, sino que son capaces de determinar el tipo de rotura y suciedad, una vez determinada la calidad, los que no corresponden a los estándares mínimos, son separados de la línea por un robot.
+Son numerosas las aplicaciones de visión industrial relacionadas con el entorno de la alimentación. Permiten automatizar el control de calidad para tomar la decisión si un determinado producto cumple el estándar de calidad o no. Un ejemplo es el sistema \textbf{EggInspector}\footnote{http://www.moba.net/page/es/Grading/Moba-Grader-Options/Detection-Systems/Egg-inspector} por la empresa Moba que se utiliza para clasificar huevos de gallina de forma automática. El sistema está compuesto por 6 cámaras suspendidas por encima de la cinta transportadora que con unos complejos algoritmos. No solo pueden comprobar si los huevos están rotos o sucios, sino que son capaces de determinar el tipo de rotura y suciedad. Una vez determinada la calidad, los que no corresponden a los estándares mínimos, son separados de la línea por un robot.
 
-Siguiendo en la línea de la industria la inspección de embalajes se ha incrementado enormemente con la automatización del proceso y la visión artificial facilitando tareas como la detección del correcto nivel de llenado, verificación de tapones, control de calidad de sellado, lectura de óptica de caracteres (OCR), códigos de barras, verificación de posición, calidad de impresión de las equiquetas, conteo de productos en cajas o \textit{palets}. Algunas de las aplicaciones típicas de la industria del \textit{packaging} están representadas en la Figura~\ref{fig:Industry}.
+Siguiendo en la línea de la industria, la inspección de embalajes se ha incrementado enormemente con la automatización del proceso y la visión artificial facilitando tareas como la detección del correcto nivel de llenado, verificación de tapones, control de calidad de sellado, lectura de óptica de caracteres (OCR), códigos de barras, verificación de posición, calidad de impresión de las equiquetas, conteo de productos en cajas o \textit{palets}. Algunas de las aplicaciones típicas de la industria del \textit{packaging} están representadas en la Figura~\ref{fig:Industry}.
 
 \begin{figure}[th]
 \centering
@@ -60,7 +60,7 @@ Siguiendo en la línea de la industria la inspección de embalajes se ha increme
 \end{figure}
 
 % Deportes
-En los deportes quizás la aplicación más conocida sea el Ojo de Halcón (Figura~\ref{fig:Ojohalcon}), que se utiliza en los torneos de tenis de alto nivel para determinar la trayectoria de la pelota y saber si entró o no en el campo contrario. Además la visión artificial se usa en numerosos deportes sobretodo en estudios estadísticos post-partido para averiguar el tiempo de posesión del balón en los partidos de fútbol o los kilómetros recorridos por cada jugador en el terreno de juego, entre muchos otros.
+En los deportes quizás la aplicación más conocida sea el Ojo de Halcón (Figura~\ref{fig:Ojohalcon}), que se utiliza en los torneos de tenis de alto nivel para determinar la trayectoria de la pelota y saber si entró o no en el campo contrario. Además, la visión artificial se usa en numerosos deportes sobretodo en estudios estadísticos post-partido para averiguar el tiempo de posesión del balón en los partidos de fútbol o los kilómetros recorridos por cada jugador en el terreno de juego, entre muchos otros.
 
 \begin{figure}[th]
 \centering
@@ -70,7 +70,7 @@ En los deportes quizás la aplicación más conocida sea el Ojo de Halcón (Figu
 \label{fig:Ojohalcon}
 \end{figure}
 
-Actualmente se pueden encontrar sistemas de asistencia y seguridad en los vehículos más modernos como; sistemas de frenado automático de emergencia, asistente de mantenimiento de carril o aparcado automático. Aunque estos sistemas se entienden como asistentes o ayudas a la condución, el conductor sigue tomando la gran responsabilidad de la navegación.
+Actualmente se pueden encontrar sistemas visuales de asistencia y seguridad en los vehículos más modernos como; sistemas de frenado automático de emergencia, asistente de mantenimiento de carril o aparcado automático. Aunque estos sistemas se entienden como asistentes o ayudas a la condución, el conductor sigue tomando la gran responsabilidad de la navegación.
 
 La empresa israelí \textbf{Mobileye}\footnote{https://www.mobileye.com/} presentará su primer modelo de vehículo completamente autónomo, junto a Intel y BMW, en 2021. El cerebro de la máquina se basa en un sensor, que identifica lo que ocurre a su alrededor al instante: los carriles, las señales de tráfico, otros automóviles, motos, bicicletas e incluso a los peatones. En la Figura~\ref{fig:Car} se puede ver una captura de la vista del coche antes de parar en un semáforo.
 
@@ -84,7 +84,7 @@ La empresa israelí \textbf{Mobileye}\footnote{https://www.mobileye.com/} presen
 
 
 \section{Autolocalización visual}
-Dentro de la visión artificial se encuentra la autolocalización visual que consiste en conocer la localización 3D de la cámara en todo momento solamente con las imágenes capturadas y sin disponer de ninguna información extra. Debido al gran abanico de posibilidades que abre resolver este problema, se sitúa en uno de los retos más importantes dentro del campo de la robótica.
+Dentro de la visión artificial se encuentra la autolocalización visual que consiste en conocer la localización 3D de la cámara en todo momento sólamente con las imágenes capturadas y sin disponer de ninguna información extra. Debido al gran abanico de posibilidades que abre resolver este problema, es uno de los retos más importantes dentro del campo de la robótica.
 
 %coches
 Esta técnica se plantea en los sistemas de navegación automáticos naúticos, terrestres y aéreos. Actualmente numerosas empresas están invirtiendo en este tipo de sistemas en el que apuestan por una navegación total o parcialmente autónoma.
@@ -108,7 +108,7 @@ Puesto que la realidad virtual es una experiencia ficticia, tiene gran potencial
 %-----------------------------------
 %\section{Técnicas de autolocalización visual}
 
-Las técnicas de autolocalización ha suscitado gran interés por los investigadores en los últimos años. El problema ha sido abordado por dos comunidades distintas, por un lado la de visión artificial que denominó al problema como \textbf{structure from motion (SfM)}, donde la información es procesada por lotes, capaz de representar un objeto 2D a 3D con solo unas cuantas imágenes desde diferentes puntos de vista. Y por otro lado la comunidad robótica denominó al problema \textbf{SLAM} (\textit{Simultaneous Localization and Mapping}) que trata de resolver el problema de una manera más compleja adaptando el funcionamiento de los sistemas en tiempo real.
+Las técnicas de autolocalización han suscitado gran interés por los investigadores en los últimos años. El problema ha sido abordado por dos comunidades distintas, por un lado la de visión artificial que denominó al problema como \textbf{structure from motion (SfM)}, donde la información es procesada por lotes, capaz de representar un objeto 2D a 3D con solo unas cuantas imágenes desde diferentes puntos de vista. Y por otro lado la comunidad robótica denominó al problema \textbf{SLAM} (\textit{Simultaneous Localization and Mapping}) que trata de resolver el problema de una manera más compleja adaptando el funcionamiento de los sistemas en tiempo real.
 
 %-----------------------------------
 %	SUBSECTION Structure from Motion
@@ -117,7 +117,7 @@ Las técnicas de autolocalización ha suscitado gran interés por los investigad
 
 Las técnicas SfM se analizan generalmente de forma \textit{offline}, las escenas se graban a través de un conjunto de imágenes y luego se procesan, lo que permite realizar optimizaciones para el cálculo de la trayectoria, como por ejemplo el ajuste de haces.
 
-Existen aplicaciones comerciales que utilizan estas técnicas como es el caso de la aplicación \textbf{PhotoTourism} \parencite{Reference2} desarrollada por Microsoft. Que consiste en el cálculo de la posición 3D en la que fueron captadas las imágenes, por ejemplo de un monumento, para después extraer el modelo 3D con el que el usuario puede interactuar libremente (Figura~\ref{fig:Tourism}).
+Existen aplicaciones comerciales que utilizan estas técnicas como es el caso de la aplicación \textbf{PhotoTourism} \parencite{Reference2} desarrollada por Microsoft. Consiste en el cálculo de la posición 3D en la que fueron captadas las imágenes, por ejemplo de un monumento, para después extraer el modelo 3D con el que el usuario puede interactuar libremente (Figura~\ref{fig:Tourism}).
 
 \begin{figure}[th]
 \centering
@@ -136,7 +136,7 @@ En el problema conocido como \textit{Simultaneous Localization and Mapping} (SLA
 
 La solución a este problema conseguiría hacer sistemas de robots completamente autónomos que junto con un mecanismo de navegación el sistema se encontrara con la capacidad para saber a dónde desplazarse, ser capaz de encontrar obstáculos y reaccionar ante ellos de manera inteligente.
 
-La resolución al problema SLAM visual ha suscitado un gran interés en el campo de la robótica y se han propuesto muchas técnicas y algoritmos para dar solución al problema, como es el caso del artículo de \cite{Reference1}. Y aunque algunas de ellas han obtenido buenos resultados en la práctica siguen surgiendo problemas a la hora de buscar el método más rápido o el que genere un mejor resultado con menos índice de fallo. La búsqueda de algoritmos y métodos que resuelvan completamente estos problemas sigue siendo una tarea pendiente.
+La resolución al problema SLAM visual ha suscitado un gran interés en el campo de la robótica y se han propuesto muchas técnicas y algoritmos para dar solución al problema, como es el caso del artículo de \cite{Reference1}. Y aunque algunas de ellas han obtenido buenos resultados, en la práctica siguen surgiendo problemas a la hora de buscar el método más rápido o el que genere un mejor resultado con menos índice de fallo. La búsqueda de algoritmos y métodos que resuelvan completamente estos problemas sigue siendo una tarea pendiente.
 
 Uno de los trabajos más importantes en el ámbito es el de monoSLAM de Davison\footnote{http://www.doc.ic.ac.uk/\textasciitilde ajd/} \parencite{Reference5} que propone resolver este problema con una única cámara RGB como sensor y realizar el mapeado y la localización simultáneamente. El algoritmo propuesto por Davison utiliza un filtro extendido de Kalman para estimar la posición y la orientación de la cámara, así como la posición de una serie de puntos en el espacio 3D. Para determinar la posición inicial de la cámara es necesario a priori dotar de información con la posición 3D de por lo menos 3 puntos. Después el algoritmo es capaz de situar la cámara en el espacio tridimensional y de generar nuevos puntos para crear el mapa y servir como apoyo a la propia localización de la cámara. En la Figura~\ref{fig:Monoslam} se pueden ver unas capturas de pantalla sobre uno de los experimientos realizados.
 
@@ -160,7 +160,7 @@ Es importante destacar también la trascendencia que ha tenido el trabajo PTAM \
 
 \subsection{Odometría visual}
 
-Dentro de las familias de técnicas pertenecientes a Visual SLAM se encuentra la de odometría visual, que es la que abordaremos en este trabajo. Consiste en la estimación del movimiento 3D de la cámara en tiempo real. Es decir, el cálculo de la rotación y traslación de la cámara a partir de imágenes consecutivas. Se trata de una técnica incremental ya que se basa en la posición anterior para calcular la nueva.
+Dentro de las familias de técnicas pertenecientes a Visual SLAM se encuentra la de odometría visual, que es la que abordaremos en este trabajo. Consiste en la estimación del movimiento 3D incremental de la cámara en tiempo real. Es decir, el cálculo de la rotación y traslación de la cámara a partir de imágenes consecutivas. Se trata de una técnica incremental ya que se basa en la posición anterior para calcular la nueva.
 
 En este tipo de algoritmos se suelen utilizar técnicas de extracción de puntos de interés, cálculos de descriptores y algoritmos para el emparejamiento. Normalmente el proceso es: una vez calculados los puntos emparejados se calcula la matriz fundamental o esencial y descomponerlas mediante SVD para obtener la matriz de rotación y traslación (RT) (\cite{Reference3}, \cite{Reference4}).
 
@@ -169,7 +169,7 @@ En este tipo de algoritmos se suelen utilizar técnicas de extracción de puntos
 %-----------------------------------
 \section{Autolocalización visual en el laboratorio de robótica URJC}
 
-En esta sección se recapitulan algunos de los proyectos, dentro del campo de la autolocalización, realizados por compañeros en el laboratorio de robótica de la Universidad Rey Juan Carlos.
+En esta sección se recapitulan algunos de los proyectos, dentro del campo de la autolocalización, realizados por compañeros en el laboratorio de robótica de la Universidad Rey Juan Carlos. Sirven de contexto cercano a este Proyecto Fin de Carrera.
 
 En el proyecto de Luis Miguel López Ramos \parencite{ref1} se diseña y programa un algoritmo que estima en tiempo real la posición y orientación de una cámara móvil autónoma en un entorno estático, utilizando exclusivamente las imágenes obtenidas por la cámara. El algoritmo se valida experimentalmente haciendo uso de una cámara de videoconferencia real y en condiciones de laboratorio.
 
@@ -183,11 +183,11 @@ Se calcula, por tanto, la trayectoria realizada y se muestra en una ventana de g
 \label{fig:ramos}
 \end{figure}
 
-Eduardo Perdices García \parencite{ref3} propone en su trabajo de fin de master un proyecto de robótica autónoma. Dentro de este área se desarrolla la \textbf{RoboCup}, donde un grupo de robots autónomos deben jugar al fútbol de forma cooperativa variando su comportamiento en función de su posición en el campo, por lo que es muy importante que el robot conozca su posición en todo momento. A partir de los distintos sensores con los que cuenta el robot, como sensores de ultrasonido, sensores laser o cámaras, el robot tiene que estimar su posición en el mundo que le rodea.
+Eduardo Perdices García \parencite{ref3} propone en su trabajo de fin de master un algoritmo de autolocalización para robots humanoides en la \textbf{RoboCup}, donde un grupo de robots autónomos deben jugar al fútbol de forma cooperativa variando su comportamiento en función de su posición en el campo, por lo que es muy importante que el robot conozca su posición en todo momento. A partir de los distintos sensores con los que cuenta el robot, como sensores de ultrasonido, sensores laser o cámaras, el robot tiene que estimar su posición en el mundo que le rodea.
 
 En este proyecto se han desarrollado las técnicas necesarias para autolocalizar a un robot humanoide Nao\footnote{http://aliverobots.com/nao/} dentro de un campo de fútbol de la plataforma estándar de la RoboCup utilizando solo una cámara como sensor externo.
 
-Alberto Lopéz-Cerón Pinilla \parencite{ref2} caracteriza un algoritmo de autolocalización visual basado en marcadores. Para ello, desarrolla un componente que a partir de la detección de balizas visuales en una imagen, estima la posición y la orientación de la cámara, mostrando el modelo de la cámara resultante en una ventana OpenGL.
+Alberto Lopéz-Cerón Pinilla \parencite{ref2} caracteriza un algoritmo de autolocalización visual basado en marcadores. Para ello, desarrolla un componente que a partir de la detección de balizas visuales en una imagen, estima la posición y la orientación 3D de la cámara, mostrando el modelo de la cámara resultante en una ventana OpenGL.
 
 El algoritmo se ha validado experimentalmente realizando estudios de precisión en dos ámbitos: por un lado el de entorno simulado de Gazebo, haciendo uso de un modelo robótico virtual con sus cámaras asociadas, y por otro en un entorno real con una cámara de videoconferencia (Figura~\ref{fig:ceron}).
 
@@ -213,14 +213,14 @@ En el proyecto fin de carrera de Daniel Martín Organista \parencite{ref5} se ha
 
 Por último, en el trabajo fin de master de Ignacio San Román Lana \parencite{ref4} se desarrolla un sistema clásico de odometría visual 3D en el que se emparejan puntos característicos entre fotogramas consecutivos o seguidos en el tiempo, para después optimizar un sistema de ecuaciones que estima la matriz fundamental. El resultado obtenido es mostrado en una ventana OpenGL en donde se puede ver la posición actual de la cámara y su recorrido.
 
-El presente proyecto fin de carrera pretende unirse a los trabajos descritos en la búsqueda de algoritmos y técnicas de autolocalización visual, concretamente la odometría visual. En los próximos capítulos se detallará en la explicación de la solución adoptada.
+El presente proyecto fin de carrera pretende unirse a los trabajos descritos en la búsqueda de algoritmos y técnicas de autolocalización visual, concretamente la odometría visual. En los próximos capítulos se detallará la solución adoptada.
 
 El resto de la memoria consiste en 5 capítulos más:
 \begin{itemize}
 \item Objetivos - Se detallarán los objetivos del trabajo, así como la metodología llevada a cabo para la resolución del problema planteado.
 \item Infraestructura - Se mostrarán las bases y técnologías empleadas.
 \item Desarrollo - Se explicará el desarrollo del componente realizado y se detallarán tanto las bases teóricas como los algoritmos implementados.
-\item Experimentos - Se muestran los experimentos realizados a fin de validar la solución optada.
+\item Experimentos - Se muestran los experimentos realizados a fin de validar la solución elegida.
 \item Conclusiones - Se plantearán las conclusiones extraídas en base a los resultados obtenidos y se propondrán algunas líneas de trabajo futuras.
 
 \end{itemize}

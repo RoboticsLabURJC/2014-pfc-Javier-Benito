@@ -2,66 +2,66 @@
 \defcounter {refsection}{0}\relax 
 \select@language {spanish}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Embellecimiento de fotos (Meitu T8)}}{2}{figure.caption.9}
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Aplicaciones de radiograf\IeC {\'\i }a en medicina}}{2}{figure.caption.11}
-\contentsline {figure}{\numberline {1.3}{\ignorespaces Visi\IeC {\'o}n en la industria}}{3}{figure.caption.13}
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Ojo de halc\IeC {\'o}n}}{4}{figure.caption.14}
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Visi\IeC {\'o}n para la autoconducci\IeC {\'o}n}}{4}{figure.caption.16}
-\contentsline {figure}{\numberline {1.6}{\ignorespaces Ikea con realidad aumentada}}{5}{figure.caption.19}
-\contentsline {figure}{\numberline {1.7}{\ignorespaces PhotoTourism}}{6}{figure.caption.21}
-\contentsline {figure}{\numberline {1.8}{\ignorespaces MonoSLAM}}{7}{figure.caption.24}
-\contentsline {figure}{\numberline {1.9}{\ignorespaces PTAM}}{8}{figure.caption.25}
-\contentsline {figure}{\numberline {1.10}{\ignorespaces Captura de pantalla, PFC de Luis Miguel}}{9}{figure.caption.28}
-\contentsline {figure}{\numberline {1.11}{\ignorespaces Captura de pantalla, TFM de Alberto Lop\IeC {\'e}z-Cer\IeC {\'o}n}}{9}{figure.caption.30}
-\contentsline {figure}{\numberline {1.12}{\ignorespaces Captura de pantalla, PFC de Daniel Mart\IeC {\'\i }n}}{10}{figure.caption.31}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Embellecimiento de fotos (Meitu T8)}}{2}{figure.caption.10}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Aplicaciones de radiograf\IeC {\'\i }a en medicina}}{2}{figure.caption.12}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Visi\IeC {\'o}n en la industria}}{3}{figure.caption.14}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Ojo de halc\IeC {\'o}n}}{4}{figure.caption.15}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Visi\IeC {\'o}n para la autoconducci\IeC {\'o}n}}{4}{figure.caption.17}
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Ikea con realidad aumentada}}{5}{figure.caption.20}
+\contentsline {figure}{\numberline {1.7}{\ignorespaces PhotoTourism}}{6}{figure.caption.22}
+\contentsline {figure}{\numberline {1.8}{\ignorespaces MonoSLAM}}{7}{figure.caption.25}
+\contentsline {figure}{\numberline {1.9}{\ignorespaces PTAM}}{8}{figure.caption.26}
+\contentsline {figure}{\numberline {1.10}{\ignorespaces Captura de pantalla, PFC de Luis Miguel}}{9}{figure.caption.29}
+\contentsline {figure}{\numberline {1.11}{\ignorespaces Captura de pantalla, TFM de Alberto Lop\IeC {\'e}z-Cer\IeC {\'o}n}}{9}{figure.caption.31}
+\contentsline {figure}{\numberline {1.12}{\ignorespaces Captura de pantalla, PFC de Daniel Mart\IeC {\'\i }n}}{10}{figure.caption.32}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Ciclo de vida en espiral}}{13}{figure.caption.40}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Ciclo de vida en espiral}}{13}{figure.caption.41}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Sensor Kinect}}{15}{figure.caption.52}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Sensor Xtion}}{16}{figure.caption.54}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo \textit {Pinhole}}}{17}{figure.caption.60}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Captura de RGBDViewer}}{18}{figure.caption.64}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Detecci\IeC {\'o}n y emparejamiento con OpenCV}}{20}{figure.caption.72}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Ejemplo con Eigen}}{21}{figure.caption.75}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Captura visualizador 3D}}{23}{figure.caption.83}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Sensor Kinect}}{15}{figure.caption.53}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Sensor Xtion}}{16}{figure.caption.55}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo \textit {Pinhole}}}{17}{figure.caption.61}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Captura de RGBDViewer}}{18}{figure.caption.65}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Detecci\IeC {\'o}n y emparejamiento con OpenCV}}{20}{figure.caption.73}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Ejemplo con Eigen}}{21}{figure.caption.76}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Captura visualizador 3D}}{23}{figure.caption.84}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema general del componente RealRTEstimator}}{25}{figure.caption.86}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagrama interno del componente RealRTEstimator}}{25}{figure.caption.87}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Ejemplo de puntos de inter\IeC {\'e}s}}{26}{figure.caption.90}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Ejemplo con \textit {Shi-Tomasi Corner Detector}}}{27}{figure.caption.94}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Ejemplo de sistema escalarmente variante}}{28}{figure.caption.97}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Diferencia de gaussianas en SIFT}}{29}{figure.caption.99}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Ejemplo de local-extrema en SIFT}}{30}{figure.caption.100}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Ejemplo de \textit {Box filter} en SURF}}{31}{figure.caption.118}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces C\IeC {\'a}lculo de orientaci\IeC {\'o}n con SURF}}{31}{figure.caption.120}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Captura real con SIFT}}{34}{figure.caption.147}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Captura de los mejores puntos con SIFT}}{35}{figure.caption.155}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Captura con error de los dos mejores puntos en SIFT}}{35}{figure.caption.156}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Diagrama con la obtenci\IeC {\'o}n de puntos 3D}}{36}{figure.caption.169}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces C\IeC {\'a}lculo de punto 3D con la informaci\IeC {\'o}n de distancia $d$}}{37}{figure.caption.170}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Distancia real y la dada por el sensor}}{37}{figure.caption.171}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Ejemplo de correcci\IeC {\'o}n de distancia}}{38}{figure.caption.173}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces Ejemplo de una nube de puntos mal y bien calculada}}{39}{figure.caption.180}
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Matriz RT}}{40}{figure.caption.183}
-\contentsline {figure}{\numberline {4.19}{\ignorespaces C\IeC {\'a}lculo visual de movimiento en coordenadas absolutas}}{41}{figure.caption.189}
-\contentsline {figure}{\numberline {4.20}{\ignorespaces Captura del mapa de funcionalidades de la herramienta gr\IeC {\'a}fica}}{44}{figure.caption.215}
-\contentsline {figure}{\numberline {4.21}{\ignorespaces GUI: Actualizaci\IeC {\'o}n de imagen}}{45}{figure.caption.217}
-\contentsline {figure}{\numberline {4.22}{\ignorespaces GUI: Detecci\IeC {\'o}n de puntos}}{46}{figure.caption.219}
-\contentsline {figure}{\numberline {4.23}{\ignorespaces GUI: C\IeC {\'a}lculo de emparejamientos}}{46}{figure.caption.221}
-\contentsline {figure}{\numberline {4.24}{\ignorespaces GUI: Estimaci\IeC {\'o}n de la matriz RT}}{47}{figure.caption.223}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Esquema general del componente RealRTEstimator}}{25}{figure.caption.87}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Diagrama interno del componente RealRTEstimator}}{25}{figure.caption.88}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Ejemplo de puntos de inter\IeC {\'e}s}}{26}{figure.caption.91}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Ejemplo con \textit {Shi-Tomasi Corner Detector}}}{27}{figure.caption.95}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Ejemplo de sistema escalarmente variante}}{28}{figure.caption.98}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Diferencia de gaussianas en SIFT}}{29}{figure.caption.100}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Ejemplo de local-extrema en SIFT}}{30}{figure.caption.101}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Ejemplo de \textit {Box filter} en SURF}}{31}{figure.caption.119}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces C\IeC {\'a}lculo de orientaci\IeC {\'o}n con SURF}}{31}{figure.caption.121}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Captura real con SIFT}}{34}{figure.caption.148}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Captura de los mejores puntos con SIFT}}{35}{figure.caption.156}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Captura con error de los dos mejores puntos en SIFT}}{35}{figure.caption.157}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Diagrama con la obtenci\IeC {\'o}n de puntos 3D}}{36}{figure.caption.170}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces C\IeC {\'a}lculo de punto 3D con la informaci\IeC {\'o}n de distancia $d$}}{37}{figure.caption.171}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Distancia real y la dada por el sensor}}{37}{figure.caption.172}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Ejemplo de correcci\IeC {\'o}n de distancia}}{38}{figure.caption.174}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Ejemplo de una nube de puntos mal y bien calculada}}{39}{figure.caption.181}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Matriz RT}}{40}{figure.caption.184}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces C\IeC {\'a}lculo visual de movimiento en coordenadas absolutas}}{41}{figure.caption.190}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Captura del mapa de funcionalidades de la herramienta gr\IeC {\'a}fica}}{44}{figure.caption.216}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces GUI: Actualizaci\IeC {\'o}n de imagen}}{45}{figure.caption.218}
+\contentsline {figure}{\numberline {4.22}{\ignorespaces GUI: Detecci\IeC {\'o}n de puntos}}{46}{figure.caption.220}
+\contentsline {figure}{\numberline {4.23}{\ignorespaces GUI: C\IeC {\'a}lculo de emparejamientos}}{46}{figure.caption.222}
+\contentsline {figure}{\numberline {4.24}{\ignorespaces GUI: Estimaci\IeC {\'o}n de la matriz RT}}{47}{figure.caption.224}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Extracci\IeC {\'o}n de car\IeC {\'a}cter\IeC {\'\i }sticas con SURF y con SIFT}}{49}{figure.caption.227}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Captura de la extracci\IeC {\'o}n de puntos de inter\IeC {\'e}s con filtro frontera}}{49}{figure.caption.229}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Captura con un error de emparejamiento sin filtro de sobresaliencia}}{50}{figure.caption.232}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Captura con los emparejamientos con im\IeC {\'a}genes sometidas a una rotaci\IeC {\'o}n y a una traslaci\IeC {\'o}n}}{51}{figure.caption.234}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Ejes de coordenadas $x$, $y$ y $z$}}{52}{figure.caption.237}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Punto de partida para las pruebas de traslaci\IeC {\'o}n y rotaci\IeC {\'o}n}}{53}{figure.caption.238}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{56}{figure.caption.239}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{57}{figure.caption.240}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{58}{figure.caption.242}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{59}{figure.caption.243}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{60}{figure.caption.244}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Experimento con el c\IeC {\'a}lculo de una trayectoria en forma de c\IeC {\'\i }rculo}}{61}{figure.caption.246}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Experimento con desplazamiento vertical hacia el eje $z$ y despu\IeC {\'e}s una rotaci\IeC {\'o}n del \IeC {\'a}ngulo \textit {roll}}}{61}{figure.caption.247}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Capturas con ruido est\IeC {\'a}tico}}{62}{figure.caption.249}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Extracci\IeC {\'o}n de caracter\IeC {\'\i }sticas con SURF y con SIFT}}{49}{figure.caption.228}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Captura de la extracci\IeC {\'o}n de puntos de inter\IeC {\'e}s con filtro frontera}}{49}{figure.caption.230}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Captura con un error de emparejamiento sin filtro de sobresaliencia}}{50}{figure.caption.233}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Captura con los emparejamientos con im\IeC {\'a}genes sometidas a una rotaci\IeC {\'o}n y a una traslaci\IeC {\'o}n}}{51}{figure.caption.235}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Ejes de coordenadas $x$, $y$ y $z$}}{52}{figure.caption.238}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Punto de partida para las pruebas de traslaci\IeC {\'o}n y rotaci\IeC {\'o}n}}{53}{figure.caption.239}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Prueba con desplazamiento en el eje $y$}}{56}{figure.caption.240}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Prueba con desplazamiento en los ejes $x$ y $z$}}{57}{figure.caption.241}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Explicaci\IeC {\'o}n gr\IeC {\'a}fica del movimiento \textit {pitch}, \textit {yaw} y \textit {roll}}}{58}{figure.caption.243}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Prueba con desplazamiento del \IeC {\'a}ngulo \textit {pitch}}}{59}{figure.caption.244}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Pruebas con desplazamiento en los angulos \textit {yaw} y \textit {roll}}}{60}{figure.caption.245}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Experimento con el c\IeC {\'a}lculo de una trayectoria en forma de c\IeC {\'\i }rculo}}{61}{figure.caption.247}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Experimento con desplazamiento vertical hacia el eje $z$ y despu\IeC {\'e}s una rotaci\IeC {\'o}n del \IeC {\'a}ngulo \textit {roll}}}{61}{figure.caption.248}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Capturas con ruido est\IeC {\'a}tico}}{62}{figure.caption.250}
 \addvspace {10\p@ }

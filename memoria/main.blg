@@ -1,17 +1,17 @@
-[0] Config.pm:318> INFO - This is Biber 1.8
-[0] Config.pm:321> INFO - Logfile is 'main.blg'
-[111] biber:275> INFO - === jue jul  6, 2017, 18:04:45
-[111] Biber.pm:333> INFO - Reading 'main.bcf'
-[206] Biber.pm:630> INFO - Found 17 citekeys in bib section 0
-[238] Biber.pm:3053> INFO - Processing section 0
-[264] Biber.pm:3190> INFO - Looking for bibtex format file 'bibliografia.bib' for section 0
-[266] bibtex.pm:933> INFO - Decoding LaTeX character macros into UTF-8
-[270] bibtex.pm:808> INFO - Found BibTeX data source 'bibliografia.bib'
-[311] Utils.pm:169> WARN - BibTeX subsystem: warning: comma(s) at end of name (removing)
-[311] Utils.pm:169> WARN - BibTeX subsystem: author, warning: comma(s) at end of name (removing)
-[416] Biber.pm:2939> INFO - Overriding locale 'en_US.UTF-8' default tailoring 'variable = shifted' with 'variable = non-ignorable'
-[416] Biber.pm:2945> INFO - Sorting 'entry' list 'nyt' keys
-[416] Biber.pm:2949> INFO - No sort tailoring available for locale 'en_US.UTF-8'
-[491] bbl.pm:482> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[494] bbl.pm:555> INFO - Output to main.bbl
-[495] Biber.pm:105> INFO - WARNINGS: 2
+[0] Config.pm:354> INFO - This is Biber 2.7
+[0] Config.pm:357> INFO - Logfile is 'main.blg'
+[36] biber-MSWIN64:303> INFO - === 
+[87] Biber.pm:359> INFO - Reading 'main.bcf'
+[192] Biber.pm:835> INFO - Found 17 citekeys in bib section 0
+[209] Biber.pm:3670> INFO - Processing section 0
+[230] Biber.pm:3840> INFO - Looking for bibtex format file 'bibliografia.bib' for section 0
+[238] bibtex.pm:1435> INFO - Decoding LaTeX character macros into UTF-8
+[244] bibtex.pm:1292> INFO - Found BibTeX data source 'bibliografia.bib'
+[277] Utils.pm:164> WARN - BibTeX subsystem: warning: comma(s) at end of name (removing)
+[278] Utils.pm:164> WARN - BibTeX subsystem: author, warning: comma(s) at end of name (removing)
+[320] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[320] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[320] Biber.pm:3499> INFO - Sorting list 'nyt/global/' of type 'entry' with scheme 'nyt' and locale 'es-ES'
+[339] bbl.pm:608> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[343] bbl.pm:712> INFO - Output to main.bbl
+[347] Biber.pm:109> INFO - WARNINGS: 2

@@ -4,7 +4,7 @@
 
 \label{Chapter5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-En este capítulo se detallarán las pruebas realizadas, con el objetivo de validar la solución propuesta en este trabajo. Además se comprobarán las diferentes configuraciones desarrolladas y se evaluarán sus prestaciones con los costes temporales. Estos experimentos han permitido depurar el componente para poder ajustar y mejorar la funcionalidad del mismo durante el desarrollo.
+En este capítulo se detallarán las pruebas realizadas, con el objetivo de validar la solución propuesta en este trabajo. Además, se comprobarán las diferentes configuraciones desarrolladas y se evaluarán sus prestaciones con los costes temporales. Estos experimentos han permitido depurar el componente para ajustar y mejorar la funcionalidad del mismo durante el desarrollo.
 
 %-----------------------------------
 %	SECTION Validación experimental
@@ -13,11 +13,11 @@ En este capítulo se detallarán las pruebas realizadas, con el objetivo de vali
 
 El entorno de pruebas utilizado ha sido siempre un entorno real, trabajando con los datos en vivo proporcionados por OpenniServer que extrae la información directamente del sensor RGBD.
 
-Se propone en esta sección validar el componente en las diferentes fases que lo componen: detección de puntos de interés, cálculo de emparejamientos y estimación de movimiento.
+Se propone en esta sección validar el componente en las diferentes fases unitarias que lo componen: detección de puntos de interés, cálculo de emparejamientos y estimación de movimiento.
 
 \subsection{Detección de puntos de interés}
 
-La detección de puntos de interés resulta una tarea sencilla si nos ayudamos de OpenCV. En esta sección veremos algunos ejemplos de sobre las diferencias entre técnicas empleadas, y el filtro frontera.
+La detección de puntos de interés resulta una tarea sencilla si nos ayudamos de OpenCV. En esta sección veremos algunos ejemplos de las diferencias entre técnicas empleadas, y el filtro frontera.
 
 En la Figura~\ref{fig:sift-surf} se puede ver la extracción de puntos de interés tanto con SIFT como con SURF, aparentemente no hay grandes diferencias. Como se vió en el capítulo~\ref{Chapter4} el cálculo de puntos de interés es muy similar y la diferencia fundamental radica en el tiempo de cómputo.
 
@@ -25,13 +25,13 @@ En la Figura~\ref{fig:sift-surf} se puede ver la extracción de puntos de inter�
 \centering
 \includegraphics[scale=0.6]{Figures/tests/sift-surf.png}
 \decoRule
-\caption[Extracción de carácterísticas con SURF y con SIFT]{Extracción de carácterísticas con SURF (a), y con SIFT (b).}
+\caption[Extracción de características con SURF y con SIFT]{Extracción de características con SURF (a), y con SIFT (b).}
 \label{fig:sift-surf}
 \end{figure}
 
 \subsubsection{Efecto del filtro de puntos frontera}
 
-En la Figura~\ref{fig:borderfilter} tenemos el resultado de aplicar el filtro frontera sobre una misma imagen. Como se puede observar, al añadir el filtro frontera se eliminan algunos de los puntos más controvertidos de la imágen, como son los puntos a lo largo del marco de la puerta o del mástil de la guitarra.
+En la Figura~\ref{fig:borderfilter} tenemos el resultado de aplicar el filtro frontera sobre una misma imagen. Como se puede observar, al añadir el filtro frontera se eliminan algunos de los puntos más controvertidos de la imagen, como son los puntos a lo largo del marco de la puerta o del mástil de la guitarra.
 
 \begin{figure}[th]
 \centering
@@ -43,7 +43,7 @@ En la Figura~\ref{fig:borderfilter} tenemos el resultado de aplicar el filtro fr
 
 \subsection{Cálculo de emparejamientos}
 
-Para probar el cálculo de los emparejamientos se somete el componente a cambios de traslación y rotación para comprobar la veracidad de los puntos emparejados. Se parte, como se explicó en el anterior capítulo (\ref{Chapter4}), de los $20\%$ mejores emparejamientos medidos por distancia, ya que en condiciones normales se tienen unos $300$ y el $20\% (60)$ es un número razonable de puntos y se asegura consistencia.
+Para probar el cálculo de los emparejamientos se somete el componente a cambios de traslación y rotación para comprobar la veracidad de los puntos emparejados. Se parte, como se explicó en el anterior capítulo \ref{Chapter4}, de los $20\%$ mejores emparejamientos medidos por distancia, ya que en condiciones normales se tienen unos $300$ y el $20\% (60)$ es un número razonable de puntos y se asegura consistencia.
 
 \subsubsection{Necesidad del filtro de sobresaliencia}
 
@@ -131,7 +131,7 @@ Como vimos en el capítulo~\ref{Chapter3} la información de profundidad del sen
 
 \subsubsection{Validación de la Rotación}
 
-Se valida ahora la rotación de sensor de los ángulos \textit{pitch}, \textit{yaw} y \textit{roll}. En la Figura~\ref{fig:p-y-r} se tiene un ejemplo gráfico de cuales son estos movimientos y a qué rotación de ejes pertenecen.
+Se valida ahora la rotación de sensor de los ángulos \textit{pitch}, \textit{yaw} y \textit{roll}. En la Figura~\ref{fig:p-y-r} se tiene un ejemplo gráfico de cuáles son estos movimientos y a qué rotación de ejes pertenecen.
 
 \begin{figure}[th]
 \centering
@@ -143,7 +143,7 @@ Se valida ahora la rotación de sensor de los ángulos \textit{pitch}, \textit{y
 
 En la Figura~\ref{fig:pitch} se efectúa una prueba con el ángulo \textit{pitch} y se comprueba cómo el sistema detecta una rotación total de $90º$. Se visualiza el estado de la cámara al orientar hacia arriba el sensor y posteriormente orientarlo paralelo al suelo. 
 
-En cuanto a la traslación se observa, sin contar con el ruido, que el eje de la cámara se mantiene fijo en el origen, como era de esperar.
+En cuanto a la traslación, se observa, sin contar con el ruido, que el eje de la cámara se mantiene fijo en el origen, como era de esperar.
 
 \begin{figure}[th]
 \centering
@@ -165,7 +165,7 @@ Para los ángulos \textit{yaw} y \textit{roll} se pueden observar en la Figura~\
 
 \subsubsection{Validación de trayectorias combinadas}
 
-En esta subsección se muestra el funcionamiento del componente desarrollado ante trayectorias combinadas. El primer experimento consiste en la realización de un círculo a mano con el sensor RGBD. El resultado del experimento, en diferentes etapas, se puede observar en la Figura~\ref{fig:ex-1}. Se aprecia como a pesar del movimiento irregular del brazo y el error acumulativo, el resultado obtenido se parece a un círculo.
+En esta subsección se muestra el funcionamiento del componente desarrollado ante trayectorias combinadas. El primer experimento consiste en la realización de un círculo a mano con el sensor RGBD. El resultado del experimento, en diferentes etapas, se puede observar en la Figura~\ref{fig:ex1}. Se aprecia cómo a pesar del movimiento irregular del brazo y el error acumulativo, el resultado obtenido se parece a un círculo.
 
 \begin{figure}[th]
 \centering
@@ -175,7 +175,7 @@ En esta subsección se muestra el funcionamiento del componente desarrollado ant
 \label{fig:ex1}
 \end{figure}
  
-En el siguiente experimento se compone de un desplazamiento vertical hacia el eje $z$ y después una rotación del ángulo \textit{roll}. El resultado se visualiza en la Figura~\ref{fig:ex-2}.
+El siguiente experimento se compone de un desplazamiento vertical hacia el eje $z$ y después una rotación del ángulo \textit{roll}. El resultado se visualiza en la Figura~\ref{fig:ex2}.
  
 \begin{figure}[th]
 \centering
@@ -188,17 +188,17 @@ En el siguiente experimento se compone de un desplazamiento vertical hacia el ej
 
 \subsection{Acumulación de error en estático}
 
-El error estático muestra el ruido que se esconde detrás de la resolución 3D en tiempo real. Como se va a poder observar en esta sección, el ruido acumulado en estático es recurrente, está presente en todas las configuraciones del algoritmo y refleja su naturaleza incremental, acumulativa. Sin embargo, en el capítulo de conclusiones (\ref{Chapter6}), en el cual se proponen posibles mejoras y líneas futuras, se sugerirán métodos para poder eliminarlo en mayor o menor medida.
+El error estático muestra el ruido que se esconde detrás de la resolución 3D en tiempo real. Como se va a poder observar en esta sección, el ruido acumulado en estático es recurrente, está presente en todas las configuraciones del algoritmo y refleja su naturaleza incremental, acumulativa. En el capítulo de conclusiones (\ref{Chapter6}), se sugerirán métodos para poder eliminarlo en mayor o menor medida.
 
 Se han relizado varios experimentos con la cámara quieta, con distintas configuraciones del algoritmo. En cada iteración se incurre en algún ligero error que se va acumulando y hace que pasados 30 o 60 segundos la posición estimada de la cámara sea distinta de la posición real, que no se ha movido nada.
 
-En las siguiente Figura (\ref{fig:static}) se puede ver un ejemplo de este error para diferentes configuraciones. Como se puede apreciar, es un error que está presente en todos los casos.
+En la Figura (\ref{fig:static}) se puede ver un ejemplo de este error para diferentes configuraciones. Como se puede apreciar, es un error que está presente en todos los casos. Las pruebas realizadas han sido capturadas a los 30 y 60 segundos respectivamente y la configuración aplicada se encuentra en la descripción de la Figura~\ref{fig:static}.
 
 \begin{figure}[th]
 \centering
 \includegraphics[scale=0.30]{Figures/tests/static.png}
 \decoRule
-\caption[Capturas con ruido estático]{En la primera imágen se representa el ruido estático después de 30 y 60 segundos, con SURF y FLANN. La segunda con SIFT, Fuerza Bruta y filtros. La tercera con SIFT, Fuerza Bruta y RANSAC.}
+\caption[Capturas con ruido estático]{En la primera imagen se representa el ruido estático después de 30 y 60 segundos, con SURF y FLANN. La segunda con SIFT, Fuerza Bruta y filtros. La tercera con SIFT, Fuerza Bruta y RANSAC.}
 \label{fig:static}
 \end{figure}
 
@@ -218,11 +218,9 @@ En las siguiente Figura (\ref{fig:static}) se puede ver un ejemplo de este error
 %\label{fig:static3}
 %\end{figure}
 
-Las pruebas realizadas han sido capturadas a los 30 y 60 segundos respectivamente y la configuración aplicada se encuentra en la descripción de la Figura~\ref{fig:static}.
+Si analizamos las matrices RT obtenidas se puede observar que el eje en que más crece el ruido es el eje $y$, el perpendicular al plano imagen, lo que es coherente con las pruebas de la sección anterior. Es precisamente en ese eje donde el algoritmo realizado se comporta peor, donde incurre en más error.
 
-Si analizamos las matrices RT obtenidas se puede observar que el eje en que más avanza el ruido es el eje $y$, el perpendicular al plano imagen, lo que es coherente con las pruebas de la sección anterior. Es precisamente en ese eje donde el algoritmo realizado se comporta peor, donde incurre en más error.
-
-La conclusión a la que se quiere llegar con las pruebas realizadas es que el error perjudica más al sistema cuanto mayor es la duración de la estimación, ya que se trata de un error acumulativo.
+La conclusión a la que se llega con las pruebas realizadas es que el error perjudica más al sistema cuanto mayor es la duración de la estimación, ya que se trata de un error acumulativo.
 
 
 %-----------------------------------
@@ -232,7 +230,7 @@ La conclusión a la que se quiere llegar con las pruebas realizadas es que el er
 \section{Tiempos de cómputo del procesamiento}
 En esta sección se ven los tiempos de cómputo del componente realizado en este proyecto. Como el componente realiza distintas tareas hasta completar una iteración, se ha desarrollado una funcionalidad que mide el tiempo medio por cada una de ellas cuando se termina la ejecución del componente.
 
-Se ha analizado el tiempo medio para diferentes configuraciones en un intervalo de tiempo de 10 segundos. Para un uso por defecto de la aplicación, se tienen estos costes computacionales:
+Se ha analizado el tiempo medio para diferentes configuraciones en un intervalo de 10 segundos. Para un uso por defecto de la aplicación, se tienen estos costes computacionales:
 
 \begin{lstlisting}[style=CStyle]
 Average times:
@@ -244,7 +242,7 @@ Average times:
 - TOTAL: 151.731 ms
 \end{lstlisting}
 
-Como se puede observar, la detección de puntos es la parte que más tiempo requiere. Por el contrario, la estimación de la matriz RT es la que menos. Esta prueba se ha realizado con una media de unos 300 puntos de interés por iteración. Como es lógico el tiempo de detección variará con respecto al número de puntos de interés o carácterísticas extraídas. Estos puntos de interés según las pruebas no solo están condicionados a la imágen que se está analizando, si no que la intensidad de luz desempeña un papel muy importante en la detección de más o menos características.
+Como se puede observar, la detección de puntos es la parte que más tiempo requiere. Por el contrario, la estimación de la matriz RT es la que menos. Esta prueba se ha realizado con una media de unos 300 puntos de interés por iteración. Como es lógico, el tiempo de detección variará con respecto al número de puntos de interés o características extraídas. Estos puntos de interés según las pruebas no solo están condicionados a la imagen que se está analizando, la intensidad de luz también desempeña un papel muy importante en la detección de más o menos características.
 
 En el cuadro~\ref{tab:detection-time} podemos ver la variabilidad de tiempo de detección para diferentes números de puntos.
 

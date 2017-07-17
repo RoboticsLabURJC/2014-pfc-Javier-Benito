@@ -24,7 +24,7 @@ Desarrollo de un componente capaz de recoger, a través de diferentes técnicas,
 Desarrollo del cálculo de correspondencias entre los puntos de interés en el fotograma actual y en el fotograma previo.
 
 \item \underline{Estimación del movimiento 3D}.
-Implementación de la matemática necesaria para una vez tenidos los puntos emparejados, entre dos fotogramas consecutivos, calcular la matriz de rotación y traslación (RT) que se necesitará para calcular en ese instante el movimiento incremental del sensor.
+Implementación de la matemática necesaria para una vez tenidos los puntos emparejados entre dos fotogramas consecutivos, calcular la matriz de rotación y traslación (RT) que se necesitará para calcular en ese instante el movimiento incremental del sensor.
 
 \item \underline{Pruebas y experimentos}.
 El programa diseñado y construido se validará experimentalmente con un sensor real.
@@ -63,14 +63,14 @@ Para abordar un proyecto de tal envergadura es necesaria una metodología de des
 
 Esta metodología permite el desarrollo de implementaciones parciales que van siendo probadas a medida que después de cada ciclo se va generando un prototipo más completo que el ciclo anterior. Por lo tanto, en cada ciclo o iteración se va añadiendo complejidad a la vez que se van generando funcionalidades nuevas.
 
-Este modelo, utilizado en este trabajo, ha servido de gran ayuda, ya que permite ir avanzando de menos a más, con unos requisitos dependientes de los anteriores y a la vez diferentes para cada iteración. Además, permite ir evaluando y adaptando la evolución del desarrollo a nuestros intereses, algo que suele ocurrir normalmente en los proyectos de investigación.
+Este modelo, ha servido de gran ayuda, ya que permite ir avanzando de menos a más, con unos requisitos dependientes de los anteriores y a la vez diferentes para cada iteración. Además, permite ir evaluando y adaptando la evolución del desarrollo a nuestros intereses, algo que suele ocurrir normalmente en los proyectos de investigación.
 
 En la Figura~\ref{fig:spiral} se puede observar el ciclo completo de desarrollo de software en el modelo en espiral. Cada etapa o ciclo completo está compuesto por cuatro fases:
 
 \begin{itemize}
 \item \underline{Identificación de objetivos}. En esta primera fase se deciden y se planifican los objetivos a alcanzar en la siguiente iteración partiendo de lo realizado en el ciclo anterior. En caso de la primera iteración se definen los objetivos iniciales.
 
-\item \underline{Evaluación alternativa}. Aquí se definen requisitos y se estudian las distintas maneras de abordar los objetivos marcados de la etapa anterior. Se estudian los riesgos y se evaluan de qué manera se puedan reducir lo máximo posible. Se debe tener un prototipo antes de la siguiente etapa.
+\item \underline{Evaluación alternativa}. Aquí se definen requisitos y se estudian las distintas maneras de abordar los objetivos marcados de la etapa anterior. Se estudian los riesgos y se evalúa de qué manera se puedan reducir lo máximo posible. Se debe tener un prototipo antes de la siguiente etapa.
 
 \item \underline{Desarrollo del producto}. En esta fase se diseña y se implementa el producto en base a lo planteado en las anteriores fases. Por último, se verifica y se prueba.
 
@@ -90,7 +90,7 @@ Para las fases de planificación y análisis se han mantenido reuniones semanale
 
 A fin de documentar y guardar los hitos realizados en el desarrollo del proyecto, así como los errores cometidos y su posible solución, se ha llevado un seguimiento en MediaWiki\footnote{http://jderobot.org/J.benitod-tfg} con los detalles de las diferentes iteraciones, ayudadas a veces por imágenes y/o vídeos.
 
-Para la gestión de código se han usado herramientas \textit{software} de control de versiones, primeramente con Subversion (SVN)\footnote{http://svn.jderobot.org/users/j.benitod/pfc} y finalmente con GIT en un repositorio de GitHub\footnote{https://github.com/RoboticsURJC-students/2014-pfc-Javier-Benito}. Todo el código desarrollado es \textit{software} libre y está accesible a quien lo quiera.
+Para la gestión de código se han usado herramientas \textit{software} de control de versiones, primeramente con Subversion (SVN)\footnote{http://svn.jderobot.org/users/j.benitod/pfc} y finalmente con GIT en un repositorio de GitHub\footnote{https://github.com/RoboticsURJC-students/2014-pfc-Javier-Benito}. Todo el código desarrollado es \textit{software} libre y está accesible a quien lo quiera con licencia GPL3.
 
 %------------------------------------------------
 %	SECTION Planificación
